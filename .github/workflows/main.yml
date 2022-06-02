@@ -40,9 +40,9 @@ jobs:
           working-directory: .
       
       # Create .nojekyll file
-      - name: Create .nojekyll
-        run: touch docs/html/.nojekyll
-        shell: bash
+      #- name: Create .nojekyll
+      #  run: touch docs/html/.nojekyll
+      #  shell: bash
       
       # Deploy using GitHub Pages
       - name: Deploy to GitHub Pages
