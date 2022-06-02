@@ -26,6 +26,16 @@ var NAVTREE =
 [
   [ "Oyster HA Closure Analysis", "index.html", [
     [ "Data Structures", "annotated.html", [
+      [ "About", "index.html#autotoc_md0", null ],
+      [ "Install", "index.html#autotoc_md1", [
+        [ "Install dependencies", "index.html#autotoc_md2", [
+          [ "cJSON", "index.html#autotoc_md3", null ]
+        ] ],
+        [ "ENV Variables", "index.html#autotoc_md4", null ],
+        [ "Clone", "index.html#autotoc_md5", null ],
+        [ "Build & Run", "index.html#autotoc_md6", null ]
+      ] ],
+      [ "License", "index.html#autotoc_md7", null ],
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
