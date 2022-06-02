@@ -1,0 +1,9 @@
+.idea/
+bin
+obj
+doxygen-styles
+docs
+
+*.swp
+*.*.swp
+.DS_Store
