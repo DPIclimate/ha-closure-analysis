@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['example_0',['Example',['../class_my_library_1_1_example.html',1,'MyLibrary']]]
+  ['memorystruct_5ftypedef_0',['MemoryStruct_TypeDef',['../struct_memory_struct___type_def.html',1,'']]]
 ];

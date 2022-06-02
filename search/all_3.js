@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['example_0',['Example',['../class_my_library_1_1_example.html',1,'MyLibrary']]],
-  ['example_2ehpp_1',['example.hpp',['../example_8hpp.html',1,'']]],
-  ['extensions_2',['Extensions',['../md_doxygen_awesome_css_docs_extensions.html',1,'']]],
-  ['extensions_2emd_3',['extensions.md',['../extensions_8md.html',1,'']]]
+  ['size_0',['size',['../struct_memory_struct___type_def.html#ac7e3d1d1b59c48679ea65f882fdfce47',1,'MemoryStruct_TypeDef']]]
 ];
