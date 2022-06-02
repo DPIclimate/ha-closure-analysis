@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['w_5fweather_2ec_0',['w_weather.c',['../w__weather_8c.html',1,'']]],
-  ['w_5fweather_2eh_1',['w_weather.h',['../w__weather_8h.html',1,'']]],
-  ['willyweather_5fgetforecast_2',['WillyWeather_GetForecast',['../w__weather_8h.html#a6f686bb92abf3dfb2f1da7db31c1f53d',1,'WillyWeather_GetForecast(const char *token, const char *location, const char *forecast_type, const char *start_date, const char *n_days):&#160;w_weather.c'],['../w__weather_8c.html#a6f686bb92abf3dfb2f1da7db31c1f53d',1,'WillyWeather_GetForecast(const char *token, const char *location, const char *forecast_type, const char *start_date, const char *n_days):&#160;w_weather.c']]],
-  ['willyweather_5fgetlocationbyname_3',['WillyWeather_GetLocationByName',['../w__weather_8h.html#a895171d653fd0f3507d1307f79affd8a',1,'WillyWeather_GetLocationByName(const char *token, const char *name, const char *q_limit):&#160;w_weather.c'],['../w__weather_8c.html#a895171d653fd0f3507d1307f79affd8a',1,'WillyWeather_GetLocationByName(const char *token, const char *name, const char *q_limit):&#160;w_weather.c']]]
+  ['virtualfunc_0',['virtualfunc',['../class_my_library_1_1_example.html#a8431ef1c10c4e2a36302b8e8556514f6',1,'MyLibrary::Example::virtualfunc()'],['../class_my_library_1_1_subclass_example.html#a6c1b7e5c6e56d31a169ddd42e8992300',1,'MyLibrary::SubclassExample::virtualfunc()']]]
 ];

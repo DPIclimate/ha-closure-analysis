@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['size_0',['size',['../struct_memory_struct___type_def.html#ac7e3d1d1b59c48679ea65f882fdfce47',1,'MemoryStruct_TypeDef']]],
-  ['staticfunc_1',['staticfunc',['../class_my_library_1_1_example.html#a8c3ea5ce33b9e1fada7ff46eab0956a7',1,'MyLibrary::Example']]],
-  ['subclass_2dexample_2ehpp_2',['subclass-example.hpp',['../subclass-example_8hpp.html',1,'']]],
-  ['subclassexample_3',['SubclassExample',['../class_my_library_1_1_subclass_example.html',1,'MyLibrary']]]
+  ['readme_2emd_0',['README.md',['../doxygen-awesome-css_2_r_e_a_d_m_e_8md.html',1,'(Global Namespace)'],['../_r_e_a_d_m_e_8md.html',1,'(Global Namespace)']]],
+  ['red_1',['red',['../namespace_my_library.html#a79a9f4bbb675f6c082b09249c5a95ceda82b4a54f6fbf39698c2a6982d75f4f0c',1,'MyLibrary']]]
 ];

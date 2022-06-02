@@ -25,15 +25,17 @@
 var NAVTREE =
 [
   [ "Oyster HA Closure Analysis", "index.html", [
-    [ "Doxygen Awesome", "index.html", [
-      [ "Motivation", "index.html#autotoc_md24", null ],
-      [ "Features", "index.html#autotoc_md25", null ],
-      [ "Examples", "index.html#autotoc_md26", null ],
-      [ "Installation", "index.html#autotoc_md27", null ],
-      [ "Browser support", "index.html#autotoc_md28", null ],
-      [ "Credits", "index.html#autotoc_md29", null ]
-    ] ],
     [ "Customization", "md_doxygen_awesome_css_docs_customization.html", [
+      [ "About", "index.html#autotoc_md30", null ],
+      [ "Install", "index.html#autotoc_md31", [
+        [ "Install dependencies", "index.html#autotoc_md32", [
+          [ "cJSON", "index.html#autotoc_md33", null ]
+        ] ],
+        [ "ENV Variables", "index.html#autotoc_md34", null ],
+        [ "Clone", "index.html#autotoc_md35", null ],
+        [ "Build & Run", "index.html#autotoc_md36", null ]
+      ] ],
+      [ "License", "index.html#autotoc_md37", null ],
       [ "CSS-Variables", "md_doxygen_awesome_css_docs_customization.html#autotoc_md1", [
         [ "Setup", "md_doxygen_awesome_css_docs_customization.html#autotoc_md2", null ],
         [ "Available variables", "md_doxygen_awesome_css_docs_customization.html#autotoc_md3", null ]
@@ -56,6 +58,14 @@ var NAVTREE =
       [ "Class Diagrams with Graphviz", "md_doxygen_awesome_css_docs_tricks.html#autotoc_md14", null ],
       [ "Disable Dark Mode", "md_doxygen_awesome_css_docs_tricks.html#autotoc_md15", null ],
       [ "Choosing Sidebar Width", "md_doxygen_awesome_css_docs_tricks.html#autotoc_md16", null ]
+    ] ],
+    [ "Doxygen Awesome", "md_doxygen_awesome_css__r_e_a_d_m_e.html", [
+      [ "Motivation", "md_doxygen_awesome_css__r_e_a_d_m_e.html#autotoc_md24", null ],
+      [ "Features", "md_doxygen_awesome_css__r_e_a_d_m_e.html#autotoc_md25", null ],
+      [ "Examples", "md_doxygen_awesome_css__r_e_a_d_m_e.html#autotoc_md26", null ],
+      [ "Installation", "md_doxygen_awesome_css__r_e_a_d_m_e.html#autotoc_md27", null ],
+      [ "Browser support", "md_doxygen_awesome_css__r_e_a_d_m_e.html#autotoc_md28", null ],
+      [ "Credits", "md_doxygen_awesome_css__r_e_a_d_m_e.html#autotoc_md29", null ]
     ] ],
     [ "Bug List", "bug.html", null ],
     [ "Deprecated List", "deprecated.html", null ],

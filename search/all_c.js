@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['ubidots_2ec_0',['ubidots.c',['../ubidots_8c.html',1,'']]],
-  ['ubidots_2eh_1',['ubidots.h',['../ubidots_8h.html',1,'']]],
-  ['ubidots_5flistdevices_2',['Ubidots_ListDevices',['../ubidots_8h.html#a60e77431f71cea7dbfd09272e661fdc2',1,'Ubidots_ListDevices(const char *token):&#160;ubidots.c'],['../ubidots_8c.html#a60e77431f71cea7dbfd09272e661fdc2',1,'Ubidots_ListDevices(const char *token):&#160;ubidots.c']]],
-  ['utils_2ec_3',['utils.c',['../utils_8c.html',1,'']]],
-  ['utils_2eh_4',['utils.h',['../utils_8h.html',1,'']]]
+  ['test_0',['test',['../class_my_library_1_1_example.html#a1c0046b0674eb4cad09c5d3e943912b8',1,'MyLibrary::Example']]],
+  ['tips_20_26_20tricks_1',['Tips &amp; Tricks',['../md_doxygen_awesome_css_docs_tricks.html',1,'']]],
+  ['todo_20list_2',['Todo List',['../todo.html',1,'']]],
+  ['tricks_2emd_3',['tricks.md',['../tricks_8md.html',1,'']]]
 ];
