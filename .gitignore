@@ -1,7 +1,7 @@
 .idea/
 bin
 obj
-doxygen-awesome-css
+doxygen-styles
 docs
 
 *.swp
