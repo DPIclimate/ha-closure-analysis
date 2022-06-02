@@ -99,7 +99,7 @@ CURLcode WillyWeather_GetForecast(const char *token,
  * @param q_limit Number of returned sites to limit to.
  * @return The result status code provided by CURL.
  */
-__attribute__((unused)) CURLcode WillyWeather_GetLocationByName(
+CURLcode WillyWeather_GetLocationByName(
                                         const char *token,
                                         const char *name,
                                         const char *q_limit) {

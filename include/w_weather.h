@@ -6,13 +6,15 @@
 
 #include "utils.h"
 
+/// Get the weather forcast from Willy Weather.
 CURLcode WillyWeather_GetForecast(const char *token,
                                   const char *location,
                                   const char *forecast_type,
                                   const char *start_date,
                                   const char *n_days);
 
-__attribute__((unused)) CURLcode WillyWeather_GetLocationByName(const char *token,
+/// Get an ID describing a location from Willy Weather.
+CURLcode WillyWeather_GetLocationByName(const char *token,
                                         const char *name,
                                         const char *q_limit);
 

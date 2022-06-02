@@ -60,11 +60,14 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
  * @code
  *      const char *URL = "https://www.example.com";
  *      // Create some headers (more may be needed depending on application)
+ *
  *      struct curl_slist *headers = NULL;
  *      headers = curl_slist_append(headers, "Content-Type: application/json");
+ *
  *      // Create a cJSON object to hold the response
  *      cJSON *response = NULL;
- *      CURLcode result = HttpRequest(&response, URL, headers);
+ *      CURLcode result = HttpRequest(&response, URL, headers, 0, NULL);
+ *
  *      // Free memory
  *      curl_slist_free_all(headers);
  *      cJSON_Delete(response);

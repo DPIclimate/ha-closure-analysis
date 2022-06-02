@@ -6,11 +6,13 @@
 
 #include "utils.h"
 
-__attribute__((unused)) CURLcode IBM_Authenticate(const char* token,
-                                                  char* refresh_token,
-                                                  char* access_token);
+/// Authenticate with IBM's Environmental Monitoring Suite (EMS).
+CURLcode IBM_Authenticate(const char* token,
+                          char* refresh_token,
+                          char* access_token);
 
-__attribute__((unused)) CURLcode IBM_Refresh(const char* refresh_token,
-                                             char* access_token);
+/// Obtain a new access token from IBM's EMS.
+CURLcode IBM_Refresh(const char* refresh_token,
+                     char* access_token);
 
 #endif //HA_CLOSURE_ANALYSIS_IBM_EMS_H

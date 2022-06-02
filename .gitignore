@@ -1,9 +1,9 @@
 .idea/
 bin
 obj
+doxygen-awesome-css
+docs
 
 *.swp
 *.*.swp
 .DS_Store
-
-

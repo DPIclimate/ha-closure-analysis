@@ -30,7 +30,7 @@
  * @param access_token Access token to populate.
  * @return CURLcode error message
  */
-__attribute__((unused)) CURLcode IBM_Authenticate(const char* token,
+CURLcode IBM_Authenticate(const char* token,
                                                   char* refresh_token,
                                                   char* access_token) {
 
@@ -111,7 +111,7 @@ __attribute__((unused)) CURLcode IBM_Authenticate(const char* token,
  * @param access_token Access token to populate.
  * @return CURLcode error message
  */
-__attribute__((unused)) CURLcode IBM_Refresh(const char* refresh_token,
+CURLcode IBM_Refresh(const char* refresh_token,
                                              char* access_token) {
     const char* URL = "https://auth-b2b-twc.ibm.com/connect/token";
 
