@@ -33,7 +33,7 @@ jobs:
           mv doxygen-awesome.css ../doxygen-styles/doxygen-awesome.css
           mv doxygen-awesome-sidebar-only.css ../doxygen-styles/doxygen-awesome-sidebar-only.css
           cd ..
-          rm -f doxygen-awesome-css
+          rmdir --ignore-fail-on-non-empty doxygen-awesome-css
         shell: bash
 
       # Generate documentaiton in docs/html folder
