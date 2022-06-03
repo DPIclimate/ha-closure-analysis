@@ -21,8 +21,8 @@
 <g id="node2" class="node">
 <title>Node2</title>
 <g id="a_node2"><a xlink:href="ubidots_8h.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="92,-112.5 92,-131.5 148,-131.5 148,-112.5 92,-112.5"/>
-<text text-anchor="middle" x="120" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00">ubidots.h</text>
+<polygon fill="none" stroke="black" points="71.5,-112.5 71.5,-131.5 168.5,-131.5 168.5,-112.5 71.5,-112.5"/>
+<text text-anchor="middle" x="120" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00">../include/ubidots.h</text>
 </a>
 </g>
 </g>

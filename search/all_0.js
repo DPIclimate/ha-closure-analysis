@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['httprequest_0',['HttpRequest',['../utils_8h.html#a72099cc3afa0e11832f789a273e36ae3',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body):&#160;utils.c'],['../utils_8c.html#a72099cc3afa0e11832f789a273e36ae3',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body):&#160;utils.c']]]
+  ['classification_0',['classification',['../struct_harvest_area_status___type_def.html#a074992e8f15179e7f1b284cb6892e1ee',1,'HarvestAreaStatus_TypeDef']]]
 ];

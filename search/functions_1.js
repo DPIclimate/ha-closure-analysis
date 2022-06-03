@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ibm_5fauthenticate_0',['IBM_Authenticate',['../ibm__ems_8h.html#acae463e79cfb46e22f38df66d6fccc9d',1,'IBM_Authenticate(const char *token, char *refresh_token, char *access_token):&#160;ibm_ems.c'],['../ibm__ems_8c.html#acae463e79cfb46e22f38df66d6fccc9d',1,'IBM_Authenticate(const char *token, char *refresh_token, char *access_token):&#160;ibm_ems.c']]],
-  ['ibm_5frefresh_1',['IBM_Refresh',['../ibm__ems_8h.html#ad00eb472987e4fac1c5ac3a0deda2006',1,'IBM_Refresh(const char *refresh_token, char *access_token):&#160;ibm_ems.c'],['../ibm__ems_8c.html#ad00eb472987e4fac1c5ac3a0deda2006',1,'IBM_Refresh(const char *refresh_token, char *access_token):&#160;ibm_ems.c']]]
+  ['httprequest_0',['HttpRequest',['../utils_8h.html#a72099cc3afa0e11832f789a273e36ae3',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body):&#160;utils.c'],['../utils_8c.html#a72099cc3afa0e11832f789a273e36ae3',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body):&#160;utils.c']]]
 ];

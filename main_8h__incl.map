@@ -1,12 +1,13 @@
 <map id="include/main.h" name="include/main.h">
-<area shape="rect" id="node1" title=" " alt="" coords="128,5,233,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="285,5,391,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,229,68,256"/>
-<area shape="rect" id="node3" title=" " alt="" coords="409,80,469,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="119,229,197,256"/>
-<area shape="rect" id="node5" href="$ubidots_8h.html" title=" " alt="" coords="310,80,385,107"/>
-<area shape="rect" id="node9" href="$w__weather_8h.html" title=" " alt="" coords="191,80,285,107"/>
-<area shape="rect" id="node10" href="$ibm__ems_8h.html" title=" " alt="" coords="81,80,166,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="385,229,449,256"/>
-<area shape="rect" id="node7" title=" " alt="" coords="221,229,332,256"/>
-<area shape="rect" id="node8" href="$utils_8h.html" title=" " alt="" coords="222,155,278,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="599,80,659,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="273,229,352,256"/>
+<area shape="rect" id="node5" href="$ubidots_8h.html" title=" " alt="" coords="226,80,301,107"/>
+<area shape="rect" id="node9" href="$w__weather_8h.html" title=" " alt="" coords="83,80,177,107"/>
+<area shape="rect" id="node10" href="$ibm__ems_8h.html" title=" " alt="" coords="375,80,461,107"/>
+<area shape="rect" id="node11" href="$food__auth_8h.html" title=" " alt="" coords="485,80,575,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="125,229,189,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="443,229,553,256"/>
+<area shape="rect" id="node8" href="$utils_8h.html" title=" " alt="" coords="194,155,250,181"/>
 </map>
