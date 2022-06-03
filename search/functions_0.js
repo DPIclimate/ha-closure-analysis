@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['httprequest_0',['HttpRequest',['../utils_8h.html#a72099cc3afa0e11832f789a273e36ae3',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body):&#160;utils.c'],['../utils_8c.html#a72099cc3afa0e11832f789a273e36ae3',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body):&#160;utils.c']]]
+  ['cjson_5fminify_5fmod_0',['cJSON_Minify_Mod',['../food__auth_8c.html#a4121c48754e618c3eb17361341f78016',1,'food_auth.c']]]
 ];
