@@ -1,11 +1,14 @@
-#include "food_auth.h"
+#include "FoodAuthority/food_auth.h"
 
+/// Find value with HTML tags.
 static void FoodAuth_FindHTMLValue(char* data, const char* search_term,
                                    char* value);
 
+/// Parse HTML data to populate status information data.
 static void FoodAuth_ParseResponse(char* data,
                                    HarvestAreaStatus_TypeDef *ha_status);
 
+/// Modified minify function from cJSON
 static CJSON_PUBLIC(void) cJSON_Minify_Mod(char *json);
 
 /**
@@ -16,11 +19,6 @@ static CJSON_PUBLIC(void) cJSON_Minify_Mod(char *json);
  * NSW FA website. This function parses out the relevent XML data and used
  * helper functions to pull out a struct containing relevent data.
  *
- * @code
- *      HarvestAreaStatus_TypeDef ha_status;
- *      FoodAuth_GetHarvestAreaStatus("Moonlight", &ha_status);
- * @endcode
- *
  * The havest area names for Batemans Bay are as follow:
  * - Waterfall
  * - Moonlight
@@ -28,6 +26,11 @@ static CJSON_PUBLIC(void) cJSON_Minify_Mod(char *json);
  *
  * Other harvest areas can be checked using this function (just need to know
  * their name and use it as the harvest_name variable.
+ *
+ * @code
+ *      HarvestAreaStatus_TypeDef ha_status;
+ *      FoodAuth_GetHarvestAreaStatus("Moonlight", &ha_status);
+ * @endcode
  *
  * @param harvest_name Name of harvest area.
  * @param ha_status Harvest area struct to populate with status information.

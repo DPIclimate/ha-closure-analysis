@@ -19,9 +19,9 @@ SRC = ./src
 OBJ = ./obj
 HEADER = ./include
 BIN_DIR = ./bin
-SRCS = $(wildcard $(SRC)/*.c)
+SRCS = $(wildcard $(SRC)/*.c $(SRC)/*/*.c)
 OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
-HDRS = $(wildcard $(HEADER)/*.h)
+HDRS = $(wildcard $(HEADER)/*.h $(HEADER)/*.c)
 BIN = $(addprefix $(BIN_DIR)/, program)
 
 all: $(BIN)
@@ -33,9 +33,10 @@ $(OBJ):
 $(BIN): $(OBJS) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
 
-$(OBJ)/%.o: $(SRC)/%.c $(OBJ) 
-	$(CC) $(CFLAGS) -c $< -o $@ 
+$(OBJ)/%.o: $(SRC)/%.c $(OBJ)
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -r $(OBJ)
-	$(RM) -r $(BIN_DIR)
+	$(RM) -r $(OBJ)/*
+	$(RM) -r $(BIN_DIR)/*

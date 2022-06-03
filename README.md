@@ -3,6 +3,7 @@
 </h2>
 <p align="center">
   <a href="#about">About</a> •
+  <a href="https://dpiclimate.github.io/ha-closure-analysis/">Docs</a> •
   <a href="#install">Install</a> •
   <a href="#license">License</a>
 </p>

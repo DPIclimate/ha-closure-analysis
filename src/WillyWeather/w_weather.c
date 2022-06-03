@@ -1,4 +1,4 @@
-#include "w_weather.h"
+#include "WillyWeather/w_weather.h"
 
 /**
  * Get weather forecast data from Willy Weather.
