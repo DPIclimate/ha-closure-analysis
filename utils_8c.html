@@ -100,6 +100,8 @@ Include dependency graph for utils.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4ddd5eda46f8b61317f95145c87e653d"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d">WriteMemoryCallback</a> (void *contents, size_t size, size_t nmemb, void *userp)</td></tr>
+<tr class="separator:a4ddd5eda46f8b61317f95145c87e653d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72099cc3afa0e11832f789a273e36ae3"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a> (cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body)</td></tr>
 <tr class="memdesc:a72099cc3afa0e11832f789a273e36ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP GET &amp; POST request using cURL.  <a href="utils_8c.html#a72099cc3afa0e11832f789a273e36ae3">More...</a><br /></td></tr>
 <tr class="separator:a72099cc3afa0e11832f789a273e36ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,6 +179,77 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Status code representing the response status. </dd></dl>
+
+</div>
+</div>
+<a id="a4ddd5eda46f8b61317f95145c87e653d" name="a4ddd5eda46f8b61317f95145c87e653d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ddd5eda46f8b61317f95145c87e653d">&#9670;&nbsp;</a></span>WriteMemoryCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static size_t WriteMemoryCallback </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>contents</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nmemb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Callback function to save HTTP response data to a character array.</p>
+<p >CURL defaults to printing to stdout. This function is added to CURL in the setup options (curl_easy_setupopt()). Memory is allocated and then filled with the response string. This character array is then used to create cJSON objects and other items.</p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="struct_memory_struct___type_def.html">MemoryStruct_TypeDef</a> chunk;</div>
+<div class="line">chunk.<a class="code hl_variable" href="struct_memory_struct___type_def.html#ab23504126b36f9a22c97cf7d2044cb25">memory</a> = malloc(1);</div>
+<div class="line">chunk.<a class="code hl_variable" href="struct_memory_struct___type_def.html#ac7e3d1d1b59c48679ea65f882fdfce47">size</a> = 0;</div>
+<div class="line">curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, <a class="code hl_function" href="utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d">WriteMemoryCallback</a>);</div>
+<div class="line">curl_easy_setopt(curl, CURLOPT_WRITEDATA, (<span class="keywordtype">void</span> *)&amp;chunk);</div>
+<div class="line">free(chunk.<a class="code hl_variable" href="struct_memory_struct___type_def.html#ab23504126b36f9a22c97cf7d2044cb25">memory</a>) <span class="comment">// Don&#39;t forget to free allocation</span></div>
+<div class="ttc" id="astruct_memory_struct___type_def_html"><div class="ttname"><a href="struct_memory_struct___type_def.html">MemoryStruct_TypeDef</a></div><div class="ttdoc">Holds HTTP response data before converting these data into cJSON objects.</div><div class="ttdef"><b>Definition:</b> utils.h:10</div></div>
+<div class="ttc" id="astruct_memory_struct___type_def_html_ab23504126b36f9a22c97cf7d2044cb25"><div class="ttname"><a href="struct_memory_struct___type_def.html#ab23504126b36f9a22c97cf7d2044cb25">MemoryStruct_TypeDef::memory</a></div><div class="ttdeci">char * memory</div><div class="ttdoc">The (response) data.</div><div class="ttdef"><b>Definition:</b> utils.h:11</div></div>
+<div class="ttc" id="astruct_memory_struct___type_def_html_ac7e3d1d1b59c48679ea65f882fdfce47"><div class="ttname"><a href="struct_memory_struct___type_def.html#ac7e3d1d1b59c48679ea65f882fdfce47">MemoryStruct_TypeDef::size</a></div><div class="ttdeci">size_t size</div><div class="ttdoc">Size of the (response) data.</div><div class="ttdef"><b>Definition:</b> utils.h:12</div></div>
+<div class="ttc" id="autils_8c_html_a4ddd5eda46f8b61317f95145c87e653d"><div class="ttname"><a href="utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d">WriteMemoryCallback</a></div><div class="ttdeci">static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)</div><div class="ttdef"><b>Definition:</b> utils.c:31</div></div>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://curl.se/libcurl/c/getinmemory.html">https://curl.se/libcurl/c/getinmemory.html</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contents</td><td>The items to add. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of items to add. </td></tr>
+    <tr><td class="paramname">nmemb</td><td>The number of members (data size). </td></tr>
+    <tr><td class="paramname">userp</td><td>The struct to populate with data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The size of received data. </dd></dl>
 
 </div>
 </div>
