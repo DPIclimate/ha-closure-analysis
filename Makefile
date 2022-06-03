@@ -1,4 +1,4 @@
-CC = cc
+CC = gcc
 
 #### Check for memory leaks (at exit) ####
 # $ leaks --list --atExit -- ./bin/program
@@ -11,7 +11,6 @@ CC = cc
 # $ leaks <proccess_id>
 # Step though debugger and check for leaks each step
 # $ export MallocStackLogging=0
-
 
 CFLAGS = -g -Wall -Werror -I include/
 LDFLAGS = -lcurl -lcjson

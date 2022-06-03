@@ -1,4 +1,4 @@
-#include "ubidots.h"
+#include "../include/ubidots.h"
 
 /**
  * Method to get a list of all devices on Ubidots.

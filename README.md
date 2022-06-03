@@ -1,3 +1,6 @@
+<h2 align="center">
+    Oyster Farm Environmental Monitoring & Prediction Analysis
+</h2>
 <p align="center">
   <a href="#about">About</a> •
   <a href="#install">Install</a> •
@@ -39,8 +42,8 @@ This project uses several environmental variables.
 You need to provide these or the program will not run.
 ```bash
 export UBI_TOKEN="<your_ubidots_token>"
-export WW_TOKEN="<your_willy_weather_token"
-export IBM_TOKEN="<your_ibm_token"
+export WW_TOKEN="<your_willy_weather_token>"
+export IBM_TOKEN="<your_ibm_token>"
 ```
 
 ### Clone

@@ -17,7 +17,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
  *      chunk.size = 0;
  *      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
  *      curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
- *      // free(chunk.memory) <- Required
+ *      free(chunk.memory) // Don't forget to free allocation
  * @endcode
  *
  * @see https://curl.se/libcurl/c/getinmemory.html

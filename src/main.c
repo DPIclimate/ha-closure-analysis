@@ -12,6 +12,9 @@ int main(void){
 		return EXIT_FAILURE;
 	}
 
+    HarvestAreaStatus_TypeDef ha_status;
+    FoodAuth_GetHarvestAreaStatus("Moonlight", &ha_status);
+
     // Required to cleanup curl
     curl_global_cleanup();
 

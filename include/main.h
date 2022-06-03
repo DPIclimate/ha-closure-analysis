@@ -8,5 +8,6 @@
 #include "ubidots.h"
 #include "w_weather.h"
 #include "ibm_ems.h"
+#include "food_auth.h"
 
 #endif // HA_CLOSURE_ANALYSIS_MAIN_H
