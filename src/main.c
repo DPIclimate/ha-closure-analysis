@@ -1,5 +1,11 @@
 #include "main.h"
 
+// TODO Download method for IBM precipitation data.
+// TODO Download method for Ubidots salinity & weather readings.
+// TODO Download method for Willy Weather forecast (tides etc.)
+// TODO Data transformation to calculate closure severity index
+// TODO Data transformation to calculate heat severity index
+
 int main(void){
 
     // Initialise CURL (required)

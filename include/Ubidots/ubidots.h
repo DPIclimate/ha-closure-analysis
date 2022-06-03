@@ -7,6 +7,7 @@
 
 #include "utils.h"
 
+/// List all ubidots devices
 CURLcode Ubidots_ListDevices(const char *token);
 
 #endif // HA_CLOSURE_ANALYSIS_UBIDOTS_H
