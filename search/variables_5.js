@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reason_0',['reason',['../struct_harvest_area_status___type_def.html#a9fb369f51d1efe8f1bd5e7b4d9c529f7',1,'HarvestAreaStatus_TypeDef']]]
+  ['previous_5freason_0',['previous_reason',['../struct_harvest_area_status___type_def.html#ac6e1820d320df97f9abd0ff6a7cdc258',1,'HarvestAreaStatus_TypeDef']]]
 ];

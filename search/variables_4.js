@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['previous_5freason_0',['previous_reason',['../struct_harvest_area_status___type_def.html#ac6e1820d320df97f9abd0ff6a7cdc258',1,'HarvestAreaStatus_TypeDef']]]
+  ['memory_0',['memory',['../struct_memory_struct___type_def.html#ab23504126b36f9a22c97cf7d2044cb25',1,'MemoryStruct_TypeDef']]]
 ];

@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('struct_timeseries_req___type_def.html'
 <p>Request structure for IBM EMS timeseries data.  
  <a href="struct_timeseries_req___type_def.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="precipitation_8h_source.html">precipitation.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="timeseries_8h_source.html">timeseries.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for TimeseriesReq_TypeDef:</div>
 <div class="dyncontent">
@@ -104,32 +104,32 @@ Collaboration diagram for TimeseriesReq_TypeDef:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad40f03d2f7a2d2fc43667b0f916ee961"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#ad40f03d2f7a2d2fc43667b0f916ee961">layer_id</a></td></tr>
-<tr class="separator:ad40f03d2f7a2d2fc43667b0f916ee961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee540e70faa319dde6124ef1c3bb4b17"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#aee540e70faa319dde6124ef1c3bb4b17">layer_id</a></td></tr>
+<tr class="separator:aee540e70faa319dde6124ef1c3bb4b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a616882d3bf3a64307310b579cc483d29"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#a616882d3bf3a64307310b579cc483d29">latitude</a></td></tr>
 <tr class="memdesc:a616882d3bf3a64307310b579cc483d29"><td class="mdescLeft">&#160;</td><td class="mdescRight">The layer ID of interest (obtained from IBM query)  <a href="struct_timeseries_req___type_def.html#a616882d3bf3a64307310b579cc483d29">More...</a><br /></td></tr>
 <tr class="separator:a616882d3bf3a64307310b579cc483d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9efb670499a11be3f02616fe813653d8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#a9efb670499a11be3f02616fe813653d8">longitude</a></td></tr>
 <tr class="memdesc:a9efb670499a11be3f02616fe813653d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The latitude of interest.  <a href="struct_timeseries_req___type_def.html#a9efb670499a11be3f02616fe813653d8">More...</a><br /></td></tr>
 <tr class="separator:a9efb670499a11be3f02616fe813653d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aed496100ac2fa467322cb43f961834"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#a1aed496100ac2fa467322cb43f961834">start</a></td></tr>
-<tr class="memdesc:a1aed496100ac2fa467322cb43f961834"><td class="mdescLeft">&#160;</td><td class="mdescRight">The longitude of interest.  <a href="struct_timeseries_req___type_def.html#a1aed496100ac2fa467322cb43f961834">More...</a><br /></td></tr>
-<tr class="separator:a1aed496100ac2fa467322cb43f961834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae04705fea761dec2a54ddbc91af8a89f"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#ae04705fea761dec2a54ddbc91af8a89f">end</a></td></tr>
-<tr class="memdesc:ae04705fea761dec2a54ddbc91af8a89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The start time as UNIX epoch time.  <a href="struct_timeseries_req___type_def.html#ae04705fea761dec2a54ddbc91af8a89f">More...</a><br /></td></tr>
-<tr class="separator:ae04705fea761dec2a54ddbc91af8a89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0c853be12f3e67079de90a8f2382723"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#af0c853be12f3e67079de90a8f2382723">start</a></td></tr>
+<tr class="memdesc:af0c853be12f3e67079de90a8f2382723"><td class="mdescLeft">&#160;</td><td class="mdescRight">The longitude of interest.  <a href="struct_timeseries_req___type_def.html#af0c853be12f3e67079de90a8f2382723">More...</a><br /></td></tr>
+<tr class="separator:af0c853be12f3e67079de90a8f2382723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c21be8008d38fc321bd65d6383626d"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_timeseries_req___type_def.html#a31c21be8008d38fc321bd65d6383626d">end</a></td></tr>
+<tr class="memdesc:a31c21be8008d38fc321bd65d6383626d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The start time as UNIX epoch time.  <a href="struct_timeseries_req___type_def.html#a31c21be8008d38fc321bd65d6383626d">More...</a><br /></td></tr>
+<tr class="separator:a31c21be8008d38fc321bd65d6383626d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Request structure for IBM EMS timeseries data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ae04705fea761dec2a54ddbc91af8a89f" name="ae04705fea761dec2a54ddbc91af8a89f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae04705fea761dec2a54ddbc91af8a89f">&#9670;&nbsp;</a></span>end</h2>
+<a id="a31c21be8008d38fc321bd65d6383626d" name="a31c21be8008d38fc321bd65d6383626d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31c21be8008d38fc321bd65d6383626d">&#9670;&nbsp;</a></span>end</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned long TimeseriesReq_TypeDef::end</td>
+          <td class="memname">time_t TimeseriesReq_TypeDef::end</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -154,14 +154,14 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="ad40f03d2f7a2d2fc43667b0f916ee961" name="ad40f03d2f7a2d2fc43667b0f916ee961"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad40f03d2f7a2d2fc43667b0f916ee961">&#9670;&nbsp;</a></span>layer_id</h2>
+<a id="aee540e70faa319dde6124ef1c3bb4b17" name="aee540e70faa319dde6124ef1c3bb4b17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee540e70faa319dde6124ef1c3bb4b17">&#9670;&nbsp;</a></span>layer_id</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* TimeseriesReq_TypeDef::layer_id</td>
+          <td class="memname">uint16_t TimeseriesReq_TypeDef::layer_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -184,14 +184,14 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="a1aed496100ac2fa467322cb43f961834" name="a1aed496100ac2fa467322cb43f961834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aed496100ac2fa467322cb43f961834">&#9670;&nbsp;</a></span>start</h2>
+<a id="af0c853be12f3e67079de90a8f2382723" name="af0c853be12f3e67079de90a8f2382723"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0c853be12f3e67079de90a8f2382723">&#9670;&nbsp;</a></span>start</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned long TimeseriesReq_TypeDef::start</td>
+          <td class="memname">time_t TimeseriesReq_TypeDef::start</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -201,7 +201,7 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/IBM_EMS/<a class="el" href="precipitation_8h_source.html">precipitation.h</a></li>
+<li>include/IBM_EMS/<a class="el" href="timeseries_8h_source.html">timeseries.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
