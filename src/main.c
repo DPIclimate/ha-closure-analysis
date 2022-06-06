@@ -18,8 +18,23 @@ int main(void){
 		return EXIT_FAILURE;
 	}
 
-    HarvestAreaStatus_TypeDef ha_status;
-    FoodAuth_GetHarvestAreaStatus("Moonlight", &ha_status);
+    char* access_token = malloc(IBM_ACCESS_TOKEN_SIZE); // Access token to populate
+    char* refresh_token = malloc(IBM_REFRESH_TOKEN_SIZE); // Refresh token to populate
+    IBM_Authenticate(ibm_token, refresh_token, access_token);
+
+    TimeseriesReq_TypeDef ts = {
+            .layer_id = 49097, // 16700 (alt_flag = 0) or 49097 (alt_flag = 1)
+            .latitude = -35.69701049568654,
+            .longitude = 150.1546566614602,
+            .start = 1654005600,
+            .end = 1654783200
+    };
+
+    TimeseriesDataset_TypeDef dataset;
+    IBM_GetTimeseries(access_token, &ts, &dataset, 1);
+
+    free(access_token);
+    free(refresh_token);
 
     // Required to cleanup curl
     curl_global_cleanup();

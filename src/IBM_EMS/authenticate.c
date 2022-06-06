@@ -10,8 +10,8 @@
  *
  * @code
  * // Allocate memory to hold IBM EMS tokens
- * char *access_token = malloc(2000); // Access token to populate
- * char *refresh_token = malloc(50); // Refresh token to populate
+ * char* access_token[IBM_ACCESS_TOKEN_SIZE]; // Access token to populate
+ * char* refresh_token[IBM_REFRESH_TOKEN_SIZE]; // Refresh token to populate
  * IBM_Authenticate(ibm_token, refresh_token, access_token);
  *
  * // Check for errors
@@ -21,8 +21,6 @@
  *
  * // Do things with tokens
  *
- * free(access_token);
- * free(refresh_token);
  * @endcode
  *
  * @param token IBM API key to use.
@@ -31,10 +29,8 @@
  * @return CURLcode error message
  */
 CURLcode IBM_Authenticate(const char* token,
-                                                  char* refresh_token,
-                                                  char* access_token) {
-
-    const char* URL = "https://auth-b2b-twc.ibm.com/connect/token";
+                          char* refresh_token,
+                          char* access_token) {
 
     // Build request body
     const char* BASE_BODY = "client_id=ibm-pairs"
@@ -50,7 +46,7 @@ CURLcode IBM_Authenticate(const char* token,
                                        "application/x-www-form-urlencoded");
 
     cJSON *response = NULL;
-    CURLcode result = HttpRequest(&response, URL, headers, 1, req_body);
+    CURLcode result = HttpRequest(&response, IBM_TOKEN_URL, headers, 1, req_body);
 
     // Assign access token
     cJSON *j_refresh_token = NULL;
@@ -60,7 +56,8 @@ CURLcode IBM_Authenticate(const char* token,
                                                           "access_token");
         if(cJSON_IsString(j_access_token) &&
         j_access_token->valuestring != NULL){
-            strcpy(access_token, j_access_token->valuestring);
+            strncpy(access_token, j_access_token->valuestring,
+                    IBM_ACCESS_TOKEN_SIZE);
         }
         else {
             result = CURLE_RECV_ERROR;
@@ -70,7 +67,8 @@ CURLcode IBM_Authenticate(const char* token,
                                                            "refresh_token");
         if(cJSON_IsString(j_refresh_token) &&
         j_refresh_token->valuestring != NULL){
-            strcpy(refresh_token, j_refresh_token->valuestring);
+            strncpy(refresh_token, j_refresh_token->valuestring,
+                    IBM_REFRESH_TOKEN_SIZE);
         }
     } else {
         result = CURLE_RECV_ERROR;
@@ -90,7 +88,7 @@ CURLcode IBM_Authenticate(const char* token,
  * process. The access_token length is at least 1861 characters.
  *
  * @code
- * char *access_token = malloc(2000); // Token to populate
+ * char* access_token[IBM_ACCESS_TOKEN_SIZE]; // Access token to populate
  * IBM_Refresh(refresh_token, access_token);
  *
  * // Check for errors
@@ -99,8 +97,6 @@ CURLcode IBM_Authenticate(const char* token,
  * }
  *
  * // Do things with tokens
- *
- * free(access_token); // Don't forget to free
  *
  * @endcode
  *
@@ -111,10 +107,8 @@ CURLcode IBM_Authenticate(const char* token,
  * @param access_token Access token to populate.
  * @return CURLcode error message
  */
-CURLcode IBM_Refresh(const char* refresh_token,
-                                             char* access_token) {
-    const char* URL = "https://auth-b2b-twc.ibm.com/connect/token";
-
+CURLcode IBM_Refresh(char* refresh_token,
+                     char* access_token) {
     const char* BASE_BODY = "client_id=ibm-pairs"
                             "&grant_type=refresh_token"
                             "&refresh_token=";
@@ -129,7 +123,7 @@ CURLcode IBM_Refresh(const char* refresh_token,
                                          "application/x-www-form-urlencoded");
 
     cJSON *response = NULL;
-    CURLcode result = HttpRequest(&response, URL, headers, 1, req_body);
+    CURLcode result = HttpRequest(&response, IBM_TOKEN_URL, headers, 1, req_body);
 
     // Assign access token
     cJSON *j_access_token = NULL;
