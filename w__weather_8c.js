@@ -1,5 +1,5 @@
 var w__weather_8c =
 [
-    [ "WillyWeather_GetForecast", "w__weather_8c.html#a6f686bb92abf3dfb2f1da7db31c1f53d", null ],
-    [ "WillyWeather_GetLocationByName", "w__weather_8c.html#a895171d653fd0f3507d1307f79affd8a", null ]
+    [ "WillyWeather_GetForecast", "w__weather_8c.html#a0fadfba7e24d93027121070ce8c2b007", null ],
+    [ "WillyWeather_GetLocationByName", "w__weather_8c.html#a613b30ffd47de4224c13090b1f7581bd", null ]
 ];

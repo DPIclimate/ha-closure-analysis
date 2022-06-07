@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['timeseriesdataset_5ftypedef_0',['TimeseriesDataset_TypeDef',['../struct_timeseries_dataset___type_def.html',1,'']]],
-  ['timeseriesreq_5ftypedef_1',['TimeseriesReq_TypeDef',['../struct_timeseries_req___type_def.html',1,'']]]
+  ['memorystruct_5ftypedef_0',['MemoryStruct_TypeDef',['../struct_memory_struct___type_def.html',1,'']]]
 ];

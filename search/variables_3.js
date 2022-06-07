@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['latitude_0',['latitude',['../struct_timeseries_req___type_def.html#a616882d3bf3a64307310b579cc483d29',1,'TimeseriesReq_TypeDef']]],
-  ['layer_5fid_1',['layer_id',['../struct_timeseries_req___type_def.html#aee540e70faa319dde6124ef1c3bb4b17',1,'TimeseriesReq_TypeDef']]],
-  ['location_2',['location',['../struct_harvest_area_status___type_def.html#a1014b70de775ee477889557373bea42d',1,'HarvestAreaStatus_TypeDef']]],
-  ['longitude_3',['longitude',['../struct_timeseries_req___type_def.html#a9efb670499a11be3f02616fe813653d8',1,'TimeseriesReq_TypeDef']]]
+  ['high_5ftide_5ftimestamps_0',['high_tide_timestamps',['../struct_w_w___tide_dataset___type_def.html#a63c266cf97219347c7cd0d6b1e57c523',1,'WW_TideDataset_TypeDef']]],
+  ['high_5ftide_5fvalues_1',['high_tide_values',['../struct_w_w___tide_dataset___type_def.html#a97c7fa94f7fdb1868acee12cd93cf1d8',1,'WW_TideDataset_TypeDef']]]
 ];

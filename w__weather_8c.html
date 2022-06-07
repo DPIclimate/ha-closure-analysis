@@ -100,16 +100,16 @@ Include dependency graph for w_weather.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6f686bb92abf3dfb2f1da7db31c1f53d"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="w__weather_8c.html#a6f686bb92abf3dfb2f1da7db31c1f53d">WillyWeather_GetForecast</a> (const char *token, const char *location, const char *forecast_type, const char *start_date, const char *n_days)</td></tr>
-<tr class="memdesc:a6f686bb92abf3dfb2f1da7db31c1f53d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the weather forcast from Willy Weather.  <a href="w__weather_8c.html#a6f686bb92abf3dfb2f1da7db31c1f53d">More...</a><br /></td></tr>
-<tr class="separator:a6f686bb92abf3dfb2f1da7db31c1f53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a895171d653fd0f3507d1307f79affd8a"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="w__weather_8c.html#a895171d653fd0f3507d1307f79affd8a">WillyWeather_GetLocationByName</a> (const char *token, const char *name, const char *q_limit)</td></tr>
-<tr class="memdesc:a895171d653fd0f3507d1307f79affd8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an ID describing a location from Willy Weather.  <a href="w__weather_8c.html#a895171d653fd0f3507d1307f79affd8a">More...</a><br /></td></tr>
-<tr class="separator:a895171d653fd0f3507d1307f79affd8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fadfba7e24d93027121070ce8c2b007"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="w__weather_8c.html#a0fadfba7e24d93027121070ce8c2b007">WillyWeather_GetForecast</a> (const char *token, uint16_t location, const char *forecast_type, const char *start_date, uint16_t n_days)</td></tr>
+<tr class="memdesc:a0fadfba7e24d93027121070ce8c2b007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the weather forcast from Willy Weather.  <a href="w__weather_8c.html#a0fadfba7e24d93027121070ce8c2b007">More...</a><br /></td></tr>
+<tr class="separator:a0fadfba7e24d93027121070ce8c2b007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a613b30ffd47de4224c13090b1f7581bd"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="w__weather_8c.html#a613b30ffd47de4224c13090b1f7581bd">WillyWeather_GetLocationByName</a> (const char *token, const char *name, uint8_t q_limit)</td></tr>
+<tr class="memdesc:a613b30ffd47de4224c13090b1f7581bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an ID describing a location from Willy Weather.  <a href="w__weather_8c.html#a613b30ffd47de4224c13090b1f7581bd">More...</a><br /></td></tr>
+<tr class="separator:a613b30ffd47de4224c13090b1f7581bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a6f686bb92abf3dfb2f1da7db31c1f53d" name="a6f686bb92abf3dfb2f1da7db31c1f53d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f686bb92abf3dfb2f1da7db31c1f53d">&#9670;&nbsp;</a></span>WillyWeather_GetForecast()</h2>
+<a id="a0fadfba7e24d93027121070ce8c2b007" name="a0fadfba7e24d93027121070ce8c2b007"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fadfba7e24d93027121070ce8c2b007">&#9670;&nbsp;</a></span>WillyWeather_GetForecast()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -123,7 +123,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>location</em>, </td>
         </tr>
         <tr>
@@ -141,7 +141,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>n_days</em>&#160;</td>
         </tr>
         <tr>
@@ -155,13 +155,11 @@ Functions</h2></td></tr>
 <p>Get the weather forcast from Willy Weather. </p>
 <p >Get weather forecast data from Willy Weather.</p>
 <p >Willy Weather can provide numerous weather forecasts. For example, precis (text weather summary), rainfall, rainfallprobability, sunrisesunset, swell, temperature, tides, uv, weather and wind.</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *location = <span class="stringliteral">&quot;1215&quot;</span>;</div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *forecast_type = <span class="stringliteral">&quot;tides&quot;</span>;</div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *start_date = <span class="stringliteral">&quot;2022-05-01&quot;</span>;</div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *n_days = <span class="stringliteral">&quot;1&quot;</span>;</div>
-<div class="line"><a class="code hl_function" href="w__weather_8h.html#a6f686bb92abf3dfb2f1da7db31c1f53d">WillyWeather_GetForecast</a>(ww_token, location, forecast_type,</div>
-<div class="line">                         start_date, n_days);</div>
-<div class="ttc" id="aw__weather_8h_html_a6f686bb92abf3dfb2f1da7db31c1f53d"><div class="ttname"><a href="w__weather_8h.html#a6f686bb92abf3dfb2f1da7db31c1f53d">WillyWeather_GetForecast</a></div><div class="ttdeci">CURLcode WillyWeather_GetForecast(const char *token, const char *location, const char *forecast_type, const char *start_date, const char *n_days)</div><div class="ttdoc">Get the weather forcast from Willy Weather.</div><div class="ttdef"><b>Definition:</b> w_weather.c:29</div></div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *start_date = <span class="stringliteral">&quot;2022-05-01&quot;</span>;</div>
+<div class="line"><a class="code hl_function" href="w__weather_8h.html#a0fadfba7e24d93027121070ce8c2b007">WillyWeather_GetForecast</a>(ww_token, 1215, <a class="code hl_define" href="w__weather_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a>,</div>
+<div class="line">                         start_date, 10);</div>
+<div class="ttc" id="aw__weather_8h_html_a0fadfba7e24d93027121070ce8c2b007"><div class="ttname"><a href="w__weather_8h.html#a0fadfba7e24d93027121070ce8c2b007">WillyWeather_GetForecast</a></div><div class="ttdeci">CURLcode WillyWeather_GetForecast(const char *token, uint16_t location, const char *forecast_type, const char *start_date, uint16_t n_days)</div><div class="ttdoc">Get the weather forcast from Willy Weather.</div><div class="ttdef"><b>Definition:</b> w_weather.c:26</div></div>
+<div class="ttc" id="aw__weather_8h_html_aeca2b825d67d69bd01529f5c80691c43"><div class="ttname"><a href="w__weather_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a></div><div class="ttdeci">#define WW_FORECAST_TIDE</div><div class="ttdef"><b>Definition:</b> w_weather.h:14</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://www.willyweather.com.au/api/docs/v2.html#forecast-get-tides">https://www.willyweather.com.au/api/docs/v2.html#forecast-get-tides</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -177,8 +175,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a895171d653fd0f3507d1307f79affd8a" name="a895171d653fd0f3507d1307f79affd8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a895171d653fd0f3507d1307f79affd8a">&#9670;&nbsp;</a></span>WillyWeather_GetLocationByName()</h2>
+<a id="a613b30ffd47de4224c13090b1f7581bd" name="a613b30ffd47de4224c13090b1f7581bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a613b30ffd47de4224c13090b1f7581bd">&#9670;&nbsp;</a></span>WillyWeather_GetLocationByName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +196,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>q_limit</em>&#160;</td>
         </tr>
         <tr>
@@ -213,10 +211,10 @@ Functions</h2></td></tr>
 <p >Get location ID from Willy Weather.</p>
 <p >Willy Weather forecast requires a location ID. This is obtained by querying by name (e.g. Batemans) -&gt; no spaces are allowed. The response contains cJSON data of which multiple sites can be obatined (limited through q_limit).</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* search_location = <span class="stringliteral">&quot;Batemans&quot;</span>;</div>
-<div class="line"><a class="code hl_function" href="w__weather_8h.html#a895171d653fd0f3507d1307f79affd8a">WillyWeather_GetLocationByName</a>(ww_token, search_location, <span class="stringliteral">&quot;2&quot;</span>);</div>
-<div class="ttc" id="aw__weather_8h_html_a895171d653fd0f3507d1307f79affd8a"><div class="ttname"><a href="w__weather_8h.html#a895171d653fd0f3507d1307f79affd8a">WillyWeather_GetLocationByName</a></div><div class="ttdeci">CURLcode WillyWeather_GetLocationByName(const char *token, const char *name, const char *q_limit)</div><div class="ttdoc">Get an ID describing a location from Willy Weather.</div><div class="ttdef"><b>Definition:</b> w_weather.c:102</div></div>
+<div class="line"><a class="code hl_function" href="w__weather_8h.html#a613b30ffd47de4224c13090b1f7581bd">WillyWeather_GetLocationByName</a>(ww_token, search_location, 2);</div>
+<div class="ttc" id="aw__weather_8h_html_a613b30ffd47de4224c13090b1f7581bd"><div class="ttname"><a href="w__weather_8h.html#a613b30ffd47de4224c13090b1f7581bd">WillyWeather_GetLocationByName</a></div><div class="ttdeci">CURLcode WillyWeather_GetLocationByName(const char *token, const char *name, uint8_t q_limit)</div><div class="ttdoc">Get an ID describing a location from Willy Weather.</div><div class="ttdef"><b>Definition:</b> w_weather.c:75</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://www.willyweather.com.au/api/docs/v2.html#location-get-search-by-query">https://www.willyweather.com.au/api/docs/v2.html#location-get-search-by-query</a></dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Must not contain spaces in supplied name.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Must not contain spaces in supplied query name.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">token</td><td>Willy Weather token. </td></tr>

@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('food__auth_8h.html',''); initResizable
 <div class="contents">
 <div class="textblock"><code>#include &lt;curl/curl.h&gt;</code><br />
 <code>#include &lt;cjson/cJSON.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="utils_8h_source.html">utils.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for food_auth.h:</div>
@@ -112,48 +113,105 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_harvest_area_status___type_def.html">HarvestAreaStatus_TypeDef</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Harvest area status information.  <a href="struct_harvest_area_status___type_def.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Harvest area status information.  <a href="struct_f_a___harvest_area_status___type_def.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a90ee5849b8cf7d2b7b739fe08f837406"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#a90ee5849b8cf7d2b7b739fe08f837406">MAX_RESPONSE_BUFFER</a>&#160;&#160;&#160;150</td></tr>
-<tr class="memdesc:a90ee5849b8cf7d2b7b739fe08f837406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer size for each HTML value.  <a href="food__auth_8h.html#a90ee5849b8cf7d2b7b739fe08f837406">More...</a><br /></td></tr>
-<tr class="separator:a90ee5849b8cf7d2b7b739fe08f837406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cb23e542380ac9de76598c9f3fc0baf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#a5cb23e542380ac9de76598c9f3fc0baf">FA_MAX_BUFFER</a>&#160;&#160;&#160;150</td></tr>
+<tr class="memdesc:a5cb23e542380ac9de76598c9f3fc0baf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer size for each HTML value from NSW Food Authority.  <a href="food__auth_8h.html#a5cb23e542380ac9de76598c9f3fc0baf">More...</a><br /></td></tr>
+<tr class="separator:a5cb23e542380ac9de76598c9f3fc0baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf5ca3c7375d312dd86f16c7157ae646"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#adf5ca3c7375d312dd86f16c7157ae646">FA_HA_CLYDE_MOONLIGHT</a>&#160;&#160;&#160;&quot;Moonlight&quot;</td></tr>
+<tr class="memdesc:adf5ca3c7375d312dd86f16c7157ae646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moonlight harvest area.  <a href="food__auth_8h.html#adf5ca3c7375d312dd86f16c7157ae646">More...</a><br /></td></tr>
+<tr class="separator:adf5ca3c7375d312dd86f16c7157ae646"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a363a9a80b964a5f3faca3e19e8411527"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#a363a9a80b964a5f3faca3e19e8411527">FA_HA_CLYDE_ROCKY_PT</a>&#160;&#160;&#160;&quot;Rocky&quot;</td></tr>
+<tr class="memdesc:a363a9a80b964a5f3faca3e19e8411527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rocky point harvest area.  <a href="food__auth_8h.html#a363a9a80b964a5f3faca3e19e8411527">More...</a><br /></td></tr>
+<tr class="separator:a363a9a80b964a5f3faca3e19e8411527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7f00b5d4d9d32ac965b103ea28af172"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#ae7f00b5d4d9d32ac965b103ea28af172">FA_HA_CLYDE_WATERFALL</a>&#160;&#160;&#160;&quot;Waterfall&quot;</td></tr>
+<tr class="memdesc:ae7f00b5d4d9d32ac965b103ea28af172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Waterfall harvest area.  <a href="food__auth_8h.html#ae7f00b5d4d9d32ac965b103ea28af172">More...</a><br /></td></tr>
+<tr class="separator:ae7f00b5d4d9d32ac965b103ea28af172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adf768a1fd338f5181e540d9e1be2bea4"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#adf768a1fd338f5181e540d9e1be2bea4">FoodAuth_GetHarvestAreaStatus</a> (const char *harvest_name, <a class="el" href="struct_harvest_area_status___type_def.html">HarvestAreaStatus_TypeDef</a> *ha_status)</td></tr>
-<tr class="memdesc:adf768a1fd338f5181e540d9e1be2bea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Harvest area of interest status information.  <a href="food__auth_8h.html#adf768a1fd338f5181e540d9e1be2bea4">More...</a><br /></td></tr>
-<tr class="separator:adf768a1fd338f5181e540d9e1be2bea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab32ed907e9451d0fa8be3be2803cca49"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="food__auth_8h.html#ab32ed907e9451d0fa8be3be2803cca49">FA_GetHarvestAreaStatus</a> (const char *harvest_name, <a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> *ha_status)</td></tr>
+<tr class="memdesc:ab32ed907e9451d0fa8be3be2803cca49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Harvest area of interest status information.  <a href="food__auth_8h.html#ab32ed907e9451d0fa8be3be2803cca49">More...</a><br /></td></tr>
+<tr class="separator:ab32ed907e9451d0fa8be3be2803cca49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a90ee5849b8cf7d2b7b739fe08f837406" name="a90ee5849b8cf7d2b7b739fe08f837406"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90ee5849b8cf7d2b7b739fe08f837406">&#9670;&nbsp;</a></span>MAX_RESPONSE_BUFFER</h2>
+<a id="adf5ca3c7375d312dd86f16c7157ae646" name="adf5ca3c7375d312dd86f16c7157ae646"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf5ca3c7375d312dd86f16c7157ae646">&#9670;&nbsp;</a></span>FA_HA_CLYDE_MOONLIGHT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MAX_RESPONSE_BUFFER&#160;&#160;&#160;150</td>
+          <td class="memname">#define FA_HA_CLYDE_MOONLIGHT&#160;&#160;&#160;&quot;Moonlight&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Buffer size for each HTML value. </p>
+<p>Moonlight harvest area. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="adf768a1fd338f5181e540d9e1be2bea4" name="adf768a1fd338f5181e540d9e1be2bea4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf768a1fd338f5181e540d9e1be2bea4">&#9670;&nbsp;</a></span>FoodAuth_GetHarvestAreaStatus()</h2>
+<a id="a363a9a80b964a5f3faca3e19e8411527" name="a363a9a80b964a5f3faca3e19e8411527"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a363a9a80b964a5f3faca3e19e8411527">&#9670;&nbsp;</a></span>FA_HA_CLYDE_ROCKY_PT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CURLcode FoodAuth_GetHarvestAreaStatus </td>
+          <td class="memname">#define FA_HA_CLYDE_ROCKY_PT&#160;&#160;&#160;&quot;Rocky&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Rocky point harvest area. </p>
+
+</div>
+</div>
+<a id="ae7f00b5d4d9d32ac965b103ea28af172" name="ae7f00b5d4d9d32ac965b103ea28af172"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7f00b5d4d9d32ac965b103ea28af172">&#9670;&nbsp;</a></span>FA_HA_CLYDE_WATERFALL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FA_HA_CLYDE_WATERFALL&#160;&#160;&#160;&quot;Waterfall&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Waterfall harvest area. </p>
+
+</div>
+</div>
+<a id="a5cb23e542380ac9de76598c9f3fc0baf" name="a5cb23e542380ac9de76598c9f3fc0baf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cb23e542380ac9de76598c9f3fc0baf">&#9670;&nbsp;</a></span>FA_MAX_BUFFER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FA_MAX_BUFFER&#160;&#160;&#160;150</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buffer size for each HTML value from NSW Food Authority. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ab32ed907e9451d0fa8be3be2803cca49" name="ab32ed907e9451d0fa8be3be2803cca49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab32ed907e9451d0fa8be3be2803cca49">&#9670;&nbsp;</a></span>FA_GetHarvestAreaStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CURLcode FA_GetHarvestAreaStatus </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>harvest_name</em>, </td>
@@ -161,7 +219,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_harvest_area_status___type_def.html">HarvestAreaStatus_TypeDef</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ha_status</em>&#160;</td>
         </tr>
         <tr>
@@ -175,10 +233,11 @@ Functions</h2></td></tr>
 <p>Harvest area of interest status information. </p>
 <p >Gets harvest area status information from NSW Food Authority.</p>
 <p >NSW Food Authority provides a JSON response with XML data as values. The XML data basically contains generic cards that are used on the NSW FA website. This function parses out the relevent XML data and used helper functions to pull out a struct containing relevent data.</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="struct_harvest_area_status___type_def.html">HarvestAreaStatus_TypeDef</a> ha_status;</div>
-<div class="line"><a class="code hl_function" href="food__auth_8h.html#adf768a1fd338f5181e540d9e1be2bea4">FoodAuth_GetHarvestAreaStatus</a>(<span class="stringliteral">&quot;Moonlight&quot;</span>, &amp;ha_status);</div>
-<div class="ttc" id="afood__auth_8h_html_adf768a1fd338f5181e540d9e1be2bea4"><div class="ttname"><a href="food__auth_8h.html#adf768a1fd338f5181e540d9e1be2bea4">FoodAuth_GetHarvestAreaStatus</a></div><div class="ttdeci">CURLcode FoodAuth_GetHarvestAreaStatus(const char *harvest_name, HarvestAreaStatus_TypeDef *ha_status)</div><div class="ttdoc">Harvest area of interest status information.</div><div class="ttdef"><b>Definition:</b> food_auth.c:39</div></div>
-<div class="ttc" id="astruct_harvest_area_status___type_def_html"><div class="ttname"><a href="struct_harvest_area_status___type_def.html">HarvestAreaStatus_TypeDef</a></div><div class="ttdoc">Harvest area status information.</div><div class="ttdef"><b>Definition:</b> food_auth.h:12</div></div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> ha_status;</div>
+<div class="line"><a class="code hl_function" href="food__auth_8h.html#ab32ed907e9451d0fa8be3be2803cca49">FA_GetHarvestAreaStatus</a>(<a class="code hl_define" href="food__auth_8h.html#adf5ca3c7375d312dd86f16c7157ae646">FA_HA_CLYDE_MOONLIGHT</a>, &amp;ha_status);</div>
+<div class="ttc" id="afood__auth_8h_html_ab32ed907e9451d0fa8be3be2803cca49"><div class="ttname"><a href="food__auth_8h.html#ab32ed907e9451d0fa8be3be2803cca49">FA_GetHarvestAreaStatus</a></div><div class="ttdeci">CURLcode FA_GetHarvestAreaStatus(const char *harvest_name, FA_HarvestAreaStatus_TypeDef *ha_status)</div><div class="ttdoc">Harvest area of interest status information.</div><div class="ttdef"><b>Definition:</b> food_auth.c:39</div></div>
+<div class="ttc" id="afood__auth_8h_html_adf5ca3c7375d312dd86f16c7157ae646"><div class="ttname"><a href="food__auth_8h.html#adf5ca3c7375d312dd86f16c7157ae646">FA_HA_CLYDE_MOONLIGHT</a></div><div class="ttdeci">#define FA_HA_CLYDE_MOONLIGHT</div><div class="ttdoc">Moonlight harvest area.</div><div class="ttdef"><b>Definition:</b> food_auth.h:14</div></div>
+<div class="ttc" id="astruct_f_a___harvest_area_status___type_def_html"><div class="ttname"><a href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a></div><div class="ttdoc">Harvest area status information.</div><div class="ttdef"><b>Definition:</b> food_auth.h:22</div></div>
 </div><!-- fragment --><p >The havest area names for Batemans Bay are as follow:</p><ul>
 <li>Waterfall</li>
 <li>Moonlight</li>

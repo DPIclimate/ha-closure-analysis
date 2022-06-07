@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['ubidots_2ec_0',['ubidots.c',['../ubidots_8c.html',1,'']]],
-  ['ubidots_2eh_1',['ubidots.h',['../ubidots_8h.html',1,'']]],
-  ['ubidots_5flistdevices_2',['Ubidots_ListDevices',['../ubidots_8h.html#a60e77431f71cea7dbfd09272e661fdc2',1,'Ubidots_ListDevices(const char *token):&#160;ubidots.c'],['../ubidots_8c.html#a60e77431f71cea7dbfd09272e661fdc2',1,'Ubidots_ListDevices(const char *token):&#160;ubidots.c']]],
-  ['utils_2ec_3',['utils.c',['../utils_8c.html',1,'']]],
-  ['utils_2eh_4',['utils.h',['../utils_8h.html',1,'']]]
+  ['time_0',['time',['../struct_f_a___harvest_area_status___type_def.html#a6a273a51baaf67501103b63dc4c5003f',1,'FA_HarvestAreaStatus_TypeDef']]],
+  ['timeseries_2ec_1',['timeseries.c',['../timeseries_8c.html',1,'']]],
+  ['timeseries_2eh_2',['timeseries.h',['../timeseries_8h.html',1,'']]],
+  ['timestamp_3',['timestamp',['../struct_i_b_m___timeseries_dataset___type_def.html#aff7848043d9cb99c6b942c223d9ec9c9',1,'IBM_TimeseriesDataset_TypeDef']]]
 ];

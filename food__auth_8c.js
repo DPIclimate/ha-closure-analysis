@@ -1,7 +1,7 @@
 var food__auth_8c =
 [
     [ "cJSON_Minify_Mod", "food__auth_8c.html#a4121c48754e618c3eb17361341f78016", null ],
-    [ "FoodAuth_FindHTMLValue", "food__auth_8c.html#a5ceb3e0661903062b9194156ebab5064", null ],
-    [ "FoodAuth_GetHarvestAreaStatus", "food__auth_8c.html#adf768a1fd338f5181e540d9e1be2bea4", null ],
-    [ "FoodAuth_ParseResponse", "food__auth_8c.html#aac0026dcb82aa76aeb01957b0354c35c", null ]
+    [ "FA_FindHTMLValue", "food__auth_8c.html#aba76de9b85b0a6587f27778216a35061", null ],
+    [ "FA_GetHarvestAreaStatus", "food__auth_8c.html#ab32ed907e9451d0fa8be3be2803cca49", null ],
+    [ "FA_ParseResponse", "food__auth_8c.html#a18dde823076bb884eb7f19ab0827ca71", null ]
 ];
