@@ -1,55 +1,4 @@
-#include "WillyWeather/w_weather.h"
-
-/**
- * Get weather forecast data from Willy Weather.
- *
- * Willy Weather can provide numerous weather forecasts. For example,
- * precis (text weather summary), rainfall, rainfallprobability,
- * sunrisesunset, swell, temperature, tides, uv, weather and wind.
- *
- * @code
- *     const char *start_date = "2022-05-01";
- *     WillyWeather_GetForecast(ww_token, 1215, WW_FORECAST_TIDE,
- *                              start_date, 10);
- * @endcode
- *
- * @see
- * https://www.willyweather.com.au/api/docs/v2.html#forecast-get-tides
- *
- * @param token API Token for Willy Weather.
- * @param location Location index provided by Willy Weather.
- * @param forecast_type Environmental forecast is required.
- * @param start_date Start date (e.g. YYYY-MM-DD HH:MM:SS).
- * @param n_days Number of days from the start date (basically end date).
- * @return CURLcode result integer.
- */
-CURLcode WillyWeather_GetForecast(const char *token,
-                                  uint16_t location,
-                                  const char *forecast_type,
-                                  const char *start_date,
-                                  uint16_t n_days){
-
-    char url[WW_MAX_URL_SIZE];
-    snprintf(url, WW_MAX_URL_SIZE, "https://api.willyweather.com.au/v2/%s/"
-                                   "locations/%hu/weather.json?forecasts=%s&"
-                                   "startDate=%s&days=%hu", token, location,
-                                   forecast_type, start_date, n_days);
-
-    // Add relevent headers -> remember to free
-    struct curl_slist *headers = NULL;
-    headers = curl_slist_append(headers, "Content-Type: application/json");
-
-    cJSON *response = NULL;
-    CURLcode result = HttpRequest(&response, url, headers, 0, NULL);
-
-    // Do something with response here
-
-    curl_slist_free_all(headers);
-    cJSON_Delete(response);
-
-    return result;
-}
-
+#include "WillyWeather/location.h"
 
 /**
  * Get location ID from Willy Weather.
@@ -76,14 +25,15 @@ CURLcode WillyWeather_GetForecast(const char *token,
  * @param location_info Location structure to populate.
  * @return The result status code provided by CURL.
  */
-CURLcode WillyWeather_GetLocationByName(const char *token,
-                                        const char *name,
+CURLcode WillyWeather_GetLocationByName(const char *name,
                                         WW_Location_TypeDef *location_info){
 
-    char url[WW_MAX_URL_SIZE];
-    snprintf(url, WW_MAX_URL_SIZE, "https://api.willyweather.com.au/v2/%s/"
-                                   "search.json?query=%s&limit=%d", token,
-                                   name, 1);
+    if(WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
+
+    char url[WW_LOCATION_URL_BUF];
+    snprintf(url, WW_LOCATION_URL_BUF, "https://api.willyweather.com.au/v2/%s/"
+                                   "search.json?query=%s&limit=%d", WW_TOKEN,
+             name, 1);
 
     struct curl_slist *headers= NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -91,13 +41,13 @@ CURLcode WillyWeather_GetLocationByName(const char *token,
     cJSON *response = NULL;
     CURLcode result = HttpRequest(&response, url, headers, 0, NULL);
 
-    char *res = cJSON_Print(response);
-    free(res);
-
     // Response is limited to 1 (makes it easier to parse automatically)
     if(response != NULL && cJSON_IsArray(response)){
         cJSON* id = NULL;
         cJSON* location = NULL;
+        cJSON* region = NULL;
+        cJSON* state = NULL;
+        cJSON* postcode = NULL;
         cJSON* latitude = NULL;
         cJSON* longitude = NULL;
 
@@ -113,10 +63,30 @@ CURLcode WillyWeather_GetLocationByName(const char *token,
             // Location name
             location = cJSON_GetObjectItemCaseSensitive(item, "name");
             if(cJSON_IsString(location) && location->valuestring != NULL){
-                memset(&location_info->location, 0, WW_MAX_BUFFER);
                 strncpy(location_info->location, location->valuestring,
-                        WW_MAX_BUFFER);
-            }
+                        WW_LOCATION_BUF);
+            } else strncpy(location_info->location, "N/a", WW_LOCATION_BUF);
+
+            // Location region
+            region = cJSON_GetObjectItemCaseSensitive(item, "region");
+            if(cJSON_IsString(region) && region->valuestring != NULL){
+                strncpy(location_info->region, region->valuestring,
+                        WW_LOCATION_BUF);
+            } else strncpy(location_info->region, "N/a", WW_LOCATION_BUF);
+
+            // Location
+            state = cJSON_GetObjectItemCaseSensitive(item, "state");
+            if(cJSON_IsString(state) && state->valuestring != NULL){
+                strncpy(location_info->state, state->valuestring,
+                        WW_LOCATION_BUF);
+            } else strncpy(location_info->state, "N/a", WW_LOCATION_BUF);
+
+            // Location postcode
+            postcode = cJSON_GetObjectItemCaseSensitive(item, "postcode");
+            if(cJSON_IsString(postcode) && postcode->valuestring != NULL){
+                strncpy(location_info->postcode, postcode->valuestring,
+                        WW_LOCATION_BUF);
+            } else strncpy(location_info->postcode, "N/a", WW_LOCATION_BUF);
 
             // Location latitude
             latitude = cJSON_GetObjectItemCaseSensitive(item, "lat");
@@ -136,12 +106,17 @@ CURLcode WillyWeather_GetLocationByName(const char *token,
         fprintf(stdout, "[Info]: Location request to Willy Weather was "
                         "successful.\n"
                         "Location ID:\t\t%hu\n"
-                        "Location Name:\t\t%s\n"
+                        "Name:\t\t\t%s\n"
+                        "Region:\t\t\t%s\n"
+                        "State:\t\t\t%s\n"
+                        "Postcode:\t\t%s\n"
                         "Coordinates:\n"
                         "\tLatitude:\t%lf\n"
                         "\tLongitude:\t%lf\n",
-                        location_info->id, location_info->location,
-                        location_info->latitude, location_info->longitude);
+                location_info->id, location_info->location,
+                location_info->region, location_info->state,
+                location_info->postcode, location_info->latitude,
+                location_info->longitude);
     } else {
         fprintf(stderr, "[Error]: Unable to process Willy Weather location"
                         "request. Error status: %d\n", result);

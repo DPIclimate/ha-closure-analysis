@@ -10,18 +10,18 @@ int main(void){
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
-	const char *ww_token = getenv("WW_TOKEN");
-	if(ww_token == NULL) {
-		printf("Token not found. Exiting.\n");
-		return EXIT_FAILURE;
-	}
 
     //const char *start_date = "2022-05-01";
     //WillyWeather_GetForecast(ww_token, 1215, WW_FORECAST_TIDE, start_date, 10);
 
+    WillyWeather_GetToken("WW_TOKEN");
+
     const char* search_location = "Batemans";
-    WW_Location_TypeDef location_info;
-    WillyWeather_GetLocationByName(ww_token, search_location, &location_info);
+    WW_Location_TypeDef location_info = {0};
+    WillyWeather_GetLocationByName(search_location, &location_info);
+
+    WW_TideDataset_TypeDef tides = {0};
+    WillyWeather_GetTides(location_info.id, "2022-06-01", 5, &tides);
 
     //FA_HarvestAreaStatus_TypeDef hs_status;
     //FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &hs_status);

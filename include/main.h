@@ -6,9 +6,13 @@
 #include <curl/curl.h>
 
 #include "Ubidots/ubidots.h"
-#include "WillyWeather/w_weather.h"
+
+#include "WillyWeather/authenticate.h"
+#include "WillyWeather/tide.h"
+
 #include "IBM_EIS/authenticate.h"
 #include "IBM_EIS/timeseries.h"
+
 #include "FoodAuthority/food_auth.h"
 
 #endif // HA_CLOSURE_ANALYSIS_MAIN_H
