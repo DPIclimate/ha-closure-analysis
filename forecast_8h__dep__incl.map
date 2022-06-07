@@ -1,0 +1,9 @@
+<map id="include/WillyWeather/forecast.h" name="include/WillyWeather/forecast.h">
+<area shape="rect" id="node1" title=" " alt="" coords="117,5,260,47"/>
+<area shape="rect" id="node2" href="$location_8h.html" title=" " alt="" coords="172,95,315,136"/>
+<area shape="rect" id="node3" href="$tide_8h.html" title=" " alt="" coords="63,184,205,225"/>
+<area shape="rect" id="node7" href="$location_8c.html" title=" " alt="" coords="230,191,409,218"/>
+<area shape="rect" id="node4" href="$main_8h.html" title=" " alt="" coords="5,273,111,300"/>
+<area shape="rect" id="node6" href="$tide_8c.html" title=" " alt="" coords="134,273,289,300"/>
+<area shape="rect" id="node5" href="$main_8c.html" title=" " alt="" coords="17,348,99,375"/>
+</map>

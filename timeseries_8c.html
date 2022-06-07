@@ -262,9 +262,9 @@ Functions</h2></td></tr>
 <div class="line">   <span class="keywordflow">return</span> 1;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">char</span>* access_token = malloc(<a class="code hl_define" href="authenticate_8h.html#af1012953af909bf26a64039d39d3f66f">IBM_ACCESS_TOKEN_SIZE</a>);</div>
-<div class="line"><span class="keywordtype">char</span>* refresh_token = malloc(<a class="code hl_define" href="authenticate_8h.html#ad92eefc8d76188e72590bd107939dc46">IBM_REFRESH_TOKEN_SIZE</a>);</div>
-<div class="line"><a class="code hl_function" href="authenticate_8h.html#acae463e79cfb46e22f38df66d6fccc9d">IBM_Authenticate</a>(ibm_token, refresh_token, access_token);</div>
+<div class="line"><span class="keywordtype">char</span>* access_token = malloc(<a class="code hl_define" href="_i_b_m___e_i_s_2authenticate_8h.html#af1012953af909bf26a64039d39d3f66f">IBM_ACCESS_TOKEN_SIZE</a>);</div>
+<div class="line"><span class="keywordtype">char</span>* refresh_token = malloc(<a class="code hl_define" href="_i_b_m___e_i_s_2authenticate_8h.html#ad92eefc8d76188e72590bd107939dc46">IBM_REFRESH_TOKEN_SIZE</a>);</div>
+<div class="line"><a class="code hl_function" href="_i_b_m___e_i_s_2authenticate_8h.html#acae463e79cfb46e22f38df66d6fccc9d">IBM_Authenticate</a>(ibm_token, refresh_token, access_token);</div>
 <div class="line"> </div>
 <div class="line">TimeseriesReq_TypeDef ts = {</div>
 <div class="line">        .layer_id = 16700, <span class="comment">// 16700 (alt_flag = 0) or 49097 (alt_flag = 1)</span></div>
@@ -279,9 +279,9 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">free(access_token);</div>
 <div class="line">free(refresh_token);</div>
-<div class="ttc" id="aauthenticate_8h_html_acae463e79cfb46e22f38df66d6fccc9d"><div class="ttname"><a href="authenticate_8h.html#acae463e79cfb46e22f38df66d6fccc9d">IBM_Authenticate</a></div><div class="ttdeci">CURLcode IBM_Authenticate(const char *token, char *refresh_token, char *access_token)</div><div class="ttdoc">Authenticate with IBM's Environmental Monitoring Suite (EMS).</div><div class="ttdef"><b>Definition:</b> authenticate.c:31</div></div>
-<div class="ttc" id="aauthenticate_8h_html_ad92eefc8d76188e72590bd107939dc46"><div class="ttname"><a href="authenticate_8h.html#ad92eefc8d76188e72590bd107939dc46">IBM_REFRESH_TOKEN_SIZE</a></div><div class="ttdeci">#define IBM_REFRESH_TOKEN_SIZE</div><div class="ttdoc">Buffer size of hold refresh token.</div><div class="ttdef"><b>Definition:</b> authenticate.h:13</div></div>
-<div class="ttc" id="aauthenticate_8h_html_af1012953af909bf26a64039d39d3f66f"><div class="ttname"><a href="authenticate_8h.html#af1012953af909bf26a64039d39d3f66f">IBM_ACCESS_TOKEN_SIZE</a></div><div class="ttdeci">#define IBM_ACCESS_TOKEN_SIZE</div><div class="ttdoc">Buffer size to hold access token.</div><div class="ttdef"><b>Definition:</b> authenticate.h:10</div></div>
+<div class="ttc" id="a_i_b_m___e_i_s_2authenticate_8h_html_acae463e79cfb46e22f38df66d6fccc9d"><div class="ttname"><a href="_i_b_m___e_i_s_2authenticate_8h.html#acae463e79cfb46e22f38df66d6fccc9d">IBM_Authenticate</a></div><div class="ttdeci">CURLcode IBM_Authenticate(const char *token, char *refresh_token, char *access_token)</div><div class="ttdoc">Authenticate with IBM's Environmental Monitoring Suite (EMS).</div><div class="ttdef"><b>Definition:</b> authenticate.c:31</div></div>
+<div class="ttc" id="a_i_b_m___e_i_s_2authenticate_8h_html_ad92eefc8d76188e72590bd107939dc46"><div class="ttname"><a href="_i_b_m___e_i_s_2authenticate_8h.html#ad92eefc8d76188e72590bd107939dc46">IBM_REFRESH_TOKEN_SIZE</a></div><div class="ttdeci">#define IBM_REFRESH_TOKEN_SIZE</div><div class="ttdoc">Buffer size of hold refresh token.</div><div class="ttdef"><b>Definition:</b> authenticate.h:13</div></div>
+<div class="ttc" id="a_i_b_m___e_i_s_2authenticate_8h_html_af1012953af909bf26a64039d39d3f66f"><div class="ttname"><a href="_i_b_m___e_i_s_2authenticate_8h.html#af1012953af909bf26a64039d39d3f66f">IBM_ACCESS_TOKEN_SIZE</a></div><div class="ttdeci">#define IBM_ACCESS_TOKEN_SIZE</div><div class="ttdoc">Buffer size to hold access token.</div><div class="ttdef"><b>Definition:</b> authenticate.h:10</div></div>
 <div class="ttc" id="atimeseries_8h_html_a6572bf75d165f0298a53ab1dbf47ede9"><div class="ttname"><a href="timeseries_8h.html#a6572bf75d165f0298a53ab1dbf47ede9">IBM_GetTimeseries</a></div><div class="ttdeci">CURLcode IBM_GetTimeseries(const char *access_token, IBM_TimeseriesReq_TypeDef *ts_req, IBM_TimeseriesDataset_TypeDef *dataset, uint8_t alt_flag)</div><div class="ttdoc">Get timeseries data from IBM EMS.</div><div class="ttdef"><b>Definition:</b> timeseries.c:63</div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Start and end times are represented as UNIX timestamps (in seconds).</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
