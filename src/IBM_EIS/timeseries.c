@@ -271,18 +271,18 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
     fprintf(stdout, "[Building] URL for IBM EMS endpoint: %s\n",
             IBM_REQUEST_URL);
 
-    sprintf(url, "%s/v2/timeseries?layer="
-                 "%d"
-                 "&lat=%f"
-                 "&lon=%f"
-                 "&start=%ld"
-                 "&end=%ld",
-            IBM_REQUEST_URL,
-            req->layer_id,
-            req->latitude,
-            req->longitude,
-            req->start * 1000,
-            req->end * 1000);
+    snprintf(url, IBM_URL_SIZE, "%s/v2/timeseries?layer="
+                                "%d"
+                                "&lat=%f"
+                                "&lon=%f"
+                                "&start=%ld"
+                                "&end=%ld",
+             IBM_REQUEST_URL,
+             req->layer_id,
+             req->latitude,
+             req->longitude,
+             req->start * 1000,
+             req->end * 1000);
 }
 
 /**
@@ -299,9 +299,10 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
             IBM_ALT_REQUEST_URL);
 
     // Create start time char* e.g. 2022-06-06T12:25:55.000Z
-    char start_time[25];
+    const uint8_t START_SIZE = 25;
+    char start_time[START_SIZE];
     struct tm *start_tm = localtime(&req->start);
-    sprintf(start_time, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
+    snprintf(start_time, START_SIZE, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
             start_tm->tm_year + 1900,
             start_tm->tm_mon + 1,
             start_tm->tm_mday,
@@ -310,9 +311,10 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
             start_tm->tm_sec);
 
     // Create end time char*
-    char end_time[25];
+    const uint8_t END_SIZE = 25;
+    char end_time[END_SIZE];
     struct tm *end_tm = localtime(&req->end);
-    sprintf(end_time, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
+    snprintf(end_time, END_SIZE, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
             end_tm->tm_year + 1900,
             end_tm->tm_mon + 1,
             end_tm->tm_mday,
@@ -320,7 +322,7 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
             end_tm->tm_min,
             end_tm->tm_sec);
 
-    sprintf(url, "%s/timeseries/"
+    snprintf(url, IBM_URL_SIZE, "%s/timeseries/"
                  "%d"
                  "?latitude=%f"
                  "&longitude=%f"
