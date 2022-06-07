@@ -1,4 +1,4 @@
-#include "IBM_EMS/timeseries.h"
+#include "IBM_EIS/timeseries.h"
 
 /// Parse timeseries response
 static void IBM_ParseTimeseries(cJSON* response,

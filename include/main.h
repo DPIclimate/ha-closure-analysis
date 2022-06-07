@@ -7,8 +7,8 @@
 
 #include "Ubidots/ubidots.h"
 #include "WillyWeather/w_weather.h"
-#include "IBM_EMS/authenticate.h"
+#include "IBM_EIS/authenticate.h"
+#include "IBM_EIS/timeseries.h"
 #include "FoodAuthority/food_auth.h"
-#include "IBM_EMS/timeseries.h"
 
 #endif // HA_CLOSURE_ANALYSIS_MAIN_H

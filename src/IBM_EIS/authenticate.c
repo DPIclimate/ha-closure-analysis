@@ -1,4 +1,4 @@
-#include "IBM_EMS/authenticate.h"
+#include "IBM_EIS/authenticate.h"
 
 /**
  * Authenticate with IBM's Enviornmental Monitoring Suite.
