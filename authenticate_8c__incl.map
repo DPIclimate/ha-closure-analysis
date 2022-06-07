@@ -1,6 +1,6 @@
-<map id="src/IBM_EMS/authenticate.c" name="src/IBM_EMS/authenticate.c">
-<area shape="rect" id="node1" title=" " alt="" coords="36,5,224,32"/>
-<area shape="rect" id="node2" href="$authenticate_8h.html" title=" " alt="" coords="47,80,213,107"/>
+<map id="src/IBM_EIS/authenticate.c" name="src/IBM_EIS/authenticate.c">
+<area shape="rect" id="node1" title=" " alt="" coords="39,5,221,32"/>
+<area shape="rect" id="node2" href="$authenticate_8h.html" title=" " alt="" coords="51,80,209,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,229,84,256"/>
 <area shape="rect" id="node4" title=" " alt="" coords="108,229,219,256"/>
 <area shape="rect" id="node5" href="$utils_8h.html" title=" " alt="" coords="167,155,223,181"/>
