@@ -11,5 +11,6 @@ var searchData=
   ['ww_5fforecast_5fweather_8',['WW_FORECAST_WEATHER',['../w__weather_8h.html#a644c28f40ed626fac285e546afd0698b',1,'w_weather.h']]],
   ['ww_5fforecast_5fwind_9',['WW_FORECAST_WIND',['../w__weather_8h.html#a41068569f36964fb7b68c6c5a259fdb8',1,'w_weather.h']]],
   ['ww_5fmax_5fbuffer_10',['WW_MAX_BUFFER',['../w__weather_8h.html#abcf7d015c73d9b0f6f531b3e8a05d29e',1,'w_weather.h']]],
-  ['ww_5fmax_5fresponse_5fsize_11',['WW_MAX_RESPONSE_SIZE',['../w__weather_8h.html#aeeeb3efd6021952add1e0aaa7e49dcb1',1,'w_weather.h']]]
+  ['ww_5fmax_5fresponse_5fsize_11',['WW_MAX_RESPONSE_SIZE',['../w__weather_8h.html#aeeeb3efd6021952add1e0aaa7e49dcb1',1,'w_weather.h']]],
+  ['ww_5fmax_5furl_5fsize_12',['WW_MAX_URL_SIZE',['../w__weather_8h.html#a9e8ec6f781983c5e8993b380fc3ee3f0',1,'w_weather.h']]]
 ];

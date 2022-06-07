@@ -14,6 +14,7 @@ var w__weather_8h =
     [ "WW_FORECAST_WIND", "w__weather_8h.html#a41068569f36964fb7b68c6c5a259fdb8", null ],
     [ "WW_MAX_BUFFER", "w__weather_8h.html#abcf7d015c73d9b0f6f531b3e8a05d29e", null ],
     [ "WW_MAX_RESPONSE_SIZE", "w__weather_8h.html#aeeeb3efd6021952add1e0aaa7e49dcb1", null ],
+    [ "WW_MAX_URL_SIZE", "w__weather_8h.html#a9e8ec6f781983c5e8993b380fc3ee3f0", null ],
     [ "WillyWeather_GetForecast", "w__weather_8h.html#a0fadfba7e24d93027121070ce8c2b007", null ],
-    [ "WillyWeather_GetLocationByName", "w__weather_8h.html#a613b30ffd47de4224c13090b1f7581bd", null ]
+    [ "WillyWeather_GetLocationByName", "w__weather_8h.html#a3c95007a677f5e1d919cdb4ef292f592", null ]
 ];

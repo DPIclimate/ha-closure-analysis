@@ -3,7 +3,7 @@ var searchData=
   ['w_5fweather_2ec_0',['w_weather.c',['../w__weather_8c.html',1,'']]],
   ['w_5fweather_2eh_1',['w_weather.h',['../w__weather_8h.html',1,'']]],
   ['willyweather_5fgetforecast_2',['WillyWeather_GetForecast',['../w__weather_8h.html#a0fadfba7e24d93027121070ce8c2b007',1,'WillyWeather_GetForecast(const char *token, uint16_t location, const char *forecast_type, const char *start_date, uint16_t n_days):&#160;w_weather.c'],['../w__weather_8c.html#a0fadfba7e24d93027121070ce8c2b007',1,'WillyWeather_GetForecast(const char *token, uint16_t location, const char *forecast_type, const char *start_date, uint16_t n_days):&#160;w_weather.c']]],
-  ['willyweather_5fgetlocationbyname_3',['WillyWeather_GetLocationByName',['../w__weather_8h.html#a613b30ffd47de4224c13090b1f7581bd',1,'WillyWeather_GetLocationByName(const char *token, const char *name, uint8_t q_limit):&#160;w_weather.c'],['../w__weather_8c.html#a613b30ffd47de4224c13090b1f7581bd',1,'WillyWeather_GetLocationByName(const char *token, const char *name, uint8_t q_limit):&#160;w_weather.c']]],
+  ['willyweather_5fgetlocationbyname_3',['WillyWeather_GetLocationByName',['../w__weather_8h.html#a3c95007a677f5e1d919cdb4ef292f592',1,'WillyWeather_GetLocationByName(const char *token, const char *name, WW_Location_TypeDef *location_info):&#160;w_weather.c'],['../w__weather_8c.html#a3c95007a677f5e1d919cdb4ef292f592',1,'WillyWeather_GetLocationByName(const char *token, const char *name, WW_Location_TypeDef *location_info):&#160;w_weather.c']]],
   ['writememorycallback_4',['WriteMemoryCallback',['../utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d',1,'utils.c']]],
   ['ww_5fforecast_5fprecip_5',['WW_FORECAST_PRECIP',['../w__weather_8h.html#acbe54c5141dbb2b7c216b8b56cf03e3a',1,'w_weather.h']]],
   ['ww_5fforecast_5fprecip_5fprob_6',['WW_FORECAST_PRECIP_PROB',['../w__weather_8h.html#ad5ac67285d9e03a8c190fb97d62abac5',1,'w_weather.h']]],
@@ -18,5 +18,6 @@ var searchData=
   ['ww_5flocation_5ftypedef_15',['WW_Location_TypeDef',['../struct_w_w___location___type_def.html',1,'']]],
   ['ww_5fmax_5fbuffer_16',['WW_MAX_BUFFER',['../w__weather_8h.html#abcf7d015c73d9b0f6f531b3e8a05d29e',1,'w_weather.h']]],
   ['ww_5fmax_5fresponse_5fsize_17',['WW_MAX_RESPONSE_SIZE',['../w__weather_8h.html#aeeeb3efd6021952add1e0aaa7e49dcb1',1,'w_weather.h']]],
-  ['ww_5ftidedataset_5ftypedef_18',['WW_TideDataset_TypeDef',['../struct_w_w___tide_dataset___type_def.html',1,'']]]
+  ['ww_5fmax_5furl_5fsize_18',['WW_MAX_URL_SIZE',['../w__weather_8h.html#a9e8ec6f781983c5e8993b380fc3ee3f0',1,'w_weather.h']]],
+  ['ww_5ftidedataset_5ftypedef_19',['WW_TideDataset_TypeDef',['../struct_w_w___tide_dataset___type_def.html',1,'']]]
 ];

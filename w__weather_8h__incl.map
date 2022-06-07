@@ -1,8 +1,9 @@
 <map id="include/WillyWeather/w_weather.h" name="include/WillyWeather/w_weather.h">
-<area shape="rect" id="node1" title=" " alt="" coords="101,5,243,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="133,5,275,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,169,69,196"/>
 <area shape="rect" id="node3" title=" " alt="" coords="94,169,157,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="181,169,259,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="283,169,394,196"/>
-<area shape="rect" id="node6" href="$utils_8h.html" title=" " alt="" coords="144,95,200,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="325,95,387,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="181,169,259,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="283,169,394,196"/>
+<area shape="rect" id="node7" href="$utils_8h.html" title=" " alt="" coords="144,95,200,121"/>
 </map>
