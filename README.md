@@ -19,7 +19,7 @@
 
 Oyster harvest areas close due to rainfall, salinity, algal blooms and various other non-environmental factors.
 This works aims to predict closures relating to rainfall (i.e. freshwater input). This process is essentially 
-attempting to quantify the ammount of fresh water that has enteted a river system (through precipitation) and
+attempting to quantify the amount of fresh water that has enteted a river system (through precipitation) and
 then calculating a risk factor based on previous events. The same is done for temperature accumulation.
 
 ## Install

@@ -27,7 +27,7 @@ typedef struct {
     float longitude; /// The longitude of interest
     time_t start; /// The start time as UNIX epoch time
     time_t end; /// The end time as UNIX epoch time
-}TimeseriesReq_TypeDef;
+} IBM_TimeseriesReq_TypeDef;
 
 /// Request response data containing IBM EMS timeseries data.
 typedef struct {
@@ -36,12 +36,12 @@ typedef struct {
     time_t timestamp[IBM_MAX_RESPONSE_LENGTH]; /// Holds timestamps.
     double values[IBM_MAX_RESPONSE_LENGTH]; /// Holds corresponding values.
     int32_t count; /// Number of returned values.
-} TimeseriesDataset_TypeDef;
+} IBM_TimeseriesDataset_TypeDef;
 
 /// Get timeseries data from IBM EMS
 CURLcode IBM_GetTimeseries(const char* access_token,
-                           TimeseriesReq_TypeDef *ts_req,
-                           TimeseriesDataset_TypeDef *dataset,
+                           IBM_TimeseriesReq_TypeDef *ts_req,
+                           IBM_TimeseriesDataset_TypeDef *dataset,
                            uint8_t alt_flag);
 
 

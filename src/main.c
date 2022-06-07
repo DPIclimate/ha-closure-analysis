@@ -8,21 +8,34 @@
 
 int main(void){
 
-    // Initialise CURL (required)
 	curl_global_init(CURL_GLOBAL_ALL);
 
-    // Load ubidots token
-	const char *ibm_token = getenv("IBM_TOKEN");
-	if(ibm_token == NULL) {
-		printf("IBM token not found. Exiting.\n");
-		return EXIT_FAILURE;
-	}
+	//const char *ww_token = getenv("WW_TOKEN");
+	//if(ww_token == NULL) {
+	//	printf("Token not found. Exiting.\n");
+	//	return EXIT_FAILURE;
+	//}
+
+    //const char *start_date = "2022-05-01";
+    //WillyWeather_GetForecast(ww_token, 1215, WW_FORECAST_TIDE, start_date, 10);
+
+    //const char* search_location = "Batemans";
+    //WillyWeather_GetLocationByName(ww_token, search_location, 2);
+
+    //FA_HarvestAreaStatus_TypeDef hs_status;
+    //FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &hs_status);
+
+    const char *ibm_token = getenv("IBM_TOKEN");
+    if(ibm_token == NULL) {
+        printf("Token not found. Exiting.\n");
+        return EXIT_FAILURE;
+    }
 
     char* access_token = malloc(IBM_ACCESS_TOKEN_SIZE); // Access token to populate
     char* refresh_token = malloc(IBM_REFRESH_TOKEN_SIZE); // Refresh token to populate
     IBM_Authenticate(ibm_token, refresh_token, access_token);
 
-    TimeseriesReq_TypeDef ts = {
+    IBM_TimeseriesReq_TypeDef ts = {
             .layer_id = 49097, // 16700 (alt_flag = 0) or 49097 (alt_flag = 1)
             .latitude = -35.69701049568654,
             .longitude = 150.1546566614602,
@@ -30,13 +43,12 @@ int main(void){
             .end = 1654783200
     };
 
-    TimeseriesDataset_TypeDef dataset;
+    IBM_TimeseriesDataset_TypeDef dataset;
     IBM_GetTimeseries(access_token, &ts, &dataset, 1);
 
     free(access_token);
     free(refresh_token);
 
-    // Required to cleanup curl
     curl_global_cleanup();
 
     return 0;

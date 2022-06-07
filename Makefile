@@ -17,7 +17,7 @@ LDFLAGS = -lcurl -lcjson
 
 SRC = ./src
 OBJ = ./obj
-HEADER = ./include
+HEADER = include/
 BIN_DIR = ./bin
 SRCS = $(wildcard $(SRC)/*.c $(SRC)/*/*.c)
 OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))

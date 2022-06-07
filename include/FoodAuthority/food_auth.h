@@ -3,23 +3,34 @@
 
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
+#include <time.h>
 
 #include "utils.h"
 
-#define MAX_RESPONSE_BUFFER 150 ///< Buffer size for each HTML value
+/// Buffer size for each HTML value from NSW Food Authority
+#define FA_MAX_BUFFER 150
+
+/// Moonlight harvest area
+#define FA_HA_CLYDE_MOONLIGHT "Moonlight"
+/// Rocky point harvest area
+#define FA_HA_CLYDE_ROCKY_PT "Rocky"
+/// Waterfall harvest area
+#define FA_HA_CLYDE_WATERFALL "Waterfall"
+
 
 /// Harvest area status information.
 typedef struct {
-    char location[MAX_RESPONSE_BUFFER]; ///< Relevent location
-    char classification[MAX_RESPONSE_BUFFER]; ///< NSW FA quality classification
-    char status[MAX_RESPONSE_BUFFER]; ///< HA status (open / closed)
-    char time[MAX_RESPONSE_BUFFER]; ///< Time updated
-    char reason[MAX_RESPONSE_BUFFER]; ///< Reason for status
-    char previous_reason[MAX_RESPONSE_BUFFER]; ///< Previous status reason
-} HarvestAreaStatus_TypeDef;
+    char location[FA_MAX_BUFFER]; /// Relevent location
+    char classification[FA_MAX_BUFFER]; /// NSW FA quality classification
+    char status[FA_MAX_BUFFER]; /// HA status (open / closed)
+    char time[FA_MAX_BUFFER]; /// Time updated
+    struct tm u_time; /// System formatted time
+    char reason[FA_MAX_BUFFER]; /// Reason for status
+    char previous_reason[FA_MAX_BUFFER]; /// Previous status reason
+} FA_HarvestAreaStatus_TypeDef;
 
 /// Harvest area of interest status information.
-CURLcode FoodAuth_GetHarvestAreaStatus(const char* harvest_name,
-                                       HarvestAreaStatus_TypeDef *ha_status);
+CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
+                                       FA_HarvestAreaStatus_TypeDef *ha_status);
 
 #endif //HA_CLOSURE_ANALYSIS_FOOD_AUTH_H

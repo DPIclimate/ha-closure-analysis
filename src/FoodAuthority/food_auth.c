@@ -1,12 +1,12 @@
 #include "FoodAuthority/food_auth.h"
 
 /// Find value with HTML tags.
-static void FoodAuth_FindHTMLValue(char* data, const char* search_term,
+static void FA_FindHTMLValue(char* data, const char* search_term,
                                    char* value);
 
 /// Parse HTML data to populate status information data.
-static void FoodAuth_ParseResponse(char* data,
-                                   HarvestAreaStatus_TypeDef *ha_status);
+static void FA_ParseResponse(char* data,
+                                   FA_HarvestAreaStatus_TypeDef *ha_status);
 
 /// Modified minify function from cJSON
 static void cJSON_Minify_Mod(char *json);
@@ -20,8 +20,8 @@ static void cJSON_Minify_Mod(char *json);
  * helper functions to pull out a struct containing relevent data.
  *
  * @code
- *      HarvestAreaStatus_TypeDef ha_status;
- *      FoodAuth_GetHarvestAreaStatus("Moonlight", &ha_status);
+ *      FA_HarvestAreaStatus_TypeDef ha_status;
+ *      FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &ha_status);
  * @endcode
  *
  * The havest area names for Batemans Bay are as follow:
@@ -36,8 +36,8 @@ static void cJSON_Minify_Mod(char *json);
  * @param ha_status Harvest area struct to populate with status information.
  * @return Code representing CURL response status.
  */
-CURLcode FoodAuth_GetHarvestAreaStatus(const char* harvest_name,
-                                       HarvestAreaStatus_TypeDef *ha_status){
+CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
+                                       FA_HarvestAreaStatus_TypeDef *ha_status){
 
     strcpy(ha_status->location, harvest_name);
 
@@ -53,6 +53,9 @@ CURLcode FoodAuth_GetHarvestAreaStatus(const char* harvest_name,
     strcpy(req_body, BASE_FILTER);
     strcat(req_body, harvest_name);
     strcat(req_body, BASE_BODY);
+
+    fprintf(stdout, "[Info]: Requesting harvest area information for site %s "
+            "from: %s\n", harvest_name, URL);
 
     struct curl_slist* headers = NULL;
     headers = curl_slist_append(headers, "authority: "
@@ -71,11 +74,25 @@ CURLcode FoodAuth_GetHarvestAreaStatus(const char* harvest_name,
             data = cJSON_GetObjectItemCaseSensitive(res, "data");
             if(cJSON_IsString(data) && data->valuestring != NULL){
                 cJSON_Minify_Mod(data->valuestring); // Remove unessessary chars
-                FoodAuth_ParseResponse(data->valuestring, ha_status);
+                FA_ParseResponse(data->valuestring, ha_status);
             } else {
-                printf("Request succeded but data was not found.\n");
+                fprintf(stderr, "[Error]: Food authority request was "
+                                "successful. But no data was found.\n");
             }
         }
+    }
+
+    if(result == CURLE_OK){
+        fprintf(stdout, "[Info]: NSW Food authority request was successful.\n"
+                        "\tLocation:\t\t%s\n"
+                        "\tClassification:\t\t%s\n"
+                        "\tStatus:\t\t\t%s\n"
+                        "\tTime Updated:\t\t%s\n"
+                        "\tReason:\t\t\t%s\n"
+                        "\tPrevious Reason:\t%s\n",
+                        ha_status->location, ha_status->classification,
+                        ha_status->status, ha_status->time, ha_status->reason,
+                        ha_status->previous_reason);
     }
 
     free(req_body);
@@ -94,8 +111,10 @@ CURLcode FoodAuth_GetHarvestAreaStatus(const char* harvest_name,
  * @param data The string to parse.
  * @param ha_status The struct to populate with values.
  */
-static void FoodAuth_ParseResponse(char* data,
-                                   HarvestAreaStatus_TypeDef *ha_status){
+static void FA_ParseResponse(char* data,
+                                   FA_HarvestAreaStatus_TypeDef *ha_status){
+
+    fprintf(stdout, "[Info]: Parsing JSON response from NSW Food Authority.\n");
 
     // Items to extract from request. The order of these items matters for the
     // below switch statement.
@@ -107,34 +126,48 @@ static void FoodAuth_ParseResponse(char* data,
             "Previous reasons/conditions</div><div"
     };
 
-    char value[MAX_RESPONSE_BUFFER] = {0};
+    // Setup to hold time struct
+    struct tm v_time; // Value time
+    memset(&v_time, 0, sizeof(struct tm));
+
+    char value[FA_MAX_BUFFER] = {0};
     for(int i = 0; i < sizeof(search_terms) / sizeof(*search_terms); i++){
-        FoodAuth_FindHTMLValue(data, search_terms[i], value);
+        FA_FindHTMLValue(data, search_terms[i], value);
+
         if(strlen(value) == 0){
-            printf("Value not found for: %s\n", search_terms[i]);
-        } else{
-            switch (i){
-                case 0:
-                    strcpy(ha_status->classification, value);
-                    break;
-                case 1:
-                    strcpy(ha_status->status, value);
-                    break;
-                case 2:
-                    strcpy(ha_status->time, value);
-                    break;
-                case 3:
-                    strcpy(ha_status->reason, value);
-                    break;
-                case 4:
-                    strcpy(ha_status->previous_reason, value);
-                    break;
-                default:
-                    printf("Unknown harvest area option\n");
-                    break;
-            }
+            strcpy(value, "N/A");
         }
 
+        if(strlen(value) > FA_MAX_BUFFER){
+            fprintf(stderr, "[Error]: Value: %s exceeds set maxiumum buffer"
+                            "size. Skipping.\n", value);
+            memset(value, 0, sizeof(value));
+            continue;
+        }
+
+        switch (i){
+            case 0:
+                strcpy(ha_status->classification, value);
+                break;
+            case 1:
+                strcpy(ha_status->status, value);
+                break;
+            case 2:
+                /// Convert time to tm struct
+                strptime(value, "%02d/%02m/%Y - %02H:%02M%p", &v_time);
+                ha_status->u_time = v_time;
+                strcpy(ha_status->time, value);
+                break;
+            case 3:
+                strcpy(ha_status->reason, value);
+                break;
+            case 4:
+                strcpy(ha_status->previous_reason, value);
+                break;
+            default:
+                printf("Unknown harvest area option\n");
+                break;
+        }
         memset(value, 0, sizeof(value));
     }
 }
@@ -204,18 +237,19 @@ static void cJSON_Minify_Mod(char *json){
  * @param search_term
  * @param value
  */
-static void FoodAuth_FindHTMLValue(char* data, const char* search_term,
+static void FA_FindHTMLValue(char* data, const char* search_term,
                                    char* value){
 
     char* clsf = strstr(data, search_term);
     if(clsf == NULL) {
+        fprintf(stderr, "[Error]: No value found for: %s\n", search_term);
         return; // Sub-string not found
     }
 
     int start_substr = 0;
     int value_index = 0;
     for(unsigned long i = strlen(search_term); i < strlen(clsf) &&
-    i < MAX_RESPONSE_BUFFER; i++){
+    i < FA_MAX_BUFFER; i++){
         if(clsf[i] == '>'){
             start_substr = 1;
             continue;

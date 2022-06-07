@@ -2,17 +2,17 @@
 
 /// Parse timeseries response
 static void IBM_ParseTimeseries(cJSON* response,
-                                TimeseriesDataset_TypeDef *dataset);
+                                IBM_TimeseriesDataset_TypeDef *dataset);
 
 /// Parse timeseries response from alternative endpoint
 static void IBM_ParseTimeseriesAlt(cJSON* response,
-                                   TimeseriesDataset_TypeDef *dataset);
+                                   IBM_TimeseriesDataset_TypeDef *dataset);
 
 /// Build IBM EMS request URL
-static void IBM_BuildURL(TimeseriesReq_TypeDef *req, char* url);
+static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url);
 
 /// Build IBM EMS request URL for alternative endpoint
-static void IBM_BuildURLAlt(TimeseriesReq_TypeDef *req, char* url);
+static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url);
 
 /**
  * IBM EMS get timeseries data as a JSON response.
@@ -61,8 +61,8 @@ static void IBM_BuildURLAlt(TimeseriesReq_TypeDef *req, char* url);
  * @return Curl success code.
  */
 CURLcode IBM_GetTimeseries(const char* access_token,
-                           TimeseriesReq_TypeDef *request,
-                           TimeseriesDataset_TypeDef *dataset,
+                           IBM_TimeseriesReq_TypeDef *request,
+                           IBM_TimeseriesDataset_TypeDef *dataset,
                            uint8_t alt_flag){
 
     char url[IBM_URL_SIZE];
@@ -121,7 +121,8 @@ CURLcode IBM_GetTimeseries(const char* access_token,
  * @param response The JSON to parse.
  * @param dataset The dataset to populate.
  */
-static void IBM_ParseTimeseries(cJSON* response, TimeseriesDataset_TypeDef *dataset){
+static void IBM_ParseTimeseries(cJSON* response,
+                                IBM_TimeseriesDataset_TypeDef *dataset){
     // For query information
     cJSON* start = NULL;
     cJSON* end = NULL;
@@ -192,7 +193,8 @@ static void IBM_ParseTimeseries(cJSON* response, TimeseriesDataset_TypeDef *data
  * @param response The JSON to parse.
  * @param dataset The dataset to populate.
  */
-static void IBM_ParseTimeseriesAlt(cJSON* response, TimeseriesDataset_TypeDef *dataset){
+static void IBM_ParseTimeseriesAlt(cJSON* response,
+                                   IBM_TimeseriesDataset_TypeDef *dataset){
 
     fprintf(stdout, "[Parsing] Response from IBM EMS.\n");
 
@@ -264,7 +266,7 @@ static void IBM_ParseTimeseriesAlt(cJSON* response, TimeseriesDataset_TypeDef *d
  * @param req Request information to populate URL with.
  * @param url URL to modify.
  */
-static void IBM_BuildURL(TimeseriesReq_TypeDef *req, char* url){
+static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
 
     fprintf(stdout, "[Building] URL for IBM EMS endpoint: %s\n",
             IBM_REQUEST_URL);
@@ -291,13 +293,13 @@ static void IBM_BuildURL(TimeseriesReq_TypeDef *req, char* url){
  * @param req Request information to populate URL with.
  * @param url URL to modify.
  */
-static void IBM_BuildURLAlt(TimeseriesReq_TypeDef *req, char* url){
+static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
 
     fprintf(stdout, "[Building] URL for IBM EMS endpoint: %s\n",
             IBM_ALT_REQUEST_URL);
 
     // Create start time char* e.g. 2022-06-06T12:25:55.000Z
-    char start_time[50];
+    char start_time[25];
     struct tm *start_tm = localtime(&req->start);
     sprintf(start_time, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
             start_tm->tm_year + 1900,
@@ -308,7 +310,7 @@ static void IBM_BuildURLAlt(TimeseriesReq_TypeDef *req, char* url){
             start_tm->tm_sec);
 
     // Create end time char*
-    char end_time[50];
+    char end_time[25];
     struct tm *end_tm = localtime(&req->end);
     sprintf(end_time, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
             end_tm->tm_year + 1900,
