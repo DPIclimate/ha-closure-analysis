@@ -121,3 +121,27 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
     return result;
 }
 
+int8_t MakeDirectory(const char* directory){
+    if(mkdir(directory, S_IRWXU | S_IRWXG | S_IRWXO) == -1){
+        // If the directory already exists it not an error
+        if(errno != EEXIST){
+            fprintf(stderr, "[Error]: Unable to create directory: %s -> ",
+                    directory);
+            switch(errno){
+                case EACCES:
+                    fprintf(stderr, "Permission denied.\n");
+                    return 1;
+                case ENOENT:
+                    fprintf(stderr, "Path does not exist.\n");
+                    return 1;
+                default:
+                    fprintf(stderr, "Unknown error.\n");
+                    return 1;
+            }
+        }
+    } else {
+        fprintf(stdout, "[Info]: Created directory: %s\n", directory);
+    }
+    return 0;
+}
+

@@ -10,7 +10,6 @@
 
 #include "WillyWeather/authenticate.h"
 #include "utils.h"
-#include "forecast.h"
 
 /// Buffer for location information
 #define WW_LOCATION_BUF                 150

@@ -3,6 +3,7 @@ bin
 obj
 doxygen-styles
 docs
+datasets
 
 *.swp
 *.*.swp

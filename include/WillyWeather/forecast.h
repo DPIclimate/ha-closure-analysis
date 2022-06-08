@@ -21,4 +21,4 @@
 /// Max response values
 #define WW_FORECAST_RESPONSE_BUF         2000
 
-#endif //HA_CLOSURE_ANALYSIS_FORECAST_H
+#endif //HA_CLOSURE_ANALYSIS_UTILS_H

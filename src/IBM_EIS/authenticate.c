@@ -18,9 +18,6 @@
  * if(access_token == NULL && refresh_token == NULL){
  *      return ERROR;
  * }
- *
- * // Do things with tokens
- *
  * @endcode
  *
  * @param token IBM API key to use.
@@ -90,14 +87,6 @@ CURLcode IBM_Authenticate(const char* token,
  * @code
  * char* access_token[IBM_ACCESS_TOKEN_SIZE]; // Access token to populate
  * IBM_Refresh(refresh_token, access_token);
- *
- * // Check for errors
- * if(access_token == NULL){
- *      return ERROR;
- * }
- *
- * // Do things with tokens
- *
  * @endcode
  *
  * @note Ensure malloc size if large enough to hold the returned access

@@ -8,7 +8,6 @@
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
 
-#include "forecast.h"
 #include "WillyWeather/authenticate.h"
 #include "WillyWeather/location.h"
 #include "WillyWeather/forecast.h"
@@ -32,5 +31,8 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
                                const char *start_date,
                                uint16_t n_days,
                                WW_TideDataset_TypeDef *tides);
+
+uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
+                                WW_TideDataset_TypeDef *dataset);
 
 #endif // HA_CLOSURE_ANALYSIS_TIDE_H
