@@ -1,7 +1,10 @@
 <map id="include/utils.h" name="include/utils.h">
-<area shape="rect" id="node1" title=" " alt="" coords="122,5,223,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="289,5,390,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,68,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="93,80,157,107"/>
 <area shape="rect" id="node4" title=" " alt="" coords="181,80,260,107"/>
 <area shape="rect" id="node5" title=" " alt="" coords="284,80,395,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="419,80,497,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="521,80,608,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="633,80,694,107"/>
 </map>

@@ -97,14 +97,14 @@ $(document).ready(function(){initNavTree('tide_8h.html',''); initResizable(); })
 <code>#include &lt;time.h&gt;</code><br />
 <code>#include &lt;curl/curl.h&gt;</code><br />
 <code>#include &lt;cjson/cJSON.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="forecast_8h_source.html">forecast.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_willy_weather_2authenticate_8h_source.html">WillyWeather/authenticate.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="location_8h_source.html">WillyWeather/location.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="forecast_8h_source.html">WillyWeather/forecast.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="utils_8h_source.html">utils.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for tide.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="tide_8h__incl.svg" width="848" height="276"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="tide_8h__incl.svg" width="944" height="276"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -127,6 +127,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a8936fbff9d591227262dbf567952ab9d"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tide_8h.html#a8936fbff9d591227262dbf567952ab9d">WillyWeather_GetTides</a> (uint16_t location_id, const char *start_date, uint16_t n_days, <a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a> *tides)</td></tr>
 <tr class="memdesc:a8936fbff9d591227262dbf567952ab9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the tides data from Willy Weather.  <a href="tide_8h.html#a8936fbff9d591227262dbf567952ab9d">More...</a><br /></td></tr>
 <tr class="separator:a8936fbff9d591227262dbf567952ab9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c311588198fc1c526cd30e7a1e4547"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tide_8h.html#a34c311588198fc1c526cd30e7a1e4547">WillyWeather_TidesToCSV</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location_info, <a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a> *dataset)</td></tr>
+<tr class="separator:a34c311588198fc1c526cd30e7a1e4547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a8936fbff9d591227262dbf567952ab9d" name="a8936fbff9d591227262dbf567952ab9d"></a>
@@ -184,6 +186,34 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>CURLcode result integer. </dd></dl>
+
+</div>
+</div>
+<a id="a34c311588198fc1c526cd30e7a1e4547" name="a34c311588198fc1c526cd30e7a1e4547"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34c311588198fc1c526cd30e7a1e4547">&#9670;&nbsp;</a></span>WillyWeather_TidesToCSV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WillyWeather_TidesToCSV </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>location_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>dataset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

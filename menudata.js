@@ -67,6 +67,13 @@ var menudata={children:[
 {text:"m",url:"globals.html#index_m"},
 {text:"u",url:"globals.html#index_u"},
 {text:"w",url:"globals.html#index_w"}]},
-{text:"Functions",url:"globals_func.html"},
+{text:"Functions",url:"globals_func.html",children:[
+{text:"c",url:"globals_func.html#index_c"},
+{text:"f",url:"globals_func.html#index_f"},
+{text:"h",url:"globals_func.html#index_h"},
+{text:"i",url:"globals_func.html#index_i"},
+{text:"m",url:"globals_func.html#index_m"},
+{text:"u",url:"globals_func.html#index_u"},
+{text:"w",url:"globals_func.html#index_w"}]},
 {text:"Variables",url:"globals_vars.html"},
 {text:"Macros",url:"globals_defs.html"}]}]}]}

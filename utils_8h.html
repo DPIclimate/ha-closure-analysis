@@ -95,10 +95,13 @@ $(document).ready(function(){initNavTree('utils_8h.html',''); initResizable(); }
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &lt;curl/curl.h&gt;</code><br />
 <code>#include &lt;cjson/cJSON.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
+<code>#include &lt;errno.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for utils.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="utils_8h__incl.svg" width="400" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="utils_8h__incl.svg" width="700" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -118,6 +121,9 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a6885b6b56d62d9d96fc7682c122bb719"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a> (const char *directory)</td></tr>
+<tr class="memdesc:a6885b6b56d62d9d96fc7682c122bb719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make directories.  <a href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">More...</a><br /></td></tr>
+<tr class="separator:a6885b6b56d62d9d96fc7682c122bb719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72099cc3afa0e11832f789a273e36ae3"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a> (cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body)</td></tr>
 <tr class="memdesc:a72099cc3afa0e11832f789a273e36ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP GET &amp; POST request using cURL.  <a href="utils_8h.html#a72099cc3afa0e11832f789a273e36ae3">More...</a><br /></td></tr>
 <tr class="separator:a72099cc3afa0e11832f789a273e36ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,7 +189,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="comment">// Free memory</span></div>
 <div class="line">curl_slist_free_all(headers);</div>
 <div class="line">cJSON_Delete(response);</div>
-<div class="ttc" id="autils_8h_html_a72099cc3afa0e11832f789a273e36ae3"><div class="ttname"><a href="utils_8h.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a></div><div class="ttdeci">CURLcode HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body)</div><div class="ttdoc">HTTP GET &amp; POST request using cURL.</div><div class="ttdef"><b>Definition:</b> forecast.c:83</div></div>
+<div class="ttc" id="autils_8h_html_a72099cc3afa0e11832f789a273e36ae3"><div class="ttname"><a href="utils_8h.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a></div><div class="ttdeci">CURLcode HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body)</div><div class="ttdoc">HTTP GET &amp; POST request using cURL.</div><div class="ttdef"><b>Definition:</b> utils.c:83</div></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">response</td><td>The cJSON response to populate with JSON. </td></tr>
@@ -195,6 +201,26 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Status code representing the response status. </dd></dl>
+
+</div>
+</div>
+<a id="a6885b6b56d62d9d96fc7682c122bb719" name="a6885b6b56d62d9d96fc7682c122bb719"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6885b6b56d62d9d96fc7682c122bb719">&#9670;&nbsp;</a></span>MakeDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t MakeDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>directory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Make directories. </p>
 
 </div>
 </div>
