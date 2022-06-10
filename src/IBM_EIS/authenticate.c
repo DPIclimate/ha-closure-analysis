@@ -1,5 +1,21 @@
 #include "IBM_EIS/authenticate.h"
 
+/**
+ * Handles authentication, checking and re-authentication of IBM EIS access
+ * tokens.
+ *
+ * @code
+ * IBM_AuthHandle_TypeDef auth_handle = {0};
+ * if(IBM_HandleAuth(&auth_handle) != 0){
+ *     return 1;
+ * }
+ * @endcode
+ *
+ * @note Authentication handler must be initialised to zero.
+ *
+ * @param auth_handle Authentication hander with tokens and expiry information.
+ * @return Error code. 0 = OK 1 = ERROR
+ */
 int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
     /// Check if initialised already
     if(auth_handle->token_expiry != 0){
@@ -38,18 +54,6 @@ int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
  * process. The lengths of the tokens are:
  * - Access token = 1861 bytes
  * - Refresh token = 43 bytes
- *
- * @code
- * // Allocate memory to hold IBM EMS tokens
- * char* access_token[IBM_ACCESS_TOKEN_SIZE]; // Access token to populate
- * char* refresh_token[IBM_REFRESH_TOKEN_SIZE]; // Refresh token to populate
- * IBM_Authenticate(ibm_token, refresh_token, access_token);
- *
- * // Check for errors
- * if(access_token == NULL && refresh_token == NULL){
- *      return ERROR;
- * }
- * @endcode
  *
  * @param token IBM API key to use.
  * @param auth_handle Authenication handler for IBM tokens

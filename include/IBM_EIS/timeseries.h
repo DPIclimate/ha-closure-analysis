@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "utils.h"
+#include <IBM_EIS/authenticate.h>
 
 /// Max number of values in response.
 #define IBM_MAX_RESPONSE_LENGTH 2000
@@ -39,8 +40,8 @@ typedef struct {
 } IBM_TimeseriesDataset_TypeDef;
 
 /// Get timeseries data from IBM EMS
-CURLcode IBM_GetTimeseries(const char* access_token,
-                           IBM_TimeseriesReq_TypeDef *ts_req,
+CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
+                           IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset,
                            uint8_t alt_flag);
 

@@ -27,16 +27,6 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url);
  * requests.
  *
  * @code
- *	const char *ibm_token = getenv("IBM_TOKEN");
- *	if(ibm_token == NULL) {
- *		printf("IBM token not found. Exiting.\n");
- *		return 1;
- *	}
- *
- *  char* access_token = malloc(IBM_ACCESS_TOKEN_SIZE);
- *  char* refresh_token = malloc(IBM_REFRESH_TOKEN_SIZE);
- *  IBM_Authenticate(ibm_token, refresh_token, access_token);
- *
  *  TimeseriesReq_TypeDef ts = {
  *          .layer_id = 16700, // 16700 (alt_flag = 0) or 49097 (alt_flag = 1)
  *          .latitude = -35.69701049568654,
@@ -46,24 +36,25 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url);
  *  };
  *
  *  TimeseriesDataset_TypeDef dataset;
- *  IBM_GetTimeseries(access_token, &ts, &dataset, 0); // or 1 (for alt URL)
- *
- *  free(access_token);
- *  free(refresh_token);
+ *  IBM_GetTimeseries(auth_handle, &ts, &dataset, 0); // or 1 (for alt URL)
  * @endcode
  *
  * @note Start and end times are represented as UNIX timestamps (in seconds).
  *
- * @param access_token IBM access token (obtained through OAuth2.0)
+ * @param auth_handle IBM authentication handler
  * @param request Request struct with corresponding data.
  * @param dataset The dataset to populate.
  * @param alt_flag A flag representing if the alt enpoint should be used.
  * @return Curl success code.
  */
-CURLcode IBM_GetTimeseries(const char* access_token,
+CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
                            IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset,
                            uint8_t alt_flag){
+
+    if(IBM_HandleAuth(auth_handle) != 0){
+        return CURLE_AUTH_ERROR;
+    }
 
     char url[IBM_URL_SIZE];
     if(alt_flag == 1){
@@ -72,14 +63,15 @@ CURLcode IBM_GetTimeseries(const char* access_token,
         IBM_BuildURL(request, url);
     }
 
-    fprintf(stdout, "[Request]: GET from IBM EMS (layer ID: %d) : %s\n",
+    fprintf(stdout, "[Info]: GET from IBM EMS (layer ID: %d) : %s\n",
             request->layer_id, url);
 
     // Authorization builder
     const char* BASE_HEADER = "Authorization: Bearer ";
-    char* auth_header = malloc(strlen(BASE_HEADER) + strlen(access_token) + 1);
+    char* auth_header = malloc(strlen(BASE_HEADER) +
+            strlen(auth_handle->access_token) + 1);
     strcpy(auth_header, BASE_HEADER);
-    strcat(auth_header, access_token);
+    strcat(auth_header, auth_handle->access_token);
 
     // Add headers
     struct curl_slist* headers = NULL;
@@ -96,8 +88,8 @@ CURLcode IBM_GetTimeseries(const char* access_token,
             IBM_ParseTimeseries(response, dataset);
         }
     } else {
-        fprintf(stderr, "Error getting JSON response from IBM EMS timeseries"
-                        " dataset.\n");
+        fprintf(stderr, "[Error]: Unable to getting JSON response from "
+                        "IBM EMS timeseries dataset.\n");
     }
 
     free(auth_header);
@@ -105,7 +97,7 @@ CURLcode IBM_GetTimeseries(const char* access_token,
     cJSON_Delete(response);
 
     if(result == CURLE_OK){
-        fprintf(stdout, "[Finished] IBM EMS timeseries request complete.\n");
+        fprintf(stdout, "[Info]: IBM EMS timeseries request was successful.\n");
     }
 
     return result;
@@ -123,6 +115,9 @@ CURLcode IBM_GetTimeseries(const char* access_token,
  */
 static void IBM_ParseTimeseries(cJSON* response,
                                 IBM_TimeseriesDataset_TypeDef *dataset){
+
+    fprintf(stdout, "[Info]: Parsing IBM EIS request results.\n");
+
     // For query information
     cJSON* start = NULL;
     cJSON* end = NULL;
@@ -159,9 +154,10 @@ static void IBM_ParseTimeseries(cJSON* response,
         cJSON_ArrayForEach(point, data){
             if(index > IBM_MAX_RESPONSE_LENGTH){
                 fprintf(stderr,
-                        "Allocated memory exceeded. Increase the size of"
-                        "IBM_MAX_RESPONSE_LENGTH to account for the number"
-                        "of results in this query to IMB EMS.\n");
+                        "[Error]: Allocated memory exceeded. "
+                        "Increase the size of IBM_MAX_RESPONSE_LENGTH to "
+                        "account for the number of results in this query to "
+                        "IMB EMS.\n");
                 return;
             }
             cJSON* ts = NULL;
@@ -175,12 +171,14 @@ static void IBM_ParseTimeseries(cJSON* response,
             if(cJSON_IsString(value) && value->valuestring != NULL){
                 dataset->values[index] = strtod(value->valuestring, NULL);
             } else {
-                fprintf(stderr, "[Error]: Value parse error for value: %s\n",
+                fprintf(stderr, "[Error]: Parse error for value: %s\n",
                         value->valuestring);
             }
             index++;
         }
     }
+
+    fprintf(stdout, "[Info]: Finished parsing response from IBM EMS.\n");
 }
 
 /**
@@ -196,7 +194,7 @@ static void IBM_ParseTimeseries(cJSON* response,
 static void IBM_ParseTimeseriesAlt(cJSON* response,
                                    IBM_TimeseriesDataset_TypeDef *dataset){
 
-    fprintf(stdout, "[Parsing] Response from IBM EMS.\n");
+    fprintf(stdout, "[Info]: Parsing IBM EIS alternative request results.\n");
 
     // For query information
     cJSON* count = NULL;
@@ -250,12 +248,12 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
             index++;
         }
     } else {
-        fprintf(stderr, "[Error] IBM response received. However, the response "
+        fprintf(stderr, "[Error]: IBM response received. However, the response "
                         "was in an unrecognized format and "
                         "could not be parased.\n");
     }
 
-    fprintf(stdout, "[Finished] Parsing response from IBM EMS.\n");
+    fprintf(stdout, "[Info]: Finished parsing response from IBM EMS.\n");
 }
 
 /**
@@ -268,7 +266,7 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
  */
 static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
 
-    fprintf(stdout, "[Building] URL for IBM EMS endpoint: %s\n",
+    fprintf(stdout, "[Info]: Building URL for IBM EMS endpoint: %s\n",
             IBM_REQUEST_URL);
 
     snprintf(url, IBM_URL_SIZE, "%s/v2/timeseries?layer="
@@ -295,8 +293,8 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
  */
 static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
 
-    fprintf(stdout, "[Building] URL for IBM EMS endpoint: %s\n",
-            IBM_ALT_REQUEST_URL);
+    fprintf(stdout, "[Info]: Building URL for alternative IBM EMS endpoint: "
+                    "%s\n", IBM_ALT_REQUEST_URL);
 
     // Create start time char* e.g. 2022-06-06T12:25:55.000Z
     const uint8_t START_SIZE = 25;
