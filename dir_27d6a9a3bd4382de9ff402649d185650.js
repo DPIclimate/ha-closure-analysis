@@ -1,4 +1,5 @@
 var dir_27d6a9a3bd4382de9ff402649d185650 =
 [
-    [ "ubidots.h", "ubidots_8h.html", "ubidots_8h" ]
+    [ "authenticate.h", "_ubidots_2authenticate_8h.html", "_ubidots_2authenticate_8h" ],
+    [ "devices.h", "devices_8h.html", "devices_8h" ]
 ];

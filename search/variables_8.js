@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['postcode_0',['postcode',['../struct_w_w___location___type_def.html#acc61602d68af20476c380e5a2094152e',1,'WW_Location_TypeDef']]],
-  ['previous_5freason_1',['previous_reason',['../struct_f_a___harvest_area_status___type_def.html#abf44a03acd46b3293831427d9d2ba941',1,'FA_HarvestAreaStatus_TypeDef']]]
+  ['names_0',['names',['../struct_ubidots___devices___type_def.html#a74669a37a63ad1a956761b7ac47a98e1',1,'Ubidots_Devices_TypeDef']]]
 ];
