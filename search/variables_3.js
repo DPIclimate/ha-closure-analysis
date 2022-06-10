@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['high_5ftide_5ftimestamps_0',['high_tide_timestamps',['../struct_w_w___tide_dataset___type_def.html#a1c1b4657063b2c15f8e6bbeca9c6af56',1,'WW_TideDataset_TypeDef']]],
-  ['high_5ftide_5fvalues_1',['high_tide_values',['../struct_w_w___tide_dataset___type_def.html#aff29855554ae8ff6256e18d46c2cfe28',1,'WW_TideDataset_TypeDef']]]
+  ['end_0',['end',['../struct_i_b_m___timeseries_req___type_def.html#a1c9256c0354df41963d06e8c61239e56',1,'IBM_TimeseriesReq_TypeDef::end()'],['../struct_i_b_m___timeseries_dataset___type_def.html#ad21e06de1b6bc33c503e96dcea371f97',1,'IBM_TimeseriesDataset_TypeDef::end()']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['daily_5fmax_5ftide_5ftimestamps_0',['daily_max_tide_timestamps',['../struct_w_w___tide_dataset___type_def.html#a3b24c4b3b6a2a4159709fbacac2cbc7f',1,'WW_TideDataset_TypeDef']]],
-  ['daily_5fmax_5ftide_5fvalues_1',['daily_max_tide_values',['../struct_w_w___tide_dataset___type_def.html#a7e55d75db044e36a786bb027a4ffacee',1,'WW_TideDataset_TypeDef']]]
+  ['classification_0',['classification',['../struct_f_a___harvest_area_status___type_def.html#acd362ac92b253571dc6ecb9cf03a5286',1,'FA_HarvestAreaStatus_TypeDef']]],
+  ['count_1',['count',['../struct_i_b_m___timeseries_dataset___type_def.html#a70143dd5d64ee72f972a1b4c19f863d8',1,'IBM_TimeseriesDataset_TypeDef']]]
 ];

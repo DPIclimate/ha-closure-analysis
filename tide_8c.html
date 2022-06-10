@@ -104,6 +104,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a8936fbff9d591227262dbf567952ab9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the tides data from Willy Weather.  <a href="tide_8c.html#a8936fbff9d591227262dbf567952ab9d">More...</a><br /></td></tr>
 <tr class="separator:a8936fbff9d591227262dbf567952ab9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34c311588198fc1c526cd30e7a1e4547"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tide_8c.html#a34c311588198fc1c526cd30e7a1e4547">WillyWeather_TidesToCSV</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location_info, <a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a> *dataset)</td></tr>
+<tr class="memdesc:a34c311588198fc1c526cd30e7a1e4547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write tide dataset to csv files in specific directory.  <a href="tide_8c.html#a34c311588198fc1c526cd30e7a1e4547">More...</a><br /></td></tr>
 <tr class="separator:a34c311588198fc1c526cd30e7a1e4547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -146,13 +147,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the tides data from Willy Weather. </p>
-<p >Get weather forecast data from Willy Weather.</p>
-<p >Willy Weather can provide numerous weather forecasts. For example, precis (text weather summary), rainfall, rainfallprobability, sunrisesunset, swell, temperature, tides, uv, weather and wind.</p>
+<p >Get calculated high and low tides from Willy Weather.</p>
+<p >Willy Weather provides tide data for coastal regions. These data consist of high and low tides (and timestamps) grouped by day. This function extracts relevent high, low and maximum daily tides and appends them to a tides struct (<a class="el" href="struct_w_w___tide_dataset___type_def.html" title="Tide data from Willy Weather request.">WW_TideDataset_TypeDef</a>).</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *start_date = <span class="stringliteral">&quot;2022-05-01&quot;</span>;</div>
-<div class="line">WillyWeather_GetForecast(ww_token, 1215, <a class="code hl_define" href="forecast_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a>,</div>
-<div class="line">                         start_date, 10);</div>
+<div class="line">WillyWeather_GetForecast(ww_token, 1215, <a class="code hl_define" href="forecast_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a>, start_date, 10);</div>
 <div class="ttc" id="aforecast_8h_html_aeca2b825d67d69bd01529f5c80691c43"><div class="ttname"><a href="forecast_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a></div><div class="ttdeci">#define WW_FORECAST_TIDE</div><div class="ttdoc">Tides.</div><div class="ttdef"><b>Definition:</b> forecast.h:11</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://www.willyweather.com.au/api/docs/v2.html#forecast-get-tides">https://www.willyweather.com.au/api/docs/v2.html#forecast-get-tides</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Requires valid access token. See authenticate.h for method to authenticate with Willy Weather.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">location_id</td><td>Location index provided by Willy Weather. </td></tr>
@@ -190,6 +191,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Write tide dataset to csv files in specific directory. </p>
+<p >Create output CSV files with tide data from a particular location.</p>
+<p >Build tide directories and then for each of low, high and daily tide values build .csv files. Spaces in filenames are handled by this function and replaced with '-'.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">location_info</td><td>Location struct for filename. </td></tr>
+    <tr><td class="paramname">dataset</td><td>Dataset to write to .csv files. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code. OK = 0 ... ERROR = 1 </dd></dl>
 
 </div>
 </div>

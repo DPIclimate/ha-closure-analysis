@@ -102,16 +102,19 @@ Include dependency graph for utils.c:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a4ddd5eda46f8b61317f95145c87e653d"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d">WriteMemoryCallback</a> (void *contents, size_t size, size_t nmemb, void *userp)</td></tr>
 <tr class="separator:a4ddd5eda46f8b61317f95145c87e653d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72099cc3afa0e11832f789a273e36ae3"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a> (cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body)</td></tr>
-<tr class="memdesc:a72099cc3afa0e11832f789a273e36ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP GET &amp; POST request using cURL.  <a href="utils_8c.html#a72099cc3afa0e11832f789a273e36ae3">More...</a><br /></td></tr>
-<tr class="separator:a72099cc3afa0e11832f789a273e36ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a791777d7da6f02b27c321174b9977fd2"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a791777d7da6f02b27c321174b9977fd2">HttpRequest</a> (cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body)</td></tr>
+<tr class="memdesc:a791777d7da6f02b27c321174b9977fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP GET &amp; POST request using cURL.  <a href="utils_8c.html#a791777d7da6f02b27c321174b9977fd2">More...</a><br /></td></tr>
+<tr class="separator:a791777d7da6f02b27c321174b9977fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6885b6b56d62d9d96fc7682c122bb719"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a> (const char *directory)</td></tr>
-<tr class="memdesc:a6885b6b56d62d9d96fc7682c122bb719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make directories.  <a href="utils_8c.html#a6885b6b56d62d9d96fc7682c122bb719">More...</a><br /></td></tr>
+<tr class="memdesc:a6885b6b56d62d9d96fc7682c122bb719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make directories (with error handling)  <a href="utils_8c.html#a6885b6b56d62d9d96fc7682c122bb719">More...</a><br /></td></tr>
 <tr class="separator:a6885b6b56d62d9d96fc7682c122bb719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a189489cca3c7536b85793ce84830cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a> (const char *filename, time_t *dates, double *values, uint16_t max_n_values)</td></tr>
+<tr class="memdesc:a7a189489cca3c7536b85793ce84830cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries data into a csv file.  <a href="utils_8c.html#a7a189489cca3c7536b85793ce84830cb">More...</a><br /></td></tr>
+<tr class="separator:a7a189489cca3c7536b85793ce84830cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a72099cc3afa0e11832f789a273e36ae3" name="a72099cc3afa0e11832f789a273e36ae3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72099cc3afa0e11832f789a273e36ae3">&#9670;&nbsp;</a></span>HttpRequest()</h2>
+<a id="a791777d7da6f02b27c321174b9977fd2" name="a791777d7da6f02b27c321174b9977fd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a791777d7da6f02b27c321174b9977fd2">&#9670;&nbsp;</a></span>HttpRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -137,7 +140,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">int8_t&#160;</td>
           <td class="paramname"><em>post</em>, </td>
         </tr>
         <tr>
@@ -165,12 +168,12 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create a cJSON object to hold the response</span></div>
 <div class="line">cJSON *response = NULL;</div>
-<div class="line">CURLcode result = <a class="code hl_function" href="utils_8h.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a>(&amp;response, URL, headers, 0, NULL);</div>
+<div class="line">CURLcode result = <a class="code hl_function" href="utils_8h.html#a791777d7da6f02b27c321174b9977fd2">HttpRequest</a>(&amp;response, URL, headers, 0, NULL);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Free memory</span></div>
 <div class="line">curl_slist_free_all(headers);</div>
 <div class="line">cJSON_Delete(response);</div>
-<div class="ttc" id="autils_8h_html_a72099cc3afa0e11832f789a273e36ae3"><div class="ttname"><a href="utils_8h.html#a72099cc3afa0e11832f789a273e36ae3">HttpRequest</a></div><div class="ttdeci">CURLcode HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int post, const char *body)</div><div class="ttdoc">HTTP GET &amp; POST request using cURL.</div><div class="ttdef"><b>Definition:</b> utils.c:83</div></div>
+<div class="ttc" id="autils_8h_html_a791777d7da6f02b27c321174b9977fd2"><div class="ttname"><a href="utils_8h.html#a791777d7da6f02b27c321174b9977fd2">HttpRequest</a></div><div class="ttdeci">CURLcode HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body)</div><div class="ttdoc">HTTP GET &amp; POST request using cURL.</div><div class="ttdef"><b>Definition:</b> utils.c:86</div></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">response</td><td>The cJSON response to populate with JSON. </td></tr>
@@ -201,7 +204,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Make directories. </p>
+<p>Make directories (with error handling) </p>
+<p >Helper function to create directories with error handling.</p>
+<div class="fragment"><div class="line"><a class="code hl_function" href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a>(<span class="stringliteral">&quot;my_directory&quot;</span>);</div>
+<div class="line"><a class="code hl_function" href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a>(<span class="stringliteral">&quot;my_directory/my_sub_directory&quot;</span>);</div>
+<div class="ttc" id="autils_8h_html_a6885b6b56d62d9d96fc7682c122bb719"><div class="ttname"><a href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a></div><div class="ttdeci">int8_t MakeDirectory(const char *directory)</div><div class="ttdoc">Make directories (with error handling)</div><div class="ttdef"><b>Definition:</b> utils.c:138</div></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">directory</td><td>Directory name you want to create. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Integer representing error status. 0 = OK ... 1 = ERROR </dd></dl>
 
 </div>
 </div>
@@ -250,6 +264,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Helper function to handle a CURL request response which normally gets written to stdout.</p>
 <p >Callback function to save HTTP response data to a character array.</p>
 <p >CURL defaults to printing to stdout. This function is added to CURL in the setup options (curl_easy_setupopt()). Memory is allocated and then filled with the response string. This character array is then used to create cJSON objects and other items.</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="struct_memory_struct___type_def.html">MemoryStruct_TypeDef</a> chunk;</div>
@@ -261,7 +276,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="astruct_memory_struct___type_def_html"><div class="ttname"><a href="struct_memory_struct___type_def.html">MemoryStruct_TypeDef</a></div><div class="ttdoc">Holds HTTP response data before converting these data into cJSON objects.</div><div class="ttdef"><b>Definition:</b> utils.h:13</div></div>
 <div class="ttc" id="astruct_memory_struct___type_def_html_ab23504126b36f9a22c97cf7d2044cb25"><div class="ttname"><a href="struct_memory_struct___type_def.html#ab23504126b36f9a22c97cf7d2044cb25">MemoryStruct_TypeDef::memory</a></div><div class="ttdeci">char * memory</div><div class="ttdoc">The (response) data.</div><div class="ttdef"><b>Definition:</b> utils.h:14</div></div>
 <div class="ttc" id="astruct_memory_struct___type_def_html_ac7e3d1d1b59c48679ea65f882fdfce47"><div class="ttname"><a href="struct_memory_struct___type_def.html#ac7e3d1d1b59c48679ea65f882fdfce47">MemoryStruct_TypeDef::size</a></div><div class="ttdeci">size_t size</div><div class="ttdoc">Size of the (response) data.</div><div class="ttdef"><b>Definition:</b> utils.h:15</div></div>
-<div class="ttc" id="autils_8c_html_a4ddd5eda46f8b61317f95145c87e653d"><div class="ttname"><a href="utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d">WriteMemoryCallback</a></div><div class="ttdeci">static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)</div><div class="ttdef"><b>Definition:</b> utils.c:31</div></div>
+<div class="ttc" id="autils_8c_html_a4ddd5eda46f8b61317f95145c87e653d"><div class="ttname"><a href="utils_8c.html#a4ddd5eda46f8b61317f95145c87e653d">WriteMemoryCallback</a></div><div class="ttdeci">static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)</div><div class="ttdef"><b>Definition:</b> utils.c:33</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://curl.se/libcurl/c/getinmemory.html">https://curl.se/libcurl/c/getinmemory.html</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -273,6 +288,68 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The size of received data. </dd></dl>
+
+</div>
+</div>
+<a id="a7a189489cca3c7536b85793ce84830cb" name="a7a189489cca3c7536b85793ce84830cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a189489cca3c7536b85793ce84830cb">&#9670;&nbsp;</a></span>WriteTimeseriesToFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WriteTimeseriesToFile </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">time_t *&#160;</td>
+          <td class="paramname"><em>dates</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>max_n_values</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write timeseries data into a csv file. </p>
+<p >Helper function to handle writing timeseries data to a .csv file.</p>
+<p >Writes timeseries data to a filename, exiting when the data is un-initialised '\0' or the maxiumum buffer size is reached. This function also converts UNIX time into local (human readable) time in ISO 8601 format.</p>
+<div class="fragment"><div class="line"><span class="comment">// Build filename (directory requried)</span></div>
+<div class="line"><span class="keywordtype">char</span> filename[100];</div>
+<div class="line">sprintf(filename, <span class="stringliteral">&quot;%s/low.csv&quot;</span>, directory);</div>
+<div class="line"><a class="code hl_function" href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a>(filename,</div>
+<div class="line">                      dataset-&gt;low_tide_timestamps, <span class="comment">// UNIX timestamps</span></div>
+<div class="line">                      dataset-&gt;low_tide_values, <span class="comment">// Values</span></div>
+<div class="line">                      <a class="code hl_define" href="forecast_8h.html#af2b3c9f9af17e84515bc95abcb995c00">WW_FORECAST_RESPONSE_BUF</a>); <span class="comment">// Max number of values</span></div>
+<div class="ttc" id="aforecast_8h_html_af2b3c9f9af17e84515bc95abcb995c00"><div class="ttname"><a href="forecast_8h.html#af2b3c9f9af17e84515bc95abcb995c00">WW_FORECAST_RESPONSE_BUF</a></div><div class="ttdeci">#define WW_FORECAST_RESPONSE_BUF</div><div class="ttdoc">Max response values.</div><div class="ttdef"><b>Definition:</b> forecast.h:22</div></div>
+<div class="ttc" id="autils_8h_html_a7a189489cca3c7536b85793ce84830cb"><div class="ttname"><a href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a></div><div class="ttdeci">void WriteTimeseriesToFile(const char *filename, time_t *dates, double *values, uint16_t max_n_values)</div><div class="ttdoc">Write timeseries data into a csv file.</div><div class="ttdef"><b>Definition:</b> utils.c:185</div></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>File to write to. </td></tr>
+    <tr><td class="paramname">dates</td><td>Dates (x values). </td></tr>
+    <tr><td class="paramname">values</td><td>Data values (y values). </td></tr>
+    <tr><td class="paramname">max_n_values</td><td>Max buffer size. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
