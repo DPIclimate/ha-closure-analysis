@@ -97,8 +97,8 @@ $(document).ready(function(){initNavTree('timeseries_8h.html',''); initResizable
 <code>#include &lt;cjson/cJSON.h&gt;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
 <code>#include &lt;time.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="_i_b_m___e_i_s_2authenticate_8h_source.html">IBM_EIS/authenticate.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="utils_8h_source.html">utils.h</a>&quot;</code><br />
-<code>#include &lt;<a class="el" href="_i_b_m___e_i_s_2authenticate_8h_source.html">IBM_EIS/authenticate.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for timeseries.h:</div>
 <div class="dyncontent">
@@ -131,12 +131,18 @@ Macros</h2></td></tr>
 <tr class="memitem:adbaf63d36d548f4c62f211bf1678df4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#adbaf63d36d548f4c62f211bf1678df4a">IBM_URL_SIZE</a>&#160;&#160;&#160;250</td></tr>
 <tr class="memdesc:adbaf63d36d548f4c62f211bf1678df4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max characters in formulated URL.  <a href="timeseries_8h.html#adbaf63d36d548f4c62f211bf1678df4a">More...</a><br /></td></tr>
 <tr class="separator:adbaf63d36d548f4c62f211bf1678df4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af71dfed43428802358be2cd1a2bc7756"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#af71dfed43428802358be2cd1a2bc7756">IBM_PRECIPITATION_ID</a>&#160;&#160;&#160;49097</td></tr>
+<tr class="memdesc:af71dfed43428802358be2cd1a2bc7756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define layer identifier.  <a href="timeseries_8h.html#af71dfed43428802358be2cd1a2bc7756">More...</a><br /></td></tr>
+<tr class="separator:af71dfed43428802358be2cd1a2bc7756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a63b4612b52cdf60a8c7a6658bb262a6e"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#a63b4612b52cdf60a8c7a6658bb262a6e">IBM_GetTimeseries</a> (<a class="el" href="struct_i_b_m___auth_handle___type_def.html">IBM_AuthHandle_TypeDef</a> *auth_handle, <a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *request, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, uint8_t alt_flag)</td></tr>
 <tr class="memdesc:a63b4612b52cdf60a8c7a6658bb262a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get timeseries data from IBM EMS.  <a href="timeseries_8h.html#a63b4612b52cdf60a8c7a6658bb262a6e">More...</a><br /></td></tr>
 <tr class="separator:a63b4612b52cdf60a8c7a6658bb262a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#a9fb3b76bdd9848fdd63d226ddf5c7d17">IBM_TimeseriesToCSV</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *request, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset)</td></tr>
+<tr class="memdesc:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries dataset to .csv file.  <a href="timeseries_8h.html#a9fb3b76bdd9848fdd63d226ddf5c7d17">More...</a><br /></td></tr>
+<tr class="separator:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -161,6 +167,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Max number of values in response. </p>
+
+</div>
+</div>
+<a id="af71dfed43428802358be2cd1a2bc7756" name="af71dfed43428802358be2cd1a2bc7756"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af71dfed43428802358be2cd1a2bc7756">&#9670;&nbsp;</a></span>IBM_PRECIPITATION_ID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IBM_PRECIPITATION_ID&#160;&#160;&#160;49097</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define layer identifier. </p>
 
 </div>
 </div>
@@ -248,6 +270,46 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Curl success code. </dd></dl>
+
+</div>
+</div>
+<a id="a9fb3b76bdd9848fdd63d226ddf5c7d17" name="a9fb3b76bdd9848fdd63d226ddf5c7d17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fb3b76bdd9848fdd63d226ddf5c7d17">&#9670;&nbsp;</a></span>IBM_TimeseriesToCSV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t IBM_TimeseriesToCSV </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>dataset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write timeseries dataset to .csv file. </p>
+<p >IBM timeseires dataset to csv.</p>
+<p >Creates required directories and then builds a csv files with the downloaded dataset.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>Timeseries request information (layer ID is needed). </td></tr>
+    <tr><td class="paramname">dataset</td><td>Dataset to write to file. Count is provided here too. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code. 0 = OK ... 1 = ERROR </dd></dl>
 
 </div>
 </div>
