@@ -32,6 +32,7 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
                                uint16_t n_days,
                                WW_TideDataset_TypeDef *tides);
 
+/// Write tide dataset to csv files in specific directory.
 uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                                 WW_TideDataset_TypeDef *dataset);
 

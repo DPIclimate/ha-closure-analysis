@@ -1,20 +1,23 @@
 #include "WillyWeather/tide.h"
 
 /**
- * Get weather forecast data from Willy Weather.
+ * Get calculated high and low tides from Willy Weather.
  *
- * Willy Weather can provide numerous weather forecasts. For example,
- * precis (text weather summary), rainfall, rainfallprobability,
- * sunrisesunset, swell, temperature, tides, uv, weather and wind.
+ * Willy Weather provides tide data for coastal regions. These data consist
+ * of high and low tides (and timestamps) grouped by day. This function extracts
+ * relevent high, low and maximum daily tides and appends them to a tides
+ * struct (WW_TideDataset_TypeDef).
  *
  * @code
- *     const char *start_date = "2022-05-01";
- *     WillyWeather_GetForecast(ww_token, 1215, WW_FORECAST_TIDE,
- *                              start_date, 10);
+ * const char *start_date = "2022-05-01";
+ * WillyWeather_GetForecast(ww_token, 1215, WW_FORECAST_TIDE, start_date, 10);
  * @endcode
  *
  * @see
  * https://www.willyweather.com.au/api/docs/v2.html#forecast-get-tides
+ *
+ * @note Requires valid access token. See authenticate.h for method to
+ * authenticate with Willy Weather.
  *
  * @param location_id Location index provided by Willy Weather.
  * @param start_date Start date (e.g. YYYY-MM-DD HH:MM:SS).
@@ -76,7 +79,7 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
                            cJSON *diff_day = NULL;
                            cJSON_ArrayForEach(entry, entries) {
                                // Get high or low tide
-                               char high_low[5];
+                               char high_low[5] = {0};
                                type = cJSON_GetObjectItemCaseSensitive(
                                        entry, "type");
                                if (cJSON_IsString(type) &&
@@ -152,16 +155,16 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
         }
     }
 
-    if(result == CURLE_OK && day_index != 0){
+    if(result == CURLE_OK) {
         fprintf(stdout, "[Info]: Tides were successfully received and parsed "
                         "from Willy Weather.\n"
                         "\tNumber of day's parsed:\t\t%hu\n"
                         "\tNumber of high tides:\t\t%hu\n"
                         "\tNumber of low tides:\t\t%hu\n", day_index,
-                        h_index, l_index);
-    } else{
-        fprintf(stderr, "[Error]: Error parsing tide dataset.\n"
-                        "Number of day's parsed:\t\t%hu\n", day_index);
+                h_index, l_index);
+    } else {
+        fprintf(stderr, "[Error]: Error parsing tide dataset. "
+                        "Check response for malformed JSON.\n");
     }
 
     curl_slist_free_all(headers);
@@ -170,11 +173,27 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
     return result;
 }
 
+/**
+ * Create output CSV files with tide data from a particular location.
+ *
+ * Build tide directories and then for each of low, high and daily tide values
+ * build .csv files. Spaces in filenames are handled by this function and
+ * replaced with '-'.
+ *
+ * @param location_info Location struct for filename.
+ * @param dataset Dataset to write to .csv files.
+ * @return Error code. OK = 0 ... ERROR = 1
+ */
 uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                                 WW_TideDataset_TypeDef *dataset){
+
+    fprintf(stdout, "[Info]: Pushing tides dataset to .csv\n");
+
+    // Make directories if not exists
     if(MakeDirectory("datasets") != 0) return 1;
     if(MakeDirectory("datasets/tides") != 0) return 1;
 
+    // Remove spaces from filename
     char* location = malloc(strlen(location_info->location) + 1);
     for(uint8_t i = 0; i < strlen(location_info->location); i++){
         if(location_info->location[i] == ' '){
@@ -184,57 +203,42 @@ uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
         location[i] = location_info->location[i];
     }
 
+    // Name and create sub-directory
     char directory[50];
     memset(directory, 0, sizeof(directory));
     sprintf(directory, "datasets/tides/%s", location);
-    if(MakeDirectory(directory) != 0) return 1;
+    if(MakeDirectory(directory) != 0) {
+        free(location);
+        return 1;
+    }
 
-    // Low tide
+    // Build low tide file
     char filename[100];
     sprintf(filename, "%s/low.csv", directory);
+    WriteTimeseriesToFile(filename,
+                          dataset->low_tide_timestamps,
+                          dataset->low_tide_values,
+                          WW_FORECAST_RESPONSE_BUF);
 
-    FILE *low_tide_csv = fopen(filename, "w+");
-    fprintf(low_tide_csv, "Date;Tide(m)\n");
+    fprintf(stdout, "[Info]: Low tide dataset pushed to:\t\t%s\n", filename);
 
-    uint16_t index = 0;
-    while(dataset->low_tide_timestamps[index] != 0
-    && index < WW_FORECAST_RESPONSE_BUF){
-        fprintf(low_tide_csv, "%ld;%lf\n", dataset->low_tide_timestamps[index],
-                dataset->low_tide_values[index]);
-        index++;
-    }
-    fclose(low_tide_csv);
-
-    // High tide
+    // Build high tide file
     memset(filename, 0, sizeof(filename));
     sprintf(filename, "%s/high.csv", directory);
-    FILE *high_tide_csv = fopen(filename, "w+");
-    fprintf(high_tide_csv, "Date;Tide(m)\n");
+    WriteTimeseriesToFile(filename,
+                          dataset->high_tide_timestamps,
+                          dataset->high_tide_values,
+                          WW_FORECAST_RESPONSE_BUF);
+    fprintf(stdout, "[Info]: High tide dataset pushed to:\t\t%s\n", filename);
 
-    index = 0;
-    while(dataset->high_tide_timestamps[index] != 0
-    && index < WW_FORECAST_RESPONSE_BUF){
-        fprintf(high_tide_csv, "%ld;%lf\n", dataset->high_tide_timestamps[index],
-                dataset->high_tide_values[index]);
-        index++;
-    }
-    fclose(high_tide_csv);
-
-
-    // Daily
+    // Build daily maximum file
     memset(filename, 0, sizeof(filename));
     sprintf(filename, "%s/daily-max.csv", directory);
-    FILE *daily_tide_csv = fopen(filename, "w+");
-    fprintf(daily_tide_csv, "Date;Tide(m)\n");
-
-    index = 0;
-    while(dataset->daily_max_tide_timestamps[index] != 0
-    && index < WW_FORECAST_RESPONSE_BUF){
-        fprintf(daily_tide_csv, "%ld;%lf\n", dataset->daily_max_tide_timestamps[index],
-                dataset->daily_max_tide_values[index]);
-        index++;
-    }
-    fclose(daily_tide_csv);
+    WriteTimeseriesToFile(filename,
+                          dataset->daily_max_tide_timestamps,
+                          dataset->daily_max_tide_values,
+                          WW_FORECAST_RESPONSE_BUF);
+    fprintf(stdout, "[Info]: Daily max tide dataset pushed to:\t%s\n", filename);
 
     free(location);
     return 0;

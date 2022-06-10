@@ -8,7 +8,7 @@
 #include <curl/curl.h>
 
 /// Willy weather access token size
-#define WW_TOKEN_SIZE                   100
+#define WW_TOKEN_SIZE                          100
 char WW_TOKEN[WW_TOKEN_SIZE];
 
 /// Get Willy Weather API token from environment variable

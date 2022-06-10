@@ -1,5 +1,7 @@
 #include "utils.h"
 
+/// Helper function to handle a CURL request response which normally gets
+/// written to stdout.
 static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
                                   void *userp);
 
@@ -37,7 +39,8 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
 	char *ptr = realloc(mem->memory, mem->size + realsize + 1);
 
 	if(ptr == NULL){
-		printf("Not enough memory to hold response data.\n");
+		fprintf(stderr, "[Error]: Not enough memory to hold HTTP response "
+                        "data.\n");
 		return 0;
 	}
 
@@ -81,7 +84,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
  * @return Status code representing the response status.
  */
 CURLcode HttpRequest(cJSON **response, const char *URL,
-                struct curl_slist *headers, int post, const char* body){
+                struct curl_slist *headers, int8_t post, const char* body){
 
     CURL *curl = curl_easy_init();
     if(!curl){
@@ -121,6 +124,17 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
     return result;
 }
 
+/**
+ * Helper function to create directories with error handling.
+ *
+ * @code
+ * MakeDirectory("my_directory");
+ * MakeDirectory("my_directory/my_sub_directory");
+ * @endcode
+ *
+ * @param directory Directory name you want to create.
+ * @return Integer representing error status. 0 = OK ... 1 = ERROR
+ */
 int8_t MakeDirectory(const char* directory){
     if(mkdir(directory, S_IRWXU | S_IRWXG | S_IRWXO) == -1){
         // If the directory already exists it not an error
@@ -145,3 +159,43 @@ int8_t MakeDirectory(const char* directory){
     return 0;
 }
 
+/**
+ * Helper function to handle writing timeseries data to a .csv file.
+ *
+ * Writes timeseries data to a filename, exiting when the data is
+ * un-initialised '\0' or the maxiumum buffer size is reached. This function
+ * also converts UNIX time into local (human readable) time in ISO 8601
+ * format.
+ *
+ * @code
+ * // Build filename (directory requried)
+ * char filename[100];
+ * sprintf(filename, "%s/low.csv", directory);
+ * WriteTimeseriesToFile(filename,
+ *                       dataset->low_tide_timestamps, // UNIX timestamps
+ *                       dataset->low_tide_values, // Values
+ *                       WW_FORECAST_RESPONSE_BUF); // Max number of values
+ * @endcode
+ *
+ * @param filename File to write to.
+ * @param dates Dates (x values).
+ * @param values Data values (y values).
+ * @param max_n_values Max buffer size.
+ */
+void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
+                           uint16_t max_n_values){
+
+    FILE *file = fopen(filename, "w+");
+    fprintf(file, "UNIX;Date;Tide(m)\n");
+
+    uint16_t index = 0;
+    while(dates[index] != '\0' && index < max_n_values){
+        char date[25] = {0};
+        struct tm *date_tm = localtime(&dates[index]);
+        strftime(date, 25, "%Y-%m-%dT%H:%M:%S%z", date_tm);
+        fprintf(file, "%ld;%s;%lf\n", dates[index], date, values[index]);
+        index++;
+    }
+
+    fclose(file);
+}

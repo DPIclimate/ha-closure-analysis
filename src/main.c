@@ -2,7 +2,6 @@
 
 // TODO Download method for IBM precipitation data.
 // TODO Download method for Ubidots salinity & weather readings.
-// TODO Download method for Willy Weather forecast (tides etc.)
 // TODO Data transformation to calculate closure severity index
 // TODO Data transformation to calculate heat severity index
 
@@ -10,16 +9,28 @@ int main(void){
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
-    WillyWeather_GetToken("WW_TOKEN");
+    IBM_AuthHandle_TypeDef auth_handle = {0};
+    if(IBM_HandleAuth(&auth_handle) != 0){
+        fprintf(stderr, "[Error]: Unable to authenticate with IBM EIS.\n");
+        return 1;
+    }
 
-    const char* search_location = "Batemans";
-    WW_Location_TypeDef location_info = {0};
-    WillyWeather_GetLocationByName(search_location, &location_info);
+    if(IBM_HandleAuth(&auth_handle) != 0){
+        fprintf(stderr, "[Error]: Unable to authenticate with IBM EIS.\n");
+        return 1;
+    }
 
-    WW_TideDataset_TypeDef tides = {0};
-    WillyWeather_GetTides(location_info.id, "2022-06-01", 6, &tides);
 
-    WillyWeather_TidesToCSV(&location_info, &tides);
+    //WillyWeather_GetToken("WW_TOKEN");
+
+    //const char* search_location = "Batemans";
+    //WW_Location_TypeDef location_info = {0};
+    //WillyWeather_GetLocationByName(search_location, &location_info);
+
+    //WW_TideDataset_TypeDef tides = {0};
+    //WillyWeather_GetTides(location_info.id, "2022-01-01", 6, &tides);
+
+    //WillyWeather_TidesToCSV(&location_info, &tides);
 
     //FA_HarvestAreaStatus_TypeDef hs_status;
     //FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &hs_status);

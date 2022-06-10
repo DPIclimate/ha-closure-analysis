@@ -15,11 +15,15 @@ typedef struct {
 	size_t size; ///< Size of the (response) data
 } MemoryStruct_TypeDef;
 
-/// Make directories
+/// Make directories (with error handling)
 int8_t MakeDirectory(const char* directory);
 
 /// HTTP GET & POST request using cURL.
 CURLcode HttpRequest(cJSON **response, const char *URL,
-                     struct curl_slist *headers, int post, const char* body);
+                     struct curl_slist *headers, int8_t post, const char* body);
+
+/// Write timeseries data into a csv file
+void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
+                           uint16_t max_n_values);
 
 #endif // HA_CLOSURE_ANALYSIS_UTILS_H
