@@ -340,7 +340,6 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
  * Creates required directories and then builds a csv files with the downloaded
  * dataset.
  *
- *
  * @param request Timeseries request information (layer ID is needed).
  * @param dataset Dataset to write to file. Count is provided here too.
  * @return Error code. 0 = OK ... 1 = ERROR

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 
-#include "Ubidots/ubidots.h"
+#include "Ubidots/devices.h"
 
 #include "WillyWeather/authenticate.h"
 #include "WillyWeather/tide.h"

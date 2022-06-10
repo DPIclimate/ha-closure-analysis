@@ -8,23 +8,27 @@ int main(void){
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
-    IBM_AuthHandle_TypeDef ibm_auth_handle = {0};
-    if(IBM_HandleAuth(&ibm_auth_handle) != 0){
-        return 1;
-    }
+    Ubidots_Devices_TypeDef devices = {0};
+    Ubidots_ListDevices(&devices);
+    Ubidots_DevicesToCSV(&devices);
 
-    IBM_TimeseriesReq_TypeDef ibm_req = {
-            .layer_id = 49097, // 16700 (alt_flag = 0) or 49097 (alt_flag = 1)
-            .latitude = -35.69701049568654,
-            .longitude = 150.1546566614602,
-            .start = 1654824507,
-            .end = 1655306906
-    };
+   // IBM_AuthHandle_TypeDef ibm_auth_handle = {0};
+   // if(IBM_HandleAuth(&ibm_auth_handle) != 0){
+   //     return 1;
+   // }
 
-    IBM_TimeseriesDataset_TypeDef dataset;
-    IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &dataset, 1);
+   // IBM_TimeseriesReq_TypeDef ibm_req = {
+   //         .layer_id = 49097, // 16700 (alt_flag = 0) or 49097 (alt_flag = 1)
+   //         .latitude = -35.69701049568654,
+   //         .longitude = 150.1546566614602,
+   //         .start = 1654824507,
+   //         .end = 1655306906
+   // };
 
-    IBM_TimeseriesToCSV(&ibm_req, &dataset);
+   // IBM_TimeseriesDataset_TypeDef dataset;
+   // IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &dataset, 1);
+
+   // IBM_TimeseriesToCSV(&ibm_req, &dataset);
 
     //WillyWeather_GetToken("WW_TOKEN");
 

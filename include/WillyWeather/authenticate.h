@@ -11,6 +11,9 @@
 #define WW_TOKEN_SIZE                          100
 char WW_TOKEN[WW_TOKEN_SIZE];
 
+/// Willy weather default environmental variable name
+#define WW_DEFAULT_ENV_NAME                    "WW_TOKEN"
+
 /// Get Willy Weather API token from environment variable
 uint8_t WillyWeather_GetToken(const char* env_var_name);
 

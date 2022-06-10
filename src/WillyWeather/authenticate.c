@@ -7,13 +7,9 @@
  * @return Integer representing
  */
 uint8_t WillyWeather_GetToken(const char* env_var_name){
-    strncpy(WW_TOKEN, getenv(env_var_name), WW_TOKEN_SIZE);
-    if(strlen(WW_TOKEN) == 0) {
-        fprintf(stderr, "[Error]: Willy Weather token not found as an "
-                        "environment variable with name: '%s'.\n",
-                env_var_name);
-        return 1;
-    }
+    char* token = getenv(env_var_name);
+    if(token == NULL) return 1; // Not found error
+    strncpy(WW_TOKEN, token, WW_TOKEN_SIZE);
     fprintf(stdout, "[Info]: Willy Weather access token found and "
                     "initialised.\n");
     return 0;
@@ -26,10 +22,14 @@ uint8_t WillyWeather_GetToken(const char* env_var_name){
  */
 uint8_t WillyWeather_CheckAccess(){
     if(strlen(WW_TOKEN) == 0){
-        fprintf(stderr, "[Error]: Willy Weather access token was "
-                        "uninitialised. A valid access token is required to "
-                        "access Willy Weather. See: "
-                        "WillyWeather_GetToken(<token>)\n");
+        fprintf(stderr, "[Error]: Willy Weather access token not found. "
+                        "Trying again with the default environmental variable "
+                        "name: %s\n", WW_DEFAULT_ENV_NAME);
+        if(WillyWeather_GetToken(WW_DEFAULT_ENV_NAME) == 0){
+            return 0;
+        }
+        fprintf(stderr, "[Error]: Willy Weather access token not found with "
+                        "default token name: %s\n", WW_DEFAULT_ENV_NAME);
         return 1;
     }
     return 0;
