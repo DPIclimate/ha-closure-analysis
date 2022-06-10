@@ -6,14 +6,19 @@
 #include <math.h>
 #include <time.h>
 
+#include "IBM_EIS/authenticate.h"
 #include "utils.h"
-#include <IBM_EIS/authenticate.h>
 
 /// Max number of values in response.
 #define IBM_MAX_RESPONSE_LENGTH 2000
 
 /// Max characters in formulated URL.
 #define IBM_URL_SIZE 250
+
+// TODO add more identifiers here
+
+/// Define layer identifier
+#define IBM_PRECIPITATION_ID 49097
 
 /// IBM URL
 static const char* IBM_REQUEST_URL = "https://pairs.res.ibm.com";
@@ -34,7 +39,7 @@ typedef struct {
 typedef struct {
     time_t start; /// Data start time (unix timestamp in seconds).
     time_t end; /// Data end time (unix timestamp in seconds).
-    time_t timestamp[IBM_MAX_RESPONSE_LENGTH]; /// Holds timestamps.
+    time_t timestamps[IBM_MAX_RESPONSE_LENGTH]; /// Holds timestamps.
     double values[IBM_MAX_RESPONSE_LENGTH]; /// Holds corresponding values.
     int32_t count; /// Number of returned values.
 } IBM_TimeseriesDataset_TypeDef;
@@ -44,6 +49,10 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
                            IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset,
                            uint8_t alt_flag);
+
+/// Write timeseries dataset to .csv file
+int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
+                           IBM_TimeseriesDataset_TypeDef *dataset);
 
 
 #endif //HA_CLOSURE_ANALYSIS_TIMESERIES_H

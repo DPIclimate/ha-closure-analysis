@@ -145,7 +145,7 @@ static void IBM_ParseTimeseries(cJSON* response,
         dataset->count = floor(count->valuedouble);
     }
 
-    memset(dataset->timestamp, 0, IBM_MAX_RESPONSE_LENGTH);
+    memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH);
     memset(dataset->values, 0, IBM_MAX_RESPONSE_LENGTH);
 
     data = cJSON_GetObjectItemCaseSensitive(response, "data");
@@ -164,7 +164,7 @@ static void IBM_ParseTimeseries(cJSON* response,
             cJSON* value = NULL;
             ts = cJSON_GetObjectItemCaseSensitive(point, "timestamp");
             if(cJSON_IsNumber(ts)){
-                dataset->timestamp[index] = floor(ts->valuedouble);
+                dataset->timestamps[index] = floor(ts->valuedouble);
             }
 
             value = cJSON_GetObjectItemCaseSensitive(point, "value");
@@ -209,7 +209,7 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
         dataset->count = floor(count->valuedouble);
     }
 
-    memset(dataset->timestamp, 0, IBM_MAX_RESPONSE_LENGTH);
+    memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH);
     memset(dataset->values, 0, IBM_MAX_RESPONSE_LENGTH);
 
     data = cJSON_GetObjectItemCaseSensitive(response, "timeSeries");
@@ -227,7 +227,7 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
                 strptime(ts->valuestring, "%FT%T%z", &v_time);
                 time_t unix_time = mktime(&v_time);
                 if(unix_time != -1){
-                    dataset->timestamp[index] = unix_time;
+                    dataset->timestamps[index] = unix_time;
                     if(index == 0){
                         dataset->start = unix_time;
                     }
@@ -332,4 +332,45 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
             req->longitude,
             start_time,
             end_time);
+}
+
+/**
+ * IBM timeseires dataset to csv.
+ *
+ * Creates required directories and then builds a csv files with the downloaded
+ * dataset.
+ *
+ *
+ * @param request Timeseries request information (layer ID is needed).
+ * @param dataset Dataset to write to file. Count is provided here too.
+ * @return Error code. 0 = OK ... 1 = ERROR
+ */
+int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
+                           IBM_TimeseriesDataset_TypeDef *dataset){
+
+    fprintf(stdout, "[Info]: Writing IBM timeseries dataset to a .csv file.\n");
+
+    if(MakeDirectory("datasets") != 0) return 1;
+    if(MakeDirectory("datasets/ibm") != 0) return 1;
+    if(MakeDirectory("datasets/ibm/timeseries") != 0) return 1;
+
+    int8_t FILENAME_SIZE = 100;
+    char filename[FILENAME_SIZE];
+    switch (request->layer_id){
+        case IBM_PRECIPITATION_ID:
+            strncpy(filename, "datasets/ibm/timeseries/precipitation.csv",
+                    FILENAME_SIZE);
+            break;
+        default:
+            strncpy(filename, "datasets/ibm/timeseries/unknown.csv",
+                    FILENAME_SIZE);
+            break;
+    }
+
+    WriteTimeseriesToFile(filename, dataset->timestamps, dataset->values,
+                          dataset->count);
+
+    fprintf(stdout, "[Info]: IBM timeseries dataset witten to: %s\n", filename);
+
+    return 0;
 }

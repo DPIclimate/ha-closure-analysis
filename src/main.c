@@ -1,6 +1,5 @@
 #include "main.h"
 
-// TODO Download method for IBM precipitation data.
 // TODO Download method for Ubidots salinity & weather readings.
 // TODO Data transformation to calculate closure severity index
 // TODO Data transformation to calculate heat severity index
@@ -14,18 +13,18 @@ int main(void){
         return 1;
     }
 
-    IBM_TimeseriesReq_TypeDef ts = {
+    IBM_TimeseriesReq_TypeDef ibm_req = {
             .layer_id = 49097, // 16700 (alt_flag = 0) or 49097 (alt_flag = 1)
             .latitude = -35.69701049568654,
             .longitude = 150.1546566614602,
-            .start = 1654005600,
-            .end = 1654783200
+            .start = 1654824507,
+            .end = 1655306906
     };
 
     IBM_TimeseriesDataset_TypeDef dataset;
-    IBM_GetTimeseries(&ibm_auth_handle, &ts, &dataset, 1);
+    IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &dataset, 1);
 
-    // TODO write timeseries dataset to csv for IBM
+    IBM_TimeseriesToCSV(&ibm_req, &dataset);
 
     //WillyWeather_GetToken("WW_TOKEN");
 
