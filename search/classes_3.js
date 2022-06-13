@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ubidots_5fdevices_5ftypedef_0',['Ubidots_Devices_TypeDef',['../struct_ubidots___devices___type_def.html',1,'']]]
+  ['log_5fevent_0',['log_Event',['../structlog___event.html',1,'']]]
 ];

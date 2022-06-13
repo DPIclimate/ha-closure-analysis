@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('timeseries_8c.html',''); initResizable
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for timeseries.c:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="timeseries_8c__incl.svg" width="756" height="336"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="timeseries_8c__incl.svg" width="927" height="411"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
@@ -107,10 +107,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a8aca8a29c1f66c574f502338f563bf5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse timeseries response from alternative endpoint.  <a href="timeseries_8c.html#a8aca8a29c1f66c574f502338f563bf5d">More...</a><br /></td></tr>
 <tr class="separator:a8aca8a29c1f66c574f502338f563bf5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44e9f7dbf87004b1e08552d3200c17f1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a44e9f7dbf87004b1e08552d3200c17f1">IBM_BuildURL</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req, char *url)</td></tr>
-<tr class="memdesc:a44e9f7dbf87004b1e08552d3200c17f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build IBM EMS request URL.  <a href="timeseries_8c.html#a44e9f7dbf87004b1e08552d3200c17f1">More...</a><br /></td></tr>
+<tr class="memdesc:a44e9f7dbf87004b1e08552d3200c17f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build IBM EIS request URL.  <a href="timeseries_8c.html#a44e9f7dbf87004b1e08552d3200c17f1">More...</a><br /></td></tr>
 <tr class="separator:a44e9f7dbf87004b1e08552d3200c17f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af562676b17f7d0309e92ec4ecd72d99f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#af562676b17f7d0309e92ec4ecd72d99f">IBM_BuildURLAlt</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req, char *url)</td></tr>
-<tr class="memdesc:af562676b17f7d0309e92ec4ecd72d99f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build IBM EMS request URL for alternative endpoint.  <a href="timeseries_8c.html#af562676b17f7d0309e92ec4ecd72d99f">More...</a><br /></td></tr>
+<tr class="memdesc:af562676b17f7d0309e92ec4ecd72d99f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build IBM EIS request URL for alternative endpoint.  <a href="timeseries_8c.html#af562676b17f7d0309e92ec4ecd72d99f">More...</a><br /></td></tr>
 <tr class="separator:af562676b17f7d0309e92ec4ecd72d99f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63b4612b52cdf60a8c7a6658bb262a6e"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a63b4612b52cdf60a8c7a6658bb262a6e">IBM_GetTimeseries</a> (<a class="el" href="struct_i_b_m___auth_handle___type_def.html">IBM_AuthHandle_TypeDef</a> *auth_handle, <a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *request, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, uint8_t alt_flag)</td></tr>
 <tr class="memdesc:a63b4612b52cdf60a8c7a6658bb262a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get timeseries data from IBM EMS.  <a href="timeseries_8c.html#a63b4612b52cdf60a8c7a6658bb262a6e">More...</a><br /></td></tr>
@@ -154,8 +154,8 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build IBM EMS request URL. </p>
-<p >Build a URL for IBM EMS at endpoint <a href="https://pairs.res.ibm.com">https://pairs.res.ibm.com</a></p>
+<p>Build IBM EIS request URL. </p>
+<p >Build a URL for IBM EIS at endpoint <a href="https://pairs.res.ibm.com">https://pairs.res.ibm.com</a></p>
 <p >Takes a request structure and formulates the appropriate URL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -201,8 +201,8 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build IBM EMS request URL for alternative endpoint. </p>
-<p >Build a URL for IBM EMS at endpoint <a href="https://ibmpairs-mvp2-api.mybluemix.net">https://ibmpairs-mvp2-api.mybluemix.net</a></p>
+<p>Build IBM EIS request URL for alternative endpoint. </p>
+<p >Build a URL for IBM EIS at endpoint <a href="https://ibmpairs-mvp2-api.mybluemix.net">https://ibmpairs-mvp2-api.mybluemix.net</a></p>
 <p >Takes a request structure and formulates the appropriate URL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -253,8 +253,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get timeseries data from IBM EMS. </p>
-<p >IBM EMS get timeseries data as a JSON response.</p>
-<p >IBM EMS provides two endpoints to get data from:</p><ul>
+<p >IBM EIS get timeseries data as a JSON response.</p>
+<p >IBM EIS provides two endpoints to get data from:</p><ul>
 <li><a href="https://pairs.res.ibm.com">https://pairs.res.ibm.com</a> (IBM_REQUEST_URL)</li>
 <li><a href="https://ibmpairs-mvp2-api.mybluemix.net">https://ibmpairs-mvp2-api.mybluemix.net</a> (IBM_ALT_REQUEST_URL)</li>
 </ul>

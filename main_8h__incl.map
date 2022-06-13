@@ -1,23 +1,26 @@
 <map id="include/main.h" name="include/main.h">
-<area shape="rect" id="node1" title=" " alt="" coords="769,5,875,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="109,319,172,345"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,319,65,345"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1300,319,1379,345"/>
-<area shape="rect" id="node5" href="$devices_8h.html" title=" " alt="" coords="759,162,885,189"/>
-<area shape="rect" id="node14" href="$_willy_weather_2authenticate_8h.html" title=" " alt="" coords="331,244,513,271"/>
-<area shape="rect" id="node15" href="$tide_8h.html" title=" " alt="" coords="553,80,685,107"/>
-<area shape="rect" id="node19" href="$_i_b_m___e_i_s_2authenticate_8h.html" title=" " alt="" coords="1164,162,1323,189"/>
-<area shape="rect" id="node20" href="$timeseries_8h.html" title=" " alt="" coords="951,80,1099,107"/>
-<area shape="rect" id="node21" href="$food__auth_8h.html" title=" " alt="" coords="1347,155,1478,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="454,319,518,345"/>
-<area shape="rect" id="node7" title=" " alt="" coords="690,244,751,271"/>
-<area shape="rect" id="node8" title=" " alt="" coords="784,319,895,345"/>
-<area shape="rect" id="node9" href="$_ubidots_2authenticate_8h.html" title=" " alt="" coords="103,244,255,271"/>
-<area shape="rect" id="node10" href="$utils_8h.html" title=" " alt="" coords="961,244,1017,271"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1116,319,1195,345"/>
-<area shape="rect" id="node12" title=" " alt="" coords="919,319,1005,345"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1030,319,1091,345"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1143,244,1200,271"/>
-<area shape="rect" id="node17" href="$location_8h.html" title=" " alt="" coords="425,162,581,189"/>
-<area shape="rect" id="node18" href="$forecast_8h.html" title=" " alt="" coords="243,162,401,189"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1030,5,1135,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="237,319,299,345"/>
+<area shape="rect" id="node3" title=" " alt="" coords="585,393,645,420"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1694,319,1773,345"/>
+<area shape="rect" id="node5" href="$log_8h.html" title=" " alt="" coords="907,319,957,345"/>
+<area shape="rect" id="node9" href="$devices_8h.html" title=" " alt="" coords="1121,162,1247,189"/>
+<area shape="rect" id="node18" href="$_willy_weather_2authenticate_8h.html" title=" " alt="" coords="523,244,706,271"/>
+<area shape="rect" id="node19" href="$tide_8h.html" title=" " alt="" coords="857,80,989,107"/>
+<area shape="rect" id="node22" href="$_i_b_m___e_i_s_2authenticate_8h.html" title=" " alt="" coords="1577,162,1735,189"/>
+<area shape="rect" id="node23" href="$timeseries_8h.html" title=" " alt="" coords="1363,80,1511,107"/>
+<area shape="rect" id="node24" href="$harvest__area_8h.html" title=" " alt="" coords="1760,155,1909,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="850,393,918,420"/>
+<area shape="rect" id="node7" title=" " alt="" coords="943,393,1017,420"/>
+<area shape="rect" id="node8" title=" " alt="" coords="1894,393,1951,420"/>
+<area shape="rect" id="node10" title=" " alt="" coords="461,319,525,345"/>
+<area shape="rect" id="node11" title=" " alt="" coords="883,244,944,271"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1259,319,1370,345"/>
+<area shape="rect" id="node13" href="$_ubidots_2authenticate_8h.html" title=" " alt="" coords="296,244,448,271"/>
+<area shape="rect" id="node14" href="$utils_8h.html" title=" " alt="" coords="1424,244,1480,271"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1591,319,1670,345"/>
+<area shape="rect" id="node16" title=" " alt="" coords="1394,319,1481,345"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1505,319,1567,345"/>
+<area shape="rect" id="node20" href="$location_8h.html" title=" " alt="" coords="553,162,709,189"/>
+<area shape="rect" id="node21" href="$forecast_8h.html" title=" " alt="" coords="785,162,943,189"/>
 </map>

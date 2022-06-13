@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['ubidots_5fdefault_5fenv_5fname_0',['UBIDOTS_DEFAULT_ENV_NAME',['../_ubidots_2authenticate_8h.html#a53e528bd7af752372dca9e42374ee59b',1,'authenticate.h']]],
-  ['ubidots_5fmax_5finfo_5flength_1',['UBIDOTS_MAX_INFO_LENGTH',['../devices_8h.html#a4cf33715e0283b1ec56637a11642c9b3',1,'devices.h']]],
-  ['ubidots_5fmax_5fnumber_5fdevices_2',['UBIDOTS_MAX_NUMBER_DEVICES',['../devices_8h.html#a8a417829ef096b502a08dbfeb34ec614',1,'devices.h']]],
-  ['ubidots_5ftoken_5fsize_3',['UBIDOTS_TOKEN_SIZE',['../_ubidots_2authenticate_8h.html#a1f53929212b3d2d99c8a75111f81d0eb',1,'authenticate.h']]]
+  ['log_5fdebug_0',['log_debug',['../log_8h.html#aa77e596ef13d2f0f75d0ac9540ed358d',1,'log.h']]],
+  ['log_5ferror_1',['log_error',['../log_8h.html#a6ae72553ea9805dd87a463d6f710364d',1,'log.h']]],
+  ['log_5ffatal_2',['log_fatal',['../log_8h.html#a704a43b1e2ff3bb554aff101efdbeecf',1,'log.h']]],
+  ['log_5finfo_3',['log_info',['../log_8h.html#aa1cfe5444875c8eca0ea6f6993977d6d',1,'log.h']]],
+  ['log_5ftrace_4',['log_trace',['../log_8h.html#af89cb876e6e1d43cfeacdd58a7c9b78c',1,'log.h']]],
+  ['log_5fversion_5',['LOG_VERSION',['../log_8h.html#aa48b2017856a8a9c33a9935afe604c8d',1,'log.h']]],
+  ['log_5fwarn_6',['log_warn',['../log_8h.html#a04af09851c431d178f16b24fa1aac1e9',1,'log.h']]]
 ];

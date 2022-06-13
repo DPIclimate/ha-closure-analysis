@@ -8,5 +8,6 @@ var searchData=
   ['ibm_5fparsetimeseries_5',['IBM_ParseTimeseries',['../timeseries_8c.html#a40386c42348fa4088d0441003004cdec',1,'timeseries.c']]],
   ['ibm_5fparsetimeseriesalt_6',['IBM_ParseTimeseriesAlt',['../timeseries_8c.html#a8aca8a29c1f66c574f502338f563bf5d',1,'timeseries.c']]],
   ['ibm_5frefresh_7',['IBM_Refresh',['../_i_b_m___e_i_s_2authenticate_8h.html#a29bec6a28beb02fa1b31bb781afa5aa9',1,'IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle):&#160;authenticate.c'],['../_i_b_m___e_i_s_2authenticate_8c.html#a29bec6a28beb02fa1b31bb781afa5aa9',1,'IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle):&#160;authenticate.c']]],
-  ['ibm_5ftimeseriestocsv_8',['IBM_TimeseriesToCSV',['../timeseries_8h.html#a9fb3b76bdd9848fdd63d226ddf5c7d17',1,'IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request, IBM_TimeseriesDataset_TypeDef *dataset):&#160;timeseries.c'],['../timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17',1,'IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request, IBM_TimeseriesDataset_TypeDef *dataset):&#160;timeseries.c']]]
+  ['ibm_5ftimeseriestocsv_8',['IBM_TimeseriesToCSV',['../timeseries_8h.html#a9fb3b76bdd9848fdd63d226ddf5c7d17',1,'IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request, IBM_TimeseriesDataset_TypeDef *dataset):&#160;timeseries.c'],['../timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17',1,'IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request, IBM_TimeseriesDataset_TypeDef *dataset):&#160;timeseries.c']]],
+  ['init_5fevent_9',['init_event',['../log_8c.html#a40303441e0369bae90f0c91da5314176',1,'log.c']]]
 ];

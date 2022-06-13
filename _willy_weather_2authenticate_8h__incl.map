@@ -1,8 +1,12 @@
 <map id="include/WillyWeather/authenticate.h" name="include/WillyWeather/authenticate.h">
-<area shape="rect" id="node1" title=" " alt="" coords="139,5,282,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="170,5,313,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,95,69,121"/>
 <area shape="rect" id="node3" title=" " alt="" coords="94,95,157,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="181,95,241,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="265,95,375,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="399,95,478,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="223,169,283,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="233,95,343,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="367,95,446,121"/>
+<area shape="rect" id="node7" href="$log_8h.html" title=" " alt="" coords="470,95,519,121"/>
+<area shape="rect" id="node8" title=" " alt="" coords="365,169,433,196"/>
+<area shape="rect" id="node9" title=" " alt="" coords="457,169,532,196"/>
+<area shape="rect" id="node10" title=" " alt="" coords="557,169,614,196"/>
 </map>

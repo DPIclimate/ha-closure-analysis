@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['latitude_0',['latitude',['../struct_i_b_m___timeseries_req___type_def.html#ac71eb6fa067e08b3f14a64fb5afd05ea',1,'IBM_TimeseriesReq_TypeDef::latitude()'],['../struct_w_w___location___type_def.html#adce93a9d7c3ff547b4f6888181934b5e',1,'WW_Location_TypeDef::latitude()']]],
-  ['latitudes_1',['latitudes',['../struct_ubidots___devices___type_def.html#a416c2fb2f7709013c68343e7018e9cc8',1,'Ubidots_Devices_TypeDef']]],
-  ['layer_5fid_2',['layer_id',['../struct_i_b_m___timeseries_req___type_def.html#a30a21be29c318d249798df24ed9ab0b3',1,'IBM_TimeseriesReq_TypeDef']]],
-  ['location_3',['location',['../struct_f_a___harvest_area_status___type_def.html#a9c90a0220e59556f8c20c99aeb5677ed',1,'FA_HarvestAreaStatus_TypeDef::location()'],['../struct_w_w___location___type_def.html#a0bbe6febdd4a6849ac86a75e3531cbeb',1,'WW_Location_TypeDef::location()']]],
-  ['longitude_4',['longitude',['../struct_i_b_m___timeseries_req___type_def.html#a3319922f8d926c2583e505d38275b95c',1,'IBM_TimeseriesReq_TypeDef::longitude()'],['../struct_w_w___location___type_def.html#a90704c97cbfd11717c055a60f8036ca1',1,'WW_Location_TypeDef::longitude()']]],
-  ['longitudes_5',['longitudes',['../struct_ubidots___devices___type_def.html#aa9e16c53d326274693ccb73459b6f665',1,'Ubidots_Devices_TypeDef']]],
-  ['low_5ftide_5ftimestamps_6',['low_tide_timestamps',['../struct_w_w___tide_dataset___type_def.html#a4923265fc51b8eae4a941a9d932d2495',1,'WW_TideDataset_TypeDef']]],
-  ['low_5ftide_5fvalues_7',['low_tide_values',['../struct_w_w___tide_dataset___type_def.html#a0ea68961c37618bde2a8cdd37c3a46a0',1,'WW_TideDataset_TypeDef']]]
+  ['ibm_5falt_5frequest_5furl_0',['IBM_ALT_REQUEST_URL',['../timeseries_8h.html#ae7960cc4cd470c456edbf20485f553cf',1,'timeseries.h']]],
+  ['ibm_5frequest_5furl_1',['IBM_REQUEST_URL',['../timeseries_8h.html#ac6e648ffe2a9d3072dd3a528e8065c2b',1,'timeseries.h']]],
+  ['ibm_5ftoken_5furl_2',['IBM_TOKEN_URL',['../_i_b_m___e_i_s_2authenticate_8h.html#a9fd8fa71eb5e972f5b0e8d75ff288bd6',1,'authenticate.h']]],
+  ['id_3',['id',['../struct_w_w___location___type_def.html#a3cb4e7074a3992244aede19179db3945',1,'WW_Location_TypeDef']]],
+  ['ids_4',['ids',['../struct_ubidots___devices___type_def.html#ae58fcc5bdb6c4f7b10bff57eec9350a4',1,'Ubidots_Devices_TypeDef']]]
 ];
