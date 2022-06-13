@@ -8,9 +8,9 @@ int main(void){
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
-    Ubidots_Devices_TypeDef devices = {0};
-    Ubidots_ListDevices(&devices);
-    Ubidots_DevicesToCSV(&devices);
+    //Ubidots_Devices_TypeDef devices = {0};
+    //Ubidots_ListDevices(&devices);
+    //Ubidots_DevicesToCSV(&devices);
 
    // IBM_AuthHandle_TypeDef ibm_auth_handle = {0};
    // if(IBM_HandleAuth(&ibm_auth_handle) != 0){
@@ -41,8 +41,8 @@ int main(void){
 
     //WillyWeather_TidesToCSV(&location_info, &tides);
 
-    //FA_HarvestAreaStatus_TypeDef hs_status;
-    //FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &hs_status);
+    FA_HarvestAreaStatus_TypeDef hs_status;
+    FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &hs_status);
 
 
     curl_global_cleanup();

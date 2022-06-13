@@ -83,16 +83,9 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
     }
 
     if(result == CURLE_OK){
-        log_info("NSW Food authority request was successful.\n"
-                 "\tLocation:\t\t%s\n"
-                 "\tClassification:\t\t%s\n"
-                 "\tStatus:\t\t\t%s\n"
-                 "\tTime Updated:\t\t%s\n"
-                 "\tReason:\t\t\t%s\n"
-                 "\tPrevious Reason:\t%s\n",
-                 ha_status->location, ha_status->classification,
-                 ha_status->status, ha_status->time, ha_status->reason,
-                 ha_status->previous_reason);
+        log_info("NSW Food Authority request was successful.\n");
+        log_debug("Location: %s, Status: %s, Time Updated: %s\n",
+                 ha_status->location, ha_status->status, ha_status->time);
     }
 
     free(req_body);
@@ -200,10 +193,9 @@ static void cJSON_Minify_Mod(char *json){
                 if (prev_char != ' ' && prev_char != '\n'){
                     into[0] = json[0];
                     into++;
-                } else {
-                    json++;
                 }
                 prev_char = json[0];
+                json++;
                 break;
             case '\t':
             case '\r':
