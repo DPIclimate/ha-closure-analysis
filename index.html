@@ -98,17 +98,17 @@ About</h2>
 <p >Oyster harvest areas close due to rainfall, salinity, algal blooms and various other non-environmental factors. This works aims to predict closures relating to rainfall (i.e. freshwater input). This process is essentially attempting to quantify the amount of fresh water that has enteted a river system (through precipitation) and then calculating a risk factor based on previous events. The same is done for temperature accumulation.</p>
 <h2><a class="anchor" id="autotoc_md1"></a>
 Install</h2>
+<p >This process requires <a href="https://cmake.org/">cmake</a>. </p>
 <h3><a class="anchor" id="autotoc_md2"></a>
 Install dependencies</h3>
 <h4><a class="anchor" id="autotoc_md3"></a>
 cJSON</h4>
-<p >A lightweight C JSON parsing and building library <a href="https://github.com/DaveGamble/cJSON">cJSON</a>.</p>
-<p >This process requires <a href="https://cmake.org/">cmake</a>. </p><div class="fragment"><div class="line"># In a directory of your choosing</div>
+<p >A JSON parsing and building library. See: <a href="https://github.com/DaveGamble/cJSON">cJSON</a></p>
+<div class="fragment"><div class="line"># In a directory of your choosing</div>
 <div class="line">git clone https://github.com/DaveGamble/cJSON</div>
 <div class="line">cd cJSON</div>
 <div class="line">mkdir build</div>
 <div class="line">cd build</div>
-<div class="line"> </div>
 <div class="line">cmake ..</div>
 <div class="line">make</div>
 </div><!-- fragment --> <h3><a class="anchor" id="autotoc_md4"></a>
@@ -117,19 +117,19 @@ ENV Variables</h3>
 <div class="line">export WW_TOKEN=&quot;&lt;your_willy_weather_token&gt;&quot;</div>
 <div class="line">export IBM_TOKEN=&quot;&lt;your_ibm_token&gt;&quot;</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
-Clone</h3>
+Build &amp; Run</h3>
 <p >Clone this repository from your command line:</p>
 <div class="fragment"><div class="line">git clone https://github.com/DPIclimate/ha-closure-analysis</div>
 <div class="line">cd ha-closure-analysis</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md6"></a>
-Build &amp; Run</h3>
-<div class="fragment"><div class="line">make</div>
-<div class="line">./bin/program</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+<div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">make</div>
+<div class="line">./bin/program # Run</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 License</h2>
 <p >This project is MIT licensed, as found in the LICENCE file.</p>
-<hr  />
- <blockquote class="doxtable">
+<blockquote class="doxtable">
 <p >Contact <a href="#" onclick="location.href='mai'+'lto:'+'har'+'ve'+'y.b'+'at'+'es@'+'dp'+'i.n'+'sw'+'.go'+'v.'+'au'; return false;">Harvey Bates</a> </p>
 </blockquote>
 </div></div><!-- PageDoc -->

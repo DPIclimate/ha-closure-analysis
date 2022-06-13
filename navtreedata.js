@@ -32,10 +32,9 @@ var NAVTREE =
           [ "cJSON", "index.html#autotoc_md3", null ]
         ] ],
         [ "ENV Variables", "index.html#autotoc_md4", null ],
-        [ "Clone", "index.html#autotoc_md5", null ],
-        [ "Build & Run", "index.html#autotoc_md6", null ]
+        [ "Build & Run", "index.html#autotoc_md5", null ]
       ] ],
-      [ "License", "index.html#autotoc_md7", null ],
+      [ "License", "index.html#autotoc_md6", null ],
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
