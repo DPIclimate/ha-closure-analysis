@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <log.h>
 
 /// Maximum number of characters in access token
 #define UBIDOTS_TOKEN_SIZE                      100

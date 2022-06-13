@@ -37,8 +37,7 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
                                    "startDate=%s&days=%hu", WW_TOKEN,
                                    location_id, start_date, n_days);
 
-    fprintf(stdout, "[Info]: Requesting tides from Willy Weather."
-                    " URL: %s\n", url);
+    log_info("Requesting tides from Willy Weather. URL: %s\n", url);
 
     // Add relevent headers -> remember to free
     struct curl_slist *headers = NULL;
@@ -156,15 +155,15 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
     }
 
     if(result == CURLE_OK) {
-        fprintf(stdout, "[Info]: Tides were successfully received and parsed "
-                        "from Willy Weather.\n"
-                        "\tNumber of day's parsed:\t\t%hu\n"
-                        "\tNumber of high tides:\t\t%hu\n"
-                        "\tNumber of low tides:\t\t%hu\n", day_index,
-                h_index, l_index);
+        log_info("Tides were successfully received and parsed "
+                 "from Willy Weather.\n"
+                 "\tNumber of day's parsed:\t\t%hu\n"
+                 "\tNumber of high tides:\t\t%hu\n"
+                 "\tNumber of low tides:\t\t%hu\n", day_index,
+                 h_index, l_index);
     } else {
-        fprintf(stderr, "[Error]: Error parsing tide dataset. "
-                        "Check response for malformed JSON.\n");
+        log_error("Error parsing tide dataset. "
+                  "Check response for malformed JSON.\n");
     }
 
     curl_slist_free_all(headers);
@@ -187,7 +186,7 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
 uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                                 WW_TideDataset_TypeDef *dataset){
 
-    fprintf(stdout, "[Info]: Pushing tides dataset to .csv\n");
+    log_info("Pushing tides dataset to .csv\n");
 
     // Make directories if not exists
     if(MakeDirectory("datasets") != 0) return 1;
@@ -220,7 +219,7 @@ uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                           dataset->low_tide_values,
                           WW_FORECAST_RESPONSE_BUF);
 
-    fprintf(stdout, "[Info]: Low tide dataset pushed to:\t\t%s\n", filename);
+    log_info("Low tide dataset pushed to:\t\t%s\n", filename);
 
     // Build high tide file
     memset(filename, 0, sizeof(filename));
@@ -229,7 +228,7 @@ uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                           dataset->high_tide_timestamps,
                           dataset->high_tide_values,
                           WW_FORECAST_RESPONSE_BUF);
-    fprintf(stdout, "[Info]: High tide dataset pushed to:\t\t%s\n", filename);
+    log_info("High tide dataset pushed to:\t\t%s\n", filename);
 
     // Build daily maximum file
     memset(filename, 0, sizeof(filename));
@@ -238,7 +237,8 @@ uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                           dataset->daily_max_tide_timestamps,
                           dataset->daily_max_tide_values,
                           WW_FORECAST_RESPONSE_BUF);
-    fprintf(stdout, "[Info]: Daily max tide dataset pushed to:\t%s\n", filename);
+
+    log_info("Daily max tide dataset pushed to:\t%s\n", filename);
 
     free(location);
     return 0;

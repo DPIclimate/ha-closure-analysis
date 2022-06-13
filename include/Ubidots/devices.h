@@ -5,6 +5,7 @@
 #include <math.h>
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
+#include <log.h>
 
 #include "Ubidots/authenticate.h"
 #include "utils.h"

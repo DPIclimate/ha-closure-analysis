@@ -13,7 +13,7 @@
  * @see https://docs.ubidots.com/reference/get-all-devices
  * @info Device names need to be less than 100 characters.
  *
- * @param token Ubidots API token to use.
+ * @param devices Ubidots devices struct to populate.
  * @return Status code respresenting response status.
  */
 CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
@@ -24,7 +24,7 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
     const char *URL = "https://industrial.api.ubidots.com.au"
                       "/api/v2.0/devices/?page_size=500";
 
-    fprintf(stdout, "[Info]: Creating ubidots device list. URL: %s\n", URL);
+    log_info("Creating ubidots device list. URL: %s\n", URL);
 
     // Add headers, remember to free these later
     struct curl_slist *headers = NULL;
@@ -113,12 +113,11 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
         }
     }
 
-    if(result == CURLE_OK){
-        fprintf(stdout, "[Info]: Ubidots devices list succesfully created.\n"
-                        "\tTotal number of devices: %d\n", devices->count);
+    if(result == CURLE_OK && devices->count != 0){
+        log_info("Ubidots devices list (containing %d devices) successfully "
+                 "created.\n", devices->count);
     } else {
-        fprintf(stderr, "[Error]: Ubidots devices list could not be "
-                        "created.\n");
+        log_error("Ubidots devices list could not be created.\n");
     }
 
     free(auth);
@@ -139,6 +138,9 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
  * @return Error codes. 0 = OK ... 1 = ERROR
  */
 int8_t Ubidots_DevicesToCSV(Ubidots_Devices_TypeDef *devices){
+
+    log_info("Writing ubidots device list to file.\n");
+
     if(MakeDirectory("datasets") != 0) return 1;
     if(MakeDirectory("datasets/ubidots") != 0) return 1;
     char* filename ="datasets/ubidots/devices.csv";
@@ -156,6 +158,8 @@ int8_t Ubidots_DevicesToCSV(Ubidots_Devices_TypeDef *devices){
         index++;
     }
     fclose(file);
+
+    log_info("Ubidots device list written to: %s\n", filename);
 
     return 0;
 }

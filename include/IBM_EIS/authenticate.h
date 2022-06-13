@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
 #include <time.h>
+#include <log.h>
 
 #include "utils.h"
 

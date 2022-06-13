@@ -4,6 +4,7 @@ obj
 doxygen-styles
 docs
 datasets
+build
 
 *.swp
 *.*.swp

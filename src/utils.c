@@ -39,8 +39,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
 	char *ptr = realloc(mem->memory, mem->size + realsize + 1);
 
 	if(ptr == NULL){
-		fprintf(stderr, "[Error]: Not enough memory to hold HTTP response "
-                        "data.\n");
+        log_error("Not enough memory to hold HTTP response data.\n");
 		return 0;
 	}
 
@@ -62,8 +61,8 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
  *
  * @code
  *      const char *URL = "https://www.example.com";
- *      // Create some headers (more may be needed depending on application)
  *
+ *      // Create some headers (more may be needed depending on application)
  *      struct curl_slist *headers = NULL;
  *      headers = curl_slist_append(headers, "Content-Type: application/json");
  *
@@ -88,7 +87,7 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
 
     CURL *curl = curl_easy_init();
     if(!curl){
-        fprintf(stderr, "Curl not found. Exiting.\n");
+        log_error("Curl not found. Exiting.\n");
         return CURLE_FUNCTION_NOT_FOUND;
     }
 
@@ -112,8 +111,8 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
     CURLcode result = curl_easy_perform(curl);
 
     if(result != CURLE_OK){
-        fprintf(stderr, "curl request failed: %s\n",
-                curl_easy_strerror(result));
+        log_error("Curl request failed: %s\n",
+                  curl_easy_strerror(result));
     } else {
         *response = cJSON_Parse(chunk.memory);
     }
@@ -139,22 +138,22 @@ int8_t MakeDirectory(const char* directory){
     if(mkdir(directory, S_IRWXU | S_IRWXG | S_IRWXO) == -1){
         // If the directory already exists it not an error
         if(errno != EEXIST){
-            fprintf(stderr, "[Error]: Unable to create directory: %s -> ",
-                    directory);
+            log_error("Unable to create directory: %s\n",
+                      directory);
             switch(errno){
                 case EACCES:
-                    fprintf(stderr, "Permission denied.\n");
+                    log_error("Permission denied.\n");
                     return 1;
                 case ENOENT:
-                    fprintf(stderr, "Path does not exist.\n");
+                    log_error("Path does not exist.\n");
                     return 1;
                 default:
-                    fprintf(stderr, "Unknown error.\n");
+                    log_error("Unknown error.\n");
                     return 1;
             }
         }
     } else {
-        fprintf(stdout, "[Info]: Created directory: %s\n", directory);
+        log_info("Created directory: %s\n", directory);
     }
     return 0;
 }
@@ -184,6 +183,8 @@ int8_t MakeDirectory(const char* directory){
  */
 void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
                            uint16_t max_n_values){
+
+    log_info("Writing timeseries dataset to %s\n", filename);
 
     FILE *file = fopen(filename, "w+");
     fprintf(file, "UNIX;Date;Tide (m)\n");

@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <log.h>
 
 /// Holds HTTP response data before converting these data into cJSON objects.
 typedef struct {

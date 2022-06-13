@@ -8,16 +8,16 @@ static void IBM_ParseTimeseries(cJSON* response,
 static void IBM_ParseTimeseriesAlt(cJSON* response,
                                    IBM_TimeseriesDataset_TypeDef *dataset);
 
-/// Build IBM EMS request URL
+/// Build IBM EIS request URL
 static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url);
 
-/// Build IBM EMS request URL for alternative endpoint
+/// Build IBM EIS request URL for alternative endpoint
 static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url);
 
 /**
- * IBM EMS get timeseries data as a JSON response.
+ * IBM EIS get timeseries data as a JSON response.
  *
- * IBM EMS provides two endpoints to get data from:
+ * IBM EIS provides two endpoints to get data from:
  * - https://pairs.res.ibm.com (IBM_REQUEST_URL)
  * - https://ibmpairs-mvp2-api.mybluemix.net (IBM_ALT_REQUEST_URL)
  *
@@ -63,7 +63,7 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
         IBM_BuildURL(request, url);
     }
 
-    fprintf(stdout, "[Info]: GET from IBM EMS (layer ID: %d) : %s\n",
+    log_info("Getting IBM EIS layer (ID: %d) : %s\n",
             request->layer_id, url);
 
     // Authorization builder
@@ -88,8 +88,8 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
             IBM_ParseTimeseries(response, dataset);
         }
     } else {
-        fprintf(stderr, "[Error]: Unable to getting JSON response from "
-                        "IBM EMS timeseries dataset.\n");
+        log_error("Unable to getting JSON response from "
+                  "IBM EIS timeseries dataset.\n");
     }
 
     free(auth_header);
@@ -97,7 +97,7 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
     cJSON_Delete(response);
 
     if(result == CURLE_OK){
-        fprintf(stdout, "[Info]: IBM EMS timeseries request was successful.\n");
+        log_info("IBM EIS timeseries request was successful.\n");
     }
 
     return result;
@@ -116,7 +116,7 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
 static void IBM_ParseTimeseries(cJSON* response,
                                 IBM_TimeseriesDataset_TypeDef *dataset){
 
-    fprintf(stdout, "[Info]: Parsing IBM EIS request results.\n");
+    log_info("Parsing IBM EIS request results.\n");
 
     // For query information
     cJSON* start = NULL;
@@ -153,11 +153,11 @@ static void IBM_ParseTimeseries(cJSON* response,
     if(cJSON_IsArray(data)){
         cJSON_ArrayForEach(point, data){
             if(index > IBM_MAX_RESPONSE_LENGTH){
-                fprintf(stderr,
-                        "[Error]: Allocated memory exceeded. "
+                log_error(
+                        "Allocated memory exceeded. "
                         "Increase the size of IBM_MAX_RESPONSE_LENGTH to "
                         "account for the number of results in this query to "
-                        "IMB EMS.\n");
+                        "IMB EIS.\n");
                 return;
             }
             cJSON* ts = NULL;
@@ -171,14 +171,14 @@ static void IBM_ParseTimeseries(cJSON* response,
             if(cJSON_IsString(value) && value->valuestring != NULL){
                 dataset->values[index] = strtod(value->valuestring, NULL);
             } else {
-                fprintf(stderr, "[Error]: Parse error for value: %s\n",
-                        value->valuestring);
+                log_error("Parse error for value: %s\n",
+                          value->valuestring);
             }
             index++;
         }
     }
 
-    fprintf(stdout, "[Info]: Finished parsing response from IBM EMS.\n");
+    log_info("Finished parsing response from IBM EIS.\n");
 }
 
 /**
@@ -194,7 +194,7 @@ static void IBM_ParseTimeseries(cJSON* response,
 static void IBM_ParseTimeseriesAlt(cJSON* response,
                                    IBM_TimeseriesDataset_TypeDef *dataset){
 
-    fprintf(stdout, "[Info]: Parsing IBM EIS alternative request results.\n");
+    log_info("Parsing IBM EIS alternative request results.\n");
 
     // For query information
     cJSON* count = NULL;
@@ -235,7 +235,7 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
                         dataset->end = unix_time;
                     }
                 } else {
-                    fprintf(stderr, "Error parsing datetime: %s\n",
+                    log_error("Unable to parse datetime: %s\n",
                             ts->valuestring);
                 }
             }
@@ -248,16 +248,16 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
             index++;
         }
     } else {
-        fprintf(stderr, "[Error]: IBM response received. However, the response "
+        log_error("IBM response received. However, the response "
                         "was in an unrecognized format and "
                         "could not be parased.\n");
     }
 
-    fprintf(stdout, "[Info]: Finished parsing response from IBM EMS.\n");
+    log_info("Finished parsing response from IBM EIS.\n");
 }
 
 /**
- * Build a URL for IBM EMS at endpoint https://pairs.res.ibm.com
+ * Build a URL for IBM EIS at endpoint https://pairs.res.ibm.com
  *
  * Takes a request structure and formulates the appropriate URL.
  *
@@ -266,8 +266,8 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
  */
 static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
 
-    fprintf(stdout, "[Info]: Building URL for IBM EMS endpoint: %s\n",
-            IBM_REQUEST_URL);
+    log_info("Building URL for IBM EIS endpoint: %s\n",
+             IBM_REQUEST_URL);
 
     snprintf(url, IBM_URL_SIZE, "%s/v2/timeseries?layer="
                                 "%d"
@@ -284,7 +284,7 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
 }
 
 /**
- * Build a URL for IBM EMS at endpoint https://ibmpairs-mvp2-api.mybluemix.net
+ * Build a URL for IBM EIS at endpoint https://ibmpairs-mvp2-api.mybluemix.net
  *
  * Takes a request structure and formulates the appropriate URL.
  *
@@ -293,8 +293,8 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
  */
 static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
 
-    fprintf(stdout, "[Info]: Building URL for alternative IBM EMS endpoint: "
-                    "%s\n", IBM_ALT_REQUEST_URL);
+    log_info("Building URL for alternative IBM EIS endpoint: "
+             "%s\n", IBM_ALT_REQUEST_URL);
 
     // Create start time char* e.g. 2022-06-06T12:25:55.000Z
     const uint8_t START_SIZE = 25;
@@ -347,7 +347,7 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
 int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset){
 
-    fprintf(stdout, "[Info]: Writing IBM timeseries dataset to a .csv file.\n");
+    log_info("Writing IBM timeseries dataset to a .csv file.\n");
 
     if(MakeDirectory("datasets") != 0) return 1;
     if(MakeDirectory("datasets/ibm") != 0) return 1;
@@ -369,7 +369,7 @@ int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
     WriteTimeseriesToFile(filename, dataset->timestamps, dataset->values,
                           dataset->count);
 
-    fprintf(stdout, "[Info]: IBM timeseries dataset witten to: %s\n", filename);
+    log_info("IBM timeseries dataset witten to: %s\n", filename);
 
     return 0;
 }

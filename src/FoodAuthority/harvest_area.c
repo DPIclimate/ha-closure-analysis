@@ -1,4 +1,4 @@
-#include "FoodAuthority/food_auth.h"
+#include "FoodAuthority/harvest_area.h"
 
 /// Find value with HTML tags.
 static void FA_FindHTMLValue(char* data, const char* search_term,
@@ -54,7 +54,7 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
     strcat(req_body, harvest_name);
     strcat(req_body, BASE_BODY);
 
-    fprintf(stdout, "[Info]: Requesting harvest area information for site %s "
+    log_info("Requesting harvest area information for site %s "
             "from: %s\n", harvest_name, URL);
 
     struct curl_slist* headers = NULL;
@@ -76,23 +76,23 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
                 cJSON_Minify_Mod(data->valuestring); // Remove unessessary chars
                 FA_ParseResponse(data->valuestring, ha_status);
             } else {
-                fprintf(stderr, "[Error]: Food authority request was "
-                                "successful. But no data was found.\n");
+                log_error("NSW Food Authority request was successful. But"
+                          " no data was found.\n");
             }
         }
     }
 
     if(result == CURLE_OK){
-        fprintf(stdout, "[Info]: NSW Food authority request was successful.\n"
-                        "\tLocation:\t\t%s\n"
-                        "\tClassification:\t\t%s\n"
-                        "\tStatus:\t\t\t%s\n"
-                        "\tTime Updated:\t\t%s\n"
-                        "\tReason:\t\t\t%s\n"
-                        "\tPrevious Reason:\t%s\n",
-                        ha_status->location, ha_status->classification,
-                        ha_status->status, ha_status->time, ha_status->reason,
-                        ha_status->previous_reason);
+        log_info("NSW Food authority request was successful.\n"
+                 "\tLocation:\t\t%s\n"
+                 "\tClassification:\t\t%s\n"
+                 "\tStatus:\t\t\t%s\n"
+                 "\tTime Updated:\t\t%s\n"
+                 "\tReason:\t\t\t%s\n"
+                 "\tPrevious Reason:\t%s\n",
+                 ha_status->location, ha_status->classification,
+                 ha_status->status, ha_status->time, ha_status->reason,
+                 ha_status->previous_reason);
     }
 
     free(req_body);
@@ -114,7 +114,7 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
 static void FA_ParseResponse(char* data,
                                    FA_HarvestAreaStatus_TypeDef *ha_status){
 
-    fprintf(stdout, "[Info]: Parsing JSON response from NSW Food Authority.\n");
+    log_info("Parsing JSON response from NSW Food Authority.\n");
 
     // Items to extract from request. The order of these items matters for the
     // below switch statement.
@@ -139,8 +139,8 @@ static void FA_ParseResponse(char* data,
         }
 
         if(strlen(value) > FA_MAX_BUFFER){
-            fprintf(stderr, "[Error]: Value: %s exceeds set maxiumum buffer"
-                            "size. Skipping.\n", value);
+            log_error("Value: %s exceeds the set maxiumu  buffer"
+                      " size. Skipping.\n", value);
             memset(value, 0, sizeof(value));
             continue;
         }
@@ -242,7 +242,7 @@ static void FA_FindHTMLValue(char* data, const char* search_term,
 
     char* clsf = strstr(data, search_term);
     if(clsf == NULL) {
-        fprintf(stderr, "[Error]: No value found for: %s\n", search_term);
+        log_error("No value found for: %s\n", search_term);
         return; // Sub-string not found
     }
 

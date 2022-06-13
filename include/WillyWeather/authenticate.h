@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <cjson/cJSON.h>
 #include <curl/curl.h>
+#include <log.h>
 
 /// Willy weather access token size
 #define WW_TOKEN_SIZE                          100

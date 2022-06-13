@@ -1,9 +1,10 @@
-#ifndef HA_CLOSURE_ANALYSIS_FOOD_AUTH_H
-#define HA_CLOSURE_ANALYSIS_FOOD_AUTH_H
+#ifndef HA_CLOSURE_ANALYSIS_HARVEST_AREA_H
+#define HA_CLOSURE_ANALYSIS_HARVEST_AREA_H
 
 #include <curl/curl.h>
 #include <cjson/cJSON.h>
 #include <time.h>
+#include <log.h>
 
 #include "utils.h"
 
@@ -33,4 +34,4 @@ typedef struct {
 CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
                                        FA_HarvestAreaStatus_TypeDef *ha_status);
 
-#endif //HA_CLOSURE_ANALYSIS_FOOD_AUTH_H
+#endif //HA_CLOSURE_ANALYSIS_HARVEST_AREA_H

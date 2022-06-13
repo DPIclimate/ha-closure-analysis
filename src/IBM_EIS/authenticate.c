@@ -21,17 +21,17 @@ int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
     if(auth_handle->token_expiry != 0){
         time_t t_now = time(NULL);
         if(t_now < auth_handle->token_expiry){
-            fprintf(stdout, "[Info]: IBM EIS authentication token is still "
-                            "valid. Skipping re-authentication.\n");
+            log_info("IBM EIS authentication token is still "
+                     "valid. Skipping re-authentication.\n");
             return 0;
         } else {
-            fprintf(stdout, "[Info]: IBM EIS authentication expired. "
-                            "Refreshing.\n");
+            log_info("IBM EIS authentication expired. "
+                     "Refreshing.\n");
             if(IBM_Refresh(auth_handle) == CURLE_OK){
                 return 0;
             }
-            fprintf(stderr, "[Error]: IBM EIS refresh failed. Trying to "
-                            "authenticate again.\n");
+            log_error("IBM EIS refresh failed. Trying to "
+                      "authenticate again.\n");
         }
     }
 
@@ -41,8 +41,8 @@ int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
             return 0;
         }
     } else {
-        fprintf(stderr, "[Error]: IBM EIS API key not found. "
-                        "Unable to authenicate with IBM. Exiting.\n");
+        log_error("IBM EIS API key not found. "
+                  "Unable to authenicate with IBM. Exiting.\n");
     }
     return 1;
 }
@@ -62,7 +62,7 @@ int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
 CURLcode IBM_Authenticate(const char* token,
                           IBM_AuthHandle_TypeDef* auth_handle) {
 
-    fprintf(stdout, "[Info]: Authenicating with IBM EIS.\n");
+    log_info("Authenicating with IBM EIS.\n");
 
     // Build request body
     const char* BASE_BODY = "client_id=ibm-pairs"
@@ -109,8 +109,8 @@ CURLcode IBM_Authenticate(const char* token,
     if(result == CURLE_OK){
         // Set UNIX time expiry in just under 1 hour
         auth_handle->token_expiry = time(NULL) + 3500;
-        fprintf(stdout, "[Info]: Authenicated with IBM EIS. Token expires at: "
-                        "%ld\n", auth_handle->token_expiry);
+        log_info("Authenicated with IBM EIS. Token expires at: "
+                 "%ld\n", auth_handle->token_expiry);
     }
 
     free(req_body);
@@ -139,7 +139,7 @@ CURLcode IBM_Authenticate(const char* token,
  */
 CURLcode IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle) {
 
-    fprintf(stdout, "[Info]: Re-authenicating with IBM EIS.\n");
+    log_info("Re-authenicating with IBM EIS.\n");
 
     const char* BASE_BODY = "client_id=ibm-pairs"
                             "&grant_type=refresh_token"
@@ -178,8 +178,8 @@ CURLcode IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle) {
     if(response == CURLE_OK){
         // Set UNIX time expiry in just under 1 hour
         auth_handle->token_expiry = time(NULL) + 3500;
-        fprintf(stdout, "[Info]: Re-authenicated with IBM EIS. Token expires "
-                        "at: %ld\n", auth_handle->token_expiry);
+        log_info("Re-authenicated with IBM EIS. Token expires "
+                 "at: %ld\n", auth_handle->token_expiry);
     }
 
     free(req_body);

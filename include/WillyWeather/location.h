@@ -7,6 +7,7 @@
 #include <math.h>
 #include <cjson/cJSON.h>
 #include <curl/curl.h>
+#include <log.h>
 
 #include "WillyWeather/authenticate.h"
 #include "utils.h"

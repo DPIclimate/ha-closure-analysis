@@ -5,6 +5,7 @@
 #include <cjson/cJSON.h>
 #include <math.h>
 #include <time.h>
+#include <log.h>
 
 #include "IBM_EIS/authenticate.h"
 #include "utils.h"

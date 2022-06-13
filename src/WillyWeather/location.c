@@ -8,9 +8,8 @@
  * cJSON data of which multiple sites can be obatined (limited through q_limit).
  *
  * @code
- * const char* search_location = "Batemans";
  * WW_Location_TypeDef *location_info;
- * WillyWeather_GetLocationByName(ww_token, search_location, location_info);
+ * WillyWeather_GetLocationByName("Batemans", location_info);
  * @endcode
  *
  * @see
@@ -20,7 +19,6 @@
  * @info Response length is limited to one as to ensure only one location is
  * returned per query.
  *
- * @param token Willy Weather token.
  * @param name Name to query against (must not contain spaces!).
  * @param location_info Location structure to populate.
  * @return The result status code provided by CURL.
@@ -32,8 +30,10 @@ CURLcode WillyWeather_GetLocationByName(const char *name,
 
     char url[WW_LOCATION_URL_BUF];
     snprintf(url, WW_LOCATION_URL_BUF, "https://api.willyweather.com.au/v2/%s/"
-                                   "search.json?query=%s&limit=%d", WW_TOKEN,
+                                       "search.json?query=%s&limit=%d", WW_TOKEN,
              name, 1);
+
+    log_info("Getting Willy Weather location information for %s\n", name);
 
     struct curl_slist *headers= NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -103,8 +103,7 @@ CURLcode WillyWeather_GetLocationByName(const char *name,
     }
 
     if(result == CURLE_OK){
-        fprintf(stdout, "[Info]: Location request to Willy Weather was "
-                        "successful.\n"
+        log_info("Location request to Willy Weather was successful.\n"
                         "Location ID:\t\t%hu\n"
                         "Name:\t\t\t%s\n"
                         "Region:\t\t\t%s\n"
@@ -118,8 +117,8 @@ CURLcode WillyWeather_GetLocationByName(const char *name,
                 location_info->postcode, location_info->latitude,
                 location_info->longitude);
     } else {
-        fprintf(stderr, "[Error]: Unable to process Willy Weather location"
-                        "request. Error status: %d\n", result);
+        log_error("Unable to process Willy Weather location"
+                  "request. Error status: %d\n", result);
     }
 
     curl_slist_free_all(headers);
