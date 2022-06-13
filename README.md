@@ -23,18 +23,17 @@ attempting to quantify the amount of fresh water that has enteted a river system
 then calculating a risk factor based on previous events. The same is done for temperature accumulation.
 
 ## Install
+This process requires [cmake](https://cmake.org/).
 ### Install dependencies
 #### cJSON
-A lightweight C JSON parsing and building library [cJSON](https://github.com/DaveGamble/cJSON).
+A JSON parsing and building library. See: [cJSON](https://github.com/DaveGamble/cJSON)
 
-This process requires [cmake](https://cmake.org/).
 ```bash
 # In a directory of your choosing
 git clone https://github.com/DaveGamble/cJSON
 cd cJSON
 mkdir build
 cd build
-
 cmake ..
 make
 ```
@@ -47,23 +46,21 @@ export WW_TOKEN="<your_willy_weather_token>"
 export IBM_TOKEN="<your_ibm_token>"
 ```
 
-### Clone
+### Build & Run
 Clone this repository from your command line:
 
 ```bash
 git clone https://github.com/DPIclimate/ha-closure-analysis
 cd ha-closure-analysis
-```
-
-### Build & Run
-```bash
+mkdir build
+cd build
+cmake ..
 make
-./bin/program
+./bin/program # Run
 ```
 
 ## License
 This project is MIT licensed, as found in the LICENCE file.
 
----
 > Contact [Harvey Bates](mailto:harvey.bates@dpi.nsw.gov.au)
 
