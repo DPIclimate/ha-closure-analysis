@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <curl/curl.h>
+#include <assert.h>
 #include <log.h>
 
 #include "Ubidots/devices.h"

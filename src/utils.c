@@ -187,7 +187,7 @@ void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
     log_info("Writing timeseries dataset to %s\n", filename);
 
     FILE *file = fopen(filename, "w+");
-    fprintf(file, "UNIX;Date;Tide (m)\n");
+    fprintf(file, "UNIX;Date;Data\n");
 
     uint16_t index = 0;
     while(dates[index] != '\0' && index < max_n_values){

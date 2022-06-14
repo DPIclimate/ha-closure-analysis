@@ -103,19 +103,13 @@ CURLcode WillyWeather_GetLocationByName(const char *name,
     }
 
     if(result == CURLE_OK){
-        log_info("Location request to Willy Weather was successful.\n"
-                        "Location ID:\t\t%hu\n"
-                        "Name:\t\t\t%s\n"
-                        "Region:\t\t\t%s\n"
-                        "State:\t\t\t%s\n"
-                        "Postcode:\t\t%s\n"
-                        "Coordinates:\n"
-                        "\tLatitude:\t%lf\n"
-                        "\tLongitude:\t%lf\n",
-                location_info->id, location_info->location,
-                location_info->region, location_info->state,
-                location_info->postcode, location_info->latitude,
-                location_info->longitude);
+        log_info("Location request to Willy Weather was successful.\n");
+        log_debug("Location ID: %hu, Name: %s, State: %s, Latitude: %lf, "
+                  "Longitude: %lf\n",
+                  location_info->id, location_info->location,
+                  location_info->state,
+                  location_info->latitude,
+                  location_info->longitude);
     } else {
         log_error("Unable to process Willy Weather location"
                   "request. Error status: %d\n", result);

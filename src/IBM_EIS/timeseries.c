@@ -279,8 +279,8 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
              req->layer_id,
              req->latitude,
              req->longitude,
-             req->start * 1000,
-             req->end * 1000);
+             (req->start - 86400) * 1000,
+             (req->end - 86400) * 1000);
 }
 
 /**
@@ -299,7 +299,8 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
     // Create start time char* e.g. 2022-06-06T12:25:55.000Z
     const uint8_t START_SIZE = 25;
     char start_time[START_SIZE];
-    struct tm *start_tm = localtime(&req->start);
+    time_t start_offset = req->start - 86400;
+    struct tm *start_tm = localtime(&start_offset);
     snprintf(start_time, START_SIZE, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
             start_tm->tm_year + 1900,
             start_tm->tm_mon + 1,
@@ -311,7 +312,8 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
     // Create end time char*
     const uint8_t END_SIZE = 25;
     char end_time[END_SIZE];
-    struct tm *end_tm = localtime(&req->end);
+    time_t end_offset = req->end - 86400;
+    struct tm *end_tm = localtime(&end_offset);
     snprintf(end_time, END_SIZE, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
             end_tm->tm_year + 1900,
             end_tm->tm_mon + 1,

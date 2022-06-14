@@ -19,6 +19,9 @@
 
 /// Tide data from Willy Weather request
 typedef struct{
+    size_t n_days;
+    size_t n_high_tide;
+    size_t n_low_tide;
     time_t low_tide_timestamps[WW_FORECAST_RESPONSE_BUF];
     double low_tide_values[WW_FORECAST_RESPONSE_BUF];
     time_t high_tide_timestamps[WW_FORECAST_RESPONSE_BUF];
