@@ -173,7 +173,13 @@ Functions</h2></td></tr>
 
 <p>Get the tides data from Willy Weather. </p>
 <p >Get calculated high and low tides from Willy Weather.</p>
-<p >Willy Weather provides tide data for coastal regions. These data consist of high and low tides (and timestamps) grouped by day. This function extracts relevent high, low and maximum daily tides and appends them to a tides struct (<a class="el" href="struct_w_w___tide_dataset___type_def.html" title="Tide data from Willy Weather request.">WW_TideDataset_TypeDef</a>).</p>
+<p >Willy Weather provides tide data for coastal regions. These data consist of high and low tides (and timestamps) grouped by day. This function extracts relevent high, low and maximum daily tides and appends them to a tides struct (<a class="el" href="struct_w_w___tide_dataset___type_def.html" title="Tide data from Willy Weather request.">WW_TideDataset_TypeDef</a>). </p><pre class="fragment">           ,-'''-.─────── High Tide (HT)
+         ,-'   ▲   `-.
+       ,'      │      `.
+     ,'        │        `.
+    /          │          \
+   /           │           \
+</pre><p> -&mdash;+---------&mdash;│---------&mdash;-----------------------&mdash; Tide Diff │ \ / │ \ / MAX(TD = HT - LT) │ &lsquo;. ,&rsquo; │ &lsquo;. ,&rsquo; │ &lsquo;-. ,-&rsquo; ▼ Low Tide (LT) ───&lsquo;-,,,-&rsquo;</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *start_date = <span class="stringliteral">&quot;2022-05-01&quot;</span>;</div>
 <div class="line">WillyWeather_GetForecast(ww_token, 1215, <a class="code hl_define" href="forecast_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a>, start_date, 10);</div>
 <div class="ttc" id="aforecast_8h_html_aeca2b825d67d69bd01529f5c80691c43"><div class="ttname"><a href="forecast_8h.html#aeca2b825d67d69bd01529f5c80691c43">WW_FORECAST_TIDE</a></div><div class="ttdeci">#define WW_FORECAST_TIDE</div><div class="ttdoc">Tides.</div><div class="ttdef"><b>Definition:</b> forecast.h:11</div></div>
