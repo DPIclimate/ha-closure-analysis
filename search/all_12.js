@@ -21,6 +21,7 @@ var searchData=
   ['ww_5flocation_5ftypedef_18',['WW_Location_TypeDef',['../struct_w_w___location___type_def.html',1,'']]],
   ['ww_5flocation_5furl_5fbuf_19',['WW_LOCATION_URL_BUF',['../location_8h.html#aaf653b8bab9367491c613eadf521f8fc',1,'location.h']]],
   ['ww_5ftidedataset_5ftypedef_20',['WW_TideDataset_TypeDef',['../struct_w_w___tide_dataset___type_def.html',1,'']]],
-  ['ww_5ftoken_21',['WW_TOKEN',['../_willy_weather_2authenticate_8h.html#a63df70fd2033f6234824c21f182aa640',1,'authenticate.h']]],
-  ['ww_5ftoken_5fsize_22',['WW_TOKEN_SIZE',['../_willy_weather_2authenticate_8h.html#a19b828d5fca2f31c8a32dd09b87c45f5',1,'authenticate.h']]]
+  ['ww_5ftidesfromcsv_21',['WW_TidesFromCSV',['../tide_8h.html#a9c3330df9eb90f9b13116d7660e82270',1,'WW_TidesFromCSV(const char *filename):&#160;tide.c'],['../tide_8c.html#a9c3330df9eb90f9b13116d7660e82270',1,'WW_TidesFromCSV(const char *filename):&#160;tide.c']]],
+  ['ww_5ftoken_22',['WW_TOKEN',['../_willy_weather_2authenticate_8h.html#a63df70fd2033f6234824c21f182aa640',1,'authenticate.h']]],
+  ['ww_5ftoken_5fsize_23',['WW_TOKEN_SIZE',['../_willy_weather_2authenticate_8h.html#a19b828d5fca2f31c8a32dd09b87c45f5',1,'authenticate.h']]]
 ];

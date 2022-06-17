@@ -118,6 +118,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17">IBM_TimeseriesToCSV</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *request, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset)</td></tr>
 <tr class="memdesc:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries dataset to .csv file.  <a href="timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17">More...</a><br /></td></tr>
 <tr class="separator:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1b5aac68159f94f647e4de6191de101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#ab1b5aac68159f94f647e4de6191de101">IBM_TimeseriesFromCSV</a> (const char *filename)</td></tr>
+<tr class="separator:ab1b5aac68159f94f647e4de6191de101"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a44e9f7dbf87004b1e08552d3200c17f1" name="a44e9f7dbf87004b1e08552d3200c17f1"></a>
@@ -375,6 +377,33 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ab1b5aac68159f94f647e4de6191de101" name="ab1b5aac68159f94f647e4de6191de101"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1b5aac68159f94f647e4de6191de101">&#9670;&nbsp;</a></span>IBM_TimeseriesFromCSV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> IBM_TimeseriesFromCSV </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Load timeseries dataset from a cached .csv for .txt file.</p>
+<p >Requires the file to be formatted as Unix;Date;Value</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Filename of file to open, including path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Dataset containing timeseries data </dd></dl>
 
 </div>
 </div>

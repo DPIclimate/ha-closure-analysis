@@ -88,11 +88,44 @@ $(document).ready(function(){initNavTree('severity__index_8h_source.html',''); i
   <div class="headertitle"><div class="title">severity_index.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="severity__index_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#define HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#endif </span><span class="comment">//HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H</span></div>
+<a href="severity__index_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;assert.h&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="utils_8h.html">utils.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="severity__index_8h.html#a7c616a125883710aa521385bcbe94bae">   11</a></span><span class="preprocessor">#define SI_MAX_NUM_DAYS 5000</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2">   14</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d">   15</a></span>    <a class="code hl_enumvalue" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d">SI_MIN_DAYS_ERROR</a> = -2,</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72">   16</a></span>    <a class="code hl_enumvalue" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72">SI_ALLOCATION_EXCEEDED</a> = -1,</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36">   17</a></span>    <a class="code hl_enumvalue" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36">SI_OK</a> = 0,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>} <a class="code hl_enumeration" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2">SI_Handle_TypeDef</a>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="struct_s_i___dataset___type_def.html">   21</a></span><span class="keyword">typedef</span> <span class="keyword">struct</span>{</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_s_i___dataset___type_def.html#a77370a074e6b8f06b1eb799aaf555efc">   22</a></span>    time_t timestamps[<a class="code hl_define" href="severity__index_8h.html#a7c616a125883710aa521385bcbe94bae">SI_MAX_NUM_DAYS</a>];</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="struct_s_i___dataset___type_def.html#ad776876455a8e483a724731f532cc7c1">   23</a></span>    <span class="keywordtype">double</span> flooding_severity_index[<a class="code hl_define" href="severity__index_8h.html#a7c616a125883710aa521385bcbe94bae">SI_MAX_NUM_DAYS</a>];</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_s_i___dataset___type_def.html#a512b403691c742b4244682bbd0255fcd">   24</a></span>    <span class="keywordtype">double</span> heat_severity_index[<a class="code hl_define" href="severity__index_8h.html#a7c616a125883710aa521385bcbe94bae">SI_MAX_NUM_DAYS</a>];</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} <a class="code hl_struct" href="struct_s_i___dataset___type_def.html">SI_Dataset_TypeDef</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="severity__index_8h.html#a6a82b3371dcec654f1ca0f520d34cc1d">   27</a></span>int8_t <a class="code hl_function" href="severity__index_8h.html#a6a82b3371dcec654f1ca0f520d34cc1d">SI_CalculateFloodRisk</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>* tide_diff,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                             <span class="keyword">const</span> <span class="keywordtype">double</span>* daily_precipitation,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                             <span class="keyword">const</span> time_t* timestamps,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                             uint16_t n_days);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif </span><span class="comment">//HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H</span></div>
+<div class="ttc" id="aseverity__index_8h_html_a6a82b3371dcec654f1ca0f520d34cc1d"><div class="ttname"><a href="severity__index_8h.html#a6a82b3371dcec654f1ca0f520d34cc1d">SI_CalculateFloodRisk</a></div><div class="ttdeci">int8_t SI_CalculateFloodRisk(const double *tide_diff, const double *daily_precipitation, const time_t *timestamps, uint16_t n_days)</div></div>
+<div class="ttc" id="aseverity__index_8h_html_a7c616a125883710aa521385bcbe94bae"><div class="ttname"><a href="severity__index_8h.html#a7c616a125883710aa521385bcbe94bae">SI_MAX_NUM_DAYS</a></div><div class="ttdeci">#define SI_MAX_NUM_DAYS</div><div class="ttdef"><b>Definition:</b> severity_index.h:11</div></div>
+<div class="ttc" id="aseverity__index_8h_html_aa71803f092765253b58945f79c193ea2"><div class="ttname"><a href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2">SI_Handle_TypeDef</a></div><div class="ttdeci">SI_Handle_TypeDef</div><div class="ttdoc">Handles severity index errors.</div><div class="ttdef"><b>Definition:</b> severity_index.h:14</div></div>
+<div class="ttc" id="aseverity__index_8h_html_aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d"><div class="ttname"><a href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d">SI_MIN_DAYS_ERROR</a></div><div class="ttdeci">@ SI_MIN_DAYS_ERROR</div><div class="ttdef"><b>Definition:</b> severity_index.h:15</div></div>
+<div class="ttc" id="aseverity__index_8h_html_aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72"><div class="ttname"><a href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72">SI_ALLOCATION_EXCEEDED</a></div><div class="ttdeci">@ SI_ALLOCATION_EXCEEDED</div><div class="ttdef"><b>Definition:</b> severity_index.h:16</div></div>
+<div class="ttc" id="aseverity__index_8h_html_aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36"><div class="ttname"><a href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36">SI_OK</a></div><div class="ttdeci">@ SI_OK</div><div class="ttdef"><b>Definition:</b> severity_index.h:17</div></div>
+<div class="ttc" id="astruct_s_i___dataset___type_def_html"><div class="ttname"><a href="struct_s_i___dataset___type_def.html">SI_Dataset_TypeDef</a></div><div class="ttdoc">Handles severity index dataset.</div><div class="ttdef"><b>Definition:</b> severity_index.h:21</div></div>
+<div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

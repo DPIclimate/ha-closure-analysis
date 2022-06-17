@@ -85,17 +85,137 @@ $(document).ready(function(){initNavTree('severity__index_8h.html',''); initResi
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">severity_index.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;assert.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="utils_8h_source.html">utils.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for severity_index.h:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="severity__index_8h__incl.svg" width="918" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="severity__index_8h__dep__incl.svg" width="170" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="severity__index_8h__dep__incl.svg" width="276" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div>
 <p><a href="severity__index_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_i___dataset___type_def.html">SI_Dataset_TypeDef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles severity index dataset.  <a href="struct_s_i___dataset___type_def.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a7c616a125883710aa521385bcbe94bae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="severity__index_8h.html#a7c616a125883710aa521385bcbe94bae">SI_MAX_NUM_DAYS</a>&#160;&#160;&#160;5000</td></tr>
+<tr class="separator:a7c616a125883710aa521385bcbe94bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aa71803f092765253b58945f79c193ea2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2">SI_Handle_TypeDef</a> { <a class="el" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d">SI_MIN_DAYS_ERROR</a> = -2
+, <a class="el" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72">SI_ALLOCATION_EXCEEDED</a> = -1
+, <a class="el" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36">SI_OK</a> = 0
+ }</td></tr>
+<tr class="memdesc:aa71803f092765253b58945f79c193ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles severity index errors.  <a href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2">More...</a><br /></td></tr>
+<tr class="separator:aa71803f092765253b58945f79c193ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a6a82b3371dcec654f1ca0f520d34cc1d"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="severity__index_8h.html#a6a82b3371dcec654f1ca0f520d34cc1d">SI_CalculateFloodRisk</a> (const double *tide_diff, const double *daily_precipitation, const time_t *timestamps, uint16_t n_days)</td></tr>
+<tr class="separator:a6a82b3371dcec654f1ca0f520d34cc1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a7c616a125883710aa521385bcbe94bae" name="a7c616a125883710aa521385bcbe94bae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c616a125883710aa521385bcbe94bae">&#9670;&nbsp;</a></span>SI_MAX_NUM_DAYS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SI_MAX_NUM_DAYS&#160;&#160;&#160;5000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="aa71803f092765253b58945f79c193ea2" name="aa71803f092765253b58945f79c193ea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa71803f092765253b58945f79c193ea2">&#9670;&nbsp;</a></span>SI_Handle_TypeDef</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="severity__index_8h.html#aa71803f092765253b58945f79c193ea2">SI_Handle_TypeDef</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handles severity index errors. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d" name="aa71803f092765253b58945f79c193ea2a75f1474b7896aa73b0e38d0695f5360d"></a>SI_MIN_DAYS_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72" name="aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72"></a>SI_ALLOCATION_EXCEEDED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36" name="aa71803f092765253b58945f79c193ea2af34a76c7d8e20d8927c1a1da5c741a36"></a>SI_OK&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a6a82b3371dcec654f1ca0f520d34cc1d" name="a6a82b3371dcec654f1ca0f520d34cc1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a82b3371dcec654f1ca0f520d34cc1d">&#9670;&nbsp;</a></span>SI_CalculateFloodRisk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t SI_CalculateFloodRisk </td>
+          <td>(</td>
+          <td class="paramtype">const double *&#160;</td>
+          <td class="paramname"><em>tide_diff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double *&#160;</td>
+          <td class="paramname"><em>daily_precipitation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const time_t *&#160;</td>
+          <td class="paramname"><em>timestamps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>n_days</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

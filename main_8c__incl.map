@@ -1,28 +1,30 @@
 <map id="src/main.c" name="src/main.c">
-<area shape="rect" id="node1" title=" " alt="" coords="1143,5,1225,32"/>
-<area shape="rect" id="node2" href="$main_8h.html" title=" " alt="" coords="1154,80,1214,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="237,393,299,420"/>
-<area shape="rect" id="node4" title=" " alt="" coords="585,468,645,495"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1694,393,1773,420"/>
-<area shape="rect" id="node6" title=" " alt="" coords="2163,155,2231,181"/>
-<area shape="rect" id="node7" href="$log_8h.html" title=" " alt="" coords="907,393,957,420"/>
-<area shape="rect" id="node11" href="$devices_8h.html" title=" " alt="" coords="1121,237,1247,263"/>
-<area shape="rect" id="node20" href="$_willy_weather_2authenticate_8h.html" title=" " alt="" coords="523,319,706,345"/>
-<area shape="rect" id="node21" href="$tide_8h.html" title=" " alt="" coords="857,155,989,181"/>
-<area shape="rect" id="node24" href="$_i_b_m___e_i_s_2authenticate_8h.html" title=" " alt="" coords="1577,237,1735,263"/>
-<area shape="rect" id="node25" href="$timeseries_8h.html" title=" " alt="" coords="1363,155,1511,181"/>
-<area shape="rect" id="node26" href="$harvest__area_8h.html" title=" " alt="" coords="1760,229,1909,271"/>
-<area shape="rect" id="node8" title=" " alt="" coords="850,468,918,495"/>
-<area shape="rect" id="node9" title=" " alt="" coords="943,468,1017,495"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1894,468,1951,495"/>
-<area shape="rect" id="node12" title=" " alt="" coords="461,393,525,420"/>
-<area shape="rect" id="node13" title=" " alt="" coords="883,319,944,345"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1259,393,1370,420"/>
-<area shape="rect" id="node15" href="$_ubidots_2authenticate_8h.html" title=" " alt="" coords="296,319,448,345"/>
-<area shape="rect" id="node16" href="$utils_8h.html" title=" " alt="" coords="1424,319,1480,345"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1591,393,1670,420"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1394,393,1481,420"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1505,393,1567,420"/>
-<area shape="rect" id="node22" href="$location_8h.html" title=" " alt="" coords="553,237,709,263"/>
-<area shape="rect" id="node23" href="$forecast_8h.html" title=" " alt="" coords="785,237,943,263"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1228,5,1311,32"/>
+<area shape="rect" id="node2" href="$main_8h.html" title=" " alt="" coords="1239,80,1299,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="422,393,485,420"/>
+<area shape="rect" id="node4" title=" " alt="" coords="701,468,761,495"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1774,393,1853,420"/>
+<area shape="rect" id="node6" title=" " alt="" coords="94,319,162,345"/>
+<area shape="rect" id="node7" title=" " alt="" coords="2256,155,2323,181"/>
+<area shape="rect" id="node8" href="$log_8h.html" title=" " alt="" coords="1330,393,1379,420"/>
+<area shape="rect" id="node12" href="$devices_8h.html" title=" " alt="" coords="1039,237,1166,263"/>
+<area shape="rect" id="node21" href="$_willy_weather_2authenticate_8h.html" title=" " alt="" coords="718,319,901,345"/>
+<area shape="rect" id="node22" href="$tide_8h.html" title=" " alt="" coords="1203,155,1335,181"/>
+<area shape="rect" id="node25" href="$_i_b_m___e_i_s_2authenticate_8h.html" title=" " alt="" coords="1953,237,2111,263"/>
+<area shape="rect" id="node26" href="$timeseries_8h.html" title=" " alt="" coords="1762,155,1910,181"/>
+<area shape="rect" id="node27" href="$harvest__area_8h.html" title=" " alt="" coords="1677,229,1827,271"/>
+<area shape="rect" id="node28" href="$severity__index_8h.html" title=" " alt="" coords="157,237,272,263"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1273,468,1341,495"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1365,468,1440,495"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2241,468,2298,495"/>
+<area shape="rect" id="node13" title=" " alt="" coords="585,393,649,420"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1309,319,1371,345"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1479,393,1590,420"/>
+<area shape="rect" id="node16" href="$_ubidots_2authenticate_8h.html" title=" " alt="" coords="541,319,693,345"/>
+<area shape="rect" id="node17" href="$utils_8h.html" title=" " alt="" coords="1077,319,1133,345"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1174,393,1253,420"/>
+<area shape="rect" id="node19" title=" " alt="" coords="977,393,1063,420"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1088,393,1149,420"/>
+<area shape="rect" id="node23" href="$location_8h.html" title=" " alt="" coords="757,237,913,263"/>
+<area shape="rect" id="node24" href="$forecast_8h.html" title=" " alt="" coords="1190,237,1349,263"/>
 </map>

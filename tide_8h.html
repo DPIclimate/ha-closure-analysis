@@ -131,6 +131,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a34c311588198fc1c526cd30e7a1e4547"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tide_8h.html#a34c311588198fc1c526cd30e7a1e4547">WillyWeather_TidesToCSV</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location_info, <a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a> *dataset)</td></tr>
 <tr class="memdesc:a34c311588198fc1c526cd30e7a1e4547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write tide dataset to csv files in specific directory.  <a href="tide_8h.html#a34c311588198fc1c526cd30e7a1e4547">More...</a><br /></td></tr>
 <tr class="separator:a34c311588198fc1c526cd30e7a1e4547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c3330df9eb90f9b13116d7660e82270"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tide_8h.html#a9c3330df9eb90f9b13116d7660e82270">WW_TidesFromCSV</a> (const char *filename)</td></tr>
+<tr class="memdesc:a9c3330df9eb90f9b13116d7660e82270"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load tide dataset from cache (.csv or .txt)  <a href="tide_8h.html#a9c3330df9eb90f9b13116d7660e82270">More...</a><br /></td></tr>
+<tr class="separator:a9c3330df9eb90f9b13116d7660e82270"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a8936fbff9d591227262dbf567952ab9d" name="a8936fbff9d591227262dbf567952ab9d"></a>
@@ -234,6 +237,35 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Error code. OK = 0 ... ERROR = 1 </dd></dl>
+
+</div>
+</div>
+<a id="a9c3330df9eb90f9b13116d7660e82270" name="a9c3330df9eb90f9b13116d7660e82270"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c3330df9eb90f9b13116d7660e82270">&#9670;&nbsp;</a></span>WW_TidesFromCSV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_w_w___tide_dataset___type_def.html">WW_TideDataset_TypeDef</a> WW_TidesFromCSV </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load tide dataset from cache (.csv or .txt) </p>
+<p >Build tide dataset from cache (.csv or .txt)</p>
+<p >Requires the following format Unix;Date;Values</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Filename (and path) of .csv or .txt file to open. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Tide dataset with values, timestamps and count </dd></dl>
 
 </div>
 </div>
