@@ -6,5 +6,6 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "WillyWeather", "dir_45f09f16d23eb05e0a5eb01b1b9e44e3.html", "dir_45f09f16d23eb05e0a5eb01b1b9e44e3" ],
     [ "log.c", "log_8c.html", "log_8c" ],
     [ "main.c", "main_8c.html", "main_8c" ],
+    [ "severity_index.c", "severity__index_8c.html", null ],
     [ "utils.c", "utils_8c.html", "utils_8c" ]
 ];
