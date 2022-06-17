@@ -375,3 +375,49 @@ int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
 
     return 0;
 }
+
+/**
+ * Load timeseries dataset from a cached .csv for .txt file.
+ *
+ * Requires the file to be formatted as Unix;Date;Value
+ *
+ * @param filename Filename of file to open, including path.
+ * @return Dataset containing timeseries data
+ */
+IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char* filename){
+    IBM_TimeseriesDataset_TypeDef dataset = {0};
+
+    log_info("Loading timeseries dataset from: %s\n", filename);
+
+    FILE* file = fopen(filename, "r");
+    if(file == NULL) {
+        log_error("Unable to open file: %s. Check filename and path.\n",
+                  filename);
+        return dataset;
+    }
+
+    char* ptr;
+    time_t unix_time;
+    char unix_buf[13], ts[26], precip_buf[21];
+    double precip;
+    int res;
+    uint16_t iters = 0;
+    do {
+        res = fscanf(file, "%12[^;];%25[^;];%20[^\n]\n", unix_buf, ts,
+                     precip_buf);
+        unix_time = strtol(unix_buf, &ptr, 10);
+        precip = strtof(precip_buf, &ptr);
+        if(unix_time != 0){
+            dataset.values[iters] = precip;
+            dataset.timestamps[iters] = unix_time;
+            iters++;
+        }
+    } while(res != EOF && iters < IBM_MAX_RESPONSE_LENGTH);
+
+    dataset.count = iters;
+    fclose(file);
+
+    log_info("%d timeseries datapoints loaded from %s.\n", iters, filename);
+
+    return dataset;
+}

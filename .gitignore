@@ -5,6 +5,7 @@ doxygen-styles
 docs
 datasets
 build
+cmake-build-debug
 
 *.swp
 *.*.swp

@@ -254,3 +254,50 @@ uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
     free(location);
     return 0;
 }
+
+/**
+ * Build tide dataset from cache (.csv or .txt)
+ *
+ * Requires the following format Unix;Date;Values
+ *
+ * @param filename Filename (and path) of .csv or .txt file to open.
+ * @return Tide dataset with values, timestamps and count
+ */
+WW_TideDataset_TypeDef WW_TidesFromCSV(const char* filename){
+    WW_TideDataset_TypeDef dataset = {0};
+
+    log_info("Loading timeseries dataset from: %s\n", filename);
+
+    FILE* file = fopen(filename, "r");
+    if(file == NULL) {
+        log_error("Unable to open file: %s. Check filename and path.\n",
+                  filename);
+        return dataset;
+    }
+
+    char* ptr;
+    time_t unix_time;
+    char unix_buf[13], ts[26], tide_buf[21];
+    double tide;
+    int res;
+    uint16_t iters = 0;
+    do {
+        res = fscanf(file, "%12[^;];%25[^;];%20[^\n]\n", unix_buf, ts,
+                     tide_buf);
+        unix_time = strtol(unix_buf, &ptr, 10);
+        tide = strtof(tide_buf, &ptr);
+        if(unix_time != 0){
+            dataset.daily_max_tide_timestamps[iters] = unix_time;
+            dataset.daily_max_tide_values[iters] = tide;
+            iters++;
+        }
+    } while(res != EOF && iters < WW_FORECAST_RESPONSE_BUF);
+
+    dataset.n_days = iters;
+
+    fclose(file);
+
+    log_info("%d timeseries datapoints loaded from %s.\n", iters, filename);
+
+    return dataset;
+}

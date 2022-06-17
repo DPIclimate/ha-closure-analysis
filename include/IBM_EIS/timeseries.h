@@ -55,5 +55,6 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
 int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset);
 
+IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char* filename);
 
 #endif //HA_CLOSURE_ANALYSIS_TIMESERIES_H

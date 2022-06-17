@@ -19,6 +19,6 @@
 /// Max characters in responses
 #define WW_FORECAST_BUF                 150
 /// Max response values
-#define WW_FORECAST_RESPONSE_BUF         2000
+#define WW_FORECAST_RESPONSE_BUF        5000
 
 #endif //HA_CLOSURE_ANALYSIS_FORECAST_H

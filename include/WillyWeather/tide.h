@@ -40,4 +40,7 @@ CURLcode WillyWeather_GetTides(uint16_t location_id,
 uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
                                 WW_TideDataset_TypeDef *dataset);
 
+/// Load tide dataset from cache (.csv or .txt)
+WW_TideDataset_TypeDef WW_TidesFromCSV(const char* filename);
+
 #endif // HA_CLOSURE_ANALYSIS_TIDE_H
