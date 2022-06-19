@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['si_5fmax_5fnum_5fdays_0',['SI_MAX_NUM_DAYS',['../severity__index_8h.html#a7c616a125883710aa521385bcbe94bae',1,'severity_index.h']]]
+  ['max_5fcallbacks_0',['MAX_CALLBACKS',['../log_8c.html#aea0bffe478318f476a4bedee63256b2c',1,'log.c']]]
 ];

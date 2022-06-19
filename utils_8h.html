@@ -87,6 +87,7 @@ $(document).ready(function(){initNavTree('utils_8h.html',''); initResizable(); }
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">utils.h File Reference</div></div>
 </div><!--header-->
@@ -108,7 +109,7 @@ Include dependency graph for utils.h:</div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="utils_8h__dep__incl.svg" width="1516" height="366"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="utils_8h__dep__incl.svg" width="2351" height="544"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div>
@@ -116,98 +117,42 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_memory_struct___type_def.html">MemoryStruct_TypeDef</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds HTTP response data before converting these data into cJSON objects.  <a href="struct_memory_struct___type_def.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_req_data___type_def.html">ReqData_TypeDef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds HTTP response data before converting these data into cJSON objects.  <a href="struct_req_data___type_def.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a8d49ab2f38a55ccc4f12fd9e5d29c07b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a8d49ab2f38a55ccc4f12fd9e5d29c07b">USER_AGENT</a>&#160;&#160;&#160;&quot;EnvMonitoring/0.1 (NSW Department of Primary Industries)&quot;</td></tr>
+<tr class="separator:a8d49ab2f38a55ccc4f12fd9e5d29c07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:abd11b076bf3b435e484a1880c77343ee"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#abd11b076bf3b435e484a1880c77343ee">WriteMemoryCallback</a> (void *contents, size_t size, size_t nmemb, void *userp)</td></tr>
+<tr class="separator:abd11b076bf3b435e484a1880c77343ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6885b6b56d62d9d96fc7682c122bb719"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a> (const char *directory)</td></tr>
 <tr class="memdesc:a6885b6b56d62d9d96fc7682c122bb719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make directories (with error handling)  <a href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">More...</a><br /></td></tr>
 <tr class="separator:a6885b6b56d62d9d96fc7682c122bb719"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a791777d7da6f02b27c321174b9977fd2"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a791777d7da6f02b27c321174b9977fd2">HttpRequest</a> (cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body)</td></tr>
-<tr class="memdesc:a791777d7da6f02b27c321174b9977fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP GET &amp; POST request using cURL.  <a href="utils_8h.html#a791777d7da6f02b27c321174b9977fd2">More...</a><br /></td></tr>
-<tr class="separator:a791777d7da6f02b27c321174b9977fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a189489cca3c7536b85793ce84830cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a> (const char *filename, time_t *dates, double *values, uint16_t max_n_values)</td></tr>
 <tr class="memdesc:a7a189489cca3c7536b85793ce84830cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries data into a csv file.  <a href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">More...</a><br /></td></tr>
 <tr class="separator:a7a189489cca3c7536b85793ce84830cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a791777d7da6f02b27c321174b9977fd2" name="a791777d7da6f02b27c321174b9977fd2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a791777d7da6f02b27c321174b9977fd2">&#9670;&nbsp;</a></span>HttpRequest()</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a8d49ab2f38a55ccc4f12fd9e5d29c07b" name="a8d49ab2f38a55ccc4f12fd9e5d29c07b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d49ab2f38a55ccc4f12fd9e5d29c07b">&#9670;&nbsp;</a></span>USER_AGENT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CURLcode HttpRequest </td>
-          <td>(</td>
-          <td class="paramtype">cJSON **&#160;</td>
-          <td class="paramname"><em>response</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>URL</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">struct curl_slist *&#160;</td>
-          <td class="paramname"><em>headers</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>post</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>body</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define USER_AGENT&#160;&#160;&#160;&quot;EnvMonitoring/0.1 (NSW Department of Primary Industries)&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>HTTP GET &amp; POST request using cURL. </p>
-<p >Basic HTTP request using CURL.</p>
-<p >Most initialisation is done outside of this function. This function just handles the HTTP request and puts the data inside a provided cJSON object. Note this function has a memory leak on a Mac M1 -&gt; (curl_easy_perform()) has 13 leaks, totalling 496 bytes per call.</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *URL = <span class="stringliteral">&quot;https://www.example.com&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Create some headers (more may be needed depending on application)</span></div>
-<div class="line"><span class="keyword">struct </span>curl_slist *headers = NULL;</div>
-<div class="line">headers = curl_slist_append(headers, <span class="stringliteral">&quot;Content-Type: application/json&quot;</span>);</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Create a cJSON object to hold the response</span></div>
-<div class="line">cJSON *response = NULL;</div>
-<div class="line">CURLcode result = <a class="code hl_function" href="utils_8h.html#a791777d7da6f02b27c321174b9977fd2">HttpRequest</a>(&amp;response, URL, headers, 0, NULL);</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Free memory</span></div>
-<div class="line">curl_slist_free_all(headers);</div>
-<div class="line">cJSON_Delete(response);</div>
-<div class="ttc" id="autils_8h_html_a791777d7da6f02b27c321174b9977fd2"><div class="ttname"><a href="utils_8h.html#a791777d7da6f02b27c321174b9977fd2">HttpRequest</a></div><div class="ttdeci">CURLcode HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body)</div><div class="ttdoc">HTTP GET &amp; POST request using cURL.</div><div class="ttdef"><b>Definition:</b> utils.c:85</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">response</td><td>The cJSON response to populate with JSON. </td></tr>
-    <tr><td class="paramname">URL</td><td>The request URL. </td></tr>
-    <tr><td class="paramname">headers</td><td>Headers to include in request. </td></tr>
-    <tr><td class="paramname">post</td><td>Interger flag to request POST request (set to 1). </td></tr>
-    <tr><td class="paramname">body</td><td>POST request body. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status code representing the response status. </dd></dl>
-
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a6885b6b56d62d9d96fc7682c122bb719" name="a6885b6b56d62d9d96fc7682c122bb719"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6885b6b56d62d9d96fc7682c122bb719">&#9670;&nbsp;</a></span>MakeDirectory()</h2>
 
@@ -228,7 +173,7 @@ Functions</h2></td></tr>
 <p >Helper function to create directories with error handling.</p>
 <div class="fragment"><div class="line"><a class="code hl_function" href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a>(<span class="stringliteral">&quot;my_directory&quot;</span>);</div>
 <div class="line"><a class="code hl_function" href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a>(<span class="stringliteral">&quot;my_directory/my_sub_directory&quot;</span>);</div>
-<div class="ttc" id="autils_8h_html_a6885b6b56d62d9d96fc7682c122bb719"><div class="ttname"><a href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a></div><div class="ttdeci">int8_t MakeDirectory(const char *directory)</div><div class="ttdoc">Make directories (with error handling)</div><div class="ttdef"><b>Definition:</b> utils.c:137</div></div>
+<div class="ttc" id="autils_8h_html_a6885b6b56d62d9d96fc7682c122bb719"><div class="ttname"><a href="utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a></div><div class="ttdeci">int8_t MakeDirectory(const char *directory)</div><div class="ttdoc">Make directories (with error handling)</div><div class="ttdef"><b>Definition:</b> utils.c:60</div></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">directory</td><td>Directory name you want to create. </td></tr>
@@ -236,6 +181,67 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Integer representing error status. 0 = OK ... 1 = ERROR </dd></dl>
+
+</div>
+</div>
+<a id="abd11b076bf3b435e484a1880c77343ee" name="abd11b076bf3b435e484a1880c77343ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd11b076bf3b435e484a1880c77343ee">&#9670;&nbsp;</a></span>WriteMemoryCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t WriteMemoryCallback </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>contents</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nmemb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Helper function to handle a CURL request response which normally gets written to stdout.</p>
+<p ><a class="el" href="struct_callback.html">Callback</a> function to save HTTP response data to a character array.</p>
+<p >CURL defaults to printing to stdout. This function is added to CURL in the setup options (curl_easy_setupopt()). Memory is allocated and then filled with the response string. This character array is then used to create cJSON objects and other items.</p>
+<div class="fragment"><div class="line">MemoryStruct_TypeDef chunk;</div>
+<div class="line">chunk.memory = malloc(1);</div>
+<div class="line">chunk.size = 0;</div>
+<div class="line">curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, <a class="code hl_function" href="utils_8h.html#abd11b076bf3b435e484a1880c77343ee">WriteMemoryCallback</a>);</div>
+<div class="line">curl_easy_setopt(curl, CURLOPT_WRITEDATA, (<span class="keywordtype">void</span> *)&amp;chunk);</div>
+<div class="line">free(chunk.memory) <span class="comment">// Don&#39;t forget to free allocation</span></div>
+<div class="ttc" id="autils_8h_html_abd11b076bf3b435e484a1880c77343ee"><div class="ttname"><a href="utils_8h.html#abd11b076bf3b435e484a1880c77343ee">WriteMemoryCallback</a></div><div class="ttdeci">size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)</div><div class="ttdef"><b>Definition:</b> utils.c:28</div></div>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://curl.se/libcurl/c/getinmemory.html">https://curl.se/libcurl/c/getinmemory.html</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contents</td><td>The items to add. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of items to add. </td></tr>
+    <tr><td class="paramname">nmemb</td><td>The number of members (data size). </td></tr>
+    <tr><td class="paramname">userp</td><td>The struct to populate with data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The size of received data. </dd></dl>
 
 </div>
 </div>
@@ -288,7 +294,7 @@ Functions</h2></td></tr>
 <div class="line">                      dataset-&gt;low_tide_values, <span class="comment">// Values</span></div>
 <div class="line">                      <a class="code hl_define" href="forecast_8h.html#af2b3c9f9af17e84515bc95abcb995c00">WW_FORECAST_RESPONSE_BUF</a>); <span class="comment">// Max number of values</span></div>
 <div class="ttc" id="aforecast_8h_html_af2b3c9f9af17e84515bc95abcb995c00"><div class="ttname"><a href="forecast_8h.html#af2b3c9f9af17e84515bc95abcb995c00">WW_FORECAST_RESPONSE_BUF</a></div><div class="ttdeci">#define WW_FORECAST_RESPONSE_BUF</div><div class="ttdoc">Max response values.</div><div class="ttdef"><b>Definition:</b> forecast.h:22</div></div>
-<div class="ttc" id="autils_8h_html_a7a189489cca3c7536b85793ce84830cb"><div class="ttname"><a href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a></div><div class="ttdeci">void WriteTimeseriesToFile(const char *filename, time_t *dates, double *values, uint16_t max_n_values)</div><div class="ttdoc">Write timeseries data into a csv file.</div><div class="ttdef"><b>Definition:</b> utils.c:184</div></div>
+<div class="ttc" id="autils_8h_html_a7a189489cca3c7536b85793ce84830cb"><div class="ttname"><a href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a></div><div class="ttdeci">void WriteTimeseriesToFile(const char *filename, time_t *dates, double *values, uint16_t max_n_values)</div><div class="ttdoc">Write timeseries data into a csv file.</div><div class="ttdef"><b>Definition:</b> utils.c:107</div></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>File to write to. </td></tr>

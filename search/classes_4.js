@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memorystruct_5ftypedef_0',['MemoryStruct_TypeDef',['../struct_memory_struct___type_def.html',1,'']]]
+  ['log_5fevent_0',['log_Event',['../structlog___event.html',1,'']]]
 ];

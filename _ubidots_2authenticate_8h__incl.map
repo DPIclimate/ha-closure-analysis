@@ -1,10 +1,17 @@
 <map id="include/Ubidots/authenticate.h" name="include/Ubidots/authenticate.h">
-<area shape="rect" id="node1" title=" " alt="" coords="22,5,219,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,155,65,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="45,80,108,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="133,80,197,107"/>
-<area shape="rect" id="node5" href="$log_8h.html" title=" " alt="" coords="221,80,271,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="116,155,184,181"/>
-<area shape="rect" id="node7" title=" " alt="" coords="209,155,283,181"/>
-<area shape="rect" id="node8" title=" " alt="" coords="308,155,365,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="11,5,208,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="265,304,325,331"/>
+<area shape="rect" id="node3" title=" " alt="" coords="37,229,99,256"/>
+<area shape="rect" id="node4" title=" " alt="" coords="124,229,188,256"/>
+<area shape="rect" id="node5" href="$log_8h.html" title=" " alt="" coords="750,229,799,256"/>
+<area shape="rect" id="node9" href="$http_8h.html" title=" " alt="" coords="183,80,238,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="645,304,713,331"/>
+<area shape="rect" id="node7" title=" " alt="" coords="737,304,812,331"/>
+<area shape="rect" id="node8" title=" " alt="" coords="837,304,894,331"/>
+<area shape="rect" id="node10" title=" " alt="" coords="213,229,291,256"/>
+<area shape="rect" id="node11" href="$utils_8h.html" title=" " alt="" coords="319,155,375,181"/>
+<area shape="rect" id="node12" title=" " alt="" coords="402,229,513,256"/>
+<area shape="rect" id="node13" title=" " alt="" coords="537,229,615,256"/>
+<area shape="rect" id="node14" title=" " alt="" coords="639,229,726,256"/>
+<area shape="rect" id="node15" title=" " alt="" coords="316,229,377,256"/>
 </map>

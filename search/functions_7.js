@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['ubidots_5fcheckaccess_0',['Ubidots_CheckAccess',['../_ubidots_2authenticate_8h.html#a528d4d66389c5e2ad7bddd0cfed1f78b',1,'Ubidots_CheckAccess():&#160;authenticate.c'],['../_ubidots_2authenticate_8c.html#a528d4d66389c5e2ad7bddd0cfed1f78b',1,'Ubidots_CheckAccess():&#160;authenticate.c']]],
-  ['ubidots_5fdevicestocsv_1',['Ubidots_DevicesToCSV',['../devices_8h.html#ad6ba0bd37f495d827c6dbd2259afbe12',1,'Ubidots_DevicesToCSV(Ubidots_Devices_TypeDef *devices):&#160;devices.c'],['../devices_8c.html#ad6ba0bd37f495d827c6dbd2259afbe12',1,'Ubidots_DevicesToCSV(Ubidots_Devices_TypeDef *devices):&#160;devices.c']]],
-  ['ubidots_5fgettoken_2',['Ubidots_GetToken',['../_ubidots_2authenticate_8h.html#a3d88ac905578bdcfb9b6a7dd3fd8afb6',1,'Ubidots_GetToken(const char *env_var_name):&#160;authenticate.c'],['../_ubidots_2authenticate_8c.html#a3d88ac905578bdcfb9b6a7dd3fd8afb6',1,'Ubidots_GetToken(const char *env_var_name):&#160;authenticate.c']]],
-  ['ubidots_5flistdevices_3',['Ubidots_ListDevices',['../devices_8h.html#aa71d6c274878471c40d6f5172296f821',1,'Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices):&#160;devices.c'],['../devices_8c.html#aa71d6c274878471c40d6f5172296f821',1,'Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices):&#160;devices.c']]],
-  ['unlock_4',['unlock',['../log_8c.html#abb7cc7eb4e959fda6a43c8dd85f20090',1,'log.c']]]
+  ['si_5fcalculatefloodrisk_0',['SI_CalculateFloodRisk',['../severity__index_8h.html#a6a82b3371dcec654f1ca0f520d34cc1d',1,'severity_index.h']]],
+  ['si_5fcalculatefoodrisk_1',['SI_CalculateFoodRisk',['../severity__index_8c.html#acd5d58ed6d92b2309b1ce47512731a0c',1,'severity_index.c']]],
+  ['stationdistance_2',['StationDistance',['../stations_8c.html#a8932a57ee92fccd5cb4b99ea30be459a',1,'stations.c']]],
+  ['stdout_5fcallback_3',['stdout_callback',['../log_8c.html#a1f81dfc93517b9d400a686df95d1e161',1,'log.c']]]
 ];
