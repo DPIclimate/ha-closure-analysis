@@ -6,6 +6,8 @@
 #include <string.h>
 #include <log.h>
 
+#include "http.h"
+
 /// Maximum number of characters in access token
 #define UBIDOTS_TOKEN_SIZE                      100
 char UBIDOTS_TOKEN[UBIDOTS_TOKEN_SIZE];

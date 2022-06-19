@@ -10,6 +10,7 @@
 #include <log.h>
 
 #include "WillyWeather/authenticate.h"
+#include "http.h"
 #include "utils.h"
 
 /// Buffer for location information

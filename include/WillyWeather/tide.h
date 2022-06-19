@@ -12,6 +12,7 @@
 #include "WillyWeather/authenticate.h"
 #include "WillyWeather/location.h"
 #include "WillyWeather/forecast.h"
+#include "http.h"
 #include "utils.h"
 
 /// Below definitions extracted from

@@ -8,16 +8,16 @@
 #include <unistd.h>
 #include <log.h>
 
+#include "BOM/historical_weather.h"
+#include "BOM/stations.h"
 #include "Ubidots/devices.h"
-
 #include "WillyWeather/authenticate.h"
 #include "WillyWeather/tide.h"
-
 #include "IBM_EIS/authenticate.h"
 #include "IBM_EIS/timeseries.h"
-
 #include "FoodAuthority/harvest_area.h"
-
 #include "severity_index.h"
+#include "http.h"
+#include "ftp.h"
 
 #endif // HA_CLOSURE_ANALYSIS_MAIN_H

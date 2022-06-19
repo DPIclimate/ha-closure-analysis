@@ -2,10 +2,6 @@
 
 // TODO Data transformation to calculate closure severity index
 
-// TODO FTP BOM Data? May not be available
-// TODO To get site details: http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_stn_num=69023&p_display_type=availableYears&p_nccObsCode=136
-// TODO Could use: http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_display_type=dailyZippedDataFile&p_stn_num=69023&p_c=-952881996&p_nccObsCode=136&p_startYear=2020
-
 // TODO Download method for Ubidots salinity & weather readings.
 // TODO Data transformation to calculate heat severity index
 
@@ -13,34 +9,45 @@ int main(void){
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
-    IBM_TimeseriesDataset_TypeDef ibm_dataset = IBM_TimeseriesFromCSV(
-            "datasets/ibm/timeseries/precipitation.csv");
+    // Get a list of weather stations
+    BOM_WeatherStations_TypeDef stations;
+    BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+    int16_t cws = BOM_ClosestStationIndex(-32.685383,
+                                          152.034096,
+                                          &stations);
 
-    WW_TideDataset_TypeDef tide_dataset = WW_TidesFromCSV(
-            "datasets/tides/Batemans-Bay/daily-max.csv");
+    // Get historical weather from the closest weather station of interest
+    BOM_WeatherDataset_TypeDef bom_dataset = {0};
+    BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
 
-    assert(ibm_dataset.count == tide_dataset.n_days);
+   // IBM_TimeseriesDataset_TypeDef ibm_dataset = IBM_TimeseriesFromCSV(
+   //         "datasets/ibm/timeseries/precipitation.csv");
 
-    int8_t res = SI_CalculateFloodRisk(
-            tide_dataset.daily_max_tide_values,
-            ibm_dataset.values,
-            ibm_dataset.timestamps,
-            ibm_dataset.count);
+   // WW_TideDataset_TypeDef tide_dataset = WW_TidesFromCSV(
+   //         "datasets/tides/Batemans-Bay/daily-max.csv");
 
-    switch(res){
-        case SI_MIN_DAYS_ERROR:
-            log_error("Error calculating severity index.\n");
-            break;
-        case SI_ALLOCATION_EXCEEDED:
-            log_error("Error number of days exceeds allocated memory.\n");
-            break;
-        case SI_OK:
-            log_info("Severity index was sucessfully calculated.\n");
-            break;
-        default:
-            log_error("Unknown error occured when calculated SI.\n");
-            break;
-    }
+   // assert(ibm_dataset.count == tide_dataset.n_days);
+
+   // int8_t res = SI_CalculateFloodRisk(
+   //         tide_dataset.daily_max_tide_values,
+   //         ibm_dataset.values,
+   //         ibm_dataset.timestamps,
+   //         ibm_dataset.count);
+
+   // switch(res){
+   //     case SI_MIN_DAYS_ERROR:
+   //         log_error("Error calculating severity index.\n");
+   //         break;
+   //     case SI_ALLOCATION_EXCEEDED:
+   //         log_error("Error number of days exceeds allocated memory.\n");
+   //         break;
+   //     case SI_OK:
+   //         log_info("Severity index was sucessfully calculated.\n");
+   //         break;
+   //     default:
+   //         log_error("Unknown error occured when calculated SI.\n");
+   //         break;
+   // }
 
   //  const char* start_time = "2022-05-01";
   //  struct tm start_dt = {0};

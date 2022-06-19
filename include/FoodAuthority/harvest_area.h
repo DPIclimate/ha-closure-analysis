@@ -6,6 +6,7 @@
 #include <time.h>
 #include <log.h>
 
+#include "http.h"
 #include "utils.h"
 
 /// Buffer size for each HTML value from NSW Food Authority

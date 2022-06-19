@@ -6,6 +6,7 @@
 #include <time.h>
 #include <log.h>
 
+#include "http.h"
 #include "utils.h"
 
 /// Default ENV variable name of API key

@@ -52,10 +52,5 @@ int8_t SI_CalculateFoodRisk(SI_Dataset_TypeDef* dataset,
         dataset->timestamps[p] = timestamps[p];
     }
 
-    // Max next 10 days
-    for(uint16_t i = 0; i < (index - offset) + 10; i++){
-
-    }
-
     return SI_OK;
 }

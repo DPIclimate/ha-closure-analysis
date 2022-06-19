@@ -8,6 +8,8 @@
 #include <curl/curl.h>
 #include <log.h>
 
+#include "http.h"
+
 /// Willy weather access token size
 #define WW_TOKEN_SIZE                          100
 char WW_TOKEN[WW_TOKEN_SIZE];

@@ -8,6 +8,7 @@
 #include <log.h>
 
 #include "IBM_EIS/authenticate.h"
+#include "http.h"
 #include "utils.h"
 
 /// Max number of values in response.

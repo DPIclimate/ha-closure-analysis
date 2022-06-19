@@ -8,6 +8,7 @@
 #include <log.h>
 
 #include "Ubidots/authenticate.h"
+#include "http.h"
 #include "utils.h"
 
 /// Maximum number of devices in buffer

@@ -10,21 +10,25 @@
 #include <errno.h>
 #include <log.h>
 
+#define USER_AGENT "EnvMonitoring/0.1 (NSW Department of Primary Industries)"
+
 /// Holds HTTP response data before converting these data into cJSON objects.
 typedef struct {
 	char *memory; ///< The (response) data
 	size_t size; ///< Size of the (response) data
-} MemoryStruct_TypeDef;
+} ReqData_TypeDef;
+
+/// Helper function to handle a CURL request response which normally gets
+/// written to stdout.
+size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
+                           void *userp);
 
 /// Make directories (with error handling)
 int8_t MakeDirectory(const char* directory);
 
-/// HTTP GET & POST request using cURL.
-CURLcode HttpRequest(cJSON **response, const char *URL,
-                     struct curl_slist *headers, int8_t post, const char* body);
-
 /// Write timeseries data into a csv file
 void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
                            uint16_t max_n_values);
+
 
 #endif // HA_CLOSURE_ANALYSIS_UTILS_H
