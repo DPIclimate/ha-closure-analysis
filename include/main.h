@@ -13,6 +13,7 @@
 #include "Ubidots/devices.h"
 #include "WillyWeather/authenticate.h"
 #include "WillyWeather/tide.h"
+#include "WillyWeather/precipitation.h"
 #include "IBM_EIS/authenticate.h"
 #include "IBM_EIS/timeseries.h"
 #include "FoodAuthority/harvest_area.h"

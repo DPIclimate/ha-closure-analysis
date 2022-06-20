@@ -9,16 +9,23 @@ int main(void){
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
-    // Get a list of weather stations
-    BOM_WeatherStations_TypeDef stations;
-    BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
-    int16_t cws = BOM_ClosestStationIndex(-32.685383,
-                                          152.034096,
-                                          &stations);
+    const char* search_location = "Batemans";
+    WW_Location_TypeDef location_info = {0};
+    WillyWeather_GetLocationByName(search_location, &location_info);
 
-    // Get historical weather from the closest weather station of interest
-    BOM_WeatherDataset_TypeDef bom_dataset = {0};
-    BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
+    WW_DailyRainfall_TypeDef daily_rainfall = {0};
+    WillyWeather_GetRainfallForecast(&location_info, &daily_rainfall);
+
+    // Get a list of weather stations
+    //BOM_WeatherStations_TypeDef stations;
+    //BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+    //int16_t cws = BOM_ClosestStationIndex(-32.685383,
+    //                                      152.034096,
+    //                                      &stations);
+
+    //// Get historical weather from the closest weather station of interest
+    //BOM_WeatherDataset_TypeDef bom_dataset = {0};
+    //BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
 
    // IBM_TimeseriesDataset_TypeDef ibm_dataset = IBM_TimeseriesFromCSV(
    //         "datasets/ibm/timeseries/precipitation.csv");

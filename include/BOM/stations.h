@@ -23,18 +23,18 @@
 
 /// BOM weather station (id, state, name, latitude, longitude)
 typedef struct {
-    char id[BOM_STATION_ID_SIZE];
-    char state[BOM_STATION_STATE_SIZE];
-    char name[BOM_STATION_NAME_SIZE];
-    char filename[BOM_STATION_FILENAME_SIZE];
-    double latitude;
-    double longitude;
+    char id[BOM_STATION_ID_SIZE]; /// Station identifier
+    char state[BOM_STATION_STATE_SIZE]; /// Australian state station is in
+    char name[BOM_STATION_NAME_SIZE]; /// Name of station
+    char filename[BOM_STATION_FILENAME_SIZE]; /// Filename formatted name
+    double latitude; /// Latitude of station
+    double longitude; /// Longitude of station
 }BOM_WeatherStation_TypeDef;
 
 /// BOM weather stations list and count
 typedef struct {
-    int16_t count;
-    BOM_WeatherStation_TypeDef stations[BOM_STATION_MAX_RESPONSES];
+    int16_t count; /// Number of stations in record
+    BOM_WeatherStation_TypeDef stations[BOM_STATION_MAX_RESPONSES]; /// List of stations
 }BOM_WeatherStations_TypeDef;
 
 /// Get a list of NSW BOM weather stations
