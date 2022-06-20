@@ -1,10 +1,12 @@
 <map id="include/WillyWeather/authenticate.h" name="include/WillyWeather/authenticate.h">
-<area shape="rect" id="node1" title=" " alt="" coords="259,5,402,47"/>
-<area shape="rect" id="node2" href="$location_8h.html" title=" " alt="" coords="197,95,339,136"/>
-<area shape="rect" id="node3" href="$tide_8h.html" title=" " alt="" coords="11,184,154,225"/>
-<area shape="rect" id="node4" href="$main_8h.html" title=" " alt="" coords="262,273,367,300"/>
-<area shape="rect" id="node8" href="$_willy_weather_2authenticate_8c.html" title=" " alt="" coords="433,102,637,129"/>
-<area shape="rect" id="node7" href="$location_8c.html" title=" " alt="" coords="179,191,357,218"/>
-<area shape="rect" id="node6" href="$tide_8c.html" title=" " alt="" coords="5,273,160,300"/>
-<area shape="rect" id="node5" href="$main_8c.html" title=" " alt="" coords="273,348,356,375"/>
+<area shape="rect" id="node1" title=" " alt="" coords="287,5,429,47"/>
+<area shape="rect" id="node2" href="$location_8h.html" title=" " alt="" coords="232,95,375,136"/>
+<area shape="rect" id="node4" href="$main_8h.html" title=" " alt="" coords="5,273,111,300"/>
+<area shape="rect" id="node7" href="$tide_8h.html" title=" " alt="" coords="417,184,560,225"/>
+<area shape="rect" id="node10" href="$_willy_weather_2authenticate_8c.html" title=" " alt="" coords="451,102,655,129"/>
+<area shape="rect" id="node3" href="$precipitation_8h.html" title=" " alt="" coords="47,184,189,225"/>
+<area shape="rect" id="node9" href="$location_8c.html" title=" " alt="" coords="214,191,393,218"/>
+<area shape="rect" id="node6" href="$precipitation_8c.html" title=" " alt="" coords="135,273,338,300"/>
+<area shape="rect" id="node5" href="$main_8c.html" title=" " alt="" coords="17,348,99,375"/>
+<area shape="rect" id="node8" href="$tide_8c.html" title=" " alt="" coords="411,273,566,300"/>
 </map>

@@ -12,6 +12,8 @@ var annotated_dup =
     [ "ReqData_TypeDef", "struct_req_data___type_def.html", "struct_req_data___type_def" ],
     [ "SI_Dataset_TypeDef", "struct_s_i___dataset___type_def.html", "struct_s_i___dataset___type_def" ],
     [ "Ubidots_Devices_TypeDef", "struct_ubidots___devices___type_def.html", "struct_ubidots___devices___type_def" ],
+    [ "WW_DailyRainfall_TypeDef", "struct_w_w___daily_rainfall___type_def.html", "struct_w_w___daily_rainfall___type_def" ],
     [ "WW_Location_TypeDef", "struct_w_w___location___type_def.html", "struct_w_w___location___type_def" ],
+    [ "WW_Rainfall_TypeDef", "struct_w_w___rainfall___type_def.html", "struct_w_w___rainfall___type_def" ],
     [ "WW_TideDataset_TypeDef", "struct_w_w___tide_dataset___type_def.html", "struct_w_w___tide_dataset___type_def" ]
 ];

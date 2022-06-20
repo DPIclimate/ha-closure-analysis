@@ -60,7 +60,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_i_b_m___e_i_s_2authenticate_8c.html",
-"struct_ubidots___devices___type_def.html#ae58fcc5bdb6c4f7b10bff57eec9350a4"
+"struct_s_i___dataset___type_def.html#a77370a074e6b8f06b1eb799aaf555efc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

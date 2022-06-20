@@ -141,6 +141,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >FTP request for data.</p>
+<p >This FTP request is required to communicate with the Buerau of Meterology FTP server. A URL is provided (denoting the base ftp server name and the path to the file of interest). A stream is also give to hold the raw data provided from this FTP request.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>URL to file of interest on FTP server. </td></tr>
+    <tr><td class="paramname">stream</td><td>Stream to hold data from response (see <a class="el" href="utils_8h.html">utils.h</a>). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Curl status code representing FTP errors. </dd></dl>
 
 </div>
 </div>
