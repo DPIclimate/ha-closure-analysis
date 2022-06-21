@@ -1,10 +1,10 @@
 #ifndef PROGRAM_HISTORICAL_WEATHER_H
 #define PROGRAM_HISTORICAL_WEATHER_H
 
+#include <time.h>
 #include <curl/curl.h>
 #include <ctype.h>
 #include <stdint.h>
-#include <time.h>
 
 #include "BOM/stations.h"
 #include "ftp.h"
