@@ -16,18 +16,18 @@
  * @param auth_handle Authentication hander with tokens and expiry information.
  * @return Error code. 0 = OK 1 = ERROR
  */
-int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
+int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle) {
     /// Check if initialised already
-    if(auth_handle->token_expiry != 0){
+    if (auth_handle->token_expiry != 0) {
         time_t t_now = time(NULL);
-        if(t_now < auth_handle->token_expiry){
+        if (t_now < auth_handle->token_expiry) {
             log_info("IBM EIS authentication token is still "
                      "valid. Skipping re-authentication.\n");
             return 0;
         } else {
             log_info("IBM EIS authentication expired. "
                      "Refreshing.\n");
-            if(IBM_Refresh(auth_handle) == CURLE_OK){
+            if (IBM_Refresh(auth_handle) == CURLE_OK) {
                 return 0;
             }
             log_error("IBM EIS refresh failed. Trying to "
@@ -35,9 +35,9 @@ int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
         }
     }
 
-    const char* api_key = getenv(IBM_DEFAULT_TOKEN_NAME);
-    if(api_key != NULL){
-        if(IBM_Authenticate(api_key, auth_handle) == CURLE_OK){
+    const char *api_key = getenv(IBM_DEFAULT_TOKEN_NAME);
+    if (api_key != NULL) {
+        if (IBM_Authenticate(api_key, auth_handle) == CURLE_OK) {
             return 0;
         }
     } else {
@@ -59,23 +59,23 @@ int8_t IBM_HandleAuth(IBM_AuthHandle_TypeDef *auth_handle){
  * @param auth_handle Authenication handler for IBM tokens
  * @return CURLcode error message
  */
-CURLcode IBM_Authenticate(const char* token,
-                          IBM_AuthHandle_TypeDef* auth_handle) {
+CURLcode IBM_Authenticate(const char *token,
+                          IBM_AuthHandle_TypeDef *auth_handle) {
 
     log_info("Authenicating with IBM EIS.\n");
 
     // Build request body
-    const char* BASE_BODY = "client_id=ibm-pairs"
+    const char *BASE_BODY = "client_id=ibm-pairs"
                             "&grant_type=apikey"
                             "&apikey=";
-    char* req_body = malloc(strlen(BASE_BODY) + strlen(token) + 1);
+    char *req_body = malloc(strlen(BASE_BODY) + strlen(token) + 1);
     strcpy(req_body, BASE_BODY);
     strcat(req_body, token);
 
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Accept: application/json");
     headers = curl_slist_append(headers, "Content-Type: "
-                                       "application/x-www-form-urlencoded");
+                                         "application/x-www-form-urlencoded");
 
     cJSON *response = NULL;
     CURLcode result = HttpRequest(&response, IBM_TOKEN_URL, headers, 1, req_body);
@@ -83,22 +83,21 @@ CURLcode IBM_Authenticate(const char* token,
     // Assign access token
     cJSON *j_refresh_token = NULL;
     cJSON *j_access_token = NULL;
-    if(response != NULL){
+    if (response != NULL) {
         j_access_token = cJSON_GetObjectItemCaseSensitive(response,
                                                           "access_token");
-        if(cJSON_IsString(j_access_token) &&
-        j_access_token->valuestring != NULL){
+        if (cJSON_IsString(j_access_token) &&
+            j_access_token->valuestring != NULL) {
             strncpy(auth_handle->access_token, j_access_token->valuestring,
                     IBM_ACCESS_TOKEN_SIZE);
-        }
-        else {
+        } else {
             result = CURLE_RECV_ERROR;
         }
 
         j_refresh_token = cJSON_GetObjectItemCaseSensitive(response,
                                                            "refresh_token");
-        if(cJSON_IsString(j_refresh_token) &&
-        j_refresh_token->valuestring != NULL){
+        if (cJSON_IsString(j_refresh_token) &&
+            j_refresh_token->valuestring != NULL) {
             strncpy(auth_handle->refresh_token, j_refresh_token->valuestring,
                     IBM_REFRESH_TOKEN_SIZE);
         }
@@ -106,7 +105,7 @@ CURLcode IBM_Authenticate(const char* token,
         result = CURLE_RECV_ERROR;
     }
 
-    if(result == CURLE_OK){
+    if (result == CURLE_OK) {
         // Set UNIX time expiry in just under 1 hour
         auth_handle->token_expiry = time(NULL) + 3500;
         log_info("Authenicated with IBM EIS. Token expires at: "
@@ -141,11 +140,11 @@ CURLcode IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle) {
 
     log_info("Re-authenicating with IBM EIS.\n");
 
-    const char* BASE_BODY = "client_id=ibm-pairs"
+    const char *BASE_BODY = "client_id=ibm-pairs"
                             "&grant_type=refresh_token"
                             "&refresh_token=";
 
-    char* req_body = malloc(
+    char *req_body = malloc(
             strlen(BASE_BODY) +
             strlen(auth_handle->refresh_token) + 1);
     strcpy(req_body, BASE_BODY);
@@ -161,21 +160,20 @@ CURLcode IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle) {
 
     // Assign access token
     cJSON *j_access_token = NULL;
-    if(response != NULL){
+    if (response != NULL) {
         j_access_token = cJSON_GetObjectItemCaseSensitive(response,
                                                           "access_token");
-        if(cJSON_IsString(j_access_token) &&
-           j_access_token->valuestring != NULL){
+        if (cJSON_IsString(j_access_token) &&
+            j_access_token->valuestring != NULL) {
             strcpy(auth_handle->access_token, j_access_token->valuestring);
-        }
-        else {
+        } else {
             result = CURLE_RECV_ERROR;
         }
     } else {
         result = CURLE_RECV_ERROR;
     }
 
-    if(response == CURLE_OK){
+    if (response == CURLE_OK) {
         // Set UNIX time expiry in just under 1 hour
         auth_handle->token_expiry = time(NULL) + 3500;
         log_info("Re-authenicated with IBM EIS. Token expires "

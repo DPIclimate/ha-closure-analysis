@@ -1,8 +1,8 @@
 #include "FoodAuthority/harvest_area.h"
 
 /// Find value with HTML tags.
-static void FA_FindHTMLValue(char* data, const char* search_term,
-                                   char* value);
+static void FA_FindHTMLValue(char *data, const char *search_term,
+                             char *value);
 
 /**
  * Gets harvest area status information from NSW Food Authority.
@@ -29,16 +29,16 @@ static void FA_FindHTMLValue(char* data, const char* search_term,
  * @param harvest_area Harvest area struct to populate with status information.
  * @return Code representing CURL response status.
  */
-CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
-                                       FA_HarvestArea_TypeDef *harvest_area){
+CURLcode FA_GetHarvestAreaStatus(const char *harvest_name,
+                                 FA_HarvestArea_TypeDef *harvest_area) {
 
-    const char* URL = "https://www.foodauthority.nsw.gov.au/views/ajax";
+    const char *URL = "https://www.foodauthority.nsw.gov.au/views/ajax";
 
     // Build body for POST request
-    const char* BASE_FILTER = "filter=";
-    const char* BASE_BODY = "&view_name=sqap_waterways&"
+    const char *BASE_FILTER = "filter=";
+    const char *BASE_BODY = "&view_name=sqap_waterways&"
                             "view_display_id=page_1";
-    char* req_body = malloc(strlen(BASE_FILTER) +
+    char *req_body = malloc(strlen(BASE_FILTER) +
                             strlen(harvest_name) +
                             strlen(BASE_BODY) + 1);
     strcpy(req_body, BASE_FILTER);
@@ -46,9 +46,9 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
     strcat(req_body, BASE_BODY);
 
     log_info("Requesting harvest area information for site %s "
-            "from: %s\n", harvest_name, URL);
+             "from: %s\n", harvest_name, URL);
 
-    struct curl_slist* headers = NULL;
+    struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "authority: NSW DPI");
     headers = curl_slist_append(headers, "x-requested-with: XMLHttpRequest");
     headers = curl_slist_append(headers, "accept: application/json");
@@ -56,13 +56,13 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
     cJSON *response = NULL;
     CURLcode result = HttpRequest(&response, URL, headers, 1, req_body);
 
-    if(response != NULL){
-        cJSON* res = NULL;
-        if(cJSON_IsArray(response)){
+    if (response != NULL) {
+        cJSON *res = NULL;
+        if (cJSON_IsArray(response)) {
             res = cJSON_GetArrayItem(response, 3);
-            cJSON* data = NULL;
+            cJSON *data = NULL;
             data = cJSON_GetObjectItemCaseSensitive(res, "data");
-            if(cJSON_IsString(data) && data->valuestring != NULL){
+            if (cJSON_IsString(data) && data->valuestring != NULL) {
                 cJSON_Minify_Mod(data->valuestring); // Remove unessessary chars
                 FA_ParseResponse(data->valuestring, harvest_area);
             } else {
@@ -72,10 +72,10 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
         }
     }
 
-    if(result == CURLE_OK){
+    if (result == CURLE_OK) {
         log_info("NSW Food Authority request was successful.\n");
         log_debug("Location: %s, Status: %s, Time Updated: %s\n",
-                 harvest_area->location, harvest_area->status, harvest_area->time);
+                  harvest_area->location, harvest_area->status, harvest_area->time);
     }
 
     free(req_body);
@@ -94,12 +94,12 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
  * @param data The string to parse.
  * @param harvest_area The struct to populate with values.
  */
-void FA_ParseResponse(char* data,
-                      FA_HarvestArea_TypeDef *harvest_area){
+void FA_ParseResponse(char *data,
+                      FA_HarvestArea_TypeDef *harvest_area) {
 
     // Items to extract from request. The order of these items matters for the
     // below switch statement.
-    const char* search_terms[] = {
+    const char *search_terms[] = {
             "sqap-program", // Program name
             "sqap-harvest-area", // Location (may include zone as well)
             "sqap-card__title", // Harvest area name
@@ -115,27 +115,27 @@ void FA_ParseResponse(char* data,
     memset(&v_time, 0, sizeof(struct tm));
 
     char value[FA_MAX_BUFFER] = {0};
-    for(int i = 0; i < sizeof(search_terms) / sizeof(*search_terms); i++){
+    for (size_t i = 0; i < sizeof(search_terms) / sizeof(*search_terms); i++) {
         FA_FindHTMLValue(data, search_terms[i], value);
 
-        if(strlen(value) == 0){
+        if (strlen(value) == 0) {
             strcpy(value, "N/A");
         }
 
-        if(strlen(value) > FA_MAX_BUFFER){
+        if (strlen(value) > FA_MAX_BUFFER) {
             log_error("Value: %s exceeds the set maximum buffer "
                       "size. Skipping.\n", value);
             memset(value, 0, sizeof(value));
             continue;
         }
 
-        switch (i){
+        switch (i) {
             case 0:
                 // Remove " SP" from last part of program name
-                for(size_t x = 0; x < strlen(value)-1; x++){
-                    if(value[x] == 'S' && value[x+1] == 'P'){
-                        if(x > 0){
-                            value[x-1] = '\0';
+                for (size_t x = 0; x < strlen(value) - 1; x++) {
+                    if (value[x] == 'S' && value[x + 1] == 'P') {
+                        if (x > 0) {
+                            value[x - 1] = '\0';
                             break;
                         }
                     }
@@ -188,24 +188,24 @@ void FA_ParseResponse(char* data,
  * @param search_term
  * @param value
  */
-static void FA_FindHTMLValue(char* data, const char* search_term,
-                             char* value){
+static void FA_FindHTMLValue(char *data, const char *search_term,
+                             char *value) {
 
-    char* clsf = strstr(data, search_term);
-    if(clsf == NULL) {
+    char *clsf = strstr(data, search_term);
+    if (clsf == NULL) {
         return; // Sub-string not found
     }
 
     int start_substr = 0;
     int value_index = 0;
-    for(unsigned long i = strlen(search_term); i < strlen(clsf) &&
-                                               i < FA_MAX_BUFFER; i++){
-        if(clsf[i] == '>'){
+    for (unsigned long i = strlen(search_term); i < strlen(clsf) &&
+                                                i < FA_MAX_BUFFER; i++) {
+        if (clsf[i] == '>') {
             start_substr = 1;
             continue;
         }
-        if(start_substr == 1){
-            if(clsf[i] == '<') {
+        if (start_substr == 1) {
+            if (clsf[i] == '<') {
                 return;
             }
             value[value_index++] = clsf[i];

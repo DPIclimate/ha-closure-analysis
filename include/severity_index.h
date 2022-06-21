@@ -29,4 +29,10 @@ int8_t SI_CalculateFloodRisk(const double* tide_diff,
                              const time_t* timestamps,
                              uint16_t n_days);
 
+int8_t SI_CalculateFoodRisk(SI_Dataset_TypeDef *dataset,
+                            const double *tide_diff,
+                            const double *daily_precipitation,
+                            const time_t *timestamps,
+                            uint16_t n_days);
+
 #endif //HA_CLOSURE_ANALYSIS_SEVERITY_INDEX_H

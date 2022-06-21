@@ -10,7 +10,7 @@
 
 /// Maximum number of characters in access token
 #define UBIDOTS_TOKEN_SIZE                      100
-char UBIDOTS_TOKEN[UBIDOTS_TOKEN_SIZE];
+static char UBIDOTS_TOKEN[UBIDOTS_TOKEN_SIZE];
 
 /// Default environmental variable for ubidots
 #define UBIDOTS_DEFAULT_ENV_NAME "UBI_TOKEN"
@@ -19,6 +19,6 @@ char UBIDOTS_TOKEN[UBIDOTS_TOKEN_SIZE];
 int8_t Ubidots_GetToken(const char* env_var_name);
 
 /// Check access token
-int8_t Ubidots_CheckAccess();
+int8_t Ubidots_CheckAccess(void);
 
 #endif //HA_CLOSURE_ANALYSIS_AUTHENTICATE_H

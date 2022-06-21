@@ -14,9 +14,9 @@
 typedef struct {
     uint16_t count;
     time_t timestamps[BOM_RESPONSE_BUFFER_SIZE];
-    float precipitation[BOM_RESPONSE_BUFFER_SIZE];
-    float max_temperature[BOM_RESPONSE_BUFFER_SIZE];
-    float min_temperature[BOM_RESPONSE_BUFFER_SIZE];
+    double precipitation[BOM_RESPONSE_BUFFER_SIZE];
+    double max_temperature[BOM_RESPONSE_BUFFER_SIZE];
+    double min_temperature[BOM_RESPONSE_BUFFER_SIZE];
 }BOM_WeatherDataset_TypeDef;
 
 CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef* dataset,

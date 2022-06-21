@@ -25,13 +25,13 @@
  * @param daily_rainfall Daily rainfall forecast struct to hold responses.
  * @return Curl code representing HTTP errors that may have occured.
  */
-CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef* location,
-                                          WW_RainfallForecast_TypeDef* rainfall_forecast){
+CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location,
+                                          WW_RainfallForecast_TypeDef *rainfall_forecast) {
 
-    if(WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
+    if (WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
 
     // Build start time as current day
-    struct tm stm = *localtime(&(time_t){time(NULL)}); // Current time
+    struct tm stm = *localtime(&(time_t) {time(NULL)}); // Current time
     time_t unix_time = mktime(&stm) - 172800; // Two days ago
     struct tm ptm = *localtime(&unix_time);
     char start_date[11] = {0};
@@ -55,94 +55,104 @@ CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef* location,
     CURLcode result = HttpRequest(&response, url, headers, 0, NULL);
 
     int16_t index = 0;
-    if(response != NULL){
+    if (response != NULL) {
 
-        cJSON* forcasts = NULL;
-        cJSON* rainfall = NULL;
+        cJSON *forcasts = NULL;
+        cJSON *rainfall = NULL;
 
         forcasts = cJSON_GetObjectItemCaseSensitive(response, "forecasts");
-        if(forcasts != NULL){
+        if (forcasts != NULL) {
             rainfall = cJSON_GetObjectItemCaseSensitive(forcasts, "rainfall");
-            if(rainfall != NULL){
-                cJSON* days = NULL;
-                cJSON* day = NULL;
-                cJSON* entries = NULL;
-                cJSON* entry = NULL;
+            if (rainfall != NULL) {
+                cJSON *days = NULL;
+                cJSON *day = NULL;
+                cJSON *entries = NULL;
+                cJSON *entry = NULL;
 
-                cJSON* datetime = NULL;
-                cJSON* start_range = NULL;
-                cJSON* end_range = NULL;
-                cJSON* range_divide = NULL;
-                cJSON* range_code = NULL;
-                cJSON* probability = NULL;
+                cJSON *datetime = NULL;
+                cJSON *start_range = NULL;
+                cJSON *end_range = NULL;
+                cJSON *range_divide = NULL;
+                cJSON *range_code = NULL;
+                cJSON *probability = NULL;
                 days = cJSON_GetObjectItemCaseSensitive(rainfall, "days");
 
-                if(cJSON_IsArray(days)){
-                    cJSON_ArrayForEach(day, days){
-                        if(index > WW_MAX_DAILY_RAINFALL_RESULTS) break;
+                if (cJSON_IsArray(days)) {
+                    cJSON_ArrayForEach(day, days) {
+                        if (index > WW_MAX_DAILY_RAINFALL_RESULTS) break;
 
                         datetime = cJSON_GetObjectItemCaseSensitive(day, "dateTime");
-                        if(datetime != NULL && datetime->valuestring != NULL){
+                        if (datetime != NULL && datetime->valuestring != NULL) {
                             struct tm dt = {0};
-                            if(strptime(datetime->valuestring, "%Y-%m-%d %H:%M:%S", &dt) != NULL){
+                            if (strptime(datetime->valuestring, "%Y-%m-%d %H:%M:%S", &dt) != NULL) {
                                 // Convert to UNIX time and append
                                 rainfall_forecast->forecast[index].date = mktime(&dt);
-                            } else log_error("Datetime conversion failed: %s\n", datetime->valuestring);
+                            } else
+                                log_error("Datetime conversion failed: %s\n", datetime->valuestring);
                         }
                         entries = cJSON_GetObjectItemCaseSensitive(day, "entries");
-                        if(cJSON_IsArray(entries)){
+                        if (cJSON_IsArray(entries)) {
                             // Should only be one entry for each day
-                            cJSON_ArrayForEach(entry, entries){
+                            cJSON_ArrayForEach(entry, entries) {
                                 // Start range (1, 5, 10, 15, 25, 50, null)
                                 start_range = cJSON_GetObjectItemCaseSensitive(entry, "startRange");
-                                if(cJSON_IsNumber(start_range)) {
-                                    rainfall_forecast->forecast[index].start_range = floor(start_range->valuedouble);
+                                if (cJSON_IsNumber(start_range)) {
+                                    rainfall_forecast->forecast[index].start_range = (int8_t)start_range->valueint;
                                 } else {
                                     rainfall_forecast->forecast[index].start_range = 0; // for value "null" return 0
                                 }
 
                                 // End range (5, 10, 15, 25, 50, 100)
                                 end_range = cJSON_GetObjectItemCaseSensitive(entry, "endRange");
-                                if(cJSON_IsNumber(end_range)) {
-                                    rainfall_forecast->forecast[index].end_range = (int8_t)end_range->valueint;
-                                } else log_error("Unable to parse end rainfall range.\n");
+                                if (cJSON_IsNumber(end_range)) {
+                                    rainfall_forecast->forecast[index].end_range = (int8_t) end_range->valueint;
+                                } else
+                                    log_error("Unable to parse end rainfall range.\n");
 
                                 // Range divider ('>' or '=')
                                 range_divide = cJSON_GetObjectItemCaseSensitive(entry, "rangeDivide");
-                                if(range_divide != NULL && range_divide->valuestring != NULL){
+                                if (range_divide != NULL && range_divide->valuestring != NULL) {
                                     rainfall_forecast->forecast[index].range_divider = range_divide->valuestring[0];
-                                } else log_error("Error parsing rainfall range divider.\n");
+                                } else
+                                    log_error("Error parsing rainfall range divider.\n");
 
                                 // Range code (0, 1-5, 5-10, 10-15, 15-25, 25-50, 50-100, 100) combines start & end range
                                 range_code = cJSON_GetObjectItemCaseSensitive(entry, "rangeCode");
-                                if(range_code != NULL && range_code->valuestring != NULL){
+                                if (range_code != NULL && range_code->valuestring != NULL) {
                                     strncpy(rainfall_forecast->forecast[index].range_code, range_code->valuestring,
                                             WW_RANGE_CODE_SIZE);
-                                } else log_error("Error parsing rainfall range code.\n");
+                                } else
+                                    log_error("Error parsing rainfall range code.\n");
 
                                 // Probability (value between 0 and 100 (%))
                                 probability = cJSON_GetObjectItemCaseSensitive(entry, "probability");
-                                if(cJSON_IsNumber(probability)){
-                                    rainfall_forecast->forecast[index].probability = (int8_t)probability->valueint;
-                                } else log_error("Error parsing rainfall probability.\n");
+                                if (cJSON_IsNumber(probability)) {
+                                    rainfall_forecast->forecast[index].probability = (int8_t) probability->valueint;
+                                } else
+                                    log_error("Error parsing rainfall probability.\n");
 
                                 log_debug("Date: %s,\tRainfall: %s,\tProbability: %d\n", datetime->valuestring,
                                           range_code->valuestring, probability->valueint);
                             }
-                        } else log_error("Entries not found in JSON response.\n");
+                        } else
+                            log_error("Entries not found in JSON response.\n");
                         index++;
                     }
-                } else log_error("No days found in rainfall JSON response.\n");
-            } else log_error("Rainfall JSON object not found in response.\n");
-        } else log_error("Unable to get rainfall forecast. Malformed JSON.\n");
-    } else log_error("Willy Weather rainfall response was empty.\n");
+                } else
+                    log_error("No days found in rainfall JSON response.\n");
+            } else
+                log_error("Rainfall JSON object not found in response.\n");
+        } else
+            log_error("Unable to get rainfall forecast. Malformed JSON.\n");
+    } else
+        log_error("Willy Weather rainfall response was empty.\n");
 
     rainfall_forecast->n_days = --index;
 
-    if(result == CURLE_OK){
-        if(index != 0){
+    if (result == CURLE_OK) {
+        if (index != 0) {
             log_info("Willy Weather daily rainfall request was successful.\n");
-        } else{
+        } else {
             log_error("Willy Weather daily rainfall request was successful. "
                       "But no results were returned.\n");
         }

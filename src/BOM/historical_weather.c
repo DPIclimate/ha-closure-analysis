@@ -1,8 +1,8 @@
 #include "BOM/historical_weather.h"
 
-static int8_t BOM_ParseWeather(ReqData_TypeDef* stream,
-                               BOM_WeatherDataset_TypeDef* dataset,
-                               BOM_WeatherStation_TypeDef* station);
+static int8_t BOM_ParseWeather(ReqData_TypeDef *stream,
+                               BOM_WeatherDataset_TypeDef *dataset,
+                               BOM_WeatherStation_TypeDef *station);
 
 /**
  * Get a file from the Bureau of Meterology FTP server.
@@ -18,18 +18,18 @@ static int8_t BOM_ParseWeather(ReqData_TypeDef* stream,
  * @param year_month Year and month of interest e.g. 202206 for 2022 06 (June)
  * @return Returns cURL status code.
  */
-CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef* dataset,
-                        BOM_WeatherStation_TypeDef* station,
-                        const char* year_month){
+CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef *dataset,
+                        BOM_WeatherStation_TypeDef *station,
+                        const char *year_month) {
 
     // Build URL from filename and year_month
     const uint8_t URL_SIZE = 250;
     char URL[URL_SIZE];
     snprintf(URL, URL_SIZE, "ftp://ftp.bom.gov.au/anon/gen/clim_data/"
                             "IDCKWCDEA0/tables/nsw/%s/%s-%s.csv",
-                            station->filename,
-                            station->filename,
-                            year_month);
+             station->filename,
+             station->filename,
+             year_month);
 
     log_info("Getting location data from BOM FTP server in directory: %s\n",
              URL);
@@ -37,7 +37,7 @@ CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef* dataset,
     ReqData_TypeDef stream;
     CURLcode result = FTPRequest(URL, &stream);
 
-    if(result == CURLE_OK){
+    if (result == CURLE_OK) {
         BOM_ParseWeather(&stream, dataset, station);
     } else {
         log_error("Unable to get dataset from "
@@ -56,21 +56,21 @@ CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef* dataset,
  * @param dataset Dataset to populate.
  * @return Status code OK = 0 ... ERROR = -1
  */
-static int8_t BOM_ParseWeather(ReqData_TypeDef* stream,
-                               BOM_WeatherDataset_TypeDef* dataset,
-                               BOM_WeatherStation_TypeDef* station){
+static int8_t BOM_ParseWeather(ReqData_TypeDef *stream,
+                               BOM_WeatherDataset_TypeDef *dataset,
+                               BOM_WeatherStation_TypeDef *station) {
 
     // Construct tempory file from raw stream
     MakeDirectory("datasets");
     MakeDirectory("datasets/bom");
     MakeDirectory("datasets/bom/historical");
 
-    char filename[BOM_STATION_FILENAME_SIZE*2];
+    char filename[BOM_STATION_FILENAME_SIZE * 2];
     snprintf(filename, BOM_STATION_FILENAME_SIZE,
              "datasets/bom/historical/%s.csv",
              station->filename);
-    FILE* write_file = fopen(filename, "w");
-    if(write_file != NULL){
+    FILE *write_file = fopen(filename, "w");
+    if (write_file != NULL) {
         fputs(stream->memory, write_file);
         fclose(write_file);
     } else {
@@ -90,12 +90,12 @@ static int8_t BOM_ParseWeather(ReqData_TypeDef* stream,
  * @param dataset Dataset to populate.
  * @return Status code.
  */
-int8_t BOM_LoadWeatherFromCSV(const char* filename,
-                       BOM_WeatherDataset_TypeDef* dataset,
-                       BOM_WeatherStation_TypeDef* station){
+int8_t BOM_LoadWeatherFromCSV(const char *filename,
+                              BOM_WeatherDataset_TypeDef *dataset,
+                              BOM_WeatherStation_TypeDef *station) {
 
-    FILE* file = fopen(filename, "r");
-    if(file == NULL) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
         log_error("Unable to open file: %s\n", filename);
         return -1;
     }
@@ -103,16 +103,16 @@ int8_t BOM_LoadWeatherFromCSV(const char* filename,
     // Convert filename to uppercase location (could be done better)
     // E.g. moruya_airport -> MORUYA AIRPORT
     char location[BOM_STATION_FILENAME_SIZE];
-    for(int16_t i = 0; i < BOM_STATION_FILENAME_SIZE; i++){
-        if(station->filename[i] == '\0') break;
+    for (int16_t i = 0; i < BOM_STATION_FILENAME_SIZE; i++) {
+        if (station->filename[i] == '\0') break;
 
         // Conver to uppercase
-        if(isalpha(station->filename[i])){
-                location[i] = (char)toupper(station->filename[i]);
+        if (isalpha(station->filename[i])) {
+            location[i] = (char) toupper(station->filename[i]);
         } else {
-            if(station->filename[i] == '_'){
+            if (station->filename[i] == '_') {
                 location[i] = ' ';
-            } else{
+            } else {
                 location[i] = station->filename[i];
             }
         }
@@ -125,22 +125,22 @@ int8_t BOM_LoadWeatherFromCSV(const char* filename,
     char precip_buf[8]; // Daily precipitaion
     char max_t_buf[8]; // Daily max temperature
     char min_t_buf[8]; // Daily min temperature
-    char* ptr;
+    char *ptr;
 
-    while(fgets(buffer, sizeof(buffer), file) != NULL){
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
         sscanf(buffer, "%99[^,],%10[^,],%*[^,],%7[^,], "
-                           ",%7[^,],%7[^,],%*[^\n]\n",
-                           loc, ts, precip_buf, max_t_buf, min_t_buf);
+                       ",%7[^,],%7[^,],%*[^\n]\n",
+               loc, ts, precip_buf, max_t_buf, min_t_buf);
 
         // Check if timestamp is correct (then assuming rest is correct...)
-        if(strncmp(loc, location, BOM_STATION_FILENAME_SIZE) == 0){
-            if(dataset->count < BOM_MAX_RESPONSE_SIZE){
+        if (strncmp(loc, location, BOM_STATION_FILENAME_SIZE) == 0) {
+            if (dataset->count < BOM_MAX_RESPONSE_SIZE) {
                 dataset->precipitation[dataset->count] =
-                        strtof(precip_buf, &ptr);
+                        strtod(precip_buf, &ptr);
                 dataset->max_temperature[dataset->count] =
-                        strtof(max_t_buf, &ptr);
+                        strtod(max_t_buf, &ptr);
                 dataset->min_temperature[dataset->count] =
-                        strtof(min_t_buf, &ptr);
+                        strtod(min_t_buf, &ptr);
                 struct tm dt = {0};
                 strptime(ts, "%d/%m/%Y", &dt);
                 time_t unix_time = mktime(&dt);

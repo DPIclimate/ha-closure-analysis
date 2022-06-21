@@ -24,22 +24,22 @@
  * @return The result status code provided by CURL.
  */
 CURLcode WillyWeather_GetLocationByName(char *name,
-                                        WW_Location_TypeDef *location_info){
+                                        WW_Location_TypeDef *location_info) {
 
-    if(WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
+    if (WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
 
     // Method to handle spaces in location name (e.g. conver ' ' to '%20')
     int16_t new_name_size = 0;
-    for(char* c = name; *c != '\0'; c++){
-        if(*c == ' '){
+    for (char *c = name; *c != '\0'; c++) {
+        if (*c == ' ') {
             new_name_size += 2;
         }
         new_name_size++;
     }
-    char* encoded_name = malloc(new_name_size + 1);
+    char *encoded_name = malloc((size_t)(new_name_size + 1));
     int16_t n = 0;
-    for(size_t en = 0; en < new_name_size; en++){
-        if(name[n] == ' '){
+    for (int16_t en = 0; en < new_name_size; en++) {
+        if (name[n] == ' ') {
             encoded_name[en] = '%';
             encoded_name[en + 1] = '2';
             encoded_name[en + 2] = '0';
@@ -57,74 +57,78 @@ CURLcode WillyWeather_GetLocationByName(char *name,
 
     log_info("Getting Willy Weather location information for %s\n", name);
 
-    struct curl_slist *headers= NULL;
+    struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
 
     cJSON *response = NULL;
     CURLcode result = HttpRequest(&response, url, headers, 0, NULL);
 
     // Response is limited to 1 (makes it easier to parse automatically)
-    if(response != NULL && cJSON_IsArray(response)){
-        cJSON* id = NULL;
-        cJSON* location = NULL;
-        cJSON* region = NULL;
-        cJSON* state = NULL;
-        cJSON* postcode = NULL;
-        cJSON* latitude = NULL;
-        cJSON* longitude = NULL;
+    if (response != NULL && cJSON_IsArray(response)) {
+        cJSON *id = NULL;
+        cJSON *location = NULL;
+        cJSON *region = NULL;
+        cJSON *state = NULL;
+        cJSON *postcode = NULL;
+        cJSON *latitude = NULL;
+        cJSON *longitude = NULL;
 
-        cJSON* item = NULL;
-        cJSON_ArrayForEach(item, response){
+        cJSON *item = NULL;
+        cJSON_ArrayForEach(item, response) {
 
             // Location ID for queries
             id = cJSON_GetObjectItemCaseSensitive(item, "id");
-            if(cJSON_IsNumber(id)){
-                location_info->id = floor(id->valuedouble);
+            if (cJSON_IsNumber(id)) {
+                location_info->id = (uint16_t)id->valueint;
             }
 
             // Location name
             location = cJSON_GetObjectItemCaseSensitive(item, "name");
-            if(cJSON_IsString(location) && location->valuestring != NULL){
+            if (cJSON_IsString(location) && location->valuestring != NULL) {
                 strncpy(location_info->location, location->valuestring,
                         WW_LOCATION_BUF);
-            } else strncpy(location_info->location, "N/a", WW_LOCATION_BUF);
+            } else
+                strncpy(location_info->location, "N/a", WW_LOCATION_BUF);
 
             // Location region
             region = cJSON_GetObjectItemCaseSensitive(item, "region");
-            if(cJSON_IsString(region) && region->valuestring != NULL){
+            if (cJSON_IsString(region) && region->valuestring != NULL) {
                 strncpy(location_info->region, region->valuestring,
                         WW_LOCATION_BUF);
-            } else strncpy(location_info->region, "N/a", WW_LOCATION_BUF);
+            } else
+                strncpy(location_info->region, "N/a", WW_LOCATION_BUF);
 
             // Location
             state = cJSON_GetObjectItemCaseSensitive(item, "state");
-            if(cJSON_IsString(state) && state->valuestring != NULL){
+            if (cJSON_IsString(state) && state->valuestring != NULL) {
                 strncpy(location_info->state, state->valuestring,
                         WW_LOCATION_BUF);
-            } else strncpy(location_info->state, "N/a", WW_LOCATION_BUF);
+            } else
+                strncpy(location_info->state, "N/a", WW_LOCATION_BUF);
 
             // Location postcode
             postcode = cJSON_GetObjectItemCaseSensitive(item, "postcode");
-            if(cJSON_IsString(postcode) && postcode->valuestring != NULL){
+            if (cJSON_IsString(postcode) && postcode->valuestring != NULL) {
                 strncpy(location_info->postcode, postcode->valuestring,
                         WW_LOCATION_BUF);
-            } else strncpy(location_info->postcode, "N/a", WW_LOCATION_BUF);
+            } else
+                strncpy(location_info->postcode, "N/a", WW_LOCATION_BUF);
 
             // Location latitude
             latitude = cJSON_GetObjectItemCaseSensitive(item, "lat");
-            if(cJSON_IsNumber(latitude)){
+            if (cJSON_IsNumber(latitude)) {
                 location_info->latitude = latitude->valuedouble;
             }
 
             // Location longitude
             longitude = cJSON_GetObjectItemCaseSensitive(item, "lng");
-            if(cJSON_IsNumber(longitude)){
+            if (cJSON_IsNumber(longitude)) {
                 location_info->longitude = longitude->valuedouble;
             }
         }
     }
 
-    if(result == CURLE_OK){
+    if (result == CURLE_OK) {
         log_info("Location request to Willy Weather was successful.\n");
         log_debug("Location ID: %hu, Name: %s, State: %s, Latitude: %lf, "
                   "Longitude: %lf\n",

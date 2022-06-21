@@ -16,10 +16,10 @@
  * @param devices Ubidots devices struct to populate.
  * @return Status code respresenting response status.
  */
-CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
+CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices) {
 
     // Check authentication / authenticates if not already done
-    if(Ubidots_CheckAccess() != 0) return CURLE_AUTH_ERROR;
+    if (Ubidots_CheckAccess() != 0) return CURLE_AUTH_ERROR;
 
     const char *URL = "https://industrial.api.ubidots.com.au"
                       "/api/v2.0/devices/?page_size=500";
@@ -30,7 +30,7 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
 
-    const char* auth_key = "X-Auth-Token: ";
+    const char *auth_key = "X-Auth-Token: ";
     char *auth = malloc(strlen(auth_key) + strlen(UBIDOTS_TOKEN) + 1);
     strcpy(auth, auth_key);
     strcat(auth, UBIDOTS_TOKEN);
@@ -40,32 +40,32 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
     cJSON *response = NULL;
     CURLcode result = HttpRequest(&response, URL, headers, 0, NULL);
 
-    if(response != NULL){
-        cJSON* count = NULL;
-        cJSON* results = NULL;
-        cJSON* device = NULL;
-        cJSON* name = NULL;
-        cJSON* latitude = NULL;
-        cJSON* longitude = NULL;
-        cJSON* id = NULL;
+    if (response != NULL) {
+        cJSON *count = NULL;
+        cJSON *results = NULL;
+        cJSON *device = NULL;
+        cJSON *name = NULL;
+        cJSON *latitude = NULL;
+        cJSON *longitude = NULL;
+        cJSON *id = NULL;
 
         int16_t index = 0;
         count = cJSON_GetObjectItemCaseSensitive(response, "count");
-        if(count != NULL){
-            if(cJSON_IsNumber(count)){
-                devices->count = floor(count->valuedouble);
+        if (count != NULL) {
+            if (cJSON_IsNumber(count)) {
+                devices->count = (int16_t)count->valueint;
             }
         }
 
         // Get a list of devices
         results = cJSON_GetObjectItemCaseSensitive(response, "results");
-        if(cJSON_IsArray(results)){
-            cJSON_ArrayForEach(device, results){
+        if (cJSON_IsArray(results)) {
+            cJSON_ArrayForEach(device, results) {
 
                 // Extract name
                 name = cJSON_GetObjectItemCaseSensitive(device, "name");
-                if(cJSON_IsString(name) && name->valuestring != NULL
-                && strlen(name->valuestring) < UBIDOTS_MAX_INFO_LENGTH){
+                if (cJSON_IsString(name) && name->valuestring != NULL
+                    && strlen(name->valuestring) < UBIDOTS_MAX_INFO_LENGTH) {
                     strncpy(devices->names[index], name->valuestring,
                             UBIDOTS_MAX_INFO_LENGTH);
                 } else {
@@ -74,20 +74,20 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
                 }
 
                 // Extract device latitude and longitude
-                cJSON* props = NULL;
+                cJSON *props = NULL;
                 props = cJSON_GetObjectItemCaseSensitive(device, "properties");
-                if(props != NULL){
-                    cJSON* loc = NULL;
+                if (props != NULL) {
+                    cJSON *loc = NULL;
                     loc = cJSON_GetObjectItemCaseSensitive(props, "_location_fixed");
-                    if(loc != NULL){
+                    if (loc != NULL) {
                         latitude = cJSON_GetObjectItemCaseSensitive(loc, "lat");
-                        if(cJSON_IsNumber(latitude)){
+                        if (cJSON_IsNumber(latitude)) {
                             devices->latitudes[index] = latitude->valuedouble;
                         } else {
                             devices->latitudes[index] = 0;
                         }
                         longitude = cJSON_GetObjectItemCaseSensitive(loc, "lng");
-                        if(cJSON_IsNumber(longitude)){
+                        if (cJSON_IsNumber(longitude)) {
                             devices->longitudes[index] = longitude->valuedouble;
                         } else {
                             devices->longitudes[index] = 0;
@@ -100,7 +100,7 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
 
                 // Device identitifier
                 id = cJSON_GetObjectItemCaseSensitive(device, "id");
-                if(cJSON_IsString(id) && id->valuestring != NULL){
+                if (cJSON_IsString(id) && id->valuestring != NULL) {
                     strncpy(devices->ids[index], id->valuestring,
                             UBIDOTS_MAX_INFO_LENGTH);
                 } else {
@@ -113,7 +113,7 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
         }
     }
 
-    if(result == CURLE_OK && devices->count != 0){
+    if (result == CURLE_OK && devices->count != 0) {
         log_info("Ubidots devices list (containing %d devices) successfully "
                  "created.\n", devices->count);
     } else {
@@ -137,19 +137,19 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices){
  * @param devices Devices struct to write to file.
  * @return Error codes. 0 = OK ... 1 = ERROR
  */
-int8_t Ubidots_DevicesToCSV(Ubidots_Devices_TypeDef *devices){
+int8_t Ubidots_DevicesToCSV(Ubidots_Devices_TypeDef *devices) {
 
     log_info("Writing ubidots device list to file.\n");
 
-    if(MakeDirectory("datasets") != 0) return 1;
-    if(MakeDirectory("datasets/ubidots") != 0) return 1;
-    char* filename ="datasets/ubidots/devices.csv";
+    if (MakeDirectory("datasets") != 0) return 1;
+    if (MakeDirectory("datasets/ubidots") != 0) return 1;
+    const char *filename = "datasets/ubidots/devices.csv";
 
-    FILE* file = fopen(filename, "w+");
+    FILE *file = fopen(filename, "w+");
     fprintf(file, "Device Name;Device ID;Latitude;Longitude\n");
 
     int16_t index = 0;
-    while(index < devices->count){
+    while (index < devices->count) {
         fprintf(file, "%s;%s;%lf;%lf\n",
                 devices->names[index],
                 devices->ids[index],

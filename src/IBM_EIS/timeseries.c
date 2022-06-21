@@ -1,18 +1,18 @@
 #include "IBM_EIS/timeseries.h"
 
 /// Parse timeseries response
-static void IBM_ParseTimeseries(cJSON* response,
+static void IBM_ParseTimeseries(cJSON *response,
                                 IBM_TimeseriesDataset_TypeDef *dataset);
 
 /// Parse timeseries response from alternative endpoint
-static void IBM_ParseTimeseriesAlt(cJSON* response,
+static void IBM_ParseTimeseriesAlt(cJSON *response,
                                    IBM_TimeseriesDataset_TypeDef *dataset);
 
 /// Build IBM EIS request URL
-static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url);
+static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char *url);
 
 /// Build IBM EIS request URL for alternative endpoint
-static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url);
+static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char *url);
 
 /**
  * IBM EIS get timeseries data as a JSON response.
@@ -50,39 +50,39 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url);
 CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
                            IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset,
-                           uint8_t alt_flag){
+                           uint8_t alt_flag) {
 
-    if(IBM_HandleAuth(auth_handle) != 0){
+    if (IBM_HandleAuth(auth_handle) != 0) {
         return CURLE_AUTH_ERROR;
     }
 
     char url[IBM_URL_SIZE];
-    if(alt_flag == 1){
+    if (alt_flag == 1) {
         IBM_BuildURLAlt(request, url);
     } else {
         IBM_BuildURL(request, url);
     }
 
     log_info("Getting IBM EIS layer (ID: %d) : %s\n",
-            request->layer_id, url);
+             request->layer_id, url);
 
     // Authorization builder
-    const char* BASE_HEADER = "Authorization: Bearer ";
-    char* auth_header = malloc(strlen(BASE_HEADER) +
-            strlen(auth_handle->access_token) + 1);
+    const char *BASE_HEADER = "Authorization: Bearer ";
+    char *auth_header = malloc(strlen(BASE_HEADER) +
+                               strlen(auth_handle->access_token) + 1);
     strcpy(auth_header, BASE_HEADER);
     strcat(auth_header, auth_handle->access_token);
 
     // Add headers
-    struct curl_slist* headers = NULL;
+    struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, auth_header);
     headers = curl_slist_append(headers, "accept: application/json");
 
-    cJSON* response = NULL;
+    cJSON *response = NULL;
     CURLcode result = HttpRequest(&response, url, headers, 0, NULL);
 
-    if(response != NULL){
-        if(alt_flag == 1){
+    if (response != NULL) {
+        if (alt_flag == 1) {
             IBM_ParseTimeseriesAlt(response, dataset);
         } else {
             IBM_ParseTimeseries(response, dataset);
@@ -96,7 +96,7 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
     curl_slist_free_all(headers);
     cJSON_Delete(response);
 
-    if(result == CURLE_OK){
+    if (result == CURLE_OK) {
         log_info("IBM EIS timeseries request was successful.\n");
     }
 
@@ -113,36 +113,36 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
  * @param response The JSON to parse.
  * @param dataset The dataset to populate.
  */
-static void IBM_ParseTimeseries(cJSON* response,
-                                IBM_TimeseriesDataset_TypeDef *dataset){
+static void IBM_ParseTimeseries(cJSON *response,
+                                IBM_TimeseriesDataset_TypeDef *dataset) {
 
     log_info("Parsing IBM EIS request results.\n");
 
     // For query information
-    cJSON* start = NULL;
-    cJSON* end = NULL;
-    cJSON* count = NULL;
+    cJSON *start = NULL;
+    cJSON *end = NULL;
+    cJSON *count = NULL;
 
     // For array data
-    cJSON* point = NULL;
-    cJSON* data = NULL;
+    cJSON *point = NULL;
+    cJSON *data = NULL;
 
     // Get the start time as time_t
     start = cJSON_GetObjectItemCaseSensitive(response, "start");
-    if(cJSON_IsNumber(start)){
-        dataset->start = floor(start->valuedouble);
+    if (cJSON_IsNumber(start)) {
+        dataset->start = (time_t)start->valuedouble;
     }
 
     // Get the end time as time_t
     end = cJSON_GetObjectItemCaseSensitive(response, "end");
-    if(cJSON_IsNumber(end)){
-        dataset->end = floor(end->valuedouble);
+    if (cJSON_IsNumber(end)) {
+        dataset->end = (time_t)end->valuedouble;
     }
 
     // Number of values returned (count)
     count = cJSON_GetObjectItemCaseSensitive(response, "count");
-    if(cJSON_IsNumber(count)){
-        dataset->count = floor(count->valuedouble);
+    if (cJSON_IsNumber(count)) {
+        dataset->count = (int32_t)count->valuedouble;
     }
 
     memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH);
@@ -150,9 +150,9 @@ static void IBM_ParseTimeseries(cJSON* response,
 
     data = cJSON_GetObjectItemCaseSensitive(response, "data");
     uint16_t index = 0;
-    if(cJSON_IsArray(data)){
-        cJSON_ArrayForEach(point, data){
-            if(index > IBM_MAX_RESPONSE_LENGTH){
+    if (cJSON_IsArray(data)) {
+        cJSON_ArrayForEach(point, data) {
+            if (index > IBM_MAX_RESPONSE_LENGTH) {
                 log_error(
                         "Allocated memory exceeded. "
                         "Increase the size of IBM_MAX_RESPONSE_LENGTH to "
@@ -160,15 +160,15 @@ static void IBM_ParseTimeseries(cJSON* response,
                         "IMB EIS.\n");
                 return;
             }
-            cJSON* ts = NULL;
-            cJSON* value = NULL;
+            cJSON *ts = NULL;
+            cJSON *value = NULL;
             ts = cJSON_GetObjectItemCaseSensitive(point, "timestamp");
-            if(cJSON_IsNumber(ts)){
-                dataset->timestamps[index] = floor(ts->valuedouble);
+            if (cJSON_IsNumber(ts)) {
+                dataset->timestamps[index] = (time_t)ts->valuedouble;
             }
 
             value = cJSON_GetObjectItemCaseSensitive(point, "value");
-            if(cJSON_IsString(value) && value->valuestring != NULL){
+            if (cJSON_IsString(value) && value->valuestring != NULL) {
                 dataset->values[index] = strtod(value->valuestring, NULL);
             } else {
                 log_error("Parse error for value: %s\n",
@@ -191,22 +191,22 @@ static void IBM_ParseTimeseries(cJSON* response,
  * @param response The JSON to parse.
  * @param dataset The dataset to populate.
  */
-static void IBM_ParseTimeseriesAlt(cJSON* response,
-                                   IBM_TimeseriesDataset_TypeDef *dataset){
+static void IBM_ParseTimeseriesAlt(cJSON *response,
+                                   IBM_TimeseriesDataset_TypeDef *dataset) {
 
     log_info("Parsing IBM EIS alternative request results.\n");
 
     // For query information
-    cJSON* count = NULL;
+    cJSON *count = NULL;
 
     // For array data
-    cJSON* point = NULL;
-    cJSON* data = NULL;
+    cJSON *point = NULL;
+    cJSON *data = NULL;
 
     // Number of values returned (count)
     count = cJSON_GetObjectItemCaseSensitive(response, "count");
-    if(cJSON_IsNumber(count)){
-        dataset->count = floor(count->valuedouble);
+    if (cJSON_IsNumber(count)) {
+        dataset->count = (uint16_t)count->valuedouble;
     }
 
     memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH);
@@ -214,34 +214,34 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
 
     data = cJSON_GetObjectItemCaseSensitive(response, "timeSeries");
     uint16_t index = 0;
-    if(cJSON_IsArray(data)){
-        cJSON_ArrayForEach(point, data){
+    if (cJSON_IsArray(data)) {
+        cJSON_ArrayForEach(point, data) {
 
-            cJSON* ts = NULL;
-            cJSON* value = NULL;
+            cJSON *ts = NULL;
+            cJSON *value = NULL;
 
             ts = cJSON_GetObjectItemCaseSensitive(point, "dateTime");
-            if(cJSON_IsString(ts) && ts->valuestring != NULL){
+            if (cJSON_IsString(ts) && ts->valuestring != NULL) {
                 struct tm v_time;
                 memset(&v_time, 0, sizeof(struct tm));
                 strptime(ts->valuestring, "%FT%T%z", &v_time);
                 time_t unix_time = mktime(&v_time);
-                if(unix_time != -1){
+                if (unix_time != -1) {
                     dataset->timestamps[index] = unix_time;
-                    if(index == 0){
+                    if (index == 0) {
                         dataset->start = unix_time;
                     }
-                    if(index == dataset->count - 1){
+                    if (index == dataset->count - 1) {
                         dataset->end = unix_time;
                     }
                 } else {
                     log_error("Unable to parse datetime: %s\n",
-                            ts->valuestring);
+                              ts->valuestring);
                 }
             }
 
             value = cJSON_GetObjectItemCaseSensitive(point, "value");
-            if(cJSON_IsNumber(value)){
+            if (cJSON_IsNumber(value)) {
                 memcpy(&dataset->values[index], &value->valuedouble,
                        sizeof(double));
             }
@@ -249,8 +249,8 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
         }
     } else {
         log_error("IBM response received. However, the response "
-                        "was in an unrecognized format and "
-                        "could not be parased.\n");
+                  "was in an unrecognized format and "
+                  "could not be parased.\n");
     }
 
     log_info("Finished parsing response from IBM EIS.\n");
@@ -264,7 +264,7 @@ static void IBM_ParseTimeseriesAlt(cJSON* response,
  * @param req Request information to populate URL with.
  * @param url URL to modify.
  */
-static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
+static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char *url) {
 
     log_info("Building URL for IBM EIS endpoint: %s\n",
              IBM_REQUEST_URL);
@@ -291,7 +291,7 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char* url){
  * @param req Request information to populate URL with.
  * @param url URL to modify.
  */
-static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
+static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char *url) {
 
     log_info("Building URL for alternative IBM EIS endpoint: "
              "%s\n", IBM_ALT_REQUEST_URL);
@@ -302,12 +302,12 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
     time_t start_offset = req->start - 86400;
     struct tm *start_tm = localtime(&start_offset);
     snprintf(start_time, START_SIZE, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
-            start_tm->tm_year + 1900,
-            start_tm->tm_mon + 1,
-            start_tm->tm_mday,
-            start_tm->tm_hour,
-            start_tm->tm_min,
-            start_tm->tm_sec);
+             start_tm->tm_year + 1900,
+             start_tm->tm_mon + 1,
+             start_tm->tm_mday,
+             start_tm->tm_hour,
+             start_tm->tm_min,
+             start_tm->tm_sec);
 
     // Create end time char*
     const uint8_t END_SIZE = 25;
@@ -315,25 +315,25 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
     time_t end_offset = req->end - 86400;
     struct tm *end_tm = localtime(&end_offset);
     snprintf(end_time, END_SIZE, "%d-%02d-%02dT%02d:%02d:%02d.000Z",
-            end_tm->tm_year + 1900,
-            end_tm->tm_mon + 1,
-            end_tm->tm_mday,
-            end_tm->tm_hour,
-            end_tm->tm_min,
-            end_tm->tm_sec);
+             end_tm->tm_year + 1900,
+             end_tm->tm_mon + 1,
+             end_tm->tm_mday,
+             end_tm->tm_hour,
+             end_tm->tm_min,
+             end_tm->tm_sec);
 
     snprintf(url, IBM_URL_SIZE, "%s/timeseries/"
-                 "%d"
-                 "?latitude=%f"
-                 "&longitude=%f"
-                 "&startingDateTime=%s"
-                 "&endingDateTime=%s",
-            IBM_ALT_REQUEST_URL,
-            req->layer_id,
-            req->latitude,
-            req->longitude,
-            start_time,
-            end_time);
+                                "%d"
+                                "?latitude=%f"
+                                "&longitude=%f"
+                                "&startingDateTime=%s"
+                                "&endingDateTime=%s",
+             IBM_ALT_REQUEST_URL,
+             req->layer_id,
+             req->latitude,
+             req->longitude,
+             start_time,
+             end_time);
 }
 
 /**
@@ -347,17 +347,17 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char* url){
  * @return Error code. 0 = OK ... 1 = ERROR
  */
 int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
-                           IBM_TimeseriesDataset_TypeDef *dataset){
+                           IBM_TimeseriesDataset_TypeDef *dataset) {
 
     log_info("Writing IBM timeseries dataset to a .csv file.\n");
 
-    if(MakeDirectory("datasets") != 0) return 1;
-    if(MakeDirectory("datasets/ibm") != 0) return 1;
-    if(MakeDirectory("datasets/ibm/timeseries") != 0) return 1;
+    if (MakeDirectory("datasets") != 0) return 1;
+    if (MakeDirectory("datasets/ibm") != 0) return 1;
+    if (MakeDirectory("datasets/ibm/timeseries") != 0) return 1;
 
     int8_t FILENAME_SIZE = 100;
     char filename[FILENAME_SIZE];
-    switch (request->layer_id){
+    switch (request->layer_id) {
         case IBM_PRECIPITATION_ID:
             strncpy(filename, "datasets/ibm/timeseries/precipitation.csv",
                     FILENAME_SIZE);
@@ -369,7 +369,7 @@ int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
     }
 
     WriteTimeseriesToFile(filename, dataset->timestamps, dataset->values,
-                          dataset->count);
+                          (int16_t)dataset->count);
 
     log_info("IBM timeseries dataset witten to: %s\n", filename);
 
@@ -384,19 +384,19 @@ int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
  * @param filename Filename of file to open, including path.
  * @return Dataset containing timeseries data
  */
-IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char* filename){
+IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char *filename) {
     IBM_TimeseriesDataset_TypeDef dataset = {0};
 
     log_info("Loading timeseries dataset from: %s\n", filename);
 
-    FILE* file = fopen(filename, "r");
-    if(file == NULL) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
         log_error("Unable to open file: %s. Check filename and path.\n",
                   filename);
         return dataset;
     }
 
-    char* ptr;
+    char *ptr;
     time_t unix_time;
     char unix_buf[13], ts[26], precip_buf[21];
     double precip;
@@ -406,13 +406,13 @@ IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char* filename){
         res = fscanf(file, "%12[^;];%25[^;];%20[^\n]\n", unix_buf, ts,
                      precip_buf);
         unix_time = strtol(unix_buf, &ptr, 10);
-        precip = strtof(precip_buf, &ptr);
-        if(unix_time != 0){
+        precip = strtod(precip_buf, &ptr);
+        if (unix_time != 0) {
             dataset.values[iters] = precip;
             dataset.timestamps[iters] = unix_time;
             iters++;
         }
-    } while(res != EOF && iters < IBM_MAX_RESPONSE_LENGTH);
+    } while (res != EOF && iters < IBM_MAX_RESPONSE_LENGTH);
 
     dataset.count = iters;
     fclose(file);

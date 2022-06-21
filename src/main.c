@@ -5,7 +5,7 @@
 // TODO Download method for Ubidots salinity & weather readings.
 // TODO Data transformation to calculate heat severity index
 
-int main(void){
+int main(void) {
 
     curl_global_init(CURL_GLOBAL_ALL);
 

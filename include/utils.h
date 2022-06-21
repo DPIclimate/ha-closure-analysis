@@ -29,7 +29,7 @@ int8_t MakeDirectory(const char* directory);
 
 /// Write timeseries data into a csv file
 void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
-                           uint16_t max_n_values);
+                           int16_t max_n_values);
 
 /// Modified minify function from cJSON
 void cJSON_Minify_Mod(char *json);

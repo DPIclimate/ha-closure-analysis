@@ -32,10 +32,10 @@
  * @return Status code representing the response status.
  */
 CURLcode HttpRequest(cJSON **response, const char *URL,
-                     struct curl_slist *headers, int8_t post, const char* body){
+                     struct curl_slist *headers, int8_t post, const char *body) {
 
     CURL *curl = curl_easy_init();
-    if(!curl){
+    if (!curl) {
         log_error("Curl not found. Exiting.\n");
         return CURLE_FUNCTION_NOT_FOUND;
     }
@@ -46,7 +46,7 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
     curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L); // Fail on 400 - 500 errors
 
     // Post request requested
-    if(post == 1 && body != NULL){
+    if (post == 1 && body != NULL) {
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
     }
 
@@ -55,11 +55,11 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
     chunk.size = 0;
 
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *) &chunk);
 
     CURLcode result = curl_easy_perform(curl);
 
-    if(result != CURLE_OK){
+    if (result != CURLE_OK) {
         log_error("Curl request failed: %s\n",
                   curl_easy_strerror(result));
     } else {

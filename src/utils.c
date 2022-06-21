@@ -26,24 +26,24 @@
  * @return The size of received data.
  */
 size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
-		void *userp){
-	size_t realsize = size * nmemb;
+                           void *userp) {
+    size_t realsize = size * nmemb;
 
-	ReqData_TypeDef* mem = (ReqData_TypeDef*) userp;
+    ReqData_TypeDef *mem = (ReqData_TypeDef *) userp;
 
-	char *ptr = realloc(mem->memory, mem->size + realsize + 1);
+    char *ptr = realloc(mem->memory, mem->size + realsize + 1);
 
-	if(ptr == NULL){
+    if (ptr == NULL) {
         log_error("Not enough memory to hold HTTP response data.\n");
-		return 0;
-	}
+        return 0;
+    }
 
-	mem->memory = ptr;
-	memcpy(&(mem->memory[mem->size]), contents, realsize);
-	mem->size += realsize;
-	mem->memory[mem->size] = 0;
+    mem->memory = ptr;
+    memcpy(&(mem->memory[mem->size]), contents, realsize);
+    mem->size += realsize;
+    mem->memory[mem->size] = 0;
 
-	return realsize;
+    return realsize;
 }
 
 /**
@@ -57,13 +57,13 @@ size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
  * @param directory Directory name you want to create.
  * @return Integer representing error status. 0 = OK ... 1 = ERROR
  */
-int8_t MakeDirectory(const char* directory){
-    if(mkdir(directory, S_IRWXU | S_IRWXG | S_IRWXO) == -1){
+int8_t MakeDirectory(const char *directory) {
+    if (mkdir(directory, S_IRWXU | S_IRWXG | S_IRWXO) == -1) {
         // If the directory already exists it not an error
-        if(errno != EEXIST){
+        if (errno != EEXIST) {
             log_error("Unable to create directory: %s\n",
                       directory);
-            switch(errno){
+            switch (errno) {
                 case EACCES:
                     log_error("Permission denied.\n");
                     return 1;
@@ -104,8 +104,8 @@ int8_t MakeDirectory(const char* directory){
  * @param values Data values (y values).
  * @param max_n_values Max buffer size.
  */
-void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
-                           uint16_t max_n_values){
+void WriteTimeseriesToFile(const char *filename, time_t *dates, double *values,
+                           int16_t max_n_values) {
 
     log_info("Writing timeseries dataset to %s\n", filename);
 
@@ -113,7 +113,7 @@ void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
     fprintf(file, "UNIX;Date;Data\n");
 
     uint16_t index = 0;
-    while(dates[index] != '\0' && index < max_n_values){
+    while (dates[index] != '\0' && index < max_n_values) {
         char date[25] = {0};
         struct tm *date_tm = localtime(&dates[index]);
         strftime(date, 25, "%Y-%m-%dT%H:%M:%S%z", date_tm);
@@ -138,18 +138,18 @@ void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
  *
  * @param json The string to minify (parse).
  */
-void cJSON_Minify_Mod(char *json){
+void cJSON_Minify_Mod(char *json) {
     char *into = json;
 
-    if (json == NULL){
+    if (json == NULL) {
         return;
     }
 
     char prev_char;
-    while (json[0] != '\0'){
-        switch (json[0]){
+    while (json[0] != '\0') {
+        switch (json[0]) {
             case ' ':
-                if (prev_char != ' ' && prev_char != '\n'){
+                if (prev_char != ' ' && prev_char != '\n') {
                     into[0] = json[0];
                     into++;
                 }

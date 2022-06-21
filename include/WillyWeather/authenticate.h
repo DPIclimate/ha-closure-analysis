@@ -12,7 +12,7 @@
 
 /// Willy weather access token size
 #define WW_TOKEN_SIZE                          100
-char WW_TOKEN[WW_TOKEN_SIZE];
+static char WW_TOKEN[WW_TOKEN_SIZE];
 
 /// Willy weather default environmental variable name
 #define WW_DEFAULT_ENV_NAME                    "WW_TOKEN"
@@ -21,6 +21,6 @@ char WW_TOKEN[WW_TOKEN_SIZE];
 uint8_t WillyWeather_GetToken(const char* env_var_name);
 
 /// Check API token is initialised and available for use
-uint8_t WillyWeather_CheckAccess();
+uint8_t WillyWeather_CheckAccess(void);
 
 #endif //HA_CLOSURE_ANALYSIS_AUTHENTICATE_H
