@@ -12,6 +12,9 @@ file(GLOB_RECURSE INC_DIR RELATIVE ${CMAKE_SOURCE_DIR} include/*.h)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# Set C standard to use
+set(CMAKE_C_STANDARD 11)
+
 # Set required packages
 find_package(CURL REQUIRED)
 find_package(cJSON REQUIRED)
@@ -20,7 +23,6 @@ find_package(cJSON REQUIRED)
 add_executable(${PROJECT_NAME} ${SRC_DIR} ${INC_DIR})
 
 # Add flags to compilation
-target_compile_options(${PROJECT_NAME} PRIVATE -std=gnu11)
 target_compile_options(${PROJECT_NAME} PRIVATE -g)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall)
 target_compile_options(${PROJECT_NAME} PRIVATE -Werror)
@@ -45,6 +47,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wunused-macros)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wmissing-declarations)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wswitch-enum)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wsign-conversion)
+target_compile_options(${PROJECT_NAME} PRIVATE -Werror=implicit-function-declaration)
 
 target_compile_options(${PROJECT_NAME} PRIVATE -DLOG_USE_COLOR)
 
