@@ -145,8 +145,8 @@ static void IBM_ParseTimeseries(cJSON *response,
         dataset->count = (int32_t)count->valuedouble;
     }
 
-    memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH * sizeof(int16_t));
-    memset(dataset->values, 0, IBM_MAX_RESPONSE_LENGTH * sizeof(int16_t));
+    memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH);
+    memset(dataset->values, 0, IBM_MAX_RESPONSE_LENGTH);
 
     data = cJSON_GetObjectItemCaseSensitive(response, "data");
     uint16_t index = 0;
@@ -209,8 +209,8 @@ static void IBM_ParseTimeseriesAlt(cJSON *response,
         dataset->count = (uint16_t)count->valuedouble;
     }
 
-    memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH * sizeof(int16_t));
-    memset(dataset->values, 0, IBM_MAX_RESPONSE_LENGTH * sizeof(int16_t));
+    memset(dataset->timestamps, 0, IBM_MAX_RESPONSE_LENGTH);
+    memset(dataset->values, 0, IBM_MAX_RESPONSE_LENGTH);
 
     data = cJSON_GetObjectItemCaseSensitive(response, "timeSeries");
     uint16_t index = 0;
@@ -277,8 +277,8 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char *url) {
                                 "&end=%ld",
              IBM_REQUEST_URL,
              req->layer_id,
-             (float)req->latitude,
-             (float)req->longitude,
+             (double)req->latitude,
+             (double)req->longitude,
              (req->start - 86400) * 1000,
              (req->end - 86400) * 1000);
 }
@@ -330,8 +330,8 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char *url) {
                                 "&endingDateTime=%s",
              IBM_ALT_REQUEST_URL,
              req->layer_id,
-             (float)req->latitude,
-             (float)req->longitude,
+             (double)req->latitude,
+             (double)req->longitude,
              start_time,
              end_time);
 }

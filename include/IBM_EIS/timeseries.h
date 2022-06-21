@@ -18,7 +18,7 @@
 #define IBM_PRECIPITATION_ID 49097
 
 /// Max number of values in response.
-static const int16_t IBM_MAX_RESPONSE_LENGTH = 2000;
+#define IBM_MAX_RESPONSE_LENGTH 2000
 
 /// IBM URL
 static const char* IBM_REQUEST_URL = "https://pairs.res.ibm.com";

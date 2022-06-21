@@ -1,13 +1,26 @@
+# Clion configuration
 .idea/
-bin
-obj
-doxygen-styles
-docs
-datasets
-build
-cmake-build-debug
-CMakeFiles
 
+# Files
 *.swp
 *.*.swp
 .DS_Store
+
+# Doxygen
+doxygen-styles
+docs
+
+# Build folders
+## Make
+bin
+obj
+## CMake
+build
+cmake-build-debug
+CMakeFiles
+cmake-build-debug-event-trace
+cmake-build-release
+
+# Data
+datasets
+

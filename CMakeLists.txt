@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION "3.19.0")
 
-project("program")
+project("program" C)
 
 # All files in source directory
 file(GLOB_RECURSE SRC_DIR RELATIVE ${CMAKE_SOURCE_DIR} src/*.c)
