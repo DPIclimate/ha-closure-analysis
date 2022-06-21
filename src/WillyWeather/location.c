@@ -32,7 +32,7 @@ CURLcode WillyWeather_GetLocationByName(char *name,
     int16_t new_name_size = 0;
     for (char *c = name; *c != '\0'; c++) {
         if (*c == ' ') {
-            new_name_size += 2;
+            new_name_size += (int16_t)2;
         }
         new_name_size++;
     }
@@ -43,7 +43,7 @@ CURLcode WillyWeather_GetLocationByName(char *name,
             encoded_name[en] = '%';
             encoded_name[en + 1] = '2';
             encoded_name[en + 2] = '0';
-            en += 2;
+            en += (int16_t)2;
         } else {
             encoded_name[en] = name[n];
         }

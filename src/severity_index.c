@@ -21,7 +21,7 @@ int8_t SI_CalculateFoodRisk(SI_Dataset_TypeDef *dataset,
 
         double sum_tide = 0;
         double sum_precip = 0;
-        for (uint16_t x = index - 4; x < (index + 9); x++) {
+        for (uint16_t x = (uint16_t)(index - 4); x < (index + 9); x++) {
             sum_tide += tide_diff[x];
             sum_precip += daily_precipitation[x];
         }

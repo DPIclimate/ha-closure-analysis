@@ -11,16 +11,14 @@
 #include "http.h"
 #include "utils.h"
 
-/// Max number of values in response.
-#define IBM_MAX_RESPONSE_LENGTH 2000
-
 /// Max characters in formulated URL.
 #define IBM_URL_SIZE 250
 
-// TODO add more identifiers here
-
 /// Define layer identifier
 #define IBM_PRECIPITATION_ID 49097
+
+/// Max number of values in response.
+static const int16_t IBM_MAX_RESPONSE_LENGTH = 2000;
 
 /// IBM URL
 static const char* IBM_REQUEST_URL = "https://pairs.res.ibm.com";
