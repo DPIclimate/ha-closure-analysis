@@ -123,3 +123,54 @@ void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
 
     fclose(file);
 }
+
+/**
+ * HTML minify function modified from cJSON library.
+ *
+ * The main cJSON_Minify() function gets rid of all white space and '/'
+ * characters in a string. This however, causes sentances to appear without
+ * the nessessary spaces between words. This modified function keeps only
+ * one space between each character (if more than one space occurs) and
+ * maintains the spaces between words in a sentance. Additionally '/'
+ * characters are maintained as they are used as datetime delimiters.
+ *
+ * @see https://github.com/DaveGamble/cJSON/blob/master/cJSON.c#L2838
+ *
+ * @param json The string to minify (parse).
+ */
+void cJSON_Minify_Mod(char *json){
+    char *into = json;
+
+    if (json == NULL){
+        return;
+    }
+
+    char prev_char;
+    while (json[0] != '\0'){
+        switch (json[0]){
+            case ' ':
+                if (prev_char != ' ' && prev_char != '\n'){
+                    into[0] = json[0];
+                    into++;
+                }
+                prev_char = json[0];
+                json++;
+                break;
+            case '\t':
+            case '\r':
+            case '\n':
+                prev_char = json[0];
+                json++;
+                break;
+            default:
+                prev_char = json[0];
+                into[0] = json[0];
+                json++;
+                into++;
+        }
+    }
+
+    /* and null-terminate. */
+    *into = '\0';
+}
+

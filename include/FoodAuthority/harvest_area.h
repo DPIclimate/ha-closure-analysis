@@ -19,20 +19,25 @@
 /// Waterfall harvest area
 #define FA_HA_CLYDE_WATERFALL "Waterfall"
 
-
 /// Harvest area status information.
 typedef struct {
-    char location[FA_MAX_BUFFER]; /// Relevent location
+    char program_name[FA_MAX_BUFFER];
+    char location[FA_MAX_BUFFER];
+    char name[FA_MAX_BUFFER]; /// Relevent location
     char classification[FA_MAX_BUFFER]; /// NSW FA quality classification
     char status[FA_MAX_BUFFER]; /// HA status (open / closed)
     char time[FA_MAX_BUFFER]; /// Time updated
     struct tm u_time; /// System formatted time
     char reason[FA_MAX_BUFFER]; /// Reason for status
     char previous_reason[FA_MAX_BUFFER]; /// Previous status reason
-} FA_HarvestAreaStatus_TypeDef;
+} FA_HarvestArea_TypeDef;
 
 /// Harvest area of interest status information.
 CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
-                                       FA_HarvestAreaStatus_TypeDef *ha_status);
+                                 FA_HarvestArea_TypeDef *ha_status);
+
+/// Parse HTML data to populate status information data.
+void FA_ParseResponse(char* data,
+                      FA_HarvestArea_TypeDef *harvest_area);
 
 #endif //HA_CLOSURE_ANALYSIS_HARVEST_AREA_H

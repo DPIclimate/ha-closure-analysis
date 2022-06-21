@@ -78,7 +78,8 @@ int8_t BOM_LoadStationsFromTxt(const char* filename,
 
             // Remove trailing whitespace from station name
             for(int16_t i = 0; i < BOM_STATION_NAME_SIZE - 2; i++){
-                if(name_buf[i] == ' ' && (name_buf[i+1] == '\0' || name_buf[i+1] == ' ')){
+                if(name_buf[i] == ' ' && (name_buf[i+1] == '\0' ||
+                                          name_buf[i+1] == ' ')){
                     name_buf[i] = '\0';
                     break;
                 }
@@ -93,23 +94,34 @@ int8_t BOM_LoadStationsFromTxt(const char* filename,
 
             int8_t opening_bracket = 0;
             // Format name as a filename (lowercase, '_' replaces ' ', no "AWS")
-            for(int16_t i = 0; i < BOM_STATION_NAME_SIZE - 2; i++){
+            for(int16_t i = 0; i < BOM_STATION_NAME_SIZE - 3; i++){
                 // Check if opening bracket occurs before AWS instance
                 if(name_buf[i] == '('){
                     opening_bracket = 1;
                 }
 
-                // Remove AWS (only occurs at end of filename)
-                if(name_buf[i] == 'A' && name_buf[i+1] == 'W' &&
-                name_buf[i+2] == 'S'){
-                    if(i > 0){
-                        if(opening_bracket != 0){
-                            name_buf[i-1] = ')';
-                            name_buf[i] = '\0';
-                        } else {
-                            name_buf[i-1] = '\0';
+                // Remove AWS or AW
+                if(i > 0) {
+                    if (name_buf[i] == 'A' && name_buf[i + 1] == 'W') {
+                        // AWS
+                        if (name_buf[i + 2] == 'S') {
+                            if (opening_bracket != 0) {
+                                name_buf[i - 1] = ')';
+                                name_buf[i] = '\0';
+                            } else {
+                                name_buf[i - 1] = '\0';
+                            }
+                            break;
                         }
-                        break;
+                        else {
+                            // Handles "PORT MAQUARIE (PORT MACQUARIE AIRPORT AW"
+                            // Converts to "PORT MAQUARIE (PORT MACQUARIE AIRPORT AW)"
+                            // Which is expected by the BOM...
+                            if(opening_bracket != 0){
+                                name_buf[i+2] = ')';
+                                name_buf[i+3] = '\0';
+                            }
+                        }
                     }
                 }
 

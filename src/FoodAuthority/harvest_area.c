@@ -4,13 +4,6 @@
 static void FA_FindHTMLValue(char* data, const char* search_term,
                                    char* value);
 
-/// Parse HTML data to populate status information data.
-static void FA_ParseResponse(char* data,
-                                   FA_HarvestAreaStatus_TypeDef *ha_status);
-
-/// Modified minify function from cJSON
-static void cJSON_Minify_Mod(char *json);
-
 /**
  * Gets harvest area status information from NSW Food Authority.
  *
@@ -20,8 +13,8 @@ static void cJSON_Minify_Mod(char *json);
  * helper functions to pull out a struct containing relevent data.
  *
  * @code
- *      FA_HarvestAreaStatus_TypeDef ha_status;
- *      FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &ha_status);
+ *      FA_HarvestAreaStatus_TypeDef harvest_area;
+ *      FA_GetHarvestAreaStatus(FA_HA_CLYDE_MOONLIGHT, &harvest_area);
  * @endcode
  *
  * The havest area names for Batemans Bay are as follow:
@@ -33,13 +26,11 @@ static void cJSON_Minify_Mod(char *json);
  * their name and use it as the harvest_name variable.
  *
  * @param harvest_name Name of harvest area.
- * @param ha_status Harvest area struct to populate with status information.
+ * @param harvest_area Harvest area struct to populate with status information.
  * @return Code representing CURL response status.
  */
 CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
-                                       FA_HarvestAreaStatus_TypeDef *ha_status){
-
-    strcpy(ha_status->location, harvest_name);
+                                       FA_HarvestArea_TypeDef *harvest_area){
 
     const char* URL = "https://www.foodauthority.nsw.gov.au/views/ajax";
 
@@ -58,8 +49,7 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
             "from: %s\n", harvest_name, URL);
 
     struct curl_slist* headers = NULL;
-    headers = curl_slist_append(headers, "authority: "
-                                         "www.foodauthority.nsw.gov.au");
+    headers = curl_slist_append(headers, "authority: NSW DPI");
     headers = curl_slist_append(headers, "x-requested-with: XMLHttpRequest");
     headers = curl_slist_append(headers, "accept: application/json");
 
@@ -74,7 +64,7 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
             data = cJSON_GetObjectItemCaseSensitive(res, "data");
             if(cJSON_IsString(data) && data->valuestring != NULL){
                 cJSON_Minify_Mod(data->valuestring); // Remove unessessary chars
-                FA_ParseResponse(data->valuestring, ha_status);
+                FA_ParseResponse(data->valuestring, harvest_area);
             } else {
                 log_error("NSW Food Authority request was successful. But"
                           " no data was found.\n");
@@ -85,7 +75,7 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
     if(result == CURLE_OK){
         log_info("NSW Food Authority request was successful.\n");
         log_debug("Location: %s, Status: %s, Time Updated: %s\n",
-                 ha_status->location, ha_status->status, ha_status->time);
+                 harvest_area->location, harvest_area->status, harvest_area->time);
     }
 
     free(req_body);
@@ -102,21 +92,22 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
  * (i.e. the text between relevent tags) are added to the corresponding struct.
  *
  * @param data The string to parse.
- * @param ha_status The struct to populate with values.
+ * @param harvest_area The struct to populate with values.
  */
-static void FA_ParseResponse(char* data,
-                                   FA_HarvestAreaStatus_TypeDef *ha_status){
-
-    log_info("Parsing JSON response from NSW Food Authority.\n");
+void FA_ParseResponse(char* data,
+                      FA_HarvestArea_TypeDef *harvest_area){
 
     // Items to extract from request. The order of these items matters for the
     // below switch statement.
     const char* search_terms[] = {
-            "-classification",
-            "-status",
-            "datetime=",
-            "Reasons/Conditions</div><div",
-            "Previous reasons/conditions</div><div"
+            "sqap-program", // Program name
+            "sqap-harvest-area", // Location (may include zone as well)
+            "sqap-card__title", // Harvest area name
+            "-classification", // Classification (Depuration, Water Drawing)
+            "-status", // Open Close
+            "datetime=", // Time updated
+            "Reasons/Conditions</div><div", // Reason for status
+            "Previous reasons/conditions</div><div" // Previous reason (if not NULL)
     };
 
     // Setup to hold time struct
@@ -132,87 +123,55 @@ static void FA_ParseResponse(char* data,
         }
 
         if(strlen(value) > FA_MAX_BUFFER){
-            log_error("Value: %s exceeds the set maxiumu  buffer"
-                      " size. Skipping.\n", value);
+            log_error("Value: %s exceeds the set maximum buffer "
+                      "size. Skipping.\n", value);
             memset(value, 0, sizeof(value));
             continue;
         }
 
         switch (i){
             case 0:
-                strcpy(ha_status->classification, value);
+                // Remove " SP" from last part of program name
+                for(size_t x = 0; x < strlen(value)-1; x++){
+                    if(value[x] == 'S' && value[x+1] == 'P'){
+                        if(x > 0){
+                            value[x-1] = '\0';
+                            break;
+                        }
+                    }
+                }
+                strncpy(harvest_area->program_name, value, FA_MAX_BUFFER);
                 break;
             case 1:
-                strcpy(ha_status->status, value);
+                strncpy(harvest_area->location, value, FA_MAX_BUFFER);
                 break;
             case 2:
-                /// Convert time to tm struct
-                strptime(value, "%02d/%02m/%Y - %02H:%02M%p", &v_time);
-                ha_status->u_time = v_time;
-                strcpy(ha_status->time, value);
+                strncpy(harvest_area->name, value, FA_MAX_BUFFER);
                 break;
             case 3:
-                strcpy(ha_status->reason, value);
+                strncpy(harvest_area->classification, value, FA_MAX_BUFFER);
                 break;
             case 4:
-                strcpy(ha_status->previous_reason, value);
+                strncpy(harvest_area->status, value, FA_MAX_BUFFER);
+                break;
+            case 5:
+                /// Convert time to tm struct
+                strptime(value, "%02d/%02m/%Y - %02H:%02M%p", &v_time);
+                harvest_area->u_time = v_time;
+                strncpy(harvest_area->time, value, FA_MAX_BUFFER);
+                break;
+            case 6:
+                strncpy(harvest_area->reason, value, FA_MAX_BUFFER);
+                break;
+            case 7:
+                strncpy(harvest_area->previous_reason, value, FA_MAX_BUFFER);
                 break;
             default:
-                printf("Unknown harvest area option\n");
+                log_error("Unknown harvest area option.\n");
                 break;
         }
         memset(value, 0, sizeof(value));
     }
-}
-
-/**
- * HTML minify function modified from cJSON library.
- *
- * The main cJSON_Minify() function gets rid of all white space and '/'
- * characters in a string. This however, causes sentances to appear without
- * the nessessary spaces between words. This modified function keeps only
- * one space between each character (if more than one space occurs) and
- * maintains the spaces between words in a sentance. Additionally '/'
- * characters are maintained as they are used as datetime delimiters.
- *
- * @see https://github.com/DaveGamble/cJSON/blob/master/cJSON.c#L2838
- *
- * @param json The string to minify (parse).
- */
-static void cJSON_Minify_Mod(char *json){
-    char *into = json;
-
-    if (json == NULL){
-        return;
-    }
-
-    char prev_char;
-    while (json[0] != '\0'){
-        switch (json[0]){
-            case ' ':
-                if (prev_char != ' ' && prev_char != '\n'){
-                    into[0] = json[0];
-                    into++;
-                }
-                prev_char = json[0];
-                json++;
-                break;
-            case '\t':
-            case '\r':
-            case '\n':
-                prev_char = json[0];
-                json++;
-                break;
-            default:
-                prev_char = json[0];
-                into[0] = json[0];
-                json++;
-                into++;
-        }
-    }
-
-    /* and null-terminate. */
-    *into = '\0';
 }
 
 /**
@@ -230,18 +189,17 @@ static void cJSON_Minify_Mod(char *json){
  * @param value
  */
 static void FA_FindHTMLValue(char* data, const char* search_term,
-                                   char* value){
+                             char* value){
 
     char* clsf = strstr(data, search_term);
     if(clsf == NULL) {
-        log_error("No value found for: %s\n", search_term);
         return; // Sub-string not found
     }
 
     int start_substr = 0;
     int value_index = 0;
     for(unsigned long i = strlen(search_term); i < strlen(clsf) &&
-    i < FA_MAX_BUFFER; i++){
+                                               i < FA_MAX_BUFFER; i++){
         if(clsf[i] == '>'){
             start_substr = 1;
             continue;

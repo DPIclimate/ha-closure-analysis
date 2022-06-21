@@ -133,7 +133,7 @@ int8_t BOM_LoadWeatherFromCSV(const char* filename,
                            loc, ts, precip_buf, max_t_buf, min_t_buf);
 
         // Check if timestamp is correct (then assuming rest is correct...)
-        if(strstr(loc, location) != NULL){
+        if(strncmp(loc, location, BOM_STATION_FILENAME_SIZE) == 0){
             if(dataset->count < BOM_MAX_RESPONSE_SIZE){
                 dataset->precipitation[dataset->count] =
                         strtof(precip_buf, &ptr);

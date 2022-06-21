@@ -46,7 +46,7 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
     curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L); // Fail on 400 - 500 errors
 
     // Post request requested
-    if(post == 1){
+    if(post == 1 && body != NULL){
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
     }
 

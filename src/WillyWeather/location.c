@@ -4,34 +4,56 @@
  * Get location ID from Willy Weather.
  *
  * Willy Weather forecast requires a location ID. This is obtained by querying
- * by name (e.g. Batemans) -> no spaces are allowed. The response contains
- * cJSON data of which multiple sites can be obatined (limited through q_limit).
+ * by name (e.g. Batemans Bay). The response contains cJSON data of which
+ * multiple sites can be obatined (limited through q_limit).
  *
  * @code
  * WW_Location_TypeDef *location_info;
- * WillyWeather_GetLocationByName("Batemans", location_info);
+ * WillyWeather_GetLocationByName("Batemans Bay", location_info);
  * @endcode
  *
  * @see
  * https://www.willyweather.com.au/api/docs/v2.html#location-get-search-by-query
  *
- * @warning Must not contain spaces in supplied query name.
+ * @info Name can contain spaces. These are encoded as "%20".
  * @info Response length is limited to one as to ensure only one location is
  * returned per query.
  *
- * @param name Name to query against (must not contain spaces!).
+ * @param name Name to query against.
  * @param location_info Location structure to populate.
  * @return The result status code provided by CURL.
  */
-CURLcode WillyWeather_GetLocationByName(const char *name,
+CURLcode WillyWeather_GetLocationByName(char *name,
                                         WW_Location_TypeDef *location_info){
 
     if(WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
 
+    // Method to handle spaces in location name (e.g. conver ' ' to '%20')
+    int16_t new_name_size = 0;
+    for(char* c = name; *c != '\0'; c++){
+        if(*c == ' '){
+            new_name_size += 2;
+        }
+        new_name_size++;
+    }
+    char* encoded_name = malloc(new_name_size + 1);
+    int16_t n = 0;
+    for(size_t en = 0; en < new_name_size; en++){
+        if(name[n] == ' '){
+            encoded_name[en] = '%';
+            encoded_name[en + 1] = '2';
+            encoded_name[en + 2] = '0';
+            en += 2;
+        } else {
+            encoded_name[en] = name[n];
+        }
+        n++;
+    }
+
     char url[WW_LOCATION_URL_BUF];
-    snprintf(url, WW_LOCATION_URL_BUF, "https://api.willyweather.com.au/v2/%s/"
-                                       "search.json?query=%s&limit=%d", WW_TOKEN,
-             name, 1);
+    snprintf(url, WW_LOCATION_URL_BUF,
+             "https://api.willyweather.com.au/v2/%s/"
+             "search.json?query=%s&limit=%d", WW_TOKEN, encoded_name, 1);
 
     log_info("Getting Willy Weather location information for %s\n", name);
 
@@ -115,6 +137,7 @@ CURLcode WillyWeather_GetLocationByName(const char *name,
                   "request. Error status: %d\n", result);
     }
 
+    free(encoded_name);
     curl_slist_free_all(headers);
     cJSON_Delete(response);
 

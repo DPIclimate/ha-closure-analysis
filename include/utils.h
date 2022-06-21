@@ -30,5 +30,7 @@ int8_t MakeDirectory(const char* directory);
 void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
                            uint16_t max_n_values);
 
+/// Modified minify function from cJSON
+void cJSON_Minify_Mod(char *json);
 
 #endif // HA_CLOSURE_ANALYSIS_UTILS_H

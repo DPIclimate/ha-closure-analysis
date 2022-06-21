@@ -30,7 +30,7 @@ typedef struct{
 } WW_Location_TypeDef;
 
 /// Get an ID describing a location from Willy Weather.
-CURLcode WillyWeather_GetLocationByName(const char *name,
+CURLcode WillyWeather_GetLocationByName(char *name,
                                         WW_Location_TypeDef *location_info);
 
 
