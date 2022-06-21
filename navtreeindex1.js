@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"struct_req_data___type_def.html#ae07c7cf1b5f056428bd82e1dce9dc1f5":[0,3,9,0],
+"struct_s_i___dataset___type_def.html":[0,3,10],
+"struct_s_i___dataset___type_def.html#a512b403691c742b4244682bbd0255fcd":[0,3,10,1],
 "struct_s_i___dataset___type_def.html#a77370a074e6b8f06b1eb799aaf555efc":[0,3,10,2],
 "struct_s_i___dataset___type_def.html#ad776876455a8e483a724731f532cc7c1":[0,3,10,0],
 "struct_ubidots___devices___type_def.html":[0,3,11],
