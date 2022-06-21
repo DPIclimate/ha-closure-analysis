@@ -144,7 +144,7 @@ CURLcode IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle) {
                             "&grant_type=refresh_token"
                             "&refresh_token=";
 
-    char *req_body = malloc(
+    char *req_body = (char*)malloc(
             strlen(BASE_BODY) +
             strlen(auth_handle->refresh_token) + 1);
     strcpy(req_body, BASE_BODY);
