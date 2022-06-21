@@ -170,7 +170,8 @@ var NAVTREEINDEX0 =
 "log_8h.html#afcf2da85fa8a21494dc461d546c50e4b":[1,0,0,7,11],
 "log_8h_source.html":[1,0,0,7],
 "main_8c.html":[1,0,1,8],
-"main_8c.html#a840291bc02cba5474a4cb46a9b9566fe":[1,0,1,8,0],
+"main_8c.html#a78c99ffd76a7bb3c8c74db76207e9ab4":[1,0,1,8,0],
+"main_8c.html#a840291bc02cba5474a4cb46a9b9566fe":[1,0,1,8,1],
 "main_8h.html":[1,0,0,8],
 "main_8h_source.html":[1,0,0,8],
 "pages.html":[],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "struct_i_b_m___auth_handle___type_def.html#aed4f625c407e9a29aa507a4ca5ab2383":[0,3,6,2],
 "struct_i_b_m___timeseries_dataset___type_def.html":[0,3,7],
 "struct_i_b_m___timeseries_dataset___type_def.html#a0a3130bb0475f3687ef54a489cf3dcd1":[0,3,7,2],
-"struct_i_b_m___timeseries_dataset___type_def.html#a544c0dd7a00413b082b39333194e8128":[0,3,7,3],
-"struct_i_b_m___timeseries_dataset___type_def.html#a70143dd5d64ee72f972a1b4c19f863d8":[0,3,7,0]
+"struct_i_b_m___timeseries_dataset___type_def.html#a544c0dd7a00413b082b39333194e8128":[0,3,7,3]
 };
