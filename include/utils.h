@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <stdint.h>
 #include <cjson/cJSON.h>
 #include <sys/stat.h>
 #include <sys/types.h>

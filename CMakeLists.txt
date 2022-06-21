@@ -19,6 +19,10 @@ find_package(cJSON REQUIRED)
 # Specify executable
 add_executable(${PROJECT_NAME} ${SRC_DIR} ${INC_DIR})
 
+# Set C version
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11
+        CXX_STANDARD_REQUIRED ON)
+
 # Add flags to compilation
 target_compile_options(${PROJECT_NAME} PRIVATE -g)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall)
