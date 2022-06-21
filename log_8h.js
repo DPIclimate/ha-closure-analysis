@@ -1,6 +1,6 @@
 var log_8h =
 [
-    [ "log_Event", "structlog___event.html", "structlog___event" ],
+    [ "Log_Event", "struct_log___event.html", "struct_log___event" ],
     [ "log_debug", "log_8h.html#aa77e596ef13d2f0f75d0ac9540ed358d", null ],
     [ "log_error", "log_8h.html#a6ae72553ea9805dd87a463d6f710364d", null ],
     [ "log_fatal", "log_8h.html#a704a43b1e2ff3bb554aff101efdbeecf", null ],
@@ -9,7 +9,7 @@ var log_8h =
     [ "LOG_VERSION", "log_8h.html#aa48b2017856a8a9c33a9935afe604c8d", null ],
     [ "log_warn", "log_8h.html#a04af09851c431d178f16b24fa1aac1e9", null ],
     [ "log_LockFn", "log_8h.html#af1c7dea93a5ff832ba11a7a4e3a46c45", null ],
-    [ "log_LogFn", "log_8h.html#a4e1a7e636a6cabe43a851e125ea86a28", null ],
+    [ "log_LogFn", "log_8h.html#a41305c3bb1c15e0055f474c02de5be79", null ],
     [ "log_add_callback", "log_8h.html#a4196855e1cd42700557b6e4fa0715a35", null ],
     [ "log_add_fp", "log_8h.html#afcf2da85fa8a21494dc461d546c50e4b", null ],
     [ "log_level_string", "log_8h.html#a10736458177293d86f211aadeff89501", null ],

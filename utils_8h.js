@@ -1,6 +1,6 @@
 var utils_8h =
 [
-    [ "ReqData_TypeDef", "struct_req_data___type_def.html", "struct_req_data___type_def" ],
+    [ "Utils_ReqData_TypeDef", "struct_utils___req_data___type_def.html", "struct_utils___req_data___type_def" ],
     [ "USER_AGENT", "utils_8h.html#a8d49ab2f38a55ccc4f12fd9e5d29c07b", null ],
     [ "cJSON_Minify_Mod", "utils_8h.html#a2dd2caaadd6c88b345799d955652f908", null ],
     [ "MakeDirectory", "utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719", null ],

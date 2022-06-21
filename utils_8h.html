@@ -118,8 +118,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_req_data___type_def.html">ReqData_TypeDef</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds HTTP response data before converting these data into cJSON objects.  <a href="struct_req_data___type_def.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_utils___req_data___type_def.html">Utils_ReqData_TypeDef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds HTTP response data before converting these data into cJSON objects.  <a href="struct_utils___req_data___type_def.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -255,7 +255,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Helper function to handle a CURL request response which normally gets written to stdout.</p>
-<p ><a class="el" href="struct_callback.html">Callback</a> function to save HTTP response data to a character array.</p>
+<p >Callback function to save HTTP response data to a character array.</p>
 <p >CURL defaults to printing to stdout. This function is added to CURL in the setup options (curl_easy_setupopt()). Memory is allocated and then filled with the response string. This character array is then used to create cJSON objects and other items.</p>
 <div class="fragment"><div class="line">MemoryStruct_TypeDef chunk;</div>
 <div class="line">chunk.memory = malloc(1);</div>

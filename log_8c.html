@@ -103,7 +103,7 @@ Include dependency graph for log.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_callback.html">Callback</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_log___callback.html">Log_Callback</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -113,10 +113,10 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1f81dfc93517b9d400a686df95d1e161"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a1f81dfc93517b9d400a686df95d1e161">stdout_callback</a> (<a class="el" href="structlog___event.html">log_Event</a> *ev)</td></tr>
-<tr class="separator:a1f81dfc93517b9d400a686df95d1e161"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a5a60d9135936e75f8cd297dd09220"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a90a5a60d9135936e75f8cd297dd09220">file_callback</a> (<a class="el" href="structlog___event.html">log_Event</a> *ev)</td></tr>
-<tr class="separator:a90a5a60d9135936e75f8cd297dd09220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4835022da53ad0b637272a4e2430022a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a4835022da53ad0b637272a4e2430022a">stdout_callback</a> (<a class="el" href="struct_log___event.html">Log_Event</a> *ev)</td></tr>
+<tr class="separator:a4835022da53ad0b637272a4e2430022a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad607b1aa70a8d1e95a12c081a7a5752c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#ad607b1aa70a8d1e95a12c081a7a5752c">file_callback</a> (<a class="el" href="struct_log___event.html">Log_Event</a> *ev)</td></tr>
+<tr class="separator:ad607b1aa70a8d1e95a12c081a7a5752c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb7cc7eb4e959fda6a43c8dd85f20090"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#abb7cc7eb4e959fda6a43c8dd85f20090">unlock</a> (void)</td></tr>
 <tr class="separator:abb7cc7eb4e959fda6a43c8dd85f20090"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10736458177293d86f211aadeff89501"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a10736458177293d86f211aadeff89501">log_level_string</a> (int <a class="el" href="log_8c.html#acf4d33ee4cff36f69b924471174dcb11">level</a>)</td></tr>
@@ -127,12 +127,12 @@ Functions</h2></td></tr>
 <tr class="separator:af2493e94f152a28b2ba4e3a2e2bba65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6de5d12252f1b48279d28769b7c130eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a6de5d12252f1b48279d28769b7c130eb">log_set_quiet</a> (bool enable)</td></tr>
 <tr class="separator:a6de5d12252f1b48279d28769b7c130eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4196855e1cd42700557b6e4fa0715a35"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a4196855e1cd42700557b6e4fa0715a35">log_add_callback</a> (<a class="el" href="log_8h.html#a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</a> fn, void *<a class="el" href="log_8c.html#a697ce711b67313990d351b5c95f87aed">udata</a>, int <a class="el" href="log_8c.html#acf4d33ee4cff36f69b924471174dcb11">level</a>)</td></tr>
+<tr class="memitem:a4196855e1cd42700557b6e4fa0715a35"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a4196855e1cd42700557b6e4fa0715a35">log_add_callback</a> (<a class="el" href="log_8h.html#a41305c3bb1c15e0055f474c02de5be79">log_LogFn</a> fn, void *<a class="el" href="log_8c.html#a697ce711b67313990d351b5c95f87aed">udata</a>, int <a class="el" href="log_8c.html#acf4d33ee4cff36f69b924471174dcb11">level</a>)</td></tr>
 <tr class="separator:a4196855e1cd42700557b6e4fa0715a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcf2da85fa8a21494dc461d546c50e4b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#afcf2da85fa8a21494dc461d546c50e4b">log_add_fp</a> (FILE *fp, int <a class="el" href="log_8c.html#acf4d33ee4cff36f69b924471174dcb11">level</a>)</td></tr>
 <tr class="separator:afcf2da85fa8a21494dc461d546c50e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40303441e0369bae90f0c91da5314176"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a40303441e0369bae90f0c91da5314176">init_event</a> (<a class="el" href="structlog___event.html">log_Event</a> *ev, void *<a class="el" href="log_8c.html#a697ce711b67313990d351b5c95f87aed">udata</a>)</td></tr>
-<tr class="separator:a40303441e0369bae90f0c91da5314176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd459ac0cef7931a066521c7f1f8e062"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#afd459ac0cef7931a066521c7f1f8e062">init_event</a> (<a class="el" href="struct_log___event.html">Log_Event</a> *ev, void *<a class="el" href="log_8c.html#a697ce711b67313990d351b5c95f87aed">udata</a>)</td></tr>
+<tr class="separator:afd459ac0cef7931a066521c7f1f8e062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac008ecbde449b2dd1bc4f8671d9a0e07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</a> (int <a class="el" href="log_8c.html#acf4d33ee4cff36f69b924471174dcb11">level</a>, const char *file, int line, const char *fmt,...)</td></tr>
 <tr class="separator:ac008ecbde449b2dd1bc4f8671d9a0e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -147,8 +147,8 @@ Variables</h2></td></tr>
 <tr class="separator:a903ee269f8a9b1f60d88f4ca4134bceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24af7bd3ffa2fa82dc16b8f12277fa83"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="log_8c.html#ae4426f467d61ae456b95844d4d9c2dcd">quiet</a></td></tr>
 <tr class="separator:a24af7bd3ffa2fa82dc16b8f12277fa83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa191730c8b770e7c6a201a425a0272d9"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="struct_callback.html">Callback</a>&#160;&#160;&#160;<a class="el" href="log_8c.html#a38367a766a6e5583a1d7cd3552a45585">callbacks</a> [<a class="el" href="log_8c.html#aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</a>]</td></tr>
-<tr class="separator:aa191730c8b770e7c6a201a425a0272d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03820721fb9bee84dc9ca05d2cf6f94a"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="struct_log___callback.html">Log_Callback</a>&#160;&#160;&#160;<a class="el" href="log_8c.html#a8ef88a49b6363714e9fd310bdc90caf7">callbacks</a> [<a class="el" href="log_8c.html#aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</a>]</td></tr>
+<tr class="separator:a03820721fb9bee84dc9ca05d2cf6f94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32afcca366c50561cf80f8df68a4e552"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a32afcca366c50561cf80f8df68a4e552">L</a></td></tr>
 <tr class="separator:a32afcca366c50561cf80f8df68a4e552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c28d4a33f3ac2df9e3755241cbd244f"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a3c28d4a33f3ac2df9e3755241cbd244f">level_strings</a> []</td></tr>
@@ -170,8 +170,8 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a90a5a60d9135936e75f8cd297dd09220" name="a90a5a60d9135936e75f8cd297dd09220"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90a5a60d9135936e75f8cd297dd09220">&#9670;&nbsp;</a></span>file_callback()</h2>
+<a id="ad607b1aa70a8d1e95a12c081a7a5752c" name="ad607b1aa70a8d1e95a12c081a7a5752c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad607b1aa70a8d1e95a12c081a7a5752c">&#9670;&nbsp;</a></span>file_callback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -182,7 +182,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static void file_callback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlog___event.html">log_Event</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_log___event.html">Log_Event</a> *&#160;</td>
           <td class="paramname"><em>ev</em></td><td>)</td>
           <td></td>
         </tr>
@@ -196,8 +196,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a40303441e0369bae90f0c91da5314176" name="a40303441e0369bae90f0c91da5314176"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40303441e0369bae90f0c91da5314176">&#9670;&nbsp;</a></span>init_event()</h2>
+<a id="afd459ac0cef7931a066521c7f1f8e062" name="afd459ac0cef7931a066521c7f1f8e062"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd459ac0cef7931a066521c7f1f8e062">&#9670;&nbsp;</a></span>init_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,7 +208,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static void init_event </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlog___event.html">log_Event</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_log___event.html">Log_Event</a> *&#160;</td>
           <td class="paramname"><em>ev</em>, </td>
         </tr>
         <tr>
@@ -241,7 +241,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int log_add_callback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="log_8h.html#a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="log_8h.html#a41305c3bb1c15e0055f474c02de5be79">log_LogFn</a>&#160;</td>
           <td class="paramname"><em>fn</em>, </td>
         </tr>
         <tr>
@@ -422,8 +422,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1f81dfc93517b9d400a686df95d1e161" name="a1f81dfc93517b9d400a686df95d1e161"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f81dfc93517b9d400a686df95d1e161">&#9670;&nbsp;</a></span>stdout_callback()</h2>
+<a id="a4835022da53ad0b637272a4e2430022a" name="a4835022da53ad0b637272a4e2430022a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4835022da53ad0b637272a4e2430022a">&#9670;&nbsp;</a></span>stdout_callback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -434,7 +434,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static void stdout_callback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structlog___event.html">log_Event</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_log___event.html">Log_Event</a> *&#160;</td>
           <td class="paramname"><em>ev</em></td><td>)</td>
           <td></td>
         </tr>
@@ -475,14 +475,14 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a38367a766a6e5583a1d7cd3552a45585" name="a38367a766a6e5583a1d7cd3552a45585"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38367a766a6e5583a1d7cd3552a45585">&#9670;&nbsp;</a></span>callbacks</h2>
+<a id="a8ef88a49b6363714e9fd310bdc90caf7" name="a8ef88a49b6363714e9fd310bdc90caf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ef88a49b6363714e9fd310bdc90caf7">&#9670;&nbsp;</a></span>callbacks</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_callback.html">Callback</a> callbacks[<a class="el" href="log_8c.html#aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</a>]</td>
+          <td class="memname"><a class="el" href="struct_log___callback.html">Log_Callback</a> callbacks[<a class="el" href="log_8c.html#aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">

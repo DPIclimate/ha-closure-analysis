@@ -10,5 +10,5 @@ var searchData=
   ['ibm_5frefresh_7',['IBM_Refresh',['../_i_b_m___e_i_s_2authenticate_8h.html#a29bec6a28beb02fa1b31bb781afa5aa9',1,'IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle):&#160;authenticate.c'],['../_i_b_m___e_i_s_2authenticate_8c.html#a29bec6a28beb02fa1b31bb781afa5aa9',1,'IBM_Refresh(IBM_AuthHandle_TypeDef *auth_handle):&#160;authenticate.c']]],
   ['ibm_5ftimeseriesfromcsv_8',['IBM_TimeseriesFromCSV',['../timeseries_8h.html#ab1b5aac68159f94f647e4de6191de101',1,'IBM_TimeseriesFromCSV(const char *filename):&#160;timeseries.c'],['../timeseries_8c.html#ab1b5aac68159f94f647e4de6191de101',1,'IBM_TimeseriesFromCSV(const char *filename):&#160;timeseries.c']]],
   ['ibm_5ftimeseriestocsv_9',['IBM_TimeseriesToCSV',['../timeseries_8h.html#a9fb3b76bdd9848fdd63d226ddf5c7d17',1,'IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request, IBM_TimeseriesDataset_TypeDef *dataset):&#160;timeseries.c'],['../timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17',1,'IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request, IBM_TimeseriesDataset_TypeDef *dataset):&#160;timeseries.c']]],
-  ['init_5fevent_10',['init_event',['../log_8c.html#a40303441e0369bae90f0c91da5314176',1,'log.c']]]
+  ['init_5fevent_10',['init_event',['../log_8c.html#afd459ac0cef7931a066521c7f1f8e062',1,'log.c']]]
 ];

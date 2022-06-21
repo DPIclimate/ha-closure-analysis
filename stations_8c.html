@@ -100,9 +100,9 @@ Include dependency graph for stations.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1483b15393436cebf09598aa2bb79792"><td class="memItemLeft" align="right" valign="top">static int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stations_8c.html#a1483b15393436cebf09598aa2bb79792">BOM_ParseStations</a> (<a class="el" href="struct_req_data___type_def.html">ReqData_TypeDef</a> *stream, <a class="el" href="struct_b_o_m___weather_stations___type_def.html">BOM_WeatherStations_TypeDef</a> *stations)</td></tr>
-<tr class="memdesc:a1483b15393436cebf09598aa2bb79792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse .txt file into a BOM_Stations struct.  <a href="stations_8c.html#a1483b15393436cebf09598aa2bb79792">More...</a><br /></td></tr>
-<tr class="separator:a1483b15393436cebf09598aa2bb79792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c3ce515993de64f2540fdc704c9c4a"><td class="memItemLeft" align="right" valign="top">static int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stations_8c.html#ac3c3ce515993de64f2540fdc704c9c4a">BOM_ParseStations</a> (<a class="el" href="struct_utils___req_data___type_def.html">Utils_ReqData_TypeDef</a> *stream, <a class="el" href="struct_b_o_m___weather_stations___type_def.html">BOM_WeatherStations_TypeDef</a> *stations)</td></tr>
+<tr class="memdesc:ac3c3ce515993de64f2540fdc704c9c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse .txt file into a BOM_Stations struct.  <a href="stations_8c.html#ac3c3ce515993de64f2540fdc704c9c4a">More...</a><br /></td></tr>
+<tr class="separator:ac3c3ce515993de64f2540fdc704c9c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8932a57ee92fccd5cb4b99ea30be459a"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stations_8c.html#a8932a57ee92fccd5cb4b99ea30be459a">StationDistance</a> (double latitude, double longitude, double station_latitude, double station_longitude)</td></tr>
 <tr class="memdesc:a8932a57ee92fccd5cb4b99ea30be459a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcualte the distance between a point and the closes BOM weather station.  <a href="stations_8c.html#a8932a57ee92fccd5cb4b99ea30be459a">More...</a><br /></td></tr>
 <tr class="separator:a8932a57ee92fccd5cb4b99ea30be459a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +150,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Index of the closest BOM station to a define latitude and longitude. </p>
+<p >Gets an index to the closest BOM weather station in reference to a provided latitude and longitude.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">latitude</td><td>Latitude of interest. </td></tr>
+    <tr><td class="paramname">longitude</td><td>Longitude of interest. </td></tr>
+    <tr><td class="paramname">stations</td><td>List of stations to search through. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of closest BOM station to provided lat and long. </dd></dl>
 
 </div>
 </div>
@@ -170,6 +180,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get a list of NSW BOM weather stations. </p>
+<p >Get a list of NSW BOM weather station.</p>
+<p >The BOM provides a list of weather stations as a .txt file on their FTP server. This function extracts the NSW locations and appends them to a list of stations within <a class="el" href="struct_b_o_m___weather_stations___type_def.html" title="BOM weather stations list and count.">BOM_WeatherStations_TypeDef</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stations</td><td>List of weather stations to popultate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Curl error code. </dd></dl>
 
 </div>
 </div>
@@ -200,11 +219,21 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Load BOM station list from cached .txt file (obtained from BOM FTP server) </p>
+<p >Reads a .txt from file to parse out a list of weather station.</p>
+<p >A .txt file is loaded from a temporary directory. fgets() is used to parse the file line by line into a buffer. The buffer is scanned using sscanf() to extract each relevent weather station. Only NSW weather stations are used to populate a list of stations (provided). Weather stations that contain "AWS" have this string removed in their filename. This filename should correspond to the location in BOM's FTP server where historical data is found. E.g. .../filename/filename-date.csv or .../moyura_airport/moyura_airport-202206.csv</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Location of BOM weather stations .txt file. </td></tr>
+    <tr><td class="paramname">stations</td><td>Stations object to populate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error status code. </dd></dl>
 
 </div>
 </div>
-<a id="a1483b15393436cebf09598aa2bb79792" name="a1483b15393436cebf09598aa2bb79792"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1483b15393436cebf09598aa2bb79792">&#9670;&nbsp;</a></span>BOM_ParseStations()</h2>
+<a id="ac3c3ce515993de64f2540fdc704c9c4a" name="ac3c3ce515993de64f2540fdc704c9c4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3c3ce515993de64f2540fdc704c9c4a">&#9670;&nbsp;</a></span>BOM_ParseStations()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +244,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static int8_t BOM_ParseStations </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_req_data___type_def.html">ReqData_TypeDef</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_utils___req_data___type_def.html">Utils_ReqData_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>stream</em>, </td>
         </tr>
         <tr>
@@ -238,6 +267,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Parse .txt file into a BOM_Stations struct. </p>
+<p >Parse BOM weather station .txt file from FTP server.</p>
+<p >This function saves the downloaded raw text stream from the BOM FTP server into a temporary file (under the tmp) directory. This then calls <a class="el" href="stations_8c.html#a083e250ebc81c4c64719dbff44b41dcb" title="Load BOM station list from cached .txt file (obtained from BOM FTP server)">BOM_LoadStationsFromTxt()</a> to populate the list of BOM weather stations.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>Raw response from BOM FTP server download. </td></tr>
+    <tr><td class="paramname">stations</td><td>Stations object to populate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error code status if file can no the written to. </dd></dl>
 
 </div>
 </div>
@@ -289,7 +328,7 @@ Functions</h2></td></tr>
 
 <p>Calcualte the distance between a point and the closes BOM weather station. </p>
 <p >Uses haversine formula to calculate the distance in km between two points on earth.</p>
-<p >Used to calculate the distance between an AOI and the closest Bureau of Meterology station.</p>
+<p >Used to calculate the distance between an POI and the closest Bureau of Meterology station.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">latitude</td><td>Latitude of point of interest. </td></tr>

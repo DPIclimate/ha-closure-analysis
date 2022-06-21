@@ -284,6 +284,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Index of the closest BOM station to a define latitude and longitude. </p>
+<p >Gets an index to the closest BOM weather station in reference to a provided latitude and longitude.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">latitude</td><td>Latitude of interest. </td></tr>
+    <tr><td class="paramname">longitude</td><td>Longitude of interest. </td></tr>
+    <tr><td class="paramname">stations</td><td>List of stations to search through. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Index of closest BOM station to provided lat and long. </dd></dl>
 
 </div>
 </div>
@@ -304,6 +314,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get a list of NSW BOM weather stations. </p>
+<p >Get a list of NSW BOM weather station.</p>
+<p >The BOM provides a list of weather stations as a .txt file on their FTP server. This function extracts the NSW locations and appends them to a list of stations within <a class="el" href="struct_b_o_m___weather_stations___type_def.html" title="BOM weather stations list and count.">BOM_WeatherStations_TypeDef</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stations</td><td>List of weather stations to popultate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Curl error code. </dd></dl>
 
 </div>
 </div>
@@ -334,6 +353,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Load BOM station list from cached .txt file (obtained from BOM FTP server) </p>
+<p >Reads a .txt from file to parse out a list of weather station.</p>
+<p >A .txt file is loaded from a temporary directory. fgets() is used to parse the file line by line into a buffer. The buffer is scanned using sscanf() to extract each relevent weather station. Only NSW weather stations are used to populate a list of stations (provided). Weather stations that contain "AWS" have this string removed in their filename. This filename should correspond to the location in BOM's FTP server where historical data is found. E.g. .../filename/filename-date.csv or .../moyura_airport/moyura_airport-202206.csv</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Location of BOM weather stations .txt file. </td></tr>
+    <tr><td class="paramname">stations</td><td>Stations object to populate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error status code. </dd></dl>
 
 </div>
 </div>

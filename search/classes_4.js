@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log_5fevent_0',['log_Event',['../structlog___event.html',1,'']]]
+  ['si_5fdataset_5ftypedef_0',['SI_Dataset_TypeDef',['../struct_s_i___dataset___type_def.html',1,'']]]
 ];
