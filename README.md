@@ -11,7 +11,11 @@
 <p align="center">
   <a href="https://github.com/DPIclimate/ha-closure-analysis/actions">
     <img src="https://github.com/DPIclimate/ha-closure-analysis/actions/workflows/main.yml/badge.svg"
-         alt="Gitter">
+         alt="documentation-badge">
+  </a>
+  <a href="https://github.com/DPIclimate/ha-closure-analysis/actions">
+    <img src="https://github.com/DPIclimate/ha-closure-analysis/actions/workflows/cmake.yml/badge.svg"
+         alt="build-badge">
   </a>
 </p>
 

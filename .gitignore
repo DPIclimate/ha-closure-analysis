@@ -19,6 +19,7 @@ build
 cmake-build-debug
 CMakeFiles
 cmake-build-debug-event-trace
+cmake-build-debug-coverage
 cmake-build-release
 
 # Data

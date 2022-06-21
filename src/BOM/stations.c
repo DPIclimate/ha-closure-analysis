@@ -10,6 +10,16 @@ static double StationDistance(double latitude,
                               double station_latitude,
                               double station_longitude);
 
+/**
+ * Get a list of NSW BOM weather station.
+ *
+ * The BOM provides a list of weather stations as a .txt file on their FTP
+ * server. This function extracts the NSW locations and appends them to a list
+ * of stations within BOM_WeatherStations_TypeDef.
+ *
+ * @param stations List of weather stations to popultate.
+ * @return Curl error code.
+ */
 CURLcode BOM_GetWeatherStations(BOM_WeatherStations_TypeDef *stations) {
 
     log_info("Getting weather station information from "
@@ -29,6 +39,17 @@ CURLcode BOM_GetWeatherStations(BOM_WeatherStations_TypeDef *stations) {
     return result;
 }
 
+/**
+ * Parse BOM weather station .txt file from FTP server.
+ *
+ * This function saves the downloaded raw text stream from the BOM FTP server
+ * into a temporary file (under the tmp) directory. This then calls
+ * BOM_LoadStationsFromTxt() to populate the list of BOM weather stations.
+ *
+ * @param stream Raw response from BOM FTP server download.
+ * @param stations Stations object to populate.
+ * @return Error code status if file can no the written to.
+ */
 static int8_t BOM_ParseStations(ReqData_TypeDef *stream,
                                 BOM_WeatherStations_TypeDef *stations) {
     MakeDirectory("tmp");
@@ -47,6 +68,22 @@ static int8_t BOM_ParseStations(ReqData_TypeDef *stream,
     return 0;
 }
 
+/**
+ * Reads a .txt from file to parse out a list of weather station.
+ *
+ * A .txt file is loaded from a temporary directory. fgets() is used to parse
+ * the file line by line into a buffer. The buffer is scanned using sscanf()
+ * to extract each relevent weather station. Only NSW weather stations are
+ * used to populate a list of stations (provided). Weather stations that contain
+ * "AWS" have this string removed in their filename. This filename should
+ * correspond to the location in BOM's FTP server where historical data is
+ * found. E.g. .../filename/filename-date.csv or
+ * .../moyura_airport/moyura_airport-202206.csv
+ *
+ * @param filename Location of BOM weather stations .txt file.
+ * @param stations Stations object to populate.
+ * @return Error status code.
+ */
 int8_t BOM_LoadStationsFromTxt(const char *filename,
                                BOM_WeatherStations_TypeDef *stations) {
 
@@ -160,7 +197,15 @@ int8_t BOM_LoadStationsFromTxt(const char *filename,
     return 0;
 }
 
-
+/**
+ * Gets an index to the closest BOM weather station in reference to a provided
+ * latitude and longitude.
+ *
+ * @param latitude Latitude of interest.
+ * @param longitude Longitude of interest.
+ * @param stations List of stations to search through.
+ * @return Index of closest BOM station to provided lat and long.
+ */
 int16_t BOM_ClosestStationIndex(double latitude,
                                 double longitude,
                                 BOM_WeatherStations_TypeDef *stations) {
@@ -176,9 +221,15 @@ int16_t BOM_ClosestStationIndex(double latitude,
             min_distance = distance;
         }
     }
-    log_debug("Closest BOM weather station: %s (%0.2lf km)\n",
-              stations->stations[closest_satation_index].name,
-              min_distance);
+    if(min_distance < 40.0){
+        log_debug("Closest BOM weather station: %s (%0.2lf km)\n",
+                  stations->stations[closest_satation_index].name,
+                  min_distance);
+    } else {
+        log_warn("Closest BOM weather station is %0.2lf km away from "
+                 "target location. Weather may not be accurate.\n",
+                 min_distance);
+    }
 
     return closest_satation_index;
 }
@@ -187,7 +238,7 @@ int16_t BOM_ClosestStationIndex(double latitude,
  * Uses haversine formula to calculate the distance in km between two
  * points on earth.
  *
- * Used to calculate the distance between an AOI and the closest Bureau of
+ * Used to calculate the distance between an POI and the closest Bureau of
  * Meterology station.
  *
  * @param latitude Latitude of point of interest.

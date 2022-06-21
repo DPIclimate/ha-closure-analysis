@@ -12,7 +12,7 @@
 
 /// Willy weather access token size
 #define WW_TOKEN_SIZE                          100
-static char WW_TOKEN[WW_TOKEN_SIZE];
+char WW_TOKEN[WW_TOKEN_SIZE];
 
 /// Willy weather default environmental variable name
 #define WW_DEFAULT_ENV_NAME                    "WW_TOKEN"

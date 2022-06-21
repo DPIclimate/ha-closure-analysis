@@ -32,7 +32,7 @@ CURLcode WillyWeather_GetLocationByName(char *name,
     int16_t new_name_size = 0;
     for (char *c = name; *c != '\0'; c++) {
         if (*c == ' ') {
-            new_name_size += (int16_t)2;
+            new_name_size += 2;
         }
         new_name_size++;
     }
@@ -43,7 +43,7 @@ CURLcode WillyWeather_GetLocationByName(char *name,
             encoded_name[en] = '%';
             encoded_name[en + 1] = '2';
             encoded_name[en + 2] = '0';
-            en += (int16_t)2;
+            en += 2;
         } else {
             encoded_name[en] = name[n];
         }
@@ -87,32 +87,36 @@ CURLcode WillyWeather_GetLocationByName(char *name,
             if (cJSON_IsString(location) && location->valuestring != NULL) {
                 strncpy(location_info->location, location->valuestring,
                         WW_LOCATION_BUF);
-            } else
+            } else{
                 strncpy(location_info->location, "N/a", WW_LOCATION_BUF);
+            }
 
             // Location region
             region = cJSON_GetObjectItemCaseSensitive(item, "region");
             if (cJSON_IsString(region) && region->valuestring != NULL) {
                 strncpy(location_info->region, region->valuestring,
                         WW_LOCATION_BUF);
-            } else
+            } else{
                 strncpy(location_info->region, "N/a", WW_LOCATION_BUF);
+            }
 
             // Location
             state = cJSON_GetObjectItemCaseSensitive(item, "state");
             if (cJSON_IsString(state) && state->valuestring != NULL) {
                 strncpy(location_info->state, state->valuestring,
                         WW_LOCATION_BUF);
-            } else
+            } else{
                 strncpy(location_info->state, "N/a", WW_LOCATION_BUF);
+            }
 
             // Location postcode
             postcode = cJSON_GetObjectItemCaseSensitive(item, "postcode");
             if (cJSON_IsString(postcode) && postcode->valuestring != NULL) {
                 strncpy(location_info->postcode, postcode->valuestring,
                         WW_LOCATION_BUF);
-            } else
+            } else {
                 strncpy(location_info->postcode, "N/a", WW_LOCATION_BUF);
+            }
 
             // Location latitude
             latitude = cJSON_GetObjectItemCaseSensitive(item, "lat");
