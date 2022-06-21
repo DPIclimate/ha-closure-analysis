@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE
 #include "main.h"
 
 // TODO Data transformation to calculate closure severity index

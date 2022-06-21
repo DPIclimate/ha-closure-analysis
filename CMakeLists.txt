@@ -23,6 +23,7 @@ find_package(cJSON REQUIRED)
 add_executable(${PROJECT_NAME} ${SRC_DIR} ${INC_DIR})
 
 # Add flags to compilation
+target_compile_options(${PROJECT_NAME} PRIVATE -std=gnu89)
 target_compile_options(${PROJECT_NAME} PRIVATE -g)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall)
 target_compile_options(${PROJECT_NAME} PRIVATE -Werror)
@@ -49,6 +50,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wswitch-enum)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wsign-conversion)
 target_compile_options(${PROJECT_NAME} PRIVATE -Werror=implicit-function-declaration)
 
+# Colored output for logs
 target_compile_options(${PROJECT_NAME} PRIVATE -DLOG_USE_COLOR)
 
 # Set include direcotires and required libraries
