@@ -1,16 +1,17 @@
 <map id="include/ftp.h" name="include/ftp.h">
-<area shape="rect" id="node1" title=" " alt="" coords="164,5,256,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="175,5,267,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,155,68,181"/>
 <area shape="rect" id="node3" title=" " alt="" coords="93,155,157,181"/>
 <area shape="rect" id="node4" title=" " alt="" coords="181,155,260,181"/>
 <area shape="rect" id="node5" title=" " alt="" coords="285,155,346,181"/>
-<area shape="rect" id="node6" href="$utils_8h.html" title=" " alt="" coords="298,80,354,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="371,155,481,181"/>
-<area shape="rect" id="node8" title=" " alt="" coords="505,155,584,181"/>
-<area shape="rect" id="node9" title=" " alt="" coords="608,155,695,181"/>
-<area shape="rect" id="node10" href="$log_8h.html" title=" " alt="" coords="719,155,768,181"/>
-<area shape="rect" id="node11" title=" " alt="" coords="577,229,637,256"/>
-<area shape="rect" id="node12" title=" " alt="" coords="661,229,729,256"/>
-<area shape="rect" id="node13" title=" " alt="" coords="754,229,829,256"/>
-<area shape="rect" id="node14" title=" " alt="" coords="853,229,911,256"/>
+<area shape="rect" id="node6" href="$utils_8h.html" title=" " alt="" coords="355,80,411,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="658,155,722,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="747,155,857,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="371,155,449,181"/>
+<area shape="rect" id="node10" title=" " alt="" coords="473,155,560,181"/>
+<area shape="rect" id="node11" href="$log_8h.html" title=" " alt="" coords="584,155,633,181"/>
+<area shape="rect" id="node12" title=" " alt="" coords="443,229,503,256"/>
+<area shape="rect" id="node13" title=" " alt="" coords="527,229,595,256"/>
+<area shape="rect" id="node14" title=" " alt="" coords="619,229,694,256"/>
+<area shape="rect" id="node15" title=" " alt="" coords="719,229,776,256"/>
 </map>
