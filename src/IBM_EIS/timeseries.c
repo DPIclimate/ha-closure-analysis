@@ -68,7 +68,7 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
 
     // Authorization builder
     const char *BASE_HEADER = "Authorization: Bearer ";
-    char *auth_header = malloc(strlen(BASE_HEADER) +
+    char *auth_header = (char*)malloc(strlen(BASE_HEADER) +
                                strlen(auth_handle->access_token) + 1);
     strcpy(auth_header, BASE_HEADER);
     strcat(auth_header, auth_handle->access_token);

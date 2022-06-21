@@ -68,7 +68,7 @@ CURLcode IBM_Authenticate(const char *token,
     const char *BASE_BODY = "client_id=ibm-pairs"
                             "&grant_type=apikey"
                             "&apikey=";
-    char *req_body = malloc(strlen(BASE_BODY) + strlen(token) + 1);
+    char *req_body = (char*)malloc(strlen(BASE_BODY) + strlen(token) + 1);
     strcpy(req_body, BASE_BODY);
     strcat(req_body, token);
 

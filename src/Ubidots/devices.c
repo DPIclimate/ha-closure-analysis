@@ -31,7 +31,7 @@ CURLcode Ubidots_ListDevices(Ubidots_Devices_TypeDef *devices) {
     headers = curl_slist_append(headers, "Content-Type: application/json");
 
     const char *auth_key = "X-Auth-Token: ";
-    char *auth = malloc(strlen(auth_key) + strlen(UBIDOTS_TOKEN) + 1);
+    char *auth = (char*)malloc(strlen(auth_key) + strlen(UBIDOTS_TOKEN) + 1);
     strcpy(auth, auth_key);
     strcat(auth, UBIDOTS_TOKEN);
 

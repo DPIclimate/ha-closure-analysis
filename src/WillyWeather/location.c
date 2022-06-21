@@ -36,7 +36,7 @@ CURLcode WillyWeather_GetLocationByName(char *name,
         }
         new_name_size++;
     }
-    char *encoded_name = malloc((size_t)(new_name_size + 1));
+    char *encoded_name = (char*)malloc((size_t)(new_name_size + 1));
     int16_t n = 0;
     for (int16_t en = 0; en < new_name_size; en++) {
         if (name[n] == ' ') {

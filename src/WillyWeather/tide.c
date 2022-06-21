@@ -209,7 +209,7 @@ uint8_t WillyWeather_TidesToCSV(WW_Location_TypeDef *location_info,
     if (MakeDirectory("datasets/tides") != 0) return 1;
 
     // Remove spaces from filename
-    char *location = malloc(strlen(location_info->location) + 1);
+    char *location = (char*)malloc(strlen(location_info->location) + 1);
     for (size_t i = 0; i < strlen(location_info->location); i++) {
         if (location_info->location[i] == ' ') {
             location[i] = '-';

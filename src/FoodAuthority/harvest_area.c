@@ -38,7 +38,7 @@ CURLcode FA_GetHarvestAreaStatus(const char *harvest_name,
     const char *BASE_FILTER = "filter=";
     const char *BASE_BODY = "&view_name=sqap_waterways&"
                             "view_display_id=page_1";
-    char *req_body = malloc(strlen(BASE_FILTER) +
+    char *req_body = (char*)malloc(strlen(BASE_FILTER) +
                             strlen(harvest_name) +
                             strlen(BASE_BODY) + 1);
     strcpy(req_body, BASE_FILTER);
