@@ -29,7 +29,7 @@ size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb,
                            void *userp) {
     size_t realsize = size * nmemb;
 
-    ReqData_TypeDef *mem = (ReqData_TypeDef *) userp;
+    Utils_ReqData_TypeDef *mem = (Utils_ReqData_TypeDef *) userp;
 
     char *ptr = realloc(mem->memory, mem->size + realsize + 1);
 

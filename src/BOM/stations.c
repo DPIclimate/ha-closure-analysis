@@ -1,7 +1,7 @@
 #include "BOM/stations.h"
 
 /// Parse .txt file into a BOM_Stations struct
-static int8_t BOM_ParseStations(ReqData_TypeDef *stream,
+static int8_t BOM_ParseStations(Utils_ReqData_TypeDef *stream,
                                 BOM_WeatherStations_TypeDef *stations);
 
 /// Calcualte the distance between a point and the closes BOM weather station
@@ -25,7 +25,7 @@ CURLcode BOM_GetWeatherStations(BOM_WeatherStations_TypeDef *stations) {
     log_info("Getting weather station information from "
              "Bureau of Meterology FTP Server.\n");
 
-    ReqData_TypeDef stream;
+    Utils_ReqData_TypeDef stream;
     CURLcode result = FTPRequest(BOM_FTP_STATIONS_URL, &stream);
 
     if (result == CURLE_OK) {
@@ -50,7 +50,7 @@ CURLcode BOM_GetWeatherStations(BOM_WeatherStations_TypeDef *stations) {
  * @param stations Stations object to populate.
  * @return Error code status if file can no the written to.
  */
-static int8_t BOM_ParseStations(ReqData_TypeDef *stream,
+static int8_t BOM_ParseStations(Utils_ReqData_TypeDef *stream,
                                 BOM_WeatherStations_TypeDef *stations) {
     MakeDirectory("tmp");
     const char *filename = "tmp/bom_weather_stations.txt";

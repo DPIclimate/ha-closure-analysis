@@ -23,9 +23,9 @@ typedef struct {
     void *udata;
     int line;
     int level;
-} log_Event;
+} Log_Event;
 
-typedef void (*log_LogFn)(log_Event *ev);
+typedef void (*log_LogFn)(Log_Event *ev);
 typedef void (*log_LockFn)(bool lock, void *udata);
 
 enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };

@@ -50,7 +50,7 @@ CURLcode HttpRequest(cJSON **response, const char *URL,
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body);
     }
 
-    ReqData_TypeDef chunk;
+    Utils_ReqData_TypeDef chunk;
     chunk.memory = malloc(1);
     chunk.size = 0;
 

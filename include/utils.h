@@ -17,7 +17,7 @@
 typedef struct {
 	char *memory; ///< The (response) data
 	size_t size; ///< Size of the (response) data
-} ReqData_TypeDef;
+} Utils_ReqData_TypeDef;
 
 /// Helper function to handle a CURL request response which normally gets
 /// written to stdout.

@@ -1,6 +1,6 @@
 #include "BOM/historical_weather.h"
 
-static int8_t BOM_ParseWeather(ReqData_TypeDef *stream,
+static int8_t BOM_ParseWeather(Utils_ReqData_TypeDef *stream,
                                BOM_WeatherDataset_TypeDef *dataset,
                                BOM_WeatherStation_TypeDef *station);
 
@@ -34,7 +34,7 @@ CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef *dataset,
     log_info("Getting location data from BOM FTP server in directory: %s\n",
              URL);
 
-    ReqData_TypeDef stream;
+    Utils_ReqData_TypeDef stream;
     CURLcode result = FTPRequest(URL, &stream);
 
     if (result == CURLE_OK) {
@@ -56,7 +56,7 @@ CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef *dataset,
  * @param dataset Dataset to populate.
  * @return Status code OK = 0 ... ERROR = -1
  */
-static int8_t BOM_ParseWeather(ReqData_TypeDef *stream,
+static int8_t BOM_ParseWeather(Utils_ReqData_TypeDef *stream,
                                BOM_WeatherDataset_TypeDef *dataset,
                                BOM_WeatherStation_TypeDef *station) {
 
