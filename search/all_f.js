@@ -4,7 +4,7 @@ var searchData=
   ['severity_5findex_2eh_1',['severity_index.h',['../severity__index_8h.html',1,'']]],
   ['si_5fallocation_5fexceeded_2',['SI_ALLOCATION_EXCEEDED',['../severity__index_8h.html#aa71803f092765253b58945f79c193ea2ad23c485911f64e1fdac5d3c4db361f72',1,'severity_index.h']]],
   ['si_5fcalculatefloodrisk_3',['SI_CalculateFloodRisk',['../severity__index_8h.html#a6a82b3371dcec654f1ca0f520d34cc1d',1,'severity_index.h']]],
-  ['si_5fcalculatefoodrisk_4',['SI_CalculateFoodRisk',['../severity__index_8c.html#acd5d58ed6d92b2309b1ce47512731a0c',1,'severity_index.c']]],
+  ['si_5fcalculatefoodrisk_4',['SI_CalculateFoodRisk',['../severity__index_8c.html#acd5d58ed6d92b2309b1ce47512731a0c',1,'SI_CalculateFoodRisk(SI_Dataset_TypeDef *dataset, const double *tide_diff, const double *daily_precipitation, const time_t *timestamps, uint16_t n_days):&#160;severity_index.c'],['../severity__index_8h.html#acd5d58ed6d92b2309b1ce47512731a0c',1,'SI_CalculateFoodRisk(SI_Dataset_TypeDef *dataset, const double *tide_diff, const double *daily_precipitation, const time_t *timestamps, uint16_t n_days):&#160;severity_index.c']]],
   ['si_5fdataset_5ftypedef_5',['SI_Dataset_TypeDef',['../struct_s_i___dataset___type_def.html',1,'']]],
   ['si_5fhandle_5ftypedef_6',['SI_Handle_TypeDef',['../severity__index_8h.html#aa71803f092765253b58945f79c193ea2',1,'severity_index.h']]],
   ['si_5fmax_5fnum_5fdays_7',['SI_MAX_NUM_DAYS',['../severity__index_8h.html#a7c616a125883710aa521385bcbe94bae',1,'severity_index.h']]],

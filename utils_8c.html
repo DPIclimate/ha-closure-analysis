@@ -105,9 +105,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a6885b6b56d62d9d96fc7682c122bb719"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a6885b6b56d62d9d96fc7682c122bb719">MakeDirectory</a> (const char *directory)</td></tr>
 <tr class="memdesc:a6885b6b56d62d9d96fc7682c122bb719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make directories (with error handling)  <a href="utils_8c.html#a6885b6b56d62d9d96fc7682c122bb719">More...</a><br /></td></tr>
 <tr class="separator:a6885b6b56d62d9d96fc7682c122bb719"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a189489cca3c7536b85793ce84830cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a> (const char *filename, time_t *dates, double *values, uint16_t max_n_values)</td></tr>
-<tr class="memdesc:a7a189489cca3c7536b85793ce84830cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries data into a csv file.  <a href="utils_8c.html#a7a189489cca3c7536b85793ce84830cb">More...</a><br /></td></tr>
-<tr class="separator:a7a189489cca3c7536b85793ce84830cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae3626bba6a021ce94bdfed42c1dbdb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#aae3626bba6a021ce94bdfed42c1dbdb9">WriteTimeseriesToFile</a> (const char *filename, time_t *dates, double *values, int16_t max_n_values)</td></tr>
+<tr class="memdesc:aae3626bba6a021ce94bdfed42c1dbdb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries data into a csv file.  <a href="utils_8c.html#aae3626bba6a021ce94bdfed42c1dbdb9">More...</a><br /></td></tr>
+<tr class="separator:aae3626bba6a021ce94bdfed42c1dbdb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dd2caaadd6c88b345799d955652f908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a2dd2caaadd6c88b345799d955652f908">cJSON_Minify_Mod</a> (char *json)</td></tr>
 <tr class="memdesc:a2dd2caaadd6c88b345799d955652f908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modified minify function from cJSON.  <a href="utils_8c.html#a2dd2caaadd6c88b345799d955652f908">More...</a><br /></td></tr>
 <tr class="separator:a2dd2caaadd6c88b345799d955652f908"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,8 +233,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7a189489cca3c7536b85793ce84830cb" name="a7a189489cca3c7536b85793ce84830cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a189489cca3c7536b85793ce84830cb">&#9670;&nbsp;</a></span>WriteTimeseriesToFile()</h2>
+<a id="aae3626bba6a021ce94bdfed42c1dbdb9" name="aae3626bba6a021ce94bdfed42c1dbdb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae3626bba6a021ce94bdfed42c1dbdb9">&#9670;&nbsp;</a></span>WriteTimeseriesToFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +260,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramtype">int16_t&#160;</td>
           <td class="paramname"><em>max_n_values</em>&#160;</td>
         </tr>
         <tr>
@@ -277,12 +277,12 @@ Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="comment">// Build filename (directory requried)</span></div>
 <div class="line"><span class="keywordtype">char</span> filename[100];</div>
 <div class="line">sprintf(filename, <span class="stringliteral">&quot;%s/low.csv&quot;</span>, directory);</div>
-<div class="line"><a class="code hl_function" href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a>(filename,</div>
+<div class="line"><a class="code hl_function" href="utils_8h.html#aae3626bba6a021ce94bdfed42c1dbdb9">WriteTimeseriesToFile</a>(filename,</div>
 <div class="line">                      dataset-&gt;low_tide_timestamps, <span class="comment">// UNIX timestamps</span></div>
 <div class="line">                      dataset-&gt;low_tide_values, <span class="comment">// Values</span></div>
 <div class="line">                      <a class="code hl_define" href="forecast_8h.html#af2b3c9f9af17e84515bc95abcb995c00">WW_FORECAST_RESPONSE_BUF</a>); <span class="comment">// Max number of values</span></div>
 <div class="ttc" id="aforecast_8h_html_af2b3c9f9af17e84515bc95abcb995c00"><div class="ttname"><a href="forecast_8h.html#af2b3c9f9af17e84515bc95abcb995c00">WW_FORECAST_RESPONSE_BUF</a></div><div class="ttdeci">#define WW_FORECAST_RESPONSE_BUF</div><div class="ttdoc">Max response values.</div><div class="ttdef"><b>Definition:</b> forecast.h:22</div></div>
-<div class="ttc" id="autils_8h_html_a7a189489cca3c7536b85793ce84830cb"><div class="ttname"><a href="utils_8h.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a></div><div class="ttdeci">void WriteTimeseriesToFile(const char *filename, time_t *dates, double *values, uint16_t max_n_values)</div><div class="ttdoc">Write timeseries data into a csv file.</div><div class="ttdef"><b>Definition:</b> utils.c:107</div></div>
+<div class="ttc" id="autils_8h_html_aae3626bba6a021ce94bdfed42c1dbdb9"><div class="ttname"><a href="utils_8h.html#aae3626bba6a021ce94bdfed42c1dbdb9">WriteTimeseriesToFile</a></div><div class="ttdeci">void WriteTimeseriesToFile(const char *filename, time_t *dates, double *values, int16_t max_n_values)</div><div class="ttdoc">Write timeseries data into a csv file.</div><div class="ttdef"><b>Definition:</b> utils.c:107</div></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>File to write to. </td></tr>
