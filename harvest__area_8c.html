@@ -103,54 +103,14 @@ Functions</h2></td></tr>
 <tr class="memitem:aba76de9b85b0a6587f27778216a35061"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__area_8c.html#aba76de9b85b0a6587f27778216a35061">FA_FindHTMLValue</a> (char *data, const char *search_term, char *value)</td></tr>
 <tr class="memdesc:aba76de9b85b0a6587f27778216a35061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find value with HTML tags.  <a href="harvest__area_8c.html#aba76de9b85b0a6587f27778216a35061">More...</a><br /></td></tr>
 <tr class="separator:aba76de9b85b0a6587f27778216a35061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18dde823076bb884eb7f19ab0827ca71"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__area_8c.html#a18dde823076bb884eb7f19ab0827ca71">FA_ParseResponse</a> (char *data, <a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> *ha_status)</td></tr>
-<tr class="memdesc:a18dde823076bb884eb7f19ab0827ca71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse HTML data to populate status information data.  <a href="harvest__area_8c.html#a18dde823076bb884eb7f19ab0827ca71">More...</a><br /></td></tr>
-<tr class="separator:a18dde823076bb884eb7f19ab0827ca71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4121c48754e618c3eb17361341f78016"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__area_8c.html#a4121c48754e618c3eb17361341f78016">cJSON_Minify_Mod</a> (char *json)</td></tr>
-<tr class="memdesc:a4121c48754e618c3eb17361341f78016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modified minify function from cJSON.  <a href="harvest__area_8c.html#a4121c48754e618c3eb17361341f78016">More...</a><br /></td></tr>
-<tr class="separator:a4121c48754e618c3eb17361341f78016"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab32ed907e9451d0fa8be3be2803cca49"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__area_8c.html#ab32ed907e9451d0fa8be3be2803cca49">FA_GetHarvestAreaStatus</a> (const char *harvest_name, <a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> *ha_status)</td></tr>
-<tr class="memdesc:ab32ed907e9451d0fa8be3be2803cca49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Harvest area of interest status information.  <a href="harvest__area_8c.html#ab32ed907e9451d0fa8be3be2803cca49">More...</a><br /></td></tr>
-<tr class="separator:ab32ed907e9451d0fa8be3be2803cca49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a6d9da835c024572862d82db053d32d"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__area_8c.html#a7a6d9da835c024572862d82db053d32d">FA_GetHarvestAreaStatus</a> (const char *harvest_name, <a class="el" href="struct_f_a___harvest_area___type_def.html">FA_HarvestArea_TypeDef</a> *harvest_area)</td></tr>
+<tr class="memdesc:a7a6d9da835c024572862d82db053d32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Harvest area of interest status information.  <a href="harvest__area_8c.html#a7a6d9da835c024572862d82db053d32d">More...</a><br /></td></tr>
+<tr class="separator:a7a6d9da835c024572862d82db053d32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f62b61b400c27a22a19fe463fcf81bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__area_8c.html#a1f62b61b400c27a22a19fe463fcf81bb">FA_ParseResponse</a> (char *data, <a class="el" href="struct_f_a___harvest_area___type_def.html">FA_HarvestArea_TypeDef</a> *harvest_area)</td></tr>
+<tr class="memdesc:a1f62b61b400c27a22a19fe463fcf81bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse HTML data to populate status information data.  <a href="harvest__area_8c.html#a1f62b61b400c27a22a19fe463fcf81bb">More...</a><br /></td></tr>
+<tr class="separator:a1f62b61b400c27a22a19fe463fcf81bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a4121c48754e618c3eb17361341f78016" name="a4121c48754e618c3eb17361341f78016"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4121c48754e618c3eb17361341f78016">&#9670;&nbsp;</a></span>cJSON_Minify_Mod()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void cJSON_Minify_Mod </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>json</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Modified minify function from cJSON. </p>
-<p >HTML minify function modified from cJSON library.</p>
-<p >The main cJSON_Minify() function gets rid of all white space and '/' characters in a string. This however, causes sentances to appear without the nessessary spaces between words. This modified function keeps only one space between each character (if more than one space occurs) and maintains the spaces between words in a sentance. Additionally '/' characters are maintained as they are used as datetime delimiters.</p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://github.com/DaveGamble/cJSON/blob/master/cJSON.c#L2838">https://github.com/DaveGamble/cJSON/blob/master/cJSON.c#L2838</a></dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">json</td><td>The string to minify (parse). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="aba76de9b85b0a6587f27778216a35061" name="aba76de9b85b0a6587f27778216a35061"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba76de9b85b0a6587f27778216a35061">&#9670;&nbsp;</a></span>FA_FindHTMLValue()</h2>
 
@@ -206,8 +166,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab32ed907e9451d0fa8be3be2803cca49" name="ab32ed907e9451d0fa8be3be2803cca49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab32ed907e9451d0fa8be3be2803cca49">&#9670;&nbsp;</a></span>FA_GetHarvestAreaStatus()</h2>
+<a id="a7a6d9da835c024572862d82db053d32d" name="a7a6d9da835c024572862d82db053d32d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a6d9da835c024572862d82db053d32d">&#9670;&nbsp;</a></span>FA_GetHarvestAreaStatus()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,8 +181,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> *&#160;</td>
-          <td class="paramname"><em>ha_status</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_area___type_def.html">FA_HarvestArea_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>harvest_area</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -235,11 +195,10 @@ Functions</h2></td></tr>
 <p>Harvest area of interest status information. </p>
 <p >Gets harvest area status information from NSW Food Authority.</p>
 <p >NSW Food Authority provides a JSON response with XML data as values. The XML data basically contains generic cards that are used on the NSW FA website. This function parses out the relevent XML data and used helper functions to pull out a struct containing relevent data.</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> ha_status;</div>
-<div class="line"><a class="code hl_function" href="harvest__area_8h.html#ab32ed907e9451d0fa8be3be2803cca49">FA_GetHarvestAreaStatus</a>(<a class="code hl_define" href="harvest__area_8h.html#adf5ca3c7375d312dd86f16c7157ae646">FA_HA_CLYDE_MOONLIGHT</a>, &amp;ha_status);</div>
-<div class="ttc" id="aharvest__area_8h_html_ab32ed907e9451d0fa8be3be2803cca49"><div class="ttname"><a href="harvest__area_8h.html#ab32ed907e9451d0fa8be3be2803cca49">FA_GetHarvestAreaStatus</a></div><div class="ttdeci">CURLcode FA_GetHarvestAreaStatus(const char *harvest_name, FA_HarvestAreaStatus_TypeDef *ha_status)</div><div class="ttdoc">Harvest area of interest status information.</div><div class="ttdef"><b>Definition:</b> harvest_area.c:39</div></div>
+<div class="fragment"><div class="line">FA_HarvestAreaStatus_TypeDef harvest_area;</div>
+<div class="line"><a class="code hl_function" href="harvest__area_8h.html#a3a55ef1a5d213d907911f9271cc82cb1">FA_GetHarvestAreaStatus</a>(<a class="code hl_define" href="harvest__area_8h.html#adf5ca3c7375d312dd86f16c7157ae646">FA_HA_CLYDE_MOONLIGHT</a>, &amp;harvest_area);</div>
+<div class="ttc" id="aharvest__area_8h_html_a3a55ef1a5d213d907911f9271cc82cb1"><div class="ttname"><a href="harvest__area_8h.html#a3a55ef1a5d213d907911f9271cc82cb1">FA_GetHarvestAreaStatus</a></div><div class="ttdeci">CURLcode FA_GetHarvestAreaStatus(const char *harvest_name, FA_HarvestArea_TypeDef *ha_status)</div><div class="ttdoc">Harvest area of interest status information.</div><div class="ttdef"><b>Definition:</b> harvest_area.c:32</div></div>
 <div class="ttc" id="aharvest__area_8h_html_adf5ca3c7375d312dd86f16c7157ae646"><div class="ttname"><a href="harvest__area_8h.html#adf5ca3c7375d312dd86f16c7157ae646">FA_HA_CLYDE_MOONLIGHT</a></div><div class="ttdeci">#define FA_HA_CLYDE_MOONLIGHT</div><div class="ttdoc">Moonlight harvest area.</div><div class="ttdef"><b>Definition:</b> harvest_area.h:16</div></div>
-<div class="ttc" id="astruct_f_a___harvest_area_status___type_def_html"><div class="ttname"><a href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a></div><div class="ttdoc">Harvest area status information.</div><div class="ttdef"><b>Definition:</b> harvest_area.h:24</div></div>
 </div><!-- fragment --><p >The havest area names for Batemans Bay are as follow:</p><ul>
 <li>Waterfall</li>
 <li>Moonlight</li>
@@ -249,7 +208,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">harvest_name</td><td>Name of harvest area. </td></tr>
-    <tr><td class="paramname">ha_status</td><td>Harvest area struct to populate with status information. </td></tr>
+    <tr><td class="paramname">harvest_area</td><td>Harvest area struct to populate with status information. </td></tr>
   </table>
   </dd>
 </dl>
@@ -257,17 +216,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a18dde823076bb884eb7f19ab0827ca71" name="a18dde823076bb884eb7f19ab0827ca71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18dde823076bb884eb7f19ab0827ca71">&#9670;&nbsp;</a></span>FA_ParseResponse()</h2>
+<a id="a1f62b61b400c27a22a19fe463fcf81bb" name="a1f62b61b400c27a22a19fe463fcf81bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f62b61b400c27a22a19fe463fcf81bb">&#9670;&nbsp;</a></span>FA_ParseResponse()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FA_ParseResponse </td>
+          <td class="memname">void FA_ParseResponse </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -275,8 +231,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_f_a___harvest_area_status___type_def.html">FA_HarvestAreaStatus_TypeDef</a> *&#160;</td>
-          <td class="paramname"><em>ha_status</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_area___type_def.html">FA_HarvestArea_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>harvest_area</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -284,11 +240,6 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Parse HTML data to populate status information data. </p>
@@ -297,7 +248,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>The string to parse. </td></tr>
-    <tr><td class="paramname">ha_status</td><td>The struct to populate with values. </td></tr>
+    <tr><td class="paramname">harvest_area</td><td>The struct to populate with values. </td></tr>
   </table>
   </dd>
 </dl>

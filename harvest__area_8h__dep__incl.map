@@ -1,6 +1,8 @@
 <map id="include/FoodAuthority/harvest_area.h" name="include/FoodAuthority/harvest_area.h">
-<area shape="rect" id="node1" title=" " alt="" coords="66,5,213,47"/>
-<area shape="rect" id="node2" href="$main_8h.html" title=" " alt="" coords="5,102,111,129"/>
-<area shape="rect" id="node4" href="$harvest__area_8c.html" title=" " alt="" coords="135,95,306,136"/>
-<area shape="rect" id="node3" href="$main_8c.html" title=" " alt="" coords="17,184,99,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="95,5,242,47"/>
+<area shape="rect" id="node2" href="$harvest__areas_8h.html" title=" " alt="" coords="95,95,242,136"/>
+<area shape="rect" id="node3" href="$main_8h.html" title=" " alt="" coords="5,191,111,218"/>
+<area shape="rect" id="node6" href="$harvest__area_8c.html" title=" " alt="" coords="266,95,437,136"/>
+<area shape="rect" id="node5" href="$harvest__areas_8c.html" title=" " alt="" coords="135,184,306,225"/>
+<area shape="rect" id="node4" href="$main_8c.html" title=" " alt="" coords="17,273,99,300"/>
 </map>

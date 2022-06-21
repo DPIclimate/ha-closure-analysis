@@ -85,17 +85,104 @@ $(document).ready(function(){initNavTree('harvest__areas_8c.html',''); initResiz
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">harvest_areas.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="harvest__areas_8h_source.html">harvest_areas.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="harvest__areas_8h_source.html">FoodAuthority/harvest_areas.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for harvest_areas.c:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="harvest__areas_8c__incl.svg" width="182" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="harvest__areas_8c__incl.svg" width="863" height="530"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a08deaf022e63f744957fb61117f1832a"><td class="memItemLeft" align="right" valign="top">static int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__areas_8c.html#a08deaf022e63f744957fb61117f1832a">FA_ParseListResponse</a> (char *data, <a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *harvest_areas)</td></tr>
+<tr class="separator:a08deaf022e63f744957fb61117f1832a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d0aaaa5c182c8ae6b21a94a88e61161"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__areas_8c.html#a3d0aaaa5c182c8ae6b21a94a88e61161">FA_GetHarvestAreas</a> (<a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *harvest_areas)</td></tr>
+<tr class="memdesc:a3d0aaaa5c182c8ae6b21a94a88e61161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of oyster harvest areas in NSW Australia.  <a href="harvest__areas_8c.html#a3d0aaaa5c182c8ae6b21a94a88e61161">More...</a><br /></td></tr>
+<tr class="separator:a3d0aaaa5c182c8ae6b21a94a88e61161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a3d0aaaa5c182c8ae6b21a94a88e61161" name="a3d0aaaa5c182c8ae6b21a94a88e61161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d0aaaa5c182c8ae6b21a94a88e61161">&#9670;&nbsp;</a></span>FA_GetHarvestAreas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CURLcode FA_GetHarvestAreas </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>harvest_areas</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a list of oyster harvest areas in NSW Australia. </p>
+<p >Request list of harvest areas (and status) from NSW Food Authority.</p>
+<p >End product of this function is a list of harvest areas with their status (open, closed etc.).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">harvest_areas</td><td>List of harvest areas to populate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>CURL error code. </dd></dl>
+
+</div>
+</div>
+<a id="a08deaf022e63f744957fb61117f1832a" name="a08deaf022e63f744957fb61117f1832a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08deaf022e63f744957fb61117f1832a">&#9670;&nbsp;</a></span>FA_ParseListResponse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int8_t FA_ParseListResponse </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>harvest_areas</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Takes a raw text XML input of all harvest areas across NSW from NSW Food Authority and converts the text into a list of harvest area objects.</p>
+<p >NSW Food Authority provides data regarding harvest area status as a raw XML endpoint. First the string "-row" is identified as this divides the raw text into each individual harvest areas. Then the '-' in "-row" is replaced with a newline character. This results in each harvest area being put on seperate lines. These data are saved to a file and then read from the same file using fgets() to get results line by line. These lines are then passed individually to <a class="el" href="harvest__area_8h.html#a1f62b61b400c27a22a19fe463fcf81bb" title="Parse HTML data to populate status information data.">FA_ParseResponse()</a> to construct <a class="el" href="struct_f_a___harvest_area___type_def.html" title="Harvest area status information.">FA_HarvestArea_TypeDef</a>'s.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Raw XML text from NSW FA JSON request. </td></tr>
+    <tr><td class="paramname">harvest_areas</td><td>List of harvest areas. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Integer representing error or ok. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

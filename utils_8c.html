@@ -108,8 +108,40 @@ Functions</h2></td></tr>
 <tr class="memitem:a7a189489cca3c7536b85793ce84830cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a7a189489cca3c7536b85793ce84830cb">WriteTimeseriesToFile</a> (const char *filename, time_t *dates, double *values, uint16_t max_n_values)</td></tr>
 <tr class="memdesc:a7a189489cca3c7536b85793ce84830cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries data into a csv file.  <a href="utils_8c.html#a7a189489cca3c7536b85793ce84830cb">More...</a><br /></td></tr>
 <tr class="separator:a7a189489cca3c7536b85793ce84830cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dd2caaadd6c88b345799d955652f908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a2dd2caaadd6c88b345799d955652f908">cJSON_Minify_Mod</a> (char *json)</td></tr>
+<tr class="memdesc:a2dd2caaadd6c88b345799d955652f908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modified minify function from cJSON.  <a href="utils_8c.html#a2dd2caaadd6c88b345799d955652f908">More...</a><br /></td></tr>
+<tr class="separator:a2dd2caaadd6c88b345799d955652f908"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a2dd2caaadd6c88b345799d955652f908" name="a2dd2caaadd6c88b345799d955652f908"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dd2caaadd6c88b345799d955652f908">&#9670;&nbsp;</a></span>cJSON_Minify_Mod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cJSON_Minify_Mod </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>json</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Modified minify function from cJSON. </p>
+<p >HTML minify function modified from cJSON library.</p>
+<p >The main cJSON_Minify() function gets rid of all white space and '/' characters in a string. This however, causes sentances to appear without the nessessary spaces between words. This modified function keeps only one space between each character (if more than one space occurs) and maintains the spaces between words in a sentance. Additionally '/' characters are maintained as they are used as datetime delimiters.</p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://github.com/DaveGamble/cJSON/blob/master/cJSON.c#L2838">https://github.com/DaveGamble/cJSON/blob/master/cJSON.c#L2838</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">json</td><td>The string to minify (parse). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6885b6b56d62d9d96fc7682c122bb719" name="a6885b6b56d62d9d96fc7682c122bb719"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6885b6b56d62d9d96fc7682c122bb719">&#9670;&nbsp;</a></span>MakeDirectory()</h2>
 

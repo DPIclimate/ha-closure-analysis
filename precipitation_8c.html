@@ -100,13 +100,13 @@ Include dependency graph for precipitation.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afd49ffaf6f813f621002dc380b316cfe"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8c.html#afd49ffaf6f813f621002dc380b316cfe">WillyWeather_GetRainfallForecast</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___daily_rainfall___type_def.html">WW_DailyRainfall_TypeDef</a> *daily_rainfall)</td></tr>
-<tr class="memdesc:afd49ffaf6f813f621002dc380b316cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the rainfall forecast (next 7 days inc today) for a location.  <a href="precipitation_8c.html#afd49ffaf6f813f621002dc380b316cfe">More...</a><br /></td></tr>
-<tr class="separator:afd49ffaf6f813f621002dc380b316cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af563374b4968379747c13e581bf12a96"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8c.html#af563374b4968379747c13e581bf12a96">WillyWeather_GetRainfallForecast</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *rainfall_forecast)</td></tr>
+<tr class="memdesc:af563374b4968379747c13e581bf12a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the rainfall forecast (next 7 days inc today) for a location.  <a href="precipitation_8c.html#af563374b4968379747c13e581bf12a96">More...</a><br /></td></tr>
+<tr class="separator:af563374b4968379747c13e581bf12a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="afd49ffaf6f813f621002dc380b316cfe" name="afd49ffaf6f813f621002dc380b316cfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd49ffaf6f813f621002dc380b316cfe">&#9670;&nbsp;</a></span>WillyWeather_GetRainfallForecast()</h2>
+<a id="af563374b4968379747c13e581bf12a96" name="af563374b4968379747c13e581bf12a96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af563374b4968379747c13e581bf12a96">&#9670;&nbsp;</a></span>WillyWeather_GetRainfallForecast()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -120,8 +120,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_w_w___daily_rainfall___type_def.html">WW_DailyRainfall_TypeDef</a> *&#160;</td>
-          <td class="paramname"><em>daily_rainfall</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>rainfall_forecast</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -137,15 +137,15 @@ Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="comment">// Get location by name</span></div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* search_location = <span class="stringliteral">&quot;Batemans&quot;</span>;</div>
 <div class="line"><a class="code hl_struct" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> location_info = {0};</div>
-<div class="line"><a class="code hl_function" href="location_8h.html#a16fd07a10b5fb32b6e1c1b932c63ae01">WillyWeather_GetLocationByName</a>(search_location, &amp;location_info);</div>
+<div class="line"><a class="code hl_function" href="location_8h.html#a7174469433632afde1315db6c7764abc">WillyWeather_GetLocationByName</a>(search_location, &amp;location_info);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Get rainfall for a location</span></div>
-<div class="line"><a class="code hl_struct" href="struct_w_w___daily_rainfall___type_def.html">WW_DailyRainfall_TypeDef</a> daily_rainfall = {0};</div>
-<div class="line"><a class="code hl_function" href="precipitation_8h.html#afd49ffaf6f813f621002dc380b316cfe">WillyWeather_GetRainfallForecast</a>(&amp;location_info, &amp;daily_rainfall);</div>
-<div class="ttc" id="alocation_8h_html_a16fd07a10b5fb32b6e1c1b932c63ae01"><div class="ttname"><a href="location_8h.html#a16fd07a10b5fb32b6e1c1b932c63ae01">WillyWeather_GetLocationByName</a></div><div class="ttdeci">CURLcode WillyWeather_GetLocationByName(const char *name, WW_Location_TypeDef *location_info)</div><div class="ttdoc">Get an ID describing a location from Willy Weather.</div><div class="ttdef"><b>Definition:</b> location.c:26</div></div>
-<div class="ttc" id="aprecipitation_8h_html_afd49ffaf6f813f621002dc380b316cfe"><div class="ttname"><a href="precipitation_8h.html#afd49ffaf6f813f621002dc380b316cfe">WillyWeather_GetRainfallForecast</a></div><div class="ttdeci">CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location, WW_DailyRainfall_TypeDef *daily_rainfall)</div><div class="ttdoc">Gets the rainfall forecast (next 7 days inc today) for a location.</div><div class="ttdef"><b>Definition:</b> precipitation.c:28</div></div>
-<div class="ttc" id="astruct_w_w___daily_rainfall___type_def_html"><div class="ttname"><a href="struct_w_w___daily_rainfall___type_def.html">WW_DailyRainfall_TypeDef</a></div><div class="ttdoc">Holds daily forecast rainfall information from Willy Weather.</div><div class="ttdef"><b>Definition:</b> precipitation.h:29</div></div>
+<div class="line"><a class="code hl_struct" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> rainfall_forecast = {0};</div>
+<div class="line"><a class="code hl_function" href="precipitation_8h.html#a5b46f6801cdcade574c08a7cd8570b29">WillyWeather_GetRainfallForecast</a>(&amp;location_info, &amp;rainfall_forecast);</div>
+<div class="ttc" id="alocation_8h_html_a7174469433632afde1315db6c7764abc"><div class="ttname"><a href="location_8h.html#a7174469433632afde1315db6c7764abc">WillyWeather_GetLocationByName</a></div><div class="ttdeci">CURLcode WillyWeather_GetLocationByName(char *name, WW_Location_TypeDef *location_info)</div><div class="ttdoc">Get an ID describing a location from Willy Weather.</div><div class="ttdef"><b>Definition:</b> location.c:26</div></div>
+<div class="ttc" id="aprecipitation_8h_html_a5b46f6801cdcade574c08a7cd8570b29"><div class="ttname"><a href="precipitation_8h.html#a5b46f6801cdcade574c08a7cd8570b29">WillyWeather_GetRainfallForecast</a></div><div class="ttdeci">CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location, WW_RainfallForecast_TypeDef *daily_rainfall)</div><div class="ttdoc">Gets the rainfall forecast (next 7 days inc today) for a location.</div><div class="ttdef"><b>Definition:</b> precipitation.c:28</div></div>
 <div class="ttc" id="astruct_w_w___location___type_def_html"><div class="ttname"><a href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a></div><div class="ttdoc">Location data from Willy Weather request.</div><div class="ttdef"><b>Definition:</b> location.h:22</div></div>
+<div class="ttc" id="astruct_w_w___rainfall_forecast___type_def_html"><div class="ttname"><a href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a></div><div class="ttdoc">Holds daily forecast rainfall information from Willy Weather.</div><div class="ttdef"><b>Definition:</b> precipitation.h:30</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://www.willyweather.com.au/api/docs/v2.html#forecast-get-rainfall">https://www.willyweather.com.au/api/docs/v2.html#forecast-get-rainfall</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
