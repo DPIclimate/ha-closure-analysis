@@ -17,6 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Install CURL
+      run: |
+        sudo apt update
+        sudo apt -y install curl
+    
     - name: Install cJSON
       run: |
         cd ~
