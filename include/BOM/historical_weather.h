@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 #include <ctype.h>
 #include <stdint.h>
+#include <time.h>
 
 #include "BOM/stations.h"
 #include "ftp.h"

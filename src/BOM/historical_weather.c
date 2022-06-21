@@ -65,8 +65,9 @@ static int8_t BOM_ParseWeather(ReqData_TypeDef *stream,
     MakeDirectory("datasets/bom");
     MakeDirectory("datasets/bom/historical");
 
-    char filename[BOM_STATION_FILENAME_SIZE * 2];
-    snprintf(filename, BOM_STATION_FILENAME_SIZE,
+    int16_t full_filename_size = BOM_STATION_FILENAME_SIZE * 2;
+    char filename[full_filename_size];
+    snprintf(filename, full_filename_size,
              "datasets/bom/historical/%s.csv",
              station->filename);
     FILE *write_file = fopen(filename, "w");
