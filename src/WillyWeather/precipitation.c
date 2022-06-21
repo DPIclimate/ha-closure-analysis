@@ -28,13 +28,14 @@
 CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef* location,
                                           WW_RainfallForecast_TypeDef* rainfall_forecast){
 
-
     if(WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
 
     // Build start time as current day
-    struct tm stm = *localtime(&(time_t){time(NULL)});
+    struct tm stm = *localtime(&(time_t){time(NULL)}); // Current time
+    time_t unix_time = mktime(&stm) - 172800; // Two days ago
+    struct tm ptm = *localtime(&unix_time);
     char start_date[11] = {0};
-    strftime(start_date, 10, "%Y-%m-%d", &stm);
+    strftime(start_date, 10, "%Y-%m-%d", &ptm); // Todays date minus two days
 
     // Max 9 day forcast (7 days inc today plus 2 days prior)
     char url[WW_FORECAST_URL_BUF];
