@@ -360,11 +360,11 @@ int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
     switch (request->layer_id) {
         case IBM_PRECIPITATION_ID:
             strncpy(filename, "datasets/ibm/timeseries/precipitation.csv",
-                    FILENAME_SIZE);
+                    (size_t)FILENAME_SIZE);
             break;
         default:
             strncpy(filename, "datasets/ibm/timeseries/unknown.csv",
-                    FILENAME_SIZE);
+                    (size_t)FILENAME_SIZE);
             break;
     }
 

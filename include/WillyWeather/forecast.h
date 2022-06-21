@@ -15,7 +15,7 @@
 #define WW_FORECAST_WIND                "wind"
 
 /// Max number of characters in URL
-#define WW_FORECAST_URL_BUF              200
+#define WW_FORECAST_URL_BUF              250
 /// Max characters in responses
 #define WW_FORECAST_BUF                 150
 /// Max response values

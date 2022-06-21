@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION "3.19.2")
+cmake_minimum_required(VERSION "3.19.0")
 
 project("program")
 
@@ -26,7 +26,8 @@ add_executable(${PROJECT_NAME} ${SRC_DIR} ${INC_DIR})
 target_compile_options(${PROJECT_NAME} PRIVATE -std=gnu11)
 target_compile_options(${PROJECT_NAME} PRIVATE -g)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall)
-target_compile_options(${PROJECT_NAME} PRIVATE -Werror)
+target_compile_options(${PROJECT_NAME} PRIVATE -pedantic)
+#target_compile_options(${PROJECT_NAME} PRIVATE -Werror)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wextra)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wstrict-prototypes)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wwrite-strings)
@@ -39,7 +40,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wcast-qual)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wundef)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wswitch-default)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wconversion)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wc++-compat)
+#target_compile_options(${PROJECT_NAME} PRIVATE -Wc++-compat)
 target_compile_options(${PROJECT_NAME} PRIVATE -fstack-protector-strong)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wcomment)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wdouble-promotion)
@@ -48,11 +49,12 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wunused-macros)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wmissing-declarations)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wswitch-enum)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wsign-conversion)
-target_compile_options(${PROJECT_NAME} PRIVATE -Werror=implicit-function-declaration)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wimplicit-function-declaration)
 
 # Colored output for logs
 target_compile_options(${PROJECT_NAME} PRIVATE -DLOG_USE_COLOR)
 target_compile_options(${PROJECT_NAME} PRIVATE -D_XOPEN_SOURCE=600)
+target_compile_options(${PROJECT_NAME} PRIVATE -DCMAKE_BUILD_TYPE=Debug)
 
 # Set include direcotires and required libraries
 include_directories(${CMAKE_SOURCE_DIR}/include ${CURL_INCLUDE_DIR}
