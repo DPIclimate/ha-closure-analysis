@@ -158,7 +158,9 @@ void FA_ParseResponse(char *data,
                 /// Convert time to tm struct
                 strptime(value, "%02d/%02m/%Y - %02H:%02M%p", &v_time);
                 harvest_area->u_time = v_time;
-                strncpy(harvest_area->time, value, FA_MAX_BUFFER);
+                char ts_tz[30];
+                strftime(ts_tz, sizeof(ts_tz), "%Y-%m-%d %H:%M:%S%z", &v_time);
+                strncpy(harvest_area->time, ts_tz, FA_MAX_BUFFER);
                 break;
             case 6:
                 strncpy(harvest_area->reason, value, FA_MAX_BUFFER);
@@ -211,4 +213,107 @@ static void FA_FindHTMLValue(char *data, const char *search_term,
             value[value_index++] = clsf[i];
         }
     }
+}
+
+
+cJSON* FA_BuildJSON(FA_HarvestArea_TypeDef* harvest_area){
+
+    cJSON* outlook = cJSON_CreateObject();
+    if(outlook == NULL){
+        return NULL;
+    }
+
+    // Food authortiy
+    cJSON* j_harvest_area = cJSON_CreateObject();
+    if(j_harvest_area == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_harvest_area, "program_name",
+                               harvest_area->program_name) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_harvest_area, "location",
+                               harvest_area->location) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_harvest_area, "name",
+                               harvest_area->name) == NULL){
+        return NULL;
+    }
+
+    // Harvest area
+    cJSON* j_information = cJSON_CreateObject();
+    if(j_information == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_information, "status",
+                               harvest_area->status) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_information, "time_updated",
+                               harvest_area->time) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_information, "reason",
+                               harvest_area->reason) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_information, "previous_reason",
+                               harvest_area->previous_reason) == NULL){
+        return NULL;
+    }
+
+    // Outlook
+    cJSON* j_outlook = cJSON_CreateObject();
+    if(j_outlook == NULL){
+        return NULL;
+    }
+    if(cJSON_AddBoolToObject(j_outlook, "closure", true) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_outlook, "type", "7d") == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_outlook, "reason",
+                               "Closure based on 7-day "
+                               "rainfall exceeding 100 mm.") == NULL){
+        return NULL;
+    }
+
+    // Predicted closure
+    cJSON* j_predicted_closure = cJSON_CreateObject();
+    if(j_predicted_closure == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_predicted_closure, "date",
+                               "15/12/2022") == NULL){
+        return NULL;
+    }
+    if(cJSON_AddNumberToObject(j_predicted_closure, "unix_ts",
+                               164000000) == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_predicted_closure, "severity",
+                               "0-25") == NULL){
+        return NULL;
+    }
+    if(cJSON_AddStringToObject(j_predicted_closure, "time_closed",
+                               "0-10") == NULL){
+        return NULL;
+    }
+
+    cJSON_AddItemToObject(j_harvest_area, "information", j_information);
+    cJSON_AddItemToObject(j_outlook, "predicted_closure", j_predicted_closure);
+    cJSON_AddItemToObject(j_harvest_area, "outlook", j_outlook);
+    cJSON_AddItemToObject(outlook, "harvest_area", j_harvest_area);
+
+    char* str = NULL;
+    str = cJSON_Print(outlook);
+    if(str == NULL){
+        log_error("Unable to build harvest area JSON.\n");
+    } else {
+        log_info("%s\n", str);
+    }
+
+    return outlook;
 }

@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:14.4
+    container_name: psql
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/data:/var/lib/postgres/data
+      - ./db/init.d:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=${PSQL_USERNAME}
+      - POSTGRES_PASSWORD=${PSQL_PASSWORD}
+      - POSTGRES_DB=${PSQL_DB}
+
+volumes:
+  oyster-db:

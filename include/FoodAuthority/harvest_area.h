@@ -21,9 +21,9 @@
 
 /// Harvest area status information.
 typedef struct {
-    char program_name[FA_MAX_BUFFER];
-    char location[FA_MAX_BUFFER];
-    char name[FA_MAX_BUFFER]; /// Relevent location
+    char program_name[FA_MAX_BUFFER]; /// Location of harvest area program
+    char location[FA_MAX_BUFFER]; /// Location of harvest area
+    char name[FA_MAX_BUFFER]; /// Name of harvest area
     char classification[FA_MAX_BUFFER]; /// NSW FA quality classification
     char status[FA_MAX_BUFFER]; /// HA status (open / closed)
     char time[FA_MAX_BUFFER]; /// Time updated
@@ -39,5 +39,7 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
 /// Parse HTML data to populate status information data.
 void FA_ParseResponse(char* data,
                       FA_HarvestArea_TypeDef *harvest_area);
+
+cJSON* FA_BuildJSON(FA_HarvestArea_TypeDef* harvest_area);
 
 #endif //HA_CLOSURE_ANALYSIS_HARVEST_AREA_H

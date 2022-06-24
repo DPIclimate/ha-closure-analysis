@@ -130,3 +130,89 @@ static int8_t FA_ParseListResponse(char *data,
     fclose(read_file);
     return 0;
 }
+
+
+int8_t FA_HarvestAreasToCSV(FA_HarvestAreas_TypeDef* harvest_areas){
+
+    MakeDirectory("datasets");
+    MakeDirectory(FA_DEFAULT_DIRECTORY);
+
+    FILE* file = fopen(FA_DEFAULT_FILENAME, "w");
+    if(file == NULL){
+        return -1;
+    }
+
+    fprintf(file, "Program Name;Location;Name;Classification;Status;Time;Unix;"
+                  "Reason;Previous Reason\n");
+
+    uint16_t i = 0;
+    while(i < harvest_areas->count){
+        FA_HarvestArea_TypeDef ha = harvest_areas->harvest_area[i];
+        fprintf(file, "%s;%s;%s;%s;%s;%s;%ld;%s;%s\n",
+                ha.program_name, ha.location, ha.name, ha.classification,
+                ha.status, ha.time, mktime(&ha.u_time), ha.reason,
+                ha.previous_reason);
+        i++;
+    }
+    fclose(file);
+
+    return 0;
+}
+
+/**
+ * Takes a list of harvest area statuses and passess them into a PSQL table.
+ *
+ * The current time is taken to reference all values against. Ideally when
+ * querying these data the program should sort by the "time_processed" and this
+ * will provide a historical look at harvest area status at a particular site.
+ *
+ * @param harvest_areas Basically a list of harvest areas.
+ * @param psql_conn A connection handler for PostrgreSQL.
+ */
+void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
+                           PGconn* psql_conn){
+
+    log_info("Inserting harvest areas status into PostgreSQL database.\n");
+
+    // Get current time
+    struct tm ctm = *localtime(&(time_t){time(NULL)});
+    char current_time[30];
+    strftime(current_time, sizeof(current_time),
+             "%Y-%m-%d %H:%M:%S%z", &ctm);
+
+    char query[3000];
+    int16_t index = 0;
+    while(index < harvest_areas->count){
+        FA_HarvestArea_TypeDef ha = harvest_areas->harvest_area[index];
+        snprintf(query, sizeof(query), "INSERT INTO harvest_area ("
+                                       "time_processed, program_name, location, "
+                                       "name, classification, status, "
+                                       "last_updated, status_reason, "
+                                       "status_prev_reason) "
+                                       "VALUES "
+                                       "('%s'," // Current time
+                                       "'%s'," // Program name
+                                       "'%s'," // Location
+                                       "'%s'," // Harvest area name
+                                       "'%s'," // Classification
+                                       "'%s'," // Status (open, closed etc.)
+                                       "'%s'," // Timestamptz
+                                       "'%s'," // Reason
+                                       "'%s')", // Previous reason
+                 current_time, ha.program_name, ha.location, ha.name,
+                 ha.classification, ha.status, ha.time, ha.reason,
+                 ha.previous_reason);
+
+        PGresult* res = PQexec(psql_conn, query);
+        if(PQresultStatus(res) != PGRES_COMMAND_OK){
+            log_error("PSQL command failed when entering %s harvest area "
+                      "information. Error: %s\n", ha.name,
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(res);
+        index++;
+    }
+
+    log_info("Done inserting harvest area statuses into "
+             "PostgreSQL database.\n");
+}

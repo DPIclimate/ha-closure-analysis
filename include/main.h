@@ -6,6 +6,7 @@
 #include <curl/curl.h>
 #include <assert.h>
 #include <unistd.h>
+#include <libpq-fe.h>
 #include <log.h>
 
 #include "BOM/historical_weather.h"
@@ -18,7 +19,6 @@
 #include "IBM_EIS/timeseries.h"
 #include "FoodAuthority/harvest_area.h"
 #include "FoodAuthority/harvest_areas.h"
-#include "severity_index.h"
 #include "http.h"
 #include "ftp.h"
 

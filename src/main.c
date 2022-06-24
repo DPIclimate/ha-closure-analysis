@@ -9,11 +9,23 @@ int main(void) {
 
     curl_global_init(CURL_GLOBAL_ALL);
 
+    // Connect to postgres
+    PGconn* psql_conn;
+    const char* psql_conn_info = "host=localhost dbname=oyster_db port=5432 "
+                                 "user=postgres password=admin";
+    psql_conn = PQconnectdb(psql_conn_info);
+    if(PQstatus(psql_conn) != CONNECTION_OK){
+        log_error("Unable to connect to PostgreSQL database. "
+                  "Error: %s\n", PQerrorMessage(psql_conn));
+    }
+
     FA_HarvestAreas_TypeDef harvest_areas = {0};
     FA_GetHarvestAreas(&harvest_areas);
+   // FA_HarvestAreasToDB(&harvest_areas, psql_conn);
 
-    log_info("Getting weather for: %s\n", harvest_areas.harvest_area[0].
-            program_name);
+ //   log_info("Getting weather for: %s\n", harvest_areas.harvest_area[0].
+ //           program_name);
+
     WW_Location_TypeDef location_info = {0};
     WillyWeather_GetLocationByName(harvest_areas.harvest_area[0].program_name,
                                    &location_info);
@@ -21,16 +33,16 @@ int main(void) {
     WW_RainfallForecast_TypeDef rainfall_forecast = {0};
     WillyWeather_GetRainfallForecast(&location_info, &rainfall_forecast);
 
-    // Get a list of weather stations
-    BOM_WeatherStations_TypeDef stations;
-    BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
-    int16_t cws = BOM_ClosestStationIndex(location_info.latitude,
-                                          location_info.longitude,
-                                          &stations);
+ //  // // Get a list of weather stations
+ //   BOM_WeatherStations_TypeDef stations;
+ //   BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+ //   int16_t cws = BOM_ClosestStationIndex(location_info.latitude,
+ //                                         location_info.longitude,
+ //                                         &stations);
 
-    // Get historical weather from BOM
-    BOM_WeatherDataset_TypeDef bom_dataset = {0};
-    BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
+ //  // // Get historical weather from BOM
+ //   BOM_WeatherDataset_TypeDef bom_dataset = {0};
+ //   BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
 
 
     //// Get historical weather from the closest weather station of interest
@@ -107,7 +119,9 @@ int main(void) {
 
     //  assert(day_diff == tides.n_days);
 
+    PQfinish(psql_conn);
     curl_global_cleanup();
+
 
     return 0;
 }

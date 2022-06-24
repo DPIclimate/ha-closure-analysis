@@ -18,6 +18,7 @@ set(CMAKE_C_STANDARD 11)
 # Set required packages
 find_package(CURL REQUIRED)
 find_package(cJSON REQUIRED)
+find_package(PostgreSQL REQUIRED)
 
 # Specify executable
 add_executable(${PROJECT_NAME} ${SRC_DIR} ${INC_DIR})
@@ -57,5 +58,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -DCMAKE_BUILD_TYPE=Debug)
 
 # Set include direcotires and required libraries
 include_directories(${CMAKE_SOURCE_DIR}/include ${CURL_INCLUDE_DIR}
-        ${CJSON_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES} ${CJSON_LIBRARIES})
+        ${CJSON_INCLUDE_DIRS} ${PostgreSQL_INCLUDE_DIR})
+
+target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES} ${CJSON_LIBRARIES}
+        ${PostgreSQL_LIBRARY})

@@ -5,6 +5,7 @@
 *.swp
 *.*.swp
 .DS_Store
+.env
 
 # Doxygen
 doxygen-styles
@@ -24,4 +25,5 @@ cmake-build-release
 
 # Data
 datasets
+db
 
