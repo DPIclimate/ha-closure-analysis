@@ -86,6 +86,9 @@ CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location,
                             struct tm dt = {0};
                             if (strptime(datetime->valuestring, "%Y-%m-%d %H:%M:%S", &dt) != NULL) {
                                 // Convert to UNIX time and append
+                                char ts_tz[WW_MAX_TS_SIZE];
+                                strftime(ts_tz, sizeof(ts_tz), "%Y-%m-%d %H:%M:%S%z", &dt);
+                                strncpy(rainfall_forecast->forecast[index].ts, ts_tz, WW_MAX_TS_SIZE);
                                 rainfall_forecast->forecast[index].date = mktime(&dt);
                             } else
                                 log_error("Datetime conversion failed: %s\n", datetime->valuestring);
@@ -161,4 +164,24 @@ CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location,
     curl_slist_free_all(headers);
     cJSON_Delete(response);
     return result;
+}
+
+void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
+                               WW_RainfallForecast_TypeDef* forecast){
+
+    int16_t index = 0;
+    while(index < forecast->n_days){
+        char query[3000];
+        WW_Rainfall_TypeDef daily_rf = forecast->forecast[index];
+        snprintf(query, sizeof(query), "INSERT INTO weather_ww ("
+                                       "location, latitude, longitude, "
+                                       "distance_from_ha, ts, precipitation) "
+                                       "VALUES ")
+
+
+    }
+
+
+
+
 }

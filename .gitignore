@@ -25,5 +25,5 @@ cmake-build-release
 
 # Data
 datasets
-db
+db/data
 

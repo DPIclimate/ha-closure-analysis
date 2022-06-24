@@ -174,3 +174,26 @@ void cJSON_Minify_Mod(char *json) {
     *into = '\0';
 }
 
+/**
+ * Uses haversine formula to calculate the distance in km between two
+ * points on earth.
+ *
+ * Used to calculate the distance between an POI and the closest Bureau of
+ * Meterology station.
+ *
+ * @param latitude Latitude of point of interest.
+ * @param longitude Longitude of point of interest.
+ * @param station_latitude Latitude of station.
+ * @param station_longitude Longitude of station.
+ * @return Distance between two points on earth in km.
+ */
+double Utils_PointsDistance(double latitude,
+                            double longitude,
+                            double station_latitude,
+                            double station_longitude) {
+    double p = M_PI / 180;
+    return 12742.0 * asin(sqrt(
+            (0.5 - (cos((latitude - station_latitude) * p) / 2.0) +
+             (cos(station_latitude * p) * cos(latitude * p)) *
+             ((1 - cos((longitude - station_longitude) * p)) / 2.0))));
+}

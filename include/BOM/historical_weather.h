@@ -4,17 +4,20 @@
 #include <time.h>
 #include <curl/curl.h>
 #include <ctype.h>
+#include <libpq-fe.h>
 #include <stdint.h>
 
 #include "BOM/stations.h"
 #include "ftp.h"
 
 #define BOM_RESPONSE_BUFFER_SIZE        200
+#define BOM_TIME_STR_BUFFER_SIZE        30
 #define BOM_MAX_RESPONSE_SIZE           10000
 
 typedef struct {
     uint16_t count;
     time_t timestamps[BOM_RESPONSE_BUFFER_SIZE];
+    char timestr[BOM_RESPONSE_BUFFER_SIZE][BOM_TIME_STR_BUFFER_SIZE];
     double precipitation[BOM_RESPONSE_BUFFER_SIZE];
     double max_temperature[BOM_RESPONSE_BUFFER_SIZE];
     double min_temperature[BOM_RESPONSE_BUFFER_SIZE];
@@ -27,5 +30,10 @@ CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef* dataset,
 int8_t BOM_LoadWeatherFromCSV(const char* filename,
                               BOM_WeatherDataset_TypeDef* dataset,
                               BOM_WeatherStation_TypeDef* station);
+
+void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
+                               BOM_WeatherDataset_TypeDef* dataset,
+                               PGconn* psql_conn);
+
 
 #endif //PROGRAM_HISTORICAL_WEATHER_H

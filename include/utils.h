@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <math.h>
 #include <log.h>
 
 #define USER_AGENT "EnvMonitoring/0.1 (NSW Department of Primary Industries)"
@@ -33,5 +34,11 @@ void WriteTimeseriesToFile(const char* filename, time_t* dates, double* values,
 
 /// Modified minify function from cJSON
 void cJSON_Minify_Mod(char *json);
+
+/// Distance between two points on earth
+double Utils_PointsDistance(double latitude,
+                            double longitude,
+                            double station_latitude,
+                            double station_longitude);
 
 #endif // HA_CLOSURE_ANALYSIS_UTILS_H

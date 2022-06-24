@@ -142,10 +142,20 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
                         strtod(max_t_buf, &ptr);
                 dataset->min_temperature[dataset->count] =
                         strtod(min_t_buf, &ptr);
+
+                // Timestamp
                 struct tm dt = {0};
                 strptime(ts, "%d/%m/%Y", &dt);
+                // As UNIX time
                 time_t unix_time = mktime(&dt);
                 dataset->timestamps[dataset->count] = unix_time;
+
+                // As timestamp with timezone of psql
+                char time_str[BOM_TIME_STR_BUFFER_SIZE];
+                strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S%z",
+                         &dt);
+                strncpy(dataset->timestr[dataset->count], time_str,
+                        sizeof(time_str));
 
                 // Debug output
                 log_debug("Location: %s, "
@@ -168,3 +178,45 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
     return 0;
 }
 
+void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
+                               BOM_WeatherDataset_TypeDef* dataset,
+                               PGconn* psql_conn){
+
+    log_info("Writing BOM weather data to PostgreSQL.\n");
+
+    int16_t index = 0;
+    while(index < dataset->count){
+        char query[3000];
+        snprintf(query, sizeof(query), "INSERT INTO weather_bom (location, "
+                                       "latitude, longitude, ts, precipitation, "
+                                       "max_temperature, min_temperature) "
+                                       "VALUES "
+                                       "('%s'," // Location (name)
+                                       "%lf," // Latitude
+                                       "%lf," // Longitude
+                                       "'%s'," // Timestamp (tz)
+                                       "%lf," // Precipitation
+                                       "%lf," // Max temperature
+                                       "%lf)" // Min temperature
+                                       " ON CONFLICT (ts) DO UPDATE SET ts = "
+                                       "EXCLUDED.ts",
+                                       weather_station->name,
+                                       weather_station->latitude,
+                                       weather_station->longitude,
+                                       dataset->timestr[index],
+                                       dataset->precipitation[index],
+                                       dataset->max_temperature[index],
+                                       dataset->min_temperature[index]);
+
+        PGresult* res = PQexec(psql_conn, query);
+        if(PQresultStatus(res) != PGRES_COMMAND_OK){
+            log_error("PSQL command failed when entering BOM weather data for "
+                      "%s. Error: %s\n", weather_station->name,
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(res);
+        index++;
+    }
+
+    log_info("BOM weather data written to PostgreSQL.\n");
+}

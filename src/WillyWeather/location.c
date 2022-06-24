@@ -50,12 +50,15 @@ CURLcode WillyWeather_GetLocationByName(char *name,
         n++;
     }
 
+    printf("%s\n", encoded_name);
+
     char url[WW_LOCATION_URL_BUF];
     snprintf(url, WW_LOCATION_URL_BUF,
              "https://api.willyweather.com.au/v2/%s/"
              "search.json?query=%s&limit=%d", WW_TOKEN, encoded_name, 1);
 
-    log_info("Getting Willy Weather location information for %s\n", name);
+    log_info("Getting Willy Weather location information for %s, from: %s\n",
+             name, url);
 
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");

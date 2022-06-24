@@ -40,6 +40,4 @@ CURLcode FA_GetHarvestAreaStatus(const char* harvest_name,
 void FA_ParseResponse(char* data,
                       FA_HarvestArea_TypeDef *harvest_area);
 
-cJSON* FA_BuildJSON(FA_HarvestArea_TypeDef* harvest_area);
-
 #endif //HA_CLOSURE_ANALYSIS_HARVEST_AREA_H

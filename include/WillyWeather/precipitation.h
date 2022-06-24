@@ -14,10 +14,13 @@
 #define WW_RANGE_CODE_SIZE                      6
 /// Max number of daily rainfall forecast results from Willy Weather
 #define WW_MAX_DAILY_RAINFALL_RESULTS           9
+/// Max timestamp size
+#define WW_MAX_TS_SIZE                          30
 
 /// Rainfall forecast for a day
 typedef struct{
     time_t date; /// UNIX timestamp date
+    char ts[WW_MAX_TS_SIZE];
     int8_t start_range; /// Min expected rainfall (1, 5, 10, 15, 25, 50, null)
     int8_t end_range; /// Max expected rainfall (5, 10, 15, 25, 50, 100)
     char range_divider; /// Divider between min and max rainfall ('>' or '=')
@@ -33,6 +36,10 @@ typedef struct{
     /// Query results
     WW_Rainfall_TypeDef forecast[WW_MAX_DAILY_RAINFALL_RESULTS];
 }WW_RainfallForecast_TypeDef;
+
+/// Rainfall to PostgreSQL method
+void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
+                               WW_RainfallForecast_TypeDef* forecast);
 
 /// Gets the rainfall forecast (next 7 days inc today) for a location
 CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef* location,

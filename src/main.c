@@ -32,17 +32,20 @@ int main(void) {
 
     WW_RainfallForecast_TypeDef rainfall_forecast = {0};
     WillyWeather_GetRainfallForecast(&location_info, &rainfall_forecast);
+    WillyWeather_RainfallToDB(&location_info, &rainfall_forecast);
+
+  //  BOM_WeatherStations_TypeDef stations;
+  //  BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+  //  BOM_ClosestStationIndex(location_info.latitude,
+  //                                        location_info.longitude,
+  //                                        &stations);
+//
+//    // Get historical weather from BOM
+//    BOM_WeatherDataset_TypeDef bom_dataset = {0};
+//    BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
+//    BOM_HistoricalWeatherToDB(&stations.stations[cws], &bom_dataset, psql_conn);
 
  //  // // Get a list of weather stations
- //   BOM_WeatherStations_TypeDef stations;
- //   BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
- //   int16_t cws = BOM_ClosestStationIndex(location_info.latitude,
- //                                         location_info.longitude,
- //                                         &stations);
-
- //  // // Get historical weather from BOM
- //   BOM_WeatherDataset_TypeDef bom_dataset = {0};
- //   BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
 
 
     //// Get historical weather from the closest weather station of interest

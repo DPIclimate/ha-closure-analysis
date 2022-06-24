@@ -4,12 +4,6 @@
 static int8_t BOM_ParseStations(Utils_ReqData_TypeDef *stream,
                                 BOM_WeatherStations_TypeDef *stations);
 
-/// Calcualte the distance between a point and the closes BOM weather station
-static double StationDistance(double latitude,
-                              double longitude,
-                              double station_latitude,
-                              double station_longitude);
-
 /**
  * Get a list of NSW BOM weather station.
  *
@@ -213,9 +207,9 @@ int16_t BOM_ClosestStationIndex(double latitude,
     int16_t closest_satation_index = 0;
     double min_distance = 0;
     for (int16_t i = 0; i < stations->count; i++) {
-        double distance = StationDistance(latitude, longitude,
-                                          stations->stations[i].latitude,
-                                          stations->stations[i].longitude);
+        double distance = Utils_PointsDistance(latitude, longitude,
+                                               stations->stations[i].latitude,
+                                               stations->stations[i].longitude);
         if (i == 0 || distance < min_distance) {
             closest_satation_index = i;
             min_distance = distance;
@@ -232,28 +226,4 @@ int16_t BOM_ClosestStationIndex(double latitude,
     }
 
     return closest_satation_index;
-}
-
-/**
- * Uses haversine formula to calculate the distance in km between two
- * points on earth.
- *
- * Used to calculate the distance between an POI and the closest Bureau of
- * Meterology station.
- *
- * @param latitude Latitude of point of interest.
- * @param longitude Longitude of point of interest.
- * @param station_latitude Latitude of station.
- * @param station_longitude Longitude of station.
- * @return Distance between two points on earth in km.
- */
-static double StationDistance(double latitude,
-                              double longitude,
-                              double station_latitude,
-                              double station_longitude) {
-    double p = M_PI / 180;
-    return 12742.0 * asin(sqrt(
-            (0.5 - (cos((latitude - station_latitude) * p) / 2.0) +
-             (cos(station_latitude * p) * cos(latitude * p)) *
-             ((1 - cos((longitude - station_longitude) * p)) / 2.0))));
 }

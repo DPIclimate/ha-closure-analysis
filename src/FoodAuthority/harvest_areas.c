@@ -180,10 +180,10 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
     strftime(current_time, sizeof(current_time),
              "%Y-%m-%d %H:%M:%S%z", &ctm);
 
-    char query[3000];
     int16_t index = 0;
     while(index < harvest_areas->count){
         FA_HarvestArea_TypeDef ha = harvest_areas->harvest_area[index];
+        char query[3000];
         snprintf(query, sizeof(query), "INSERT INTO harvest_area ("
                                        "time_processed, program_name, location, "
                                        "name, classification, status, "
