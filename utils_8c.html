@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('utils_8c.html',''); initResizable(); }
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for utils.c:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="utils_8c__incl.svg" width="1006" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="utils_8c__incl.svg" width="1091" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
@@ -111,6 +111,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2dd2caaadd6c88b345799d955652f908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a2dd2caaadd6c88b345799d955652f908">cJSON_Minify_Mod</a> (char *json)</td></tr>
 <tr class="memdesc:a2dd2caaadd6c88b345799d955652f908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modified minify function from cJSON.  <a href="utils_8c.html#a2dd2caaadd6c88b345799d955652f908">More...</a><br /></td></tr>
 <tr class="separator:a2dd2caaadd6c88b345799d955652f908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9a4fc4203f0487ffc856084f3e4a8a6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#ae9a4fc4203f0487ffc856084f3e4a8a6">Utils_PointsDistance</a> (double latitude, double longitude, double station_latitude, double station_longitude)</td></tr>
+<tr class="memdesc:ae9a4fc4203f0487ffc856084f3e4a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distance between two points on earth.  <a href="utils_8c.html#ae9a4fc4203f0487ffc856084f3e4a8a6">More...</a><br /></td></tr>
+<tr class="separator:ae9a4fc4203f0487ffc856084f3e4a8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a2dd2caaadd6c88b345799d955652f908" name="a2dd2caaadd6c88b345799d955652f908"></a>
@@ -170,6 +173,60 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Integer representing error status. 0 = OK ... 1 = ERROR </dd></dl>
+
+</div>
+</div>
+<a id="ae9a4fc4203f0487ffc856084f3e4a8a6" name="ae9a4fc4203f0487ffc856084f3e4a8a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9a4fc4203f0487ffc856084f3e4a8a6">&#9670;&nbsp;</a></span>Utils_PointsDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Utils_PointsDistance </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>latitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>longitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>station_latitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>station_longitude</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Distance between two points on earth. </p>
+<p >Uses haversine formula to calculate the distance in km between two points on earth.</p>
+<p >Used to calculate the distance between an POI and the closest Bureau of Meterology station.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">latitude</td><td>Latitude of point of interest. </td></tr>
+    <tr><td class="paramname">longitude</td><td>Longitude of point of interest. </td></tr>
+    <tr><td class="paramname">station_latitude</td><td>Latitude of station. </td></tr>
+    <tr><td class="paramname">station_longitude</td><td>Longitude of station. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Distance between two points on earth in km. </dd></dl>
 
 </div>
 </div>

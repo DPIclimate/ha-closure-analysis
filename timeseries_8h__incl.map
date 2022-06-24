@@ -1,20 +1,20 @@
 <map id="include/IBM_EIS/timeseries.h" name="include/IBM_EIS/timeseries.h">
-<area shape="rect" id="node1" title=" " alt="" coords="588,5,781,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="649,5,843,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,304,84,331"/>
-<area shape="rect" id="node3" title=" " alt="" coords="745,304,856,331"/>
-<area shape="rect" id="node4" title=" " alt="" coords="982,80,1043,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="865,379,923,405"/>
+<area shape="rect" id="node3" title=" " alt="" coords="883,304,993,331"/>
+<area shape="rect" id="node4" title=" " alt="" coords="746,304,807,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="829,379,887,405"/>
 <area shape="rect" id="node6" href="$log_8h.html" title=" " alt="" coords="672,304,721,331"/>
-<area shape="rect" id="node10" href="$_i_b_m___e_i_s_2authenticate_8h.html" title=" " alt="" coords="529,80,688,107"/>
-<area shape="rect" id="node11" href="$http_8h.html" title=" " alt="" coords="297,155,352,181"/>
-<area shape="rect" id="node14" href="$utils_8h.html" title=" " alt="" coords="406,229,462,256"/>
-<area shape="rect" id="node7" title=" " alt="" coords="579,379,639,405"/>
-<area shape="rect" id="node8" title=" " alt="" coords="663,379,731,405"/>
-<area shape="rect" id="node9" title=" " alt="" coords="755,379,830,405"/>
+<area shape="rect" id="node10" href="$_i_b_m___e_i_s_2authenticate_8h.html" title=" " alt="" coords="591,80,749,107"/>
+<area shape="rect" id="node11" href="$http_8h.html" title=" " alt="" coords="432,155,487,181"/>
+<area shape="rect" id="node14" href="$utils_8h.html" title=" " alt="" coords="501,229,557,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="653,379,713,405"/>
+<area shape="rect" id="node8" title=" " alt="" coords="737,379,805,405"/>
+<area shape="rect" id="node9" title=" " alt="" coords="554,379,629,405"/>
 <area shape="rect" id="node12" title=" " alt="" coords="108,304,171,331"/>
 <area shape="rect" id="node13" title=" " alt="" coords="195,304,259,331"/>
-<area shape="rect" id="node15" title=" " alt="" coords="283,304,347,331"/>
-<area shape="rect" id="node16" title=" " alt="" coords="372,304,451,331"/>
-<area shape="rect" id="node17" title=" " alt="" coords="475,304,561,331"/>
-<area shape="rect" id="node18" title=" " alt="" coords="586,304,647,331"/>
+<area shape="rect" id="node15" title=" " alt="" coords="583,304,647,331"/>
+<area shape="rect" id="node16" title=" " alt="" coords="284,304,363,331"/>
+<area shape="rect" id="node17" title=" " alt="" coords="387,304,473,331"/>
+<area shape="rect" id="node18" title=" " alt="" coords="498,304,559,331"/>
 </map>

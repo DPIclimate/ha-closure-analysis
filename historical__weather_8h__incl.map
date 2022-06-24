@@ -1,21 +1,22 @@
 <map id="include/BOM/historical_weather.h" name="include/BOM/historical_weather.h">
-<area shape="rect" id="node1" title=" " alt="" coords="191,5,344,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="212,393,269,420"/>
+<area shape="rect" id="node1" title=" " alt="" coords="368,5,522,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="274,393,331,420"/>
 <area shape="rect" id="node3" title=" " alt="" coords="44,319,123,345"/>
-<area shape="rect" id="node4" title=" " alt="" coords="405,169,468,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="830,319,894,345"/>
-<area shape="rect" id="node6" href="$stations_8h.html" title=" " alt="" coords="258,95,370,121"/>
-<area shape="rect" id="node8" href="$ftp_8h.html" title=" " alt="" coords="197,169,244,196"/>
-<area shape="rect" id="node7" title=" " alt="" coords="269,169,330,196"/>
-<area shape="rect" id="node12" href="$utils_8h.html" title=" " alt="" coords="339,244,395,271"/>
-<area shape="rect" id="node9" title=" " alt="" coords="147,319,209,345"/>
-<area shape="rect" id="node10" title=" " alt="" coords="234,319,298,345"/>
-<area shape="rect" id="node11" title=" " alt="" coords="322,319,383,345"/>
-<area shape="rect" id="node13" title=" " alt="" coords="695,319,805,345"/>
-<area shape="rect" id="node14" title=" " alt="" coords="408,319,487,345"/>
-<area shape="rect" id="node15" title=" " alt="" coords="511,319,597,345"/>
-<area shape="rect" id="node16" href="$log_8h.html" title=" " alt="" coords="621,319,671,345"/>
-<area shape="rect" id="node17" title=" " alt="" coords="528,393,588,420"/>
-<area shape="rect" id="node18" title=" " alt="" coords="612,393,680,420"/>
-<area shape="rect" id="node19" title=" " alt="" coords="705,393,779,420"/>
+<area shape="rect" id="node4" title=" " alt="" coords="511,169,574,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="649,95,724,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="916,319,980,345"/>
+<area shape="rect" id="node7" href="$stations_8h.html" title=" " alt="" coords="389,95,501,121"/>
+<area shape="rect" id="node9" href="$ftp_8h.html" title=" " alt="" coords="320,169,367,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="830,319,892,345"/>
+<area shape="rect" id="node13" href="$utils_8h.html" title=" " alt="" coords="381,244,437,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="147,319,210,345"/>
+<area shape="rect" id="node11" title=" " alt="" coords="234,319,298,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="322,319,384,345"/>
+<area shape="rect" id="node14" title=" " alt="" coords="408,319,519,345"/>
+<area shape="rect" id="node15" title=" " alt="" coords="543,319,622,345"/>
+<area shape="rect" id="node16" title=" " alt="" coords="646,319,732,345"/>
+<area shape="rect" id="node17" href="$log_8h.html" title=" " alt="" coords="756,319,806,345"/>
+<area shape="rect" id="node18" title=" " alt="" coords="751,393,811,420"/>
+<area shape="rect" id="node19" title=" " alt="" coords="835,393,903,420"/>
+<area shape="rect" id="node20" title=" " alt="" coords="652,393,726,420"/>
 </map>

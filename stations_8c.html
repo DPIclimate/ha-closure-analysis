@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('stations_8c.html',''); initResizable()
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for stations.c:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="stations_8c__incl.svg" width="863" height="411"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="stations_8c__incl.svg" width="1006" height="411"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
@@ -103,9 +103,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ac3c3ce515993de64f2540fdc704c9c4a"><td class="memItemLeft" align="right" valign="top">static int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stations_8c.html#ac3c3ce515993de64f2540fdc704c9c4a">BOM_ParseStations</a> (<a class="el" href="struct_utils___req_data___type_def.html">Utils_ReqData_TypeDef</a> *stream, <a class="el" href="struct_b_o_m___weather_stations___type_def.html">BOM_WeatherStations_TypeDef</a> *stations)</td></tr>
 <tr class="memdesc:ac3c3ce515993de64f2540fdc704c9c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse .txt file into a BOM_Stations struct.  <a href="stations_8c.html#ac3c3ce515993de64f2540fdc704c9c4a">More...</a><br /></td></tr>
 <tr class="separator:ac3c3ce515993de64f2540fdc704c9c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8932a57ee92fccd5cb4b99ea30be459a"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stations_8c.html#a8932a57ee92fccd5cb4b99ea30be459a">StationDistance</a> (double latitude, double longitude, double station_latitude, double station_longitude)</td></tr>
-<tr class="memdesc:a8932a57ee92fccd5cb4b99ea30be459a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcualte the distance between a point and the closes BOM weather station.  <a href="stations_8c.html#a8932a57ee92fccd5cb4b99ea30be459a">More...</a><br /></td></tr>
-<tr class="separator:a8932a57ee92fccd5cb4b99ea30be459a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5858ada54b34723f300b81f90fe08f3"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stations_8c.html#aa5858ada54b34723f300b81f90fe08f3">BOM_GetWeatherStations</a> (<a class="el" href="struct_b_o_m___weather_stations___type_def.html">BOM_WeatherStations_TypeDef</a> *stations)</td></tr>
 <tr class="memdesc:aa5858ada54b34723f300b81f90fe08f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of NSW BOM weather stations.  <a href="stations_8c.html#aa5858ada54b34723f300b81f90fe08f3">More...</a><br /></td></tr>
 <tr class="separator:aa5858ada54b34723f300b81f90fe08f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,68 +274,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Error code status if file can no the written to. </dd></dl>
-
-</div>
-</div>
-<a id="a8932a57ee92fccd5cb4b99ea30be459a" name="a8932a57ee92fccd5cb4b99ea30be459a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8932a57ee92fccd5cb4b99ea30be459a">&#9670;&nbsp;</a></span>StationDistance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static double StationDistance </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>latitude</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>longitude</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>station_latitude</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>station_longitude</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calcualte the distance between a point and the closes BOM weather station. </p>
-<p >Uses haversine formula to calculate the distance in km between two points on earth.</p>
-<p >Used to calculate the distance between an POI and the closest Bureau of Meterology station.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">latitude</td><td>Latitude of point of interest. </td></tr>
-    <tr><td class="paramname">longitude</td><td>Longitude of point of interest. </td></tr>
-    <tr><td class="paramname">station_latitude</td><td>Latitude of station. </td></tr>
-    <tr><td class="paramname">station_longitude</td><td>Longitude of station. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Distance between two points on earth in km. </dd></dl>
 
 </div>
 </div>

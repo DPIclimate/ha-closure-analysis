@@ -95,13 +95,14 @@ $(document).ready(function(){initNavTree('historical__weather_8h.html',''); init
 <div class="textblock"><code>#include &lt;time.h&gt;</code><br />
 <code>#include &lt;curl/curl.h&gt;</code><br />
 <code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;libpq-fe.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="stations_8h_source.html">BOM/stations.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ftp_8h_source.html">ftp.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for historical_weather.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="historical__weather_8h__incl.svg" width="900" height="426"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="historical__weather_8h__incl.svg" width="986" height="426"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -122,6 +123,8 @@ Data Structures</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:a5792b5fcf04b63a878814e8e46c16630"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>&#160;&#160;&#160;200</td></tr>
 <tr class="separator:a5792b5fcf04b63a878814e8e46c16630"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe18882d97d5672bb0a2d80d1e28682"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a5fe18882d97d5672bb0a2d80d1e28682">BOM_TIME_STR_BUFFER_SIZE</a>&#160;&#160;&#160;30</td></tr>
+<tr class="separator:a5fe18882d97d5672bb0a2d80d1e28682"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0cfeba67c248faf642a8c73a20626b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#af0cfeba67c248faf642a8c73a20626b8">BOM_MAX_RESPONSE_SIZE</a>&#160;&#160;&#160;10000</td></tr>
 <tr class="separator:af0cfeba67c248faf642a8c73a20626b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -131,6 +134,8 @@ Functions</h2></td></tr>
 <tr class="separator:a848c6121721e4283f03a048ca7912fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab596a78a9e22aee099c2b1d399e7587b"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#ab596a78a9e22aee099c2b1d399e7587b">BOM_LoadWeatherFromCSV</a> (const char *filename, <a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *dataset, <a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *station)</td></tr>
 <tr class="separator:ab596a78a9e22aee099c2b1d399e7587b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66ed16101a6e5215921e1c235df386ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a66ed16101a6e5215921e1c235df386ca">BOM_HistoricalWeatherToDB</a> (<a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *weather_station, <a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *dataset, PGconn *psql_conn)</td></tr>
+<tr class="separator:a66ed16101a6e5215921e1c235df386ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="af0cfeba67c248faf642a8c73a20626b8" name="af0cfeba67c248faf642a8c73a20626b8"></a>
@@ -155,6 +160,20 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define BOM_RESPONSE_BUFFER_SIZE&#160;&#160;&#160;200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5fe18882d97d5672bb0a2d80d1e28682" name="a5fe18882d97d5672bb0a2d80d1e28682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fe18882d97d5672bb0a2d80d1e28682">&#9670;&nbsp;</a></span>BOM_TIME_STR_BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOM_TIME_STR_BUFFER_SIZE&#160;&#160;&#160;30</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -205,6 +224,40 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns cURL status code. </dd></dl>
+
+</div>
+</div>
+<a id="a66ed16101a6e5215921e1c235df386ca" name="a66ed16101a6e5215921e1c235df386ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66ed16101a6e5215921e1c235df386ca">&#9670;&nbsp;</a></span>BOM_HistoricalWeatherToDB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BOM_HistoricalWeatherToDB </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>weather_station</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>dataset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

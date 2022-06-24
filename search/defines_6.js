@@ -13,6 +13,7 @@ var searchData=
   ['ww_5flocation_5fbuf_10',['WW_LOCATION_BUF',['../location_8h.html#af61a33487a912d5d6dc72beb089a33be',1,'location.h']]],
   ['ww_5flocation_5furl_5fbuf_11',['WW_LOCATION_URL_BUF',['../location_8h.html#aaf653b8bab9367491c613eadf521f8fc',1,'location.h']]],
   ['ww_5fmax_5fdaily_5frainfall_5fresults_12',['WW_MAX_DAILY_RAINFALL_RESULTS',['../precipitation_8h.html#a1ff76d9138ef2cb99511bb82da881122',1,'precipitation.h']]],
-  ['ww_5frange_5fcode_5fsize_13',['WW_RANGE_CODE_SIZE',['../precipitation_8h.html#ac56c6513729e77b9a3f193d175c80096',1,'precipitation.h']]],
-  ['ww_5ftoken_5fsize_14',['WW_TOKEN_SIZE',['../_willy_weather_2authenticate_8h.html#a19b828d5fca2f31c8a32dd09b87c45f5',1,'authenticate.h']]]
+  ['ww_5fmax_5fts_5fsize_13',['WW_MAX_TS_SIZE',['../precipitation_8h.html#aaa86e25436302c599a31bf00277469cb',1,'precipitation.h']]],
+  ['ww_5frange_5fcode_5fsize_14',['WW_RANGE_CODE_SIZE',['../precipitation_8h.html#ac56c6513729e77b9a3f193d175c80096',1,'precipitation.h']]],
+  ['ww_5ftoken_5fsize_15',['WW_TOKEN_SIZE',['../_willy_weather_2authenticate_8h.html#a19b828d5fca2f31c8a32dd09b87c45f5',1,'authenticate.h']]]
 ];

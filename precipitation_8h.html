@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('precipitation_8h.html',''); initResiza
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for precipitation.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="precipitation_8h__incl.svg" width="1236" height="500"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="precipitation_8h__incl.svg" width="1180" height="500"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -131,9 +131,15 @@ Macros</h2></td></tr>
 <tr class="memitem:a1ff76d9138ef2cb99511bb82da881122"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8h.html#a1ff76d9138ef2cb99511bb82da881122">WW_MAX_DAILY_RAINFALL_RESULTS</a>&#160;&#160;&#160;9</td></tr>
 <tr class="memdesc:a1ff76d9138ef2cb99511bb82da881122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max number of daily rainfall forecast results from Willy Weather.  <a href="precipitation_8h.html#a1ff76d9138ef2cb99511bb82da881122">More...</a><br /></td></tr>
 <tr class="separator:a1ff76d9138ef2cb99511bb82da881122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa86e25436302c599a31bf00277469cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8h.html#aaa86e25436302c599a31bf00277469cb">WW_MAX_TS_SIZE</a>&#160;&#160;&#160;30</td></tr>
+<tr class="memdesc:aaa86e25436302c599a31bf00277469cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max timestamp size.  <a href="precipitation_8h.html#aaa86e25436302c599a31bf00277469cb">More...</a><br /></td></tr>
+<tr class="separator:aaa86e25436302c599a31bf00277469cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a9f4d730c2bca30557bc415a47613c2e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8h.html#a9f4d730c2bca30557bc415a47613c2e7">WillyWeather_RainfallToDB</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *forecast)</td></tr>
+<tr class="memdesc:a9f4d730c2bca30557bc415a47613c2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rainfall to PostgreSQL method.  <a href="precipitation_8h.html#a9f4d730c2bca30557bc415a47613c2e7">More...</a><br /></td></tr>
+<tr class="separator:a9f4d730c2bca30557bc415a47613c2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b46f6801cdcade574c08a7cd8570b29"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8h.html#a5b46f6801cdcade574c08a7cd8570b29">WillyWeather_GetRainfallForecast</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *daily_rainfall)</td></tr>
 <tr class="memdesc:a5b46f6801cdcade574c08a7cd8570b29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the rainfall forecast (next 7 days inc today) for a location.  <a href="precipitation_8h.html#a5b46f6801cdcade574c08a7cd8570b29">More...</a><br /></td></tr>
 <tr class="separator:a5b46f6801cdcade574c08a7cd8570b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +158,22 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Max number of daily rainfall forecast results from Willy Weather. </p>
+
+</div>
+</div>
+<a id="aaa86e25436302c599a31bf00277469cb" name="aaa86e25436302c599a31bf00277469cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa86e25436302c599a31bf00277469cb">&#9670;&nbsp;</a></span>WW_MAX_TS_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WW_MAX_TS_SIZE&#160;&#160;&#160;30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Max timestamp size. </p>
 
 </div>
 </div>
@@ -212,7 +234,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="alocation_8h_html_a7174469433632afde1315db6c7764abc"><div class="ttname"><a href="location_8h.html#a7174469433632afde1315db6c7764abc">WillyWeather_GetLocationByName</a></div><div class="ttdeci">CURLcode WillyWeather_GetLocationByName(char *name, WW_Location_TypeDef *location_info)</div><div class="ttdoc">Get an ID describing a location from Willy Weather.</div><div class="ttdef"><b>Definition:</b> location.c:26</div></div>
 <div class="ttc" id="aprecipitation_8h_html_a5b46f6801cdcade574c08a7cd8570b29"><div class="ttname"><a href="precipitation_8h.html#a5b46f6801cdcade574c08a7cd8570b29">WillyWeather_GetRainfallForecast</a></div><div class="ttdeci">CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location, WW_RainfallForecast_TypeDef *daily_rainfall)</div><div class="ttdoc">Gets the rainfall forecast (next 7 days inc today) for a location.</div><div class="ttdef"><b>Definition:</b> precipitation.c:28</div></div>
 <div class="ttc" id="astruct_w_w___location___type_def_html"><div class="ttname"><a href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a></div><div class="ttdoc">Location data from Willy Weather request.</div><div class="ttdef"><b>Definition:</b> location.h:22</div></div>
-<div class="ttc" id="astruct_w_w___rainfall_forecast___type_def_html"><div class="ttname"><a href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a></div><div class="ttdoc">Holds daily forecast rainfall information from Willy Weather.</div><div class="ttdef"><b>Definition:</b> precipitation.h:30</div></div>
+<div class="ttc" id="astruct_w_w___rainfall_forecast___type_def_html"><div class="ttname"><a href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a></div><div class="ttdoc">Holds daily forecast rainfall information from Willy Weather.</div><div class="ttdef"><b>Definition:</b> precipitation.h:33</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://www.willyweather.com.au/api/docs/v2.html#forecast-get-rainfall">https://www.willyweather.com.au/api/docs/v2.html#forecast-get-rainfall</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -222,6 +244,36 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Curl code representing HTTP errors that may have occured. </dd></dl>
+
+</div>
+</div>
+<a id="a9f4d730c2bca30557bc415a47613c2e7" name="a9f4d730c2bca30557bc415a47613c2e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f4d730c2bca30557bc415a47613c2e7">&#9670;&nbsp;</a></span>WillyWeather_RainfallToDB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WillyWeather_RainfallToDB </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>location</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>forecast</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Rainfall to PostgreSQL method. </p>
 
 </div>
 </div>
