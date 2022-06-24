@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('harvest__areas_8c.html',''); initResiz
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for harvest_areas.c:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="harvest__areas_8c__incl.svg" width="951" height="530"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="harvest__areas_8c__incl.svg" width="1063" height="530"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
@@ -105,6 +105,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a3d0aaaa5c182c8ae6b21a94a88e61161"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__areas_8c.html#a3d0aaaa5c182c8ae6b21a94a88e61161">FA_GetHarvestAreas</a> (<a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *harvest_areas)</td></tr>
 <tr class="memdesc:a3d0aaaa5c182c8ae6b21a94a88e61161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of oyster harvest areas in NSW Australia.  <a href="harvest__areas_8c.html#a3d0aaaa5c182c8ae6b21a94a88e61161">More...</a><br /></td></tr>
 <tr class="separator:a3d0aaaa5c182c8ae6b21a94a88e61161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b4ba2b50d661231a9bb4e9a57054e51"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__areas_8c.html#a0b4ba2b50d661231a9bb4e9a57054e51">FA_HarvestAreasToCSV</a> (<a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *harvest_areas)</td></tr>
+<tr class="memdesc:a0b4ba2b50d661231a9bb4e9a57054e51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push harvest areas list into a .csv file.  <a href="harvest__areas_8c.html#a0b4ba2b50d661231a9bb4e9a57054e51">More...</a><br /></td></tr>
+<tr class="separator:a0b4ba2b50d661231a9bb4e9a57054e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4da4e69d7ccf34778bf02b048533adcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="harvest__areas_8c.html#a4da4e69d7ccf34778bf02b048533adcf">FA_HarvestAreasToDB</a> (<a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *harvest_areas, PGconn *psql_conn)</td></tr>
+<tr class="separator:a4da4e69d7ccf34778bf02b048533adcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a3d0aaaa5c182c8ae6b21a94a88e61161" name="a3d0aaaa5c182c8ae6b21a94a88e61161"></a>
@@ -133,6 +138,63 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>CURL error code. </dd></dl>
+
+</div>
+</div>
+<a id="a0b4ba2b50d661231a9bb4e9a57054e51" name="a0b4ba2b50d661231a9bb4e9a57054e51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b4ba2b50d661231a9bb4e9a57054e51">&#9670;&nbsp;</a></span>FA_HarvestAreasToCSV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t FA_HarvestAreasToCSV </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>harvest_areas</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Push harvest areas list into a .csv file. </p>
+
+</div>
+</div>
+<a id="a4da4e69d7ccf34778bf02b048533adcf" name="a4da4e69d7ccf34778bf02b048533adcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4da4e69d7ccf34778bf02b048533adcf">&#9670;&nbsp;</a></span>FA_HarvestAreasToDB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FA_HarvestAreasToDB </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_f_a___harvest_areas___type_def.html">FA_HarvestAreas_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>harvest_areas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Takes a list of harvest area statuses and passess them into a PSQL table.</p>
+<p >The current time is taken to reference all values against. Ideally when querying these data the program should sort by the "time_processed" and this will provide a historical look at harvest area status at a particular site.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">harvest_areas</td><td>Basically a list of harvest areas. </td></tr>
+    <tr><td class="paramname">psql_conn</td><td>A connection handler for PostrgreSQL. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
