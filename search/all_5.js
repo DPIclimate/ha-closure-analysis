@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['fa_5fcreatelocationslookupdb_0',['FA_CreateLocationsLookupDB',['../harvest__areas_8h.html#a87da9df1fcfd9592ca6a29ca32b0e53b',1,'FA_CreateLocationsLookupDB(PGconn *psql_conn):&#160;harvest_areas.c'],['../harvest__areas_8c.html#a87da9df1fcfd9592ca6a29ca32b0e53b',1,'FA_CreateLocationsLookupDB(PGconn *psql_conn):&#160;harvest_areas.c']]],
+  ['fa_5fcreatelocationslookupdb_0',['FA_CreateLocationsLookupDB',['../harvest__areas_8h.html#afe9215ea95955fe06bc2a8dd753ed8a8',1,'FA_CreateLocationsLookupDB(WW_Locations_TypeDef *locations, PGconn *psql_conn):&#160;harvest_areas.c'],['../harvest__areas_8c.html#afe9215ea95955fe06bc2a8dd753ed8a8',1,'FA_CreateLocationsLookupDB(WW_Locations_TypeDef *locations, PGconn *psql_conn):&#160;harvest_areas.c']]],
   ['fa_5fdefault_5fdirectory_1',['FA_DEFAULT_DIRECTORY',['../harvest__areas_8h.html#a2a2fbccbbe1a3b09c17b4ccf2b9a2954',1,'harvest_areas.h']]],
   ['fa_5fdefault_5ffilename_2',['FA_DEFAULT_FILENAME',['../harvest__areas_8h.html#a8c9a131756324098266dadd7eb91b538',1,'harvest_areas.h']]],
   ['fa_5ffindhtmlvalue_3',['FA_FindHTMLValue',['../harvest__area_8c.html#aba76de9b85b0a6587f27778216a35061',1,'harvest_area.c']]],

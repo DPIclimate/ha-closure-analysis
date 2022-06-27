@@ -1,0 +1,4 @@
+<map id="WW_Locations_TypeDef" name="WW_Locations_TypeDef">
+<area shape="rect" id="node1" title="Locations of Willy Weather stations." alt="" coords="5,233,171,311"/>
+<area shape="rect" id="node2" href="$struct_w_w___location___type_def.html" title="Location data from Willy Weather request." alt="" coords="9,5,167,171"/>
+</map>
