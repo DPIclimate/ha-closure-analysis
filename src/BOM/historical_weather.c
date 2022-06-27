@@ -187,22 +187,19 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
     int16_t index = 0;
     while(index < dataset->count){
         char query[3000];
-        snprintf(query, sizeof(query), "INSERT INTO weather_bom (location, "
-                                       "latitude, longitude, ts, precipitation, "
+        snprintf(query, sizeof(query), "INSERT INTO weather_bom (last_updated, "
+                                       "location, ts, precipitation, "
                                        "max_temperature, min_temperature) "
                                        "VALUES "
-                                       "('%s'," // Location (name)
-                                       "%lf," // Latitude
-                                       "%lf," // Longitude
-                                       "'%s'," // Timestamp (tz)
-                                       "%lf," // Precipitation
-                                       "%lf," // Max temperature
-                                       "%lf)" // Min temperature
-                                       " ON CONFLICT (ts) DO UPDATE SET ts = "
-                                       "EXCLUDED.ts",
+                                       "(NOW(), "   // Last updated timestamp
+                                       "'%s', "     // Location (name)
+                                       "'%s', "     // Timestamp (tz)
+                                       "%lf, "      // Precipitation
+                                       "%lf, "      // Max temperature
+                                       "%lf) "      // Min temperature
+                                       "ON CONFLICT (ts, location) DO UPDATE "
+                                       "SET last_updated = NOW()",
                                        weather_station->name,
-                                       weather_station->latitude,
-                                       weather_station->longitude,
                                        dataset->timestr[index],
                                        dataset->precipitation[index],
                                        dataset->max_temperature[index],

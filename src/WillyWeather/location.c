@@ -29,7 +29,7 @@ CURLcode WillyWeather_GetLocationByName(char *name,
     if (WillyWeather_CheckAccess() == 1) return CURLE_AUTH_ERROR;
 
     // Method to handle spaces in location name (e.g. conver ' ' to '%20')
-    int16_t new_name_size = 0;
+    int16_t new_name_size = 1;
     for (char *c = name; *c != '\0'; c++) {
         if (*c == ' ') {
             new_name_size += 2;
@@ -49,8 +49,6 @@ CURLcode WillyWeather_GetLocationByName(char *name,
         }
         n++;
     }
-
-    printf("%s\n", encoded_name);
 
     char url[WW_LOCATION_URL_BUF];
     snprintf(url, WW_LOCATION_URL_BUF,

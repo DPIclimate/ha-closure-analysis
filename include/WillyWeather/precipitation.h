@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <libpq-fe.h>
 
 #include "http.h"
 #include "WillyWeather/forecast.h"
@@ -37,12 +38,13 @@ typedef struct{
     WW_Rainfall_TypeDef forecast[WW_MAX_DAILY_RAINFALL_RESULTS];
 }WW_RainfallForecast_TypeDef;
 
-/// Rainfall to PostgreSQL method
-void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
-                               WW_RainfallForecast_TypeDef* forecast);
-
 /// Gets the rainfall forecast (next 7 days inc today) for a location
 CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef* location,
                                           WW_RainfallForecast_TypeDef* daily_rainfall);
+
+/// Rainfall to PostgreSQL method
+void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
+                               WW_RainfallForecast_TypeDef* forecast,
+                               PGconn* psql_conn);
 
 #endif //PROGRAM_PRECIPITATION_H

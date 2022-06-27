@@ -150,7 +150,7 @@ CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location,
     } else
         log_error("Willy Weather rainfall response was empty.\n");
 
-    rainfall_forecast->n_days = --index;
+    rainfall_forecast->n_days = index;
 
     if (result == CURLE_OK) {
         if (index != 0) {
@@ -167,21 +167,50 @@ CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location,
 }
 
 void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
-                               WW_RainfallForecast_TypeDef* forecast){
+                               WW_RainfallForecast_TypeDef* forecast,
+                               PGconn* psql_conn){
 
     int16_t index = 0;
     while(index < forecast->n_days){
         char query[3000];
         WW_Rainfall_TypeDef daily_rf = forecast->forecast[index];
-        snprintf(query, sizeof(query), "INSERT INTO weather_ww ("
+        snprintf(query, sizeof(query), "INSERT INTO weather_ww (last_updated, "
                                        "location, latitude, longitude, "
-                                       "distance_from_ha, ts, precipitation) "
-                                       "VALUES ")
-
-
+                                       "ts, rainfall_start_range, "
+                                       "rainfall_end_range, "
+                                       "rainfall_range_divider, "
+                                       "rainfall_range_code, "
+                                       "rainfall_probability_of_any) "
+                                       "VALUES ("
+                                       "NOW(), "    // Current time (updated)
+                                       "'%s', "     // Location name
+                                       "%lf,"       // Latitude
+                                       "%lf,"       // Longitude
+                                       "'%s', "     // Timestamp (tz)
+                                       "%d, "       // Start range
+                                       "%d, "       // End range
+                                       "'%c', "     // Range divider
+                                       "'%s', "     // Range code
+                                       "%d) "       // Probability
+                                       "ON CONFLICT (ts) DO UPDATE SET "
+                                       "last_updated = NOW()",
+                                       location->location,
+                                       location->latitude,
+                                       location->longitude,
+                                       daily_rf.ts,
+                                       daily_rf.start_range,
+                                       daily_rf.end_range,
+                                       daily_rf.range_divider,
+                                       daily_rf.range_code,
+                                       daily_rf.probability);
+        PGresult* res = PQexec(psql_conn, query);
+        if(PQresultStatus(res) != PGRES_COMMAND_OK){
+            log_error("PSQL command failed when entering %s "
+                      "information. Error: %s\n", location->location,
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(res);
+        index++;
     }
-
-
-
 
 }

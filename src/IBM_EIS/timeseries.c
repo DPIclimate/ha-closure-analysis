@@ -242,8 +242,7 @@ static void IBM_ParseTimeseriesAlt(cJSON *response,
 
             value = cJSON_GetObjectItemCaseSensitive(point, "value");
             if (cJSON_IsNumber(value)) {
-                memcpy(&dataset->values[index], &value->valuedouble,
-                       sizeof(double));
+                dataset->values[index] = value->valuedouble;
             }
             index++;
         }
@@ -277,8 +276,8 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char *url) {
                                 "&end=%ld",
              IBM_REQUEST_URL,
              req->layer_id,
-             (double)req->latitude,
-             (double)req->longitude,
+             req->latitude,
+             req->longitude,
              (req->start - 86400) * 1000,
              (req->end - 86400) * 1000);
 }
@@ -330,8 +329,8 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char *url) {
                                 "&endingDateTime=%s",
              IBM_ALT_REQUEST_URL,
              req->layer_id,
-             (double)req->latitude,
-             (double)req->longitude,
+             req->latitude,
+             req->longitude,
              start_time,
              end_time);
 }
@@ -421,3 +420,97 @@ IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char *filename) {
 
     return dataset;
 }
+
+void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
+                        IBM_TimeseriesDataset_TypeDef* dataset,
+                        PGconn* psql_conn){
+
+    log_info("Inserting IBM query results into PostgreSQL database.\n");
+
+    int32_t index = 0;
+    while(index < dataset->count){
+        char ts[30];
+        struct tm ctm = *localtime(&dataset->timestamps[index]);
+        strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);
+        char query[3000];
+        switch(req_info->layer_id){
+            case IBM_PRECIPITATION_ID:
+                snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
+                                               "last_updated, latitude, "
+                                               "longitude, ts, precipitation) "
+                                               "VALUES ("
+                                               "NOW(), " // Last updated
+                                               "%f, " // Latitude
+                                               "%f, " // Longitude
+                                               "'%s', " // Timestamp
+                                               "%f) " // Precipitation
+                                               "ON CONFLICT (ts) DO "
+                                               "UPDATE SET "
+                                               "last_updated = NOW();",
+                         req_info->latitude,
+                         req_info->longitude,
+                         ts,
+                         dataset->values[index]);
+                break;
+
+            case IBM_MIN_TEMPERATURE_ID:
+                snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
+                                               "last_updated, latitude, "
+                                               "longitude, ts, min_temperature) "
+                                               "VALUES ("
+                                               "NOW(), " // Last updated
+                                               "%f, " // Latitude
+                                               "%f, " // Longitude
+                                               "'%s', " // Timestamp
+                                               "%f) " // Min temperature
+                                               "ON CONFLICT (ts) DO "
+                                               "UPDATE SET "
+                                               "last_updated = NOW(),"
+                                               "min_temperature = %f;",
+                         req_info->latitude,
+                         req_info->longitude,
+                         ts,
+                         dataset->values[index] - 272.15,
+                         dataset->values[index] - 272.15);
+                break;
+
+            case IBM_MAX_TEMPERATURE_ID:
+                snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
+                                               "last_updated, latitude, "
+                                               "longitude, ts, max_temperature) "
+                                               "VALUES ("
+                                               "NOW(), " // Last updated
+                                               "%f, " // Latitude
+                                               "%f, " // Longitude
+                                               "'%s', " // Timestamp
+                                               "%f) " // Max temperature
+                                               "ON CONFLICT (ts) DO "
+                                               "UPDATE SET "
+                                               "last_updated = NOW(),"
+                                               "max_temperature = %f;",
+                         req_info->latitude,
+                         req_info->longitude,
+                         ts,
+                         dataset->values[index] - 272.15,
+                         dataset->values[index] - 272.15);
+                break;
+
+
+            default:
+                log_error("Unknown IBM dataset query results. Unable to insert"
+                          "into PostgreSQL database.\n");
+                break;
+        }
+
+        PGresult* res = PQexec(psql_conn, query);
+        if(PQresultStatus(res) != PGRES_COMMAND_OK){
+            log_error("PSQL command failed when parsing IBM query. Error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(res);
+        index++;
+    }
+    log_info("Done inserting timeseries data from IBM EIS into "
+             "PostgreSQL database.\n");
+}
+

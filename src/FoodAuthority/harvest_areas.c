@@ -174,32 +174,29 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
 
     log_info("Inserting harvest areas status into PostgreSQL database.\n");
 
-    // Get current time
-    struct tm ctm = *localtime(&(time_t){time(NULL)});
-    char current_time[30];
-    strftime(current_time, sizeof(current_time),
-             "%Y-%m-%d %H:%M:%S%z", &ctm);
-
     int16_t index = 0;
     while(index < harvest_areas->count){
         FA_HarvestArea_TypeDef ha = harvest_areas->harvest_area[index];
         char query[3000];
         snprintf(query, sizeof(query), "INSERT INTO harvest_area ("
-                                       "time_processed, program_name, location, "
+                                       "last_updated, program_name, location, "
                                        "name, classification, status, "
-                                       "last_updated, status_reason, "
+                                       "time_processed, status_reason, "
                                        "status_prev_reason) "
                                        "VALUES "
-                                       "('%s'," // Current time
-                                       "'%s'," // Program name
-                                       "'%s'," // Location
-                                       "'%s'," // Harvest area name
-                                       "'%s'," // Classification
-                                       "'%s'," // Status (open, closed etc.)
-                                       "'%s'," // Timestamptz
-                                       "'%s'," // Reason
-                                       "'%s')", // Previous reason
-                 current_time, ha.program_name, ha.location, ha.name,
+                                       "(NOW(), "   // Current time
+                                       "'%s',"      // Program name
+                                       "'%s',"      // Location
+                                       "'%s',"      // Harvest area name
+                                       "'%s',"      // Classification
+                                       "'%s',"      // Status (open, closed etc.)
+                                       "'%s',"      // Timestamptz
+                                       "'%s',"      // Reason
+                                       "'%s')"      // Previous reason
+                                       "ON CONFLICT (time_processed, name, "
+                                       "status) DO "
+                                       "UPDATE SET last_updated = NOW();",
+                 ha.program_name, ha.location, ha.name,
                  ha.classification, ha.status, ha.time, ha.reason,
                  ha.previous_reason);
 
@@ -215,4 +212,91 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
 
     log_info("Done inserting harvest area statuses into "
              "PostgreSQL database.\n");
+}
+
+void FA_CreateLocationsLookupDB(PGconn* psql_conn){
+
+    BOM_WeatherStations_TypeDef stations;
+    BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+
+    const char* query = "SELECT DISTINCT program_name FROM harvest_area;";
+
+    PGresult* res = PQexec(psql_conn, query);
+    if(PQresultStatus(res) == PGRES_TUPLES_OK){
+        int num_fields = PQnfields(res);
+        for(int i = 0; i < PQntuples(res); i++){
+            for(int j = 0; j < num_fields; j++){
+                //FA_HarvestLookup_TypeDef ha_lookup = {0};
+                char* location_name = PQgetvalue(res, i , j);
+                WW_Location_TypeDef location_info = {0};
+                if(strcmp(location_name, "Wapengo Lake") == 0){
+                    char new_name[8] = "Wapengo";
+                    WillyWeather_GetLocationByName(new_name, &location_info);
+                }
+                else if(strcmp(location_name, "Bellinger and Kalang "
+                                              "Rivers") == 0){
+                    char new_name[10] = "Bellinger";
+                    WillyWeather_GetLocationByName(new_name, &location_info);
+                }
+                else if(strcmp(location_name, "Shoalhaven - "
+                                              "Crookhaven Rivers") == 0){
+                    char new_name[20] = "Crookhaven River";
+                    WillyWeather_GetLocationByName(new_name, &location_info);
+                }
+                else{
+                    WillyWeather_GetLocationByName(location_name, &location_info);
+                }
+
+                int cws = BOM_ClosestStationIndex(location_info.latitude,
+                                                  location_info.longitude,
+                                                  &stations);
+
+                double distance = Utils_PointsDistance(location_info.latitude,
+                                                       location_info.longitude,
+                                                       stations.stations[cws].latitude,
+                                                       stations.stations[cws].longitude);
+
+                log_debug("%s\t Willy Weather: %s\t BOM: %s\t Distance: %0.2lf\n", location_name,
+                          location_info.location, stations.stations[cws].name, distance);
+
+                char i_query[3000];
+                snprintf(i_query,
+                         sizeof(i_query),
+                         "INSERT INTO harvest_lookup (last_updated, "
+                         "fa_program_name, ww_location, ww_latitude, "
+                         "ww_longitude, bom_location, bom_location_id, "
+                         "bom_latitude, bom_longitude, bom_distance) VALUES ("
+                         "NOW(), " // Last updated
+                         "'%s', " // program name
+                         "'%s'," // ww location
+                         "%f," // ww latitude
+                         "%f, " // ww longitude
+                         "'%s', " // bom location
+                         "'%s'," // bom code
+                         "%f, " // bom latitude
+                         "%f, " // bom longitude
+                         "%f) "  // bom distance
+                         "ON CONFLICT (fa_program_name) DO UPDATE SET "
+                         "last_updated = NOW();",
+                         location_name,
+                         location_info.location,
+                         location_info.latitude,
+                         location_info.longitude,
+                         stations.stations[cws].name,
+                         stations.stations[cws].id,
+                         stations.stations[cws].latitude,
+                         stations.stations[cws].longitude,
+                         distance);
+                PGresult* i_res = PQexec(psql_conn, i_query);
+                if(PQresultStatus(i_res) != PGRES_COMMAND_OK){
+                    log_error("PSQL command failed when entering station "
+                              "information for %s. Error: %s\n", location_name,
+                              PQerrorMessage(psql_conn));
+                }
+                PQclear(i_res);
+            }
+        }
+    }
+
+    PQclear(res);
 }

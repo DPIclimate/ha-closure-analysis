@@ -22,7 +22,7 @@ uint8_t WillyWeather_GetToken(const char *env_var_name) {
  */
 uint8_t WillyWeather_CheckAccess(void) {
     if (strlen(WW_TOKEN) == 0) {
-        log_error("Willy Weather access token not found. "
+        log_warn("Willy Weather access token not found. "
                   "Trying again with the default environmental variable "
                   "name: %s\n", WW_DEFAULT_ENV_NAME);
         if (WillyWeather_GetToken(WW_DEFAULT_ENV_NAME) == 0) {

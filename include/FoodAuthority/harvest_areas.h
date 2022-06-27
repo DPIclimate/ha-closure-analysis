@@ -10,6 +10,8 @@
 #include "FoodAuthority/harvest_area.h"
 #include "http.h"
 #include "utils.h"
+#include "WillyWeather/location.h"
+#include "BOM/stations.h"
 
 /// Harvest areas directory
 #define FA_DEFAULT_DIRECTORY "datasets/nsw_food_authority"
@@ -34,5 +36,7 @@ int8_t FA_HarvestAreasToCSV(FA_HarvestAreas_TypeDef* harvest_areas);
 
 void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
                            PGconn* psql_conn);
+
+void FA_CreateLocationsLookupDB(PGconn* psql_conn);
 
 #endif //PROGRAM_HARVEST_AREAS_H
