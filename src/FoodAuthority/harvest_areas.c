@@ -214,7 +214,10 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
              "PostgreSQL database.\n");
 }
 
-void FA_CreateLocationsLookupDB(PGconn* psql_conn){
+void FA_CreateLocationsLookupDB(WW_Locations_TypeDef* locations,
+                                PGconn* psql_conn){
+
+    log_info("Writing locations lookup to PostgreSQL database\n");
 
     BOM_WeatherStations_TypeDef stations;
     BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
@@ -222,6 +225,7 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
     const char* query = "SELECT DISTINCT program_name FROM harvest_area;";
 
     PGresult* res = PQexec(psql_conn, query);
+    uint16_t index = 0;
     if(PQresultStatus(res) == PGRES_TUPLES_OK){
         int num_fields = PQnfields(res);
         for(int i = 0; i < PQntuples(res); i++){
@@ -263,16 +267,18 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                 snprintf(i_query,
                          sizeof(i_query),
                          "INSERT INTO harvest_lookup (last_updated, "
-                         "fa_program_name, ww_location, ww_latitude, "
-                         "ww_longitude, bom_location, bom_location_id, "
-                         "bom_latitude, bom_longitude, bom_distance) VALUES ("
+                         "fa_program_name, ww_location, ww_location_id, "
+                         "ww_latitude, ww_longitude, bom_location, "
+                         "bom_location_id, bom_latitude, bom_longitude, "
+                         "bom_distance) VALUES ("
                          "NOW(), " // Last updated
                          "'%s', " // program name
                          "'%s'," // ww location
+                         "%d," // ww location id
                          "%f," // ww latitude
                          "%f, " // ww longitude
                          "'%s', " // bom location
-                         "'%s'," // bom code
+                         "'%s'," // bom location id
                          "%f, " // bom latitude
                          "%f, " // bom longitude
                          "%f) "  // bom distance
@@ -280,6 +286,7 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                          "last_updated = NOW();",
                          location_name,
                          location_info.location,
+                         location_info.id,
                          location_info.latitude,
                          location_info.longitude,
                          stations.stations[cws].name,
@@ -293,10 +300,22 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                               "information for %s. Error: %s\n", location_name,
                               PQerrorMessage(psql_conn));
                 }
+
+                locations->locations[index] = location_info;
+                index++;
+
                 PQclear(i_res);
+
+                if(index > WW_MAX_NUM_LOCATONS){
+                    break;
+                }
             }
         }
     }
+
+    locations->count = index;
+
+    log_info("Harvest area location lookups written to PostgreSQL database\n");
 
     PQclear(res);
 }

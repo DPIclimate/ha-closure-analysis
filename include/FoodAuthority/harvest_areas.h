@@ -37,6 +37,7 @@ int8_t FA_HarvestAreasToCSV(FA_HarvestAreas_TypeDef* harvest_areas);
 void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
                            PGconn* psql_conn);
 
-void FA_CreateLocationsLookupDB(PGconn* psql_conn);
+void FA_CreateLocationsLookupDB(WW_Locations_TypeDef* locations,
+                                PGconn* psql_conn);
 
 #endif //PROGRAM_HARVEST_AREAS_H

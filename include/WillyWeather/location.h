@@ -17,6 +17,8 @@
 #define WW_LOCATION_BUF                 150
 /// Buffer for request location URL
 #define WW_LOCATION_URL_BUF             200
+/// Max number of locations in buffer
+#define WW_MAX_NUM_LOCATONS             100
 
 /// Location data from Willy Weather request
 typedef struct{
@@ -28,6 +30,12 @@ typedef struct{
     double latitude; /// Latitude of interest
     double longitude; /// Longitude of interest
 } WW_Location_TypeDef;
+
+/// Locations of Willy Weather stations
+typedef struct {
+    uint16_t count;
+    WW_Location_TypeDef locations[WW_MAX_NUM_LOCATONS];
+} WW_Locations_TypeDef;
 
 /// Get an ID describing a location from Willy Weather.
 CURLcode WillyWeather_GetLocationByName(char *name,

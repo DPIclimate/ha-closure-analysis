@@ -28,10 +28,11 @@ CREATE TABLE IF NOT EXISTS harvest_lookup (
     last_updated                timestamptz DEFAULT NOW() NOT NULL,
     fa_program_name             text NOT NULL,
     ww_location                 text NOT NULL,
-    ww_latitude                    float NOT NULL,
-    ww_longitude                   float NOT NULL,
+    ww_location_id              int NOT NULL,
+    ww_latitude                 float NOT NULL,
+    ww_longitude                float NOT NULL,
     bom_location                text NOT NULL,
-    bom_location_id                text NOT NULL,
+    bom_location_id             text NOT NULL,
     bom_latitude                float NOT NULL,
     bom_longitude               float NOT NULL,
     bom_distance                float NOT NULL,
@@ -41,13 +42,14 @@ CREATE TABLE IF NOT EXISTS harvest_lookup (
 CREATE TABLE IF NOT EXISTS weather_ww (
     last_updated                    timestamptz DEFAULT NOW() NOT NULL,
     location                        text NOT NULL,
+    location_id                     int,
     ts                              timestamptz NOT NULL,
     rainfall_start_range            int,
     rainfall_end_range              int,
     rainfall_range_divider          char,
     rainfall_range_code             text NOT NULL,
     rainfall_probability_of_any     int,
-    UNIQUE(ts)
+    UNIQUE(location_id, ts)
 );
 
 CREATE TABLE IF NOT EXISTS weather_bom (

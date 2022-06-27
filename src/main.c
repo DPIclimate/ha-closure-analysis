@@ -19,23 +19,27 @@ int main(void) {
                   "Error: %s\n", PQerrorMessage(psql_conn));
     }
 
+    WW_Locations_TypeDef ww_locations;
+
     FA_HarvestAreas_TypeDef harvest_areas = {0};
     FA_GetHarvestAreas(&harvest_areas);
     FA_HarvestAreasToDB(&harvest_areas, psql_conn);
-    FA_CreateLocationsLookupDB(psql_conn);
+    FA_CreateLocationsLookupDB(&ww_locations, psql_conn);
 
- // //  log_info("Getting weather for: %s\n", harvest_areas.harvest_area[0].
- // //          program_name);
+    uint16_t index = 0;
+    while(index < ww_locations.count){
+        WW_RainfallForecast_TypeDef rainfall_forecast = {0};
+        WW_Location_TypeDef ww_location = ww_locations.locations[index];
+        WillyWeather_GetRainfallForecast(&ww_location, &rainfall_forecast);
+        WillyWeather_RainfallToDB(&ww_location, &rainfall_forecast, psql_conn);
+        index++;
+    }
 
     //WW_Location_TypeDef location_info = {0};
     //WillyWeather_GetLocationByName(harvest_areas.harvest_area[0].program_name,
     //                               &location_info);
 
-   //// WW_RainfallForecast_TypeDef rainfall_forecast = {0};
-   //// WillyWeather_GetRainfallForecast(&location_info, &rainfall_forecast);
-   //// WillyWeather_RainfallToDB(&location_info, &rainfall_forecast, psql_conn);
-
-   //// BOM_WeatherStations_TypeDef stations;
+    //// BOM_WeatherStations_TypeDef stations;
    //// BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
    //// int cws = BOM_ClosestStationIndex(location_info.latitude,
    ////                                   location_info.longitude,

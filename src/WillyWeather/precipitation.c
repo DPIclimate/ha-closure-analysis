@@ -175,7 +175,7 @@ void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
         char query[3000];
         WW_Rainfall_TypeDef daily_rf = forecast->forecast[index];
         snprintf(query, sizeof(query), "INSERT INTO weather_ww (last_updated, "
-                                       "location, latitude, longitude, "
+                                       "location, location_id,"
                                        "ts, rainfall_start_range, "
                                        "rainfall_end_range, "
                                        "rainfall_range_divider, "
@@ -184,20 +184,28 @@ void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
                                        "VALUES ("
                                        "NOW(), "    // Current time (updated)
                                        "'%s', "     // Location name
-                                       "%lf,"       // Latitude
-                                       "%lf,"       // Longitude
+                                       "%d, "       // Location ID
                                        "'%s', "     // Timestamp (tz)
                                        "%d, "       // Start range
                                        "%d, "       // End range
                                        "'%c', "     // Range divider
                                        "'%s', "     // Range code
                                        "%d) "       // Probability
-                                       "ON CONFLICT (ts) DO UPDATE SET "
-                                       "last_updated = NOW()",
+                                       "ON CONFLICT (location_id, ts) DO "
+                                       "UPDATE SET last_updated = NOW(), "
+                                       "rainfall_start_range = %d, "
+                                       "rainfall_end_range = %d, "
+                                       "rainfall_range_divider = '%c', "
+                                       "rainfall_range_code = '%s', "
+                                       "rainfall_probability_of_any = %d;",
                                        location->location,
-                                       location->latitude,
-                                       location->longitude,
+                                       location->id,
                                        daily_rf.ts,
+                                       daily_rf.start_range,
+                                       daily_rf.end_range,
+                                       daily_rf.range_divider,
+                                       daily_rf.range_code,
+                                       daily_rf.probability,
                                        daily_rf.start_range,
                                        daily_rf.end_range,
                                        daily_rf.range_divider,
