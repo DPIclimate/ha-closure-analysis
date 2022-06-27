@@ -103,9 +103,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af563374b4968379747c13e581bf12a96"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8c.html#af563374b4968379747c13e581bf12a96">WillyWeather_GetRainfallForecast</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *rainfall_forecast)</td></tr>
 <tr class="memdesc:af563374b4968379747c13e581bf12a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the rainfall forecast (next 7 days inc today) for a location.  <a href="precipitation_8c.html#af563374b4968379747c13e581bf12a96">More...</a><br /></td></tr>
 <tr class="separator:af563374b4968379747c13e581bf12a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f4d730c2bca30557bc415a47613c2e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8c.html#a9f4d730c2bca30557bc415a47613c2e7">WillyWeather_RainfallToDB</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *forecast)</td></tr>
-<tr class="memdesc:a9f4d730c2bca30557bc415a47613c2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rainfall to PostgreSQL method.  <a href="precipitation_8c.html#a9f4d730c2bca30557bc415a47613c2e7">More...</a><br /></td></tr>
-<tr class="separator:a9f4d730c2bca30557bc415a47613c2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4d71aaa905434905c2b0ce1cd196055"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="precipitation_8c.html#ab4d71aaa905434905c2b0ce1cd196055">WillyWeather_RainfallToDB</a> (<a class="el" href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a> *location, <a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *forecast, PGconn *psql_conn)</td></tr>
+<tr class="memdesc:ab4d71aaa905434905c2b0ce1cd196055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rainfall to PostgreSQL method.  <a href="precipitation_8c.html#ab4d71aaa905434905c2b0ce1cd196055">More...</a><br /></td></tr>
+<tr class="separator:ab4d71aaa905434905c2b0ce1cd196055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="af563374b4968379747c13e581bf12a96" name="af563374b4968379747c13e581bf12a96"></a>
@@ -148,7 +148,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="alocation_8h_html_a7174469433632afde1315db6c7764abc"><div class="ttname"><a href="location_8h.html#a7174469433632afde1315db6c7764abc">WillyWeather_GetLocationByName</a></div><div class="ttdeci">CURLcode WillyWeather_GetLocationByName(char *name, WW_Location_TypeDef *location_info)</div><div class="ttdoc">Get an ID describing a location from Willy Weather.</div><div class="ttdef"><b>Definition:</b> location.c:26</div></div>
 <div class="ttc" id="aprecipitation_8h_html_a5b46f6801cdcade574c08a7cd8570b29"><div class="ttname"><a href="precipitation_8h.html#a5b46f6801cdcade574c08a7cd8570b29">WillyWeather_GetRainfallForecast</a></div><div class="ttdeci">CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location, WW_RainfallForecast_TypeDef *daily_rainfall)</div><div class="ttdoc">Gets the rainfall forecast (next 7 days inc today) for a location.</div><div class="ttdef"><b>Definition:</b> precipitation.c:28</div></div>
 <div class="ttc" id="astruct_w_w___location___type_def_html"><div class="ttname"><a href="struct_w_w___location___type_def.html">WW_Location_TypeDef</a></div><div class="ttdoc">Location data from Willy Weather request.</div><div class="ttdef"><b>Definition:</b> location.h:22</div></div>
-<div class="ttc" id="astruct_w_w___rainfall_forecast___type_def_html"><div class="ttname"><a href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a></div><div class="ttdoc">Holds daily forecast rainfall information from Willy Weather.</div><div class="ttdef"><b>Definition:</b> precipitation.h:33</div></div>
+<div class="ttc" id="astruct_w_w___rainfall_forecast___type_def_html"><div class="ttname"><a href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a></div><div class="ttdoc">Holds daily forecast rainfall information from Willy Weather.</div><div class="ttdef"><b>Definition:</b> precipitation.h:34</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a href="https://www.willyweather.com.au/api/docs/v2.html#forecast-get-rainfall">https://www.willyweather.com.au/api/docs/v2.html#forecast-get-rainfall</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -161,8 +161,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9f4d730c2bca30557bc415a47613c2e7" name="a9f4d730c2bca30557bc415a47613c2e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f4d730c2bca30557bc415a47613c2e7">&#9670;&nbsp;</a></span>WillyWeather_RainfallToDB()</h2>
+<a id="ab4d71aaa905434905c2b0ce1cd196055" name="ab4d71aaa905434905c2b0ce1cd196055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4d71aaa905434905c2b0ce1cd196055">&#9670;&nbsp;</a></span>WillyWeather_RainfallToDB()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +177,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_w_w___rainfall_forecast___type_def.html">WW_RainfallForecast_TypeDef</a> *&#160;</td>
-          <td class="paramname"><em>forecast</em>&#160;</td>
+          <td class="paramname"><em>forecast</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

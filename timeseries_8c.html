@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('timeseries_8c.html',''); initResizable
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for timeseries.c:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="timeseries_8c__incl.svg" width="1038" height="486"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="timeseries_8c__incl.svg" width="1150" height="486"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
@@ -120,6 +120,8 @@ Functions</h2></td></tr>
 <tr class="separator:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1b5aac68159f94f647e4de6191de101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#ab1b5aac68159f94f647e4de6191de101">IBM_TimeseriesFromCSV</a> (const char *filename)</td></tr>
 <tr class="separator:ab1b5aac68159f94f647e4de6191de101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bcb0a5cd8699ad3b63dafad56315378"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a0bcb0a5cd8699ad3b63dafad56315378">IBM_TimeseriesToDB</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req_info, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, PGconn *psql_conn)</td></tr>
+<tr class="separator:a0bcb0a5cd8699ad3b63dafad56315378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a44e9f7dbf87004b1e08552d3200c17f1" name="a44e9f7dbf87004b1e08552d3200c17f1"></a>
@@ -444,6 +446,40 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Error code. 0 = OK ... 1 = ERROR </dd></dl>
+
+</div>
+</div>
+<a id="a0bcb0a5cd8699ad3b63dafad56315378" name="a0bcb0a5cd8699ad3b63dafad56315378"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bcb0a5cd8699ad3b63dafad56315378">&#9670;&nbsp;</a></span>IBM_TimeseriesToDB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IBM_TimeseriesToDB </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>req_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>dataset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
