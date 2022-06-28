@@ -19,6 +19,7 @@
 #include "IBM_EIS/timeseries.h"
 #include "FoodAuthority/harvest_area.h"
 #include "FoodAuthority/harvest_areas.h"
+#include "transform.h"
 #include "http.h"
 #include "ftp.h"
 

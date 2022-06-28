@@ -19,21 +19,24 @@ int main(void) {
                   "Error: %s\n", PQerrorMessage(psql_conn));
     }
 
-    WW_Locations_TypeDef ww_locations;
+  //  WW_Locations_TypeDef ww_locations;
 
-    FA_HarvestAreas_TypeDef harvest_areas = {0};
-    FA_GetHarvestAreas(&harvest_areas);
-    FA_HarvestAreasToDB(&harvest_areas, psql_conn);
-    FA_CreateLocationsLookupDB(&ww_locations, psql_conn);
+    //FA_HarvestAreas_TypeDef harvest_areas = {0};
+    //FA_GetHarvestAreas(&harvest_areas);
+    //FA_HarvestAreasToDB(&harvest_areas, psql_conn);
+    //FA_CreateLocationsLookupDB(psql_conn);
 
-    uint16_t index = 0;
-    while(index < ww_locations.count){
-        WW_RainfallForecast_TypeDef rainfall_forecast = {0};
-        WW_Location_TypeDef ww_location = ww_locations.locations[index];
-        WillyWeather_GetRainfallForecast(&ww_location, &rainfall_forecast);
-        WillyWeather_RainfallToDB(&ww_location, &rainfall_forecast, psql_conn);
-        index++;
-    }
+    T_LocationsLookup_TypeDef locations;
+    FA_UniqueLocationsFromDB(&locations, psql_conn);
+
+    //  uint16_t index = 0;
+  //  while(index < ww_locations.count){
+  //      WW_RainfallForecast_TypeDef rainfall_forecast = {0};
+  //      WW_Location_TypeDef ww_location = ww_locations.locations[index];
+  //      WillyWeather_GetRainfallForecast(&ww_location, &rainfall_forecast);
+  //      WillyWeather_RainfallToDB(&ww_location, &rainfall_forecast, psql_conn);
+  //      index++;
+  //  }
 
     //WW_Location_TypeDef location_info = {0};
     //WillyWeather_GetLocationByName(harvest_areas.harvest_area[0].program_name,
@@ -66,33 +69,26 @@ int main(void) {
     //    return 1;
     //}
 
- // //  IBM_TimeseriesReq_TypeDef ibm_req_precip = {
- // //          .layer_id = IBM_PRECIPITATION_ID,
- // //          .latitude = location_info.latitude,
- // //          .longitude = location_info.longitude,
- // //          .start = unix_st,
- // //          .end = unix_et
- // //  };
+    //const uint16_t ibm_ids[3] = {49097, 26019, 26018};
+    //uint16_t index = 0;
+    //while(index < locations.count){
+    //    for(uint8_t i = 0; i < (uint8_t)(sizeof(ibm_ids) / sizeof(ibm_ids[0])); i++){
 
- // //  IBM_TimeseriesDataset_TypeDef dataset;
- // //  IBM_GetTimeseries(&ibm_auth_handle, &ibm_req_precip, &dataset, 1);
- // //  IBM_TimeseriesToDB(&ibm_req_precip, &dataset, psql_conn);
+    //        IBM_TimeseriesReq_TypeDef ibm_req = {
+    //                .layer_id = ibm_ids[i],
+    //                .latitude = locations.locations[index].ww_latitude,
+    //                .longitude = locations.locations[index].ww_longitude,
+    //                .start = unix_st,
+    //                .end = unix_et
+    //        };
 
-    //const int ibm_ids[3] = {IBM_PRECIPITATION_ID,
-    //                        IBM_MAX_TEMPERATURE_ID,
-    //                        IBM_MIN_TEMPERATURE_ID};
-
-    //IBM_TimeseriesReq_TypeDef ibm_req = {
-    //        .layer_id = IBM_MIN_TEMPERATURE_ID,
-    //        .latitude = location_info.latitude,
-    //        .longitude = location_info.longitude,
-    //        .start = unix_st,
-    //        .end = unix_et
-    //};
-
-    //IBM_TimeseriesDataset_TypeDef max_temp_dataset;
-    //IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &max_temp_dataset, 1);
-    //IBM_TimeseriesToDB(&ibm_req, &max_temp_dataset, psql_conn);
+    //        IBM_TimeseriesDataset_TypeDef ibm_dataset;
+    //        IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &ibm_dataset, 1);
+    //        IBM_TimeseriesToDB(&ibm_req, &ibm_dataset,
+    //                           &locations.locations[index], psql_conn);
+    //    }
+    //    index++;
+    //}
 
     PQfinish(psql_conn);
     curl_global_cleanup();

@@ -15,11 +15,11 @@ CREATE TABLE IF NOT EXISTS harvest_area (
 
 CREATE TABLE IF NOT EXISTS harvest_outlook (
     last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    closed                      boolean,
-    to_close                    boolean,
+    closed                      boolean NOT NULL,
+    to_close                    boolean NOT NULL,
     closure_type                text NOT NULL,
     closure_reason              text NOT NULL,
-    closure_date                timestamptz,
+    closure_date                timestamptz NOT NULL,
     closure_severity            text NOT NULL,
     est_closure_time            text NOT NULL
 );
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS harvest_lookup (
 CREATE TABLE IF NOT EXISTS weather_ww (
     last_updated                    timestamptz DEFAULT NOW() NOT NULL,
     location                        text NOT NULL,
-    location_id                     int,
+    location_id                     int NOT NULL,
     ts                              timestamptz NOT NULL,
     rainfall_start_range            int,
     rainfall_end_range              int,
@@ -64,13 +64,16 @@ CREATE TABLE IF NOT EXISTS weather_bom (
 
 CREATE TABLE IF NOT EXISTS weather_ibm_eis (
     last_updated                timestamptz DEFAULT NOW() NOT NULL,
+    location                    text NOT NULL,
+    ww_location_id              text NOT NULL,
+    bom_location_id             text NOT NULL,
     latitude                    float,
     longitude                   float,
     ts                          timestamptz NOT NULL,
     precipitation               float,
     max_temperature             float,
     min_temperature             float,
-    UNIQUE(ts)
+    UNIQUE(ts, ww_location_id, bom_location_id)
 );
 
 CREATE TABLE IF NOT EXISTS weather_fdt (
@@ -83,3 +86,20 @@ CREATE TABLE IF NOT EXISTS weather_fdt (
     max_temperature             float,
     min_temperature             float
 );
+
+-- This is the main table where weather data are stored for querying
+-- IBM EIS predicted precipitation data are inserted first
+-- If BOM data exists for the same time and location these data are overwritten
+-- This makes this table contain both observed rainfall and predicted rainfall
+-- for all locations which should be easier to query
+CREATE TABLE IF NOT EXISTS weather (
+    last_updated                timestamptz DEFAULT NOW() NOT NULL,
+    latitude                    float NOT NULL,
+    longitude                   float NOT NULL,
+    ts                          timestamptz NOT NULL,
+    program_name                text NOT NULL,
+    bom_location_id             text,
+    data_type                   text NOT NULL, -- "forecast", "observed"
+    precipitation               float NOT NULL,
+    UNIQUE(ts, program_name)
+)

@@ -423,6 +423,7 @@ IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char *filename) {
 
 void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
                         IBM_TimeseriesDataset_TypeDef* dataset,
+                        T_LocationLookup_TypeDef* location,
                         PGconn* psql_conn){
 
     log_info("Inserting IBM query results into PostgreSQL database.\n");
@@ -436,17 +437,27 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
         switch(req_info->layer_id){
             case IBM_PRECIPITATION_ID:
                 snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
-                                               "last_updated, latitude, "
+                                               "last_updated, location, "
+                                               "ww_location_id, "
+                                               "bom_location_id, latitude, "
                                                "longitude, ts, precipitation) "
                                                "VALUES ("
                                                "NOW(), " // Last updated
+                                               "'%s', " // Location name
+                                               "'%s', " // WW location id
+                                               "'%s', " // BOM location id
                                                "%f, " // Latitude
                                                "%f, " // Longitude
                                                "'%s', " // Timestamp
                                                "%f) " // Precipitation
-                                               "ON CONFLICT (ts) DO "
+                                               "ON CONFLICT (ts, "
+                                               "ww_location_id, "
+                                               "bom_location_id) DO "
                                                "UPDATE SET "
                                                "last_updated = NOW();",
+                         location->ww_location,
+                         location->ww_location_id,
+                         location->bom_location_id,
                          req_info->latitude,
                          req_info->longitude,
                          ts,
@@ -455,18 +466,28 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
 
             case IBM_MIN_TEMPERATURE_ID:
                 snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
-                                               "last_updated, latitude, "
-                                               "longitude, ts, min_temperature) "
+                                               "last_updated, location, "
+                                               "ww_location_id, "
+                                               "bom_location_id, latitude, "
+                                               "longitude, ts, precipitation) "
                                                "VALUES ("
                                                "NOW(), " // Last updated
+                                               "'%s', " // Location name
+                                               "'%s', " // WW location id
+                                               "'%s', " // BOM location id
                                                "%f, " // Latitude
                                                "%f, " // Longitude
                                                "'%s', " // Timestamp
-                                               "%f) " // Min temperature
-                                               "ON CONFLICT (ts) DO "
+                                               "%f) " // Precipitation
+                                               "ON CONFLICT (ts, "
+                                               "ww_location_id, "
+                                               "bom_location_id) DO "
                                                "UPDATE SET "
-                                               "last_updated = NOW(),"
+                                               "last_updated = NOW(), "
                                                "min_temperature = %f;",
+                         location->ww_location,
+                         location->ww_location_id,
+                         location->bom_location_id,
                          req_info->latitude,
                          req_info->longitude,
                          ts,
@@ -476,18 +497,28 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
 
             case IBM_MAX_TEMPERATURE_ID:
                 snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
-                                               "last_updated, latitude, "
-                                               "longitude, ts, max_temperature) "
+                                               "last_updated, location, "
+                                               "ww_location_id, "
+                                               "bom_location_id, latitude, "
+                                               "longitude, ts, precipitation) "
                                                "VALUES ("
                                                "NOW(), " // Last updated
+                                               "'%s', " // Location name
+                                               "'%s', " // WW location id
+                                               "'%s', " // BOM location id
                                                "%f, " // Latitude
                                                "%f, " // Longitude
                                                "'%s', " // Timestamp
-                                               "%f) " // Max temperature
-                                               "ON CONFLICT (ts) DO "
+                                               "%f) " // Precipitation
+                                               "ON CONFLICT (ts, "
+                                               "ww_location_id, "
+                                               "bom_location_id) DO "
                                                "UPDATE SET "
-                                               "last_updated = NOW(),"
+                                               "last_updated = NOW(), "
                                                "max_temperature = %f;",
+                         location->ww_location,
+                         location->ww_location_id,
+                         location->bom_location_id,
                          req_info->latitude,
                          req_info->longitude,
                          ts,

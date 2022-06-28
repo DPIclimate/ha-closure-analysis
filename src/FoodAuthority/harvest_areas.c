@@ -214,8 +214,7 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
              "PostgreSQL database.\n");
 }
 
-void FA_CreateLocationsLookupDB(WW_Locations_TypeDef* locations,
-                                PGconn* psql_conn){
+void FA_CreateLocationsLookupDB(PGconn* psql_conn){
 
     log_info("Writing locations lookup to PostgreSQL database\n");
 
@@ -301,7 +300,6 @@ void FA_CreateLocationsLookupDB(WW_Locations_TypeDef* locations,
                               PQerrorMessage(psql_conn));
                 }
 
-                locations->locations[index] = location_info;
                 index++;
 
                 PQclear(i_res);
@@ -313,9 +311,90 @@ void FA_CreateLocationsLookupDB(WW_Locations_TypeDef* locations,
         }
     }
 
-    locations->count = index;
-
     log_info("Harvest area location lookups written to PostgreSQL database\n");
+
+    PQclear(res);
+}
+
+void FA_UniqueLocationsFromDB(T_LocationsLookup_TypeDef* locations,
+                              PGconn* psql_conn){
+
+    log_info("Getting unique oyster farming regions from PostgreSQL DB.\n",
+             locations->count);
+
+    const char* query = "SELECT * FROM harvest_lookup;";
+    PGresult* res = PQexec(psql_conn, query);
+
+    if(PQresultStatus(res) == PGRES_TUPLES_OK){
+        int num_fields = PQnfields(res);
+        int i = 0;
+        for(; i < PQntuples(res); i++){
+            if(i > T_MAX_N_LOCATIONS){
+                log_error("Max locations allocation exceeded. Exiting.\n");
+                break;
+            }
+            for(int j = 0; j < num_fields; j++){
+                char* ptr;
+                switch(j){
+                    case 0:
+                        strncpy(locations->locations[i].last_updated,
+                                PQgetvalue(res, i, j), T_TIMESTAMP_SIZE);
+                        break;
+                    case 1:
+                        strncpy(locations->locations[i].fa_program_name,
+                                PQgetvalue(res, i, j), FA_MAX_BUFFER);
+                        break;
+                    case 2:
+                        strncpy(locations->locations[i].ww_location,
+                                PQgetvalue(res, i, j), WW_LOCATION_BUF);
+                        break;
+                    case 3:
+                        strncpy(locations->locations[i].ww_location_id,
+                                PQgetvalue(res, i, j), WW_LOCATION_BUF);
+                        break;
+                    case 4:
+                        locations->locations[i].ww_latitude =
+                                strtof(PQgetvalue(res, i, j), &ptr);
+                        break;
+                    case 5:
+                        locations->locations[i].ww_longitude =
+                                strtof(PQgetvalue(res, i, j), &ptr);
+                        break;
+                    case 6:
+                        strncpy(locations->locations[i].bom_location,
+                                PQgetvalue(res, i, j), BOM_STATION_NAME_SIZE);
+                        break;
+                    case 7:
+                        strncpy(locations->locations[i].bom_location_id,
+                                PQgetvalue(res, i, j), BOM_STATION_ID_SIZE);
+                        break;
+                    case 8:
+                        locations->locations[i].bom_latitude =
+                                strtof(PQgetvalue(res, i, j), &ptr);
+                        break;
+                    case 9:
+                        locations->locations[i].bom_longitude =
+                                strtof(PQgetvalue(res, i, j), &ptr);
+                        break;
+                    case 10:
+                        locations->locations[i].bom_distance =
+                                strtof(PQgetvalue(res, i, j), &ptr);
+                        break;
+                    default:
+                        log_error("Unknown data field received.\n");
+                        break;
+                }
+            }
+        }
+        locations->count = (uint16_t)i;
+    }
+
+    if(locations->count == 0){
+        log_error("No locations found in harvest_lookup table.\n");
+    } else {
+        log_info("Got %d unique oyster farming regions from PostgreSQL DB.\n",
+                 locations->count);
+    }
 
     PQclear(res);
 }
