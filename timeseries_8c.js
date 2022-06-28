@@ -7,5 +7,5 @@ var timeseries_8c =
     [ "IBM_ParseTimeseriesAlt", "timeseries_8c.html#a8aca8a29c1f66c574f502338f563bf5d", null ],
     [ "IBM_TimeseriesFromCSV", "timeseries_8c.html#ab1b5aac68159f94f647e4de6191de101", null ],
     [ "IBM_TimeseriesToCSV", "timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17", null ],
-    [ "IBM_TimeseriesToDB", "timeseries_8c.html#a0bcb0a5cd8699ad3b63dafad56315378", null ]
+    [ "IBM_TimeseriesToDB", "timeseries_8c.html#a31131b0ea7ad5991a999895575fe1f63", null ]
 ];

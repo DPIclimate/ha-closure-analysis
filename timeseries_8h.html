@@ -100,12 +100,13 @@ $(document).ready(function(){initNavTree('timeseries_8h.html',''); initResizable
 <code>#include &lt;libpq-fe.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="log_8h_source.html">log.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_i_b_m___e_i_s_2authenticate_8h_source.html">IBM_EIS/authenticate.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="transform_8h_source.html">transform.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="http_8h_source.html">http.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="utils_8h_source.html">utils.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for timeseries.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="timeseries_8h__incl.svg" width="1150" height="411"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="timeseries_8h__incl.svg" width="2024" height="575"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -152,8 +153,8 @@ Functions</h2></td></tr>
 <tr class="separator:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1b5aac68159f94f647e4de6191de101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#ab1b5aac68159f94f647e4de6191de101">IBM_TimeseriesFromCSV</a> (const char *filename)</td></tr>
 <tr class="separator:ab1b5aac68159f94f647e4de6191de101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bcb0a5cd8699ad3b63dafad56315378"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#a0bcb0a5cd8699ad3b63dafad56315378">IBM_TimeseriesToDB</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req_info, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, PGconn *psql_conn)</td></tr>
-<tr class="separator:a0bcb0a5cd8699ad3b63dafad56315378"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31131b0ea7ad5991a999895575fe1f63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8h.html#a31131b0ea7ad5991a999895575fe1f63">IBM_TimeseriesToDB</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req_info, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, <a class="el" href="struct_t___location_lookup___type_def.html">T_LocationLookup_TypeDef</a> *location, PGconn *psql_conn)</td></tr>
+<tr class="separator:a31131b0ea7ad5991a999895575fe1f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -379,8 +380,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0bcb0a5cd8699ad3b63dafad56315378" name="a0bcb0a5cd8699ad3b63dafad56315378"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bcb0a5cd8699ad3b63dafad56315378">&#9670;&nbsp;</a></span>IBM_TimeseriesToDB()</h2>
+<a id="a31131b0ea7ad5991a999895575fe1f63" name="a31131b0ea7ad5991a999895575fe1f63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31131b0ea7ad5991a999895575fe1f63">&#9670;&nbsp;</a></span>IBM_TimeseriesToDB()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -396,6 +397,12 @@ Variables</h2></td></tr>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>dataset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_t___location_lookup___type_def.html">T_LocationLookup_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>location</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

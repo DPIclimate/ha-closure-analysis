@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['callbacks_0',['callbacks',['../log_8c.html#a8ef88a49b6363714e9fd310bdc90caf7',1,'log.c']]],
-  ['classification_1',['classification',['../struct_f_a___harvest_area___type_def.html#a54bbff12bcb16ada4fe7ee5808460a77',1,'FA_HarvestArea_TypeDef']]],
-  ['count_2',['count',['../struct_b_o_m___weather_dataset___type_def.html#ad9bd5e8cc5782628518327d10d6f3693',1,'BOM_WeatherDataset_TypeDef::count()'],['../struct_b_o_m___weather_stations___type_def.html#a4f26574c4715b41cbb2908bfe9eb0b5f',1,'BOM_WeatherStations_TypeDef::count()'],['../struct_f_a___harvest_areas___type_def.html#a30125ee91467e43f02f98341505089b9',1,'FA_HarvestAreas_TypeDef::count()'],['../struct_i_b_m___timeseries_dataset___type_def.html#a70143dd5d64ee72f972a1b4c19f863d8',1,'IBM_TimeseriesDataset_TypeDef::count()'],['../struct_ubidots___devices___type_def.html#a383469939782b237947effb0a10a9dbe',1,'Ubidots_Devices_TypeDef::count()'],['../struct_w_w___locations___type_def.html#a4761a69d749efbbd80cc588c28d236b0',1,'WW_Locations_TypeDef::count()']]]
+  ['bom_5fdistance_0',['bom_distance',['../struct_t___location_lookup___type_def.html#aa9047940b972cda1df6db18dde3c1287',1,'T_LocationLookup_TypeDef']]],
+  ['bom_5flatitude_1',['bom_latitude',['../struct_t___location_lookup___type_def.html#ac92383ad7f76b0215621a5d3507d079b',1,'T_LocationLookup_TypeDef']]],
+  ['bom_5flocation_2',['bom_location',['../struct_t___location_lookup___type_def.html#add9088c84b5c5b79780b1c820690d567',1,'T_LocationLookup_TypeDef']]],
+  ['bom_5flocation_5fid_3',['bom_location_id',['../struct_t___location_lookup___type_def.html#aa13a87ce0672408b3ae63f999ede0e12',1,'T_LocationLookup_TypeDef']]],
+  ['bom_5flongitude_4',['bom_longitude',['../struct_t___location_lookup___type_def.html#a137a8d58c4bfa96d0dab9a6d362f216c',1,'T_LocationLookup_TypeDef']]]
 ];

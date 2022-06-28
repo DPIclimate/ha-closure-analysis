@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['daily_5fmax_5ftide_5ftimestamps_0',['daily_max_tide_timestamps',['../struct_w_w___tide_dataset___type_def.html#a3b24c4b3b6a2a4159709fbacac2cbc7f',1,'WW_TideDataset_TypeDef']]],
-  ['daily_5fmax_5ftide_5fvalues_1',['daily_max_tide_values',['../struct_w_w___tide_dataset___type_def.html#a7e55d75db044e36a786bb027a4ffacee',1,'WW_TideDataset_TypeDef']]],
-  ['date_2',['date',['../struct_w_w___rainfall___type_def.html#a864502221f8d777dd1a27c3942f6c7e7',1,'WW_Rainfall_TypeDef']]]
+  ['callbacks_0',['callbacks',['../log_8c.html#a8ef88a49b6363714e9fd310bdc90caf7',1,'log.c']]],
+  ['classification_1',['classification',['../struct_f_a___harvest_area___type_def.html#a54bbff12bcb16ada4fe7ee5808460a77',1,'FA_HarvestArea_TypeDef']]],
+  ['count_2',['count',['../struct_b_o_m___weather_dataset___type_def.html#ad9bd5e8cc5782628518327d10d6f3693',1,'BOM_WeatherDataset_TypeDef::count()'],['../struct_b_o_m___weather_stations___type_def.html#a4f26574c4715b41cbb2908bfe9eb0b5f',1,'BOM_WeatherStations_TypeDef::count()'],['../struct_f_a___harvest_areas___type_def.html#a30125ee91467e43f02f98341505089b9',1,'FA_HarvestAreas_TypeDef::count()'],['../struct_i_b_m___timeseries_dataset___type_def.html#a70143dd5d64ee72f972a1b4c19f863d8',1,'IBM_TimeseriesDataset_TypeDef::count()'],['../struct_t___locations_lookup___type_def.html#a7bbb985492a079d013e32c1d29b1c51b',1,'T_LocationsLookup_TypeDef::count()'],['../struct_ubidots___devices___type_def.html#a383469939782b237947effb0a10a9dbe',1,'Ubidots_Devices_TypeDef::count()'],['../struct_w_w___locations___type_def.html#a4761a69d749efbbd80cc588c28d236b0',1,'WW_Locations_TypeDef::count()']]]
 ];

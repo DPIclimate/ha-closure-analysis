@@ -10,7 +10,7 @@ var timeseries_8h =
     [ "IBM_GetTimeseries", "timeseries_8h.html#a63b4612b52cdf60a8c7a6658bb262a6e", null ],
     [ "IBM_TimeseriesFromCSV", "timeseries_8h.html#ab1b5aac68159f94f647e4de6191de101", null ],
     [ "IBM_TimeseriesToCSV", "timeseries_8h.html#a9fb3b76bdd9848fdd63d226ddf5c7d17", null ],
-    [ "IBM_TimeseriesToDB", "timeseries_8h.html#a0bcb0a5cd8699ad3b63dafad56315378", null ],
+    [ "IBM_TimeseriesToDB", "timeseries_8h.html#a31131b0ea7ad5991a999895575fe1f63", null ],
     [ "IBM_ALT_REQUEST_URL", "timeseries_8h.html#ae7960cc4cd470c456edbf20485f553cf", null ],
     [ "IBM_REQUEST_URL", "timeseries_8h.html#ac6e648ffe2a9d3072dd3a528e8065c2b", null ]
 ];

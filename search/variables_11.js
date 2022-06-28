@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ww_5ftoken_0',['WW_TOKEN',['../_willy_weather_2authenticate_8h.html#a63df70fd2033f6234824c21f182aa640',1,'authenticate.h']]]
+  ['values_0',['values',['../struct_i_b_m___timeseries_dataset___type_def.html#aa0e6cee1b7999c7229971bcac665d439',1,'IBM_TimeseriesDataset_TypeDef']]]
 ];
