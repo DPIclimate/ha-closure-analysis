@@ -1,27 +1,31 @@
-SET timezone = "Australia/Sydney";
+SET timezone TO "Australia/Sydney";
 
+-- Harvest area information from NSW Food Authority
+-- New rows are only updated if the timeprocessed and status has changed
+-- This data is obtained through a JSON request to a NSW Food Authority server
+-- which contains xml data descibing each harvest areas status.
 CREATE TABLE IF NOT EXISTS harvest_area (
-    last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    program_name                text NOT NULL,
-    location                    text NOT NULL,
-    name                        text NOT NULL,
-    classification              text NOT NULL,
-    status                      text NOT NULL,
-    time_processed              timestamptz NOT NULL,
-    status_reason               text NOT NULL,
-    status_prev_reason          text NOT NULL,
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    program_name                        text NOT NULL,                      -- Area name (E.g. Clyde River)
+    location                            text NOT NULL,                      -- Harvest location (can be a zone)
+    name                                text NOT NULL,                      -- Harvest area name (e.g. Moonlight)
+    classification                      text NOT NULL,                      -- Restrictions and classifications
+    status                              text NOT NULL,                      -- Open or Closed
+    time_processed                      timestamptz NOT NULL,               -- Time NSW FA updated status
+    status_reason                       text NOT NULL,                      -- Reason for latest status
+    status_prev_reason                  text NOT NULL,                      -- Reason for the previous status (N/A if not found)
     UNIQUE(time_processed, name, status)
 );
 
 CREATE TABLE IF NOT EXISTS harvest_outlook (
-    last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    closed                      boolean NOT NULL,
-    to_close                    boolean NOT NULL,
-    closure_type                text NOT NULL,
-    closure_reason              text NOT NULL,
-    closure_date                timestamptz NOT NULL,
-    closure_severity            text NOT NULL,
-    est_closure_time            text NOT NULL
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    closed                              boolean NOT NULL,                   -- Is harvest area currently closed?
+    to_close                            boolean NOT NULL,                   -- Is the harvest area predicted to close?
+    closure_type                        text NOT NULL,                      -- Why is it going to close? Rainfall...
+    closure_reason                      text NOT NULL,                      -- Extended reason why HA is closing
+    closure_date                        timestamptz NOT NULL,               -- What date will the HA close? Predicted...
+    closure_severity                    text NOT NULL,                      -- What is the severity of this closure? (the index)
+    est_closure_time                    text NOT NULL                       -- How long will it close for?
 );
 
 CREATE TABLE IF NOT EXISTS harvest_lookup (
@@ -55,6 +59,7 @@ CREATE TABLE IF NOT EXISTS weather_ww (
 CREATE TABLE IF NOT EXISTS weather_bom (
     last_updated                timestamptz DEFAULT NOW() NOT NULL,
     location                    text NOT NULL,
+    location_id                 text NOT NULL, -- TODO need to import
     ts                          timestamptz NOT NULL,
     precipitation               float,
     max_temperature             float,
@@ -101,5 +106,7 @@ CREATE TABLE IF NOT EXISTS weather (
     bom_location_id             text,
     data_type                   text NOT NULL, -- "forecast", "observed"
     precipitation               float NOT NULL,
+    forecast_precipitation      float,
+    observed_precipitation      float,
     UNIQUE(ts, program_name)
 )

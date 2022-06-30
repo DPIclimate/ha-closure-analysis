@@ -33,4 +33,7 @@ typedef struct {
     T_LocationLookup_TypeDef locations[T_MAX_N_LOCATIONS];
 }T_LocationsLookup_TypeDef;
 
+void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
+                      PGconn* psql_conn);
+
 #endif //PROGRAM_TRANSFORM_H

@@ -146,8 +146,9 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
                 // Timestamp
                 struct tm dt = {0};
                 strptime(ts, "%d/%m/%Y", &dt);
-                // As UNIX time
-                time_t unix_time = mktime(&dt);
+                // As UNIX time minus one day as values are 9am to 9am on the
+                // day prior
+                time_t unix_time = mktime(&dt) - 86400;
                 dataset->timestamps[dataset->count] = unix_time;
 
                 // As timestamp with timezone of psql
@@ -186,13 +187,19 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
 
     int16_t index = 0;
     while(index < dataset->count){
+        char ts[30];
+        time_t unix_time = dataset->timestamps[index];
+        struct tm ctm = *localtime(&unix_time);
+        strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);
         char query[3000];
         snprintf(query, sizeof(query), "INSERT INTO weather_bom (last_updated, "
-                                       "location, ts, precipitation, "
-                                       "max_temperature, min_temperature) "
+                                       "location, location_id, ts, "
+                                       "precipitation, max_temperature, "
+                                       "min_temperature) "
                                        "VALUES "
                                        "(NOW(), "   // Last updated timestamp
                                        "'%s', "     // Location (name)
+                                       "'%s', "     // Location ID
                                        "'%s', "     // Timestamp (tz)
                                        "%lf, "      // Precipitation
                                        "%lf, "      // Max temperature
@@ -200,7 +207,8 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
                                        "ON CONFLICT (ts, location) DO UPDATE "
                                        "SET last_updated = NOW()",
                                        weather_station->name,
-                                       dataset->timestr[index],
+                                       weather_station->id,
+                                       ts,
                                        dataset->precipitation[index],
                                        dataset->max_temperature[index],
                                        dataset->min_temperature[index]);

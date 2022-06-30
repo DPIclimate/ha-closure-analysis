@@ -431,7 +431,10 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
     int32_t index = 0;
     while(index < dataset->count){
         char ts[30];
-        struct tm ctm = *localtime(&dataset->timestamps[index]);
+        // Add one day as this is UTC time and we want it to line up with
+        // AEST time
+        time_t unix_time = dataset->timestamps[index];
+        struct tm ctm = *localtime(&unix_time);
         strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);
         char query[3000];
         switch(req_info->layer_id){
@@ -440,7 +443,9 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
                                                "last_updated, location, "
                                                "ww_location_id, "
                                                "bom_location_id, latitude, "
-                                               "longitude, ts, precipitation) "
+                                               "longitude, "
+                                               "ts, "
+                                               "precipitation) "
                                                "VALUES ("
                                                "NOW(), " // Last updated
                                                "'%s', " // Location name
