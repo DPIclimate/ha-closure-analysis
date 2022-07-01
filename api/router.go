@@ -11,6 +11,10 @@ import (
 func HTTPRouter(psqlConn *sql.DB) {
 	router := mux.NewRouter().StrictSlash(true)
 
+	router.HandleFunc("/oyster_regions/list", func(w http.ResponseWriter, r *http.Request) {
+		ListLocationsRoute(w, r, psqlConn)
+	})
+
 	router.HandleFunc("/weather/precipitation/{location_id}", func(w http.ResponseWriter, r *http.Request) {
 		LocationalPrecipitationRoute(w, r, psqlConn)
 	})
