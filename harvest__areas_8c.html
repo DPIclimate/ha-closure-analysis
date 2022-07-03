@@ -136,6 +136,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create unique harvest area locations lookup table in DB. </p>
+<p >Build a harvest area / locations lookup table in PostgreSQL database.</p>
+<p >To make it easier to query datasources a lookup table is created using this function that matches a program name to the closest BOM weather station, Willy Weather location and other relevant information.</p>
+<dl class="section note"><dt>Note</dt><dd>This function requires that the harvest_area table is populated and there is an available bom weather station .txt file available.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Improve this function to use the BOM FTP, rather than the .txt file</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">psql_conn</td><td>PostgreSQL connection handler. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -300,6 +310,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get Unique harvest area locations from DB. </p>
+<p >Load unique locations from lookup table in PostgreSQL database.</p>
+<p >Load all the relevent locations from the lookup table (only 20 something locations to load).</p>
+<dl class="section note"><dt>Note</dt><dd>This requires the lookup table being populated.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">locations</td><td>Lookup table locations from PostgreSQL table. </td></tr>
+    <tr><td class="paramname">psql_conn</td><td>PostgreSQL database connection. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

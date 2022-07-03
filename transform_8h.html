@@ -118,20 +118,25 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___location_lookup___type_def.html">T_LocationLookup_TypeDef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure of a location (i.e. program location)  <a href="struct_t___location_lookup___type_def.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locations lookup table structure.  <a href="struct_t___locations_lookup___type_def.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a42101b2c4b9443d38e0d191150203aa1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8h.html#a42101b2c4b9443d38e0d191150203aa1">T_MAX_N_LOCATIONS</a>&#160;&#160;&#160;50</td></tr>
+<tr class="memdesc:a42101b2c4b9443d38e0d191150203aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of locations.  <a href="transform_8h.html#a42101b2c4b9443d38e0d191150203aa1">More...</a><br /></td></tr>
 <tr class="separator:a42101b2c4b9443d38e0d191150203aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa49393d575e5f8692268004cf458f58c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8h.html#aa49393d575e5f8692268004cf458f58c">T_TIMESTAMP_SIZE</a>&#160;&#160;&#160;50</td></tr>
+<tr class="memdesc:aa49393d575e5f8692268004cf458f58c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of timestamp (num chars)  <a href="transform_8h.html#aa49393d575e5f8692268004cf458f58c">More...</a><br /></td></tr>
 <tr class="separator:aa49393d575e5f8692268004cf458f58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a4189d4916467017dc3d00c2551a74a56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8h.html#a4189d4916467017dc3d00c2551a74a56">T_BuildWeatherDB</a> (<a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *locations, PGconn *psql_conn)</td></tr>
+<tr class="memdesc:a4189d4916467017dc3d00c2551a74a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build weather table in PostgreSQL database.  <a href="transform_8h.html#a4189d4916467017dc3d00c2551a74a56">More...</a><br /></td></tr>
 <tr class="separator:a4189d4916467017dc3d00c2551a74a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -147,6 +152,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Maximum number of locations. </p>
+
 </div>
 </div>
 <a id="aa49393d575e5f8692268004cf458f58c" name="aa49393d575e5f8692268004cf458f58c"></a>
@@ -160,6 +167,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Maximum size of timestamp (num chars) </p>
 
 </div>
 </div>
@@ -189,6 +198,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Build weather table in PostgreSQL database. </p>
+<p >Main weather table for each location.</p>
+<p >This table contains both forecasted and historical weather information for each harvest location. One column contains precipitation data where forecasted weather is added first, then overwritten using observed values. Both forecasted and observed data are stored in seperate columns.</p>
+<dl class="section note"><dt>Note</dt><dd>This function requires weather_ibm_eis and weather_bom tables to be populated.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">locations</td><td>Unique locations information. </td></tr>
+    <tr><td class="paramname">psql_conn</td><td>PostgreSQL connection handler. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -122,19 +122,25 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a5792b5fcf04b63a878814e8e46c16630"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>&#160;&#160;&#160;200</td></tr>
+<tr class="memdesc:a5792b5fcf04b63a878814e8e46c16630"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max number of items in weather dataset.  <a href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">More...</a><br /></td></tr>
 <tr class="separator:a5792b5fcf04b63a878814e8e46c16630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fe18882d97d5672bb0a2d80d1e28682"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a5fe18882d97d5672bb0a2d80d1e28682">BOM_TIME_STR_BUFFER_SIZE</a>&#160;&#160;&#160;30</td></tr>
+<tr class="memdesc:a5fe18882d97d5672bb0a2d80d1e28682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max number of chars in timestamp buffer.  <a href="historical__weather_8h.html#a5fe18882d97d5672bb0a2d80d1e28682">More...</a><br /></td></tr>
 <tr class="separator:a5fe18882d97d5672bb0a2d80d1e28682"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0cfeba67c248faf642a8c73a20626b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#af0cfeba67c248faf642a8c73a20626b8">BOM_MAX_RESPONSE_SIZE</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="memdesc:af0cfeba67c248faf642a8c73a20626b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max buffer size to read into memory (size of .csv file from BOM FTP server)  <a href="historical__weather_8h.html#af0cfeba67c248faf642a8c73a20626b8">More...</a><br /></td></tr>
 <tr class="separator:af0cfeba67c248faf642a8c73a20626b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a848c6121721e4283f03a048ca7912fde"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a848c6121721e4283f03a048ca7912fde">BOM_GetWeather</a> (<a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *dataset, <a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *station, const char *year_month)</td></tr>
+<tr class="memdesc:a848c6121721e4283f03a048ca7912fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get historical weather for a particular BOM weather station.  <a href="historical__weather_8h.html#a848c6121721e4283f03a048ca7912fde">More...</a><br /></td></tr>
 <tr class="separator:a848c6121721e4283f03a048ca7912fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab596a78a9e22aee099c2b1d399e7587b"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#ab596a78a9e22aee099c2b1d399e7587b">BOM_LoadWeatherFromCSV</a> (const char *filename, <a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *dataset, <a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *station)</td></tr>
+<tr class="memdesc:ab596a78a9e22aee099c2b1d399e7587b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load BOM weather station dataset from .csv file.  <a href="historical__weather_8h.html#ab596a78a9e22aee099c2b1d399e7587b">More...</a><br /></td></tr>
 <tr class="separator:ab596a78a9e22aee099c2b1d399e7587b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66ed16101a6e5215921e1c235df386ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a66ed16101a6e5215921e1c235df386ca">BOM_HistoricalWeatherToDB</a> (<a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *weather_station, <a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *dataset, PGconn *psql_conn)</td></tr>
+<tr class="memdesc:a66ed16101a6e5215921e1c235df386ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write observed weather to PostgreSQL table (weather_bom)  <a href="historical__weather_8h.html#a66ed16101a6e5215921e1c235df386ca">More...</a><br /></td></tr>
 <tr class="separator:a66ed16101a6e5215921e1c235df386ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -150,6 +156,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Max buffer size to read into memory (size of .csv file from BOM FTP server) </p>
+
 </div>
 </div>
 <a id="a5792b5fcf04b63a878814e8e46c16630" name="a5792b5fcf04b63a878814e8e46c16630"></a>
@@ -164,6 +172,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Max number of items in weather dataset. </p>
+
 </div>
 </div>
 <a id="a5fe18882d97d5672bb0a2d80d1e28682" name="a5fe18882d97d5672bb0a2d80d1e28682"></a>
@@ -177,6 +187,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Max number of chars in timestamp buffer. </p>
 
 </div>
 </div>
@@ -212,6 +224,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get historical weather for a particular BOM weather station. </p>
 <p >Get a file from the Bureau of Meterology FTP server.</p>
 <p >The BOM provides formatted .csv files for certain locations in Australia. These .csv files can be downloaded from the BOM's FTP server. Currently, it is unknown when the data is updated (sometime daily).</p>
 <dl class="section see"><dt>See also</dt><dd><a href="http://www.bom.gov.au/catalogue/anon-ftp.shtml">http://www.bom.gov.au/catalogue/anon-ftp.shtml</a></dd></dl>
@@ -259,6 +273,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Write observed weather to PostgreSQL table (weather_bom) </p>
+<p >Turn a weather station dataset from the BOM into database values.</p>
+<p >Rows that already exist are overwritten, new rows are added. Need to ensure each dataset and weather station are from the same source. These data are inserted into the weather_bom PostgreSQL table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">weather_station</td><td>BOM weather station information. </td></tr>
+    <tr><td class="paramname">dataset</td><td>BOM weather station dataset. </td></tr>
+    <tr><td class="paramname">psql_conn</td><td>PostgreSQL connection handler. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ab596a78a9e22aee099c2b1d399e7587b" name="ab596a78a9e22aee099c2b1d399e7587b"></a>
@@ -292,6 +318,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Load BOM weather station dataset from .csv file. </p>
 <p >Load a BOM dataset from a cached .csv file.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

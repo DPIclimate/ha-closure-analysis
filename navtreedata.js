@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Oyster HA Closure Analysis", "index.html", [
+    [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "About", "index.html#autotoc_md0", null ],
       [ "Install", "index.html#autotoc_md1", [

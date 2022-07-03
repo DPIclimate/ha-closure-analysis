@@ -119,8 +119,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries dataset to .csv file.  <a href="timeseries_8c.html#a9fb3b76bdd9848fdd63d226ddf5c7d17">More...</a><br /></td></tr>
 <tr class="separator:a9fb3b76bdd9848fdd63d226ddf5c7d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1b5aac68159f94f647e4de6191de101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#ab1b5aac68159f94f647e4de6191de101">IBM_TimeseriesFromCSV</a> (const char *filename)</td></tr>
+<tr class="memdesc:ab1b5aac68159f94f647e4de6191de101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load IBM timeseries dataset from local .csv file.  <a href="timeseries_8c.html#ab1b5aac68159f94f647e4de6191de101">More...</a><br /></td></tr>
 <tr class="separator:ab1b5aac68159f94f647e4de6191de101"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31131b0ea7ad5991a999895575fe1f63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a31131b0ea7ad5991a999895575fe1f63">IBM_TimeseriesToDB</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req_info, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, <a class="el" href="struct_t___location_lookup___type_def.html">T_LocationLookup_TypeDef</a> *location, PGconn *psql_conn)</td></tr>
+<tr class="memdesc:a31131b0ea7ad5991a999895575fe1f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries dataset to PostgreSQL table.  <a href="timeseries_8c.html#a31131b0ea7ad5991a999895575fe1f63">More...</a><br /></td></tr>
 <tr class="separator:a31131b0ea7ad5991a999895575fe1f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -397,6 +399,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Load IBM timeseries dataset from local .csv file. </p>
 <p >Load timeseries dataset from a cached .csv for .txt file.</p>
 <p >Requires the file to be formatted as Unix;Date;Value</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -486,6 +490,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Write timeseries dataset to PostgreSQL table. </p>
+<p >Insert an IBM dataset into a PostgreSQL table.</p>
+<p >This function handles precipitation, min and max temperatures. Several other datasets are required to give context regarding the IBM datasets location and relevance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">req_info</td><td>Request information provided to IBM. </td></tr>
+    <tr><td class="paramname">dataset</td><td>Dataset to insert into table. </td></tr>
+    <tr><td class="paramname">location</td><td>Location information from PostgreSQL lookup table. </td></tr>
+    <tr><td class="paramname">psql_conn</td><td>PostgreSQL database connection handler. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

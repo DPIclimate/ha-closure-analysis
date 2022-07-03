@@ -101,9 +101,30 @@ Include dependency graph for transform.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a4189d4916467017dc3d00c2551a74a56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8c.html#a4189d4916467017dc3d00c2551a74a56">T_BuildWeatherDB</a> (<a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *locations, PGconn *psql_conn)</td></tr>
+<tr class="memdesc:a4189d4916467017dc3d00c2551a74a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build weather table in PostgreSQL database.  <a href="transform_8c.html#a4189d4916467017dc3d00c2551a74a56">More...</a><br /></td></tr>
 <tr class="separator:a4189d4916467017dc3d00c2551a74a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1ef7833bcdeaed5dc11aa2e93d9fca1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8c.html#aa1ef7833bcdeaed5dc11aa2e93d9fca1">T_BuildOutlook</a> (PGconn *psql_conn)</td></tr>
+<tr class="separator:aa1ef7833bcdeaed5dc11aa2e93d9fca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aa1ef7833bcdeaed5dc11aa2e93d9fca1" name="aa1ef7833bcdeaed5dc11aa2e93d9fca1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1ef7833bcdeaed5dc11aa2e93d9fca1">&#9670;&nbsp;</a></span>T_BuildOutlook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void T_BuildOutlook </td>
+          <td>(</td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a4189d4916467017dc3d00c2551a74a56" name="a4189d4916467017dc3d00c2551a74a56"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4189d4916467017dc3d00c2551a74a56">&#9670;&nbsp;</a></span>T_BuildWeatherDB()</h2>
 
@@ -129,6 +150,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Build weather table in PostgreSQL database. </p>
+<p >Main weather table for each location.</p>
+<p >This table contains both forecasted and historical weather information for each harvest location. One column contains precipitation data where forecasted weather is added first, then overwritten using observed values. Both forecasted and observed data are stored in seperate columns.</p>
+<dl class="section note"><dt>Note</dt><dd>This function requires weather_ibm_eis and weather_bom tables to be populated.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">locations</td><td>Unique locations information. </td></tr>
+    <tr><td class="paramname">psql_conn</td><td>PostgreSQL connection handler. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

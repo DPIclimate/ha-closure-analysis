@@ -102,16 +102,21 @@ Collaboration diagram for BOM_WeatherDataset_TypeDef:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:ad9bd5e8cc5782628518327d10d6f3693"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html#ad9bd5e8cc5782628518327d10d6f3693">count</a></td></tr>
+<tr class="memdesc:ad9bd5e8cc5782628518327d10d6f3693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of values in dataset.  <a href="struct_b_o_m___weather_dataset___type_def.html#ad9bd5e8cc5782628518327d10d6f3693">More...</a><br /></td></tr>
 <tr class="separator:ad9bd5e8cc5782628518327d10d6f3693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a286317116a1f43da77373ff3e9adc873"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html#a286317116a1f43da77373ff3e9adc873">timestamps</a> [<a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>]</td></tr>
 <tr class="separator:a286317116a1f43da77373ff3e9adc873"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17b85e16dabd5783a26a5be994c81c32"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html#a17b85e16dabd5783a26a5be994c81c32">timestr</a> [<a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>][<a class="el" href="historical__weather_8h.html#a5fe18882d97d5672bb0a2d80d1e28682">BOM_TIME_STR_BUFFER_SIZE</a>]</td></tr>
+<tr class="memdesc:a17b85e16dabd5783a26a5be994c81c32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timestamps of each datapoint as needed for PostgreSQL.  <a href="struct_b_o_m___weather_dataset___type_def.html#a17b85e16dabd5783a26a5be994c81c32">More...</a><br /></td></tr>
 <tr class="separator:a17b85e16dabd5783a26a5be994c81c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11bd5d6d55f858b04677b17cd915acf8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html#a11bd5d6d55f858b04677b17cd915acf8">precipitation</a> [<a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>]</td></tr>
+<tr class="memdesc:a11bd5d6d55f858b04677b17cd915acf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Precipitation data.  <a href="struct_b_o_m___weather_dataset___type_def.html#a11bd5d6d55f858b04677b17cd915acf8">More...</a><br /></td></tr>
 <tr class="separator:a11bd5d6d55f858b04677b17cd915acf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81dc7979d18378e3e80ff5210aefa12d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html#a81dc7979d18378e3e80ff5210aefa12d">max_temperature</a> [<a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>]</td></tr>
+<tr class="memdesc:a81dc7979d18378e3e80ff5210aefa12d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max temperature data.  <a href="struct_b_o_m___weather_dataset___type_def.html#a81dc7979d18378e3e80ff5210aefa12d">More...</a><br /></td></tr>
 <tr class="separator:a81dc7979d18378e3e80ff5210aefa12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2570c0a0cf7c7bb4da0fbd39b651b2dc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_o_m___weather_dataset___type_def.html#a2570c0a0cf7c7bb4da0fbd39b651b2dc">min_temperature</a> [<a class="el" href="historical__weather_8h.html#a5792b5fcf04b63a878814e8e46c16630">BOM_RESPONSE_BUFFER_SIZE</a>]</td></tr>
+<tr class="memdesc:a2570c0a0cf7c7bb4da0fbd39b651b2dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Min temperature data.  <a href="struct_b_o_m___weather_dataset___type_def.html#a2570c0a0cf7c7bb4da0fbd39b651b2dc">More...</a><br /></td></tr>
 <tr class="separator:a2570c0a0cf7c7bb4da0fbd39b651b2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
@@ -127,6 +132,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Number of values in dataset. </p>
+
 </div>
 </div>
 <a id="a81dc7979d18378e3e80ff5210aefa12d" name="a81dc7979d18378e3e80ff5210aefa12d"></a>
@@ -140,6 +147,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Max temperature data. </p>
 
 </div>
 </div>
@@ -155,6 +164,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Min temperature data. </p>
+
 </div>
 </div>
 <a id="a11bd5d6d55f858b04677b17cd915acf8" name="a11bd5d6d55f858b04677b17cd915acf8"></a>
@@ -169,6 +180,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Precipitation data. </p>
+
 </div>
 </div>
 <a id="a286317116a1f43da77373ff3e9adc873" name="a286317116a1f43da77373ff3e9adc873"></a>
@@ -182,6 +195,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >Timestamps of each datapoint </p>
 
 </div>
 </div>
@@ -196,6 +210,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Timestamps of each datapoint as needed for PostgreSQL. </p>
 
 </div>
 </div>

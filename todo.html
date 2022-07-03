@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Oyster HA Closure Analysis: src/ftp.c File Reference</title>
+<title>Oyster HA Closure Analysis: Todo List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,7 +66,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('ftp_8c.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -84,73 +84,20 @@ $(document).ready(function(){initNavTree('ftp_8c.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">ftp.c File Reference</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Todo List </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="ftp_8h_source.html">ftp.h</a>&quot;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for ftp.c:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="ftp_8c__incl.svg" width="1091" height="336"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aecb055c30cea1aec2b7402b3e53f1647"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ftp_8c.html#aecb055c30cea1aec2b7402b3e53f1647">FTPRequest</a> (const char *url, <a class="el" href="struct_utils___req_data___type_def.html">Utils_ReqData_TypeDef</a> *stream)</td></tr>
-<tr class="memdesc:aecb055c30cea1aec2b7402b3e53f1647"><td class="mdescLeft">&#160;</td><td class="mdescRight">File Transfer Protocol request.  <a href="ftp_8c.html#aecb055c30cea1aec2b7402b3e53f1647">More...</a><br /></td></tr>
-<tr class="separator:aecb055c30cea1aec2b7402b3e53f1647"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aecb055c30cea1aec2b7402b3e53f1647" name="aecb055c30cea1aec2b7402b3e53f1647"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecb055c30cea1aec2b7402b3e53f1647">&#9670;&nbsp;</a></span>FTPRequest()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CURLcode FTPRequest </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>url</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="struct_utils___req_data___type_def.html">Utils_ReqData_TypeDef</a> *&#160;</td>
-          <td class="paramname"><em>stream</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>File Transfer Protocol request. </p>
-<p >FTP request for data.</p>
-<p >This FTP request is required to communicate with the Buerau of Meterology FTP server. A URL is provided (denoting the base ftp server name and the path to the file of interest). A stream is also give to hold the raw data provided from this FTP request.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">url</td><td>URL to file of interest on FTP server. </td></tr>
-    <tr><td class="paramname">stream</td><td>Stream to hold data from response (see <a class="el" href="utils_8h.html">utils.h</a>). </td></tr>
-  </table>
-  </dd>
+<div class="textblock"><dl class="reflist">
+<dt>Global <a class="el" href="harvest__areas_8c.html#a87da9df1fcfd9592ca6a29ca32b0e53b">FA_CreateLocationsLookupDB</a>  (PGconn *psql_conn)</dt>
+<dd><a class="anchor" id="_todo000001"></a>Improve this function to use the BOM FTP, rather than the .txt file</dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Curl status code representing FTP errors. </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="ftp_8c.html">ftp.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
