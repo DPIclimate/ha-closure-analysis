@@ -1,5 +1,19 @@
 #include "transform.h"
 
+/**
+ * Main weather table for each location.
+ *
+ * This table contains both forecasted and historical weather information
+ * for each harvest location. One column contains precipitation data where
+ * forecasted weather is added first, then overwritten using observed values.
+ * Both forecasted and observed data are stored in seperate columns.
+ *
+ * @note This function requires weather_ibm_eis and weather_bom tables
+ * to be populated.
+ *
+ * @param locations Unique locations information.
+ * @param psql_conn PostgreSQL connection handler.
+ */
 void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                       PGconn* psql_conn){
 
@@ -162,5 +176,13 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
         PQclear(bom_res);
         index++;
     }
+
+}
+
+
+void T_BuildOutlook(PGconn* psql_conn){
+
+
+
 
 }

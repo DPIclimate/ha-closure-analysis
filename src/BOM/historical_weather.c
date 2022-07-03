@@ -179,6 +179,17 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
     return 0;
 }
 
+/**
+ * Turn a weather station dataset from the BOM into database values.
+ *
+ * Rows that already exist are overwritten, new rows are added. Need to ensure
+ * each dataset and weather station are from the same source. These data are
+ * inserted into the weather_bom PostgreSQL table.
+ *
+ * @param weather_station BOM weather station information.
+ * @param dataset BOM weather station dataset.
+ * @param psql_conn PostgreSQL connection handler.
+ */
 void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
                                BOM_WeatherDataset_TypeDef* dataset,
                                PGconn* psql_conn){

@@ -23,9 +23,9 @@ static const char* IBM_TOKEN_URL = "https://auth-b2b-twc.ibm.com/connect/token";
 
 /// IBM token handler
 typedef struct {
-    time_t token_expiry;
-    char access_token[IBM_ACCESS_TOKEN_SIZE];
-    char refresh_token[IBM_REFRESH_TOKEN_SIZE];
+    time_t token_expiry; ///< Time until token expires
+    char access_token[IBM_ACCESS_TOKEN_SIZE]; ///< Holds IBM access token
+    char refresh_token[IBM_REFRESH_TOKEN_SIZE]; ///< Holds refresh token
 } IBM_AuthHandle_TypeDef;
 
 /// Authentication handler for IBM EIS

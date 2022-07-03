@@ -32,20 +32,20 @@ static const char* IBM_ALT_REQUEST_URL = "https://ibmpairs-mvp2-api.mybluemix.ne
 
 /// Request structure for IBM EMS timeseries data.
 typedef struct {
-    uint16_t layer_id; /// The layer ID of interest (obtained from IBM query)
-    float latitude; /// The latitude of interest
-    float longitude; /// The longitude of interest
-    time_t start; /// The start time as UNIX epoch time
-    time_t end; /// The end time as UNIX epoch time
+    uint16_t layer_id; ///< The layer ID of interest (obtained from IBM query)
+    float latitude; ///< The latitude of interest
+    float longitude; ///< The longitude of interest
+    time_t start; ///< The start time as UNIX epoch time
+    time_t end; ///< The end time as UNIX epoch time
 } IBM_TimeseriesReq_TypeDef;
 
 /// Request response data containing IBM EMS timeseries data.
 typedef struct {
-    time_t start; /// Data start time (unix timestamp in seconds).
-    time_t end; /// Data end time (unix timestamp in seconds).
-    time_t timestamps[IBM_MAX_RESPONSE_LENGTH]; /// Holds timestamps.
-    double values[IBM_MAX_RESPONSE_LENGTH]; /// Holds corresponding values.
-    int32_t count; /// Number of returned values.
+    time_t start; ///< Data start time (unix timestamp in seconds).
+    time_t end; ///< Data end time (unix timestamp in seconds).
+    time_t timestamps[IBM_MAX_RESPONSE_LENGTH]; ///< Holds timestamps.
+    double values[IBM_MAX_RESPONSE_LENGTH]; ///< Holds corresponding values.
+    int32_t count; ///< Number of returned values.
 } IBM_TimeseriesDataset_TypeDef;
 
 /// Get timeseries data from IBM EMS
@@ -58,8 +58,10 @@ CURLcode IBM_GetTimeseries(IBM_AuthHandle_TypeDef *auth_handle,
 int8_t IBM_TimeseriesToCSV(IBM_TimeseriesReq_TypeDef *request,
                            IBM_TimeseriesDataset_TypeDef *dataset);
 
+/// Load IBM timeseries dataset from local .csv file
 IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char* filename);
 
+/// Write timeseries dataset to PostgreSQL table
 void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
                         IBM_TimeseriesDataset_TypeDef* dataset,
                         T_LocationLookup_TypeDef* location,

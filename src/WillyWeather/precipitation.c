@@ -166,6 +166,15 @@ CURLcode WillyWeather_GetRainfallForecast(WW_Location_TypeDef *location,
     return result;
 }
 
+/**
+ * Write Willy Weather forecast for a particular location to PostgreSQL table.
+ *
+ * The target table is called weather_ww.
+ *
+ * @param location Location information for Willy Weather dataset.
+ * @param forecast Willy Weather weather forecast.
+ * @param psql_conn PostgreSQL connection handler.
+ */
 void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
                                WW_RainfallForecast_TypeDef* forecast,
                                PGconn* psql_conn){

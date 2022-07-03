@@ -22,19 +22,19 @@
 
 /// Location data from Willy Weather request
 typedef struct{
-    uint16_t id; /// Location ID for Willy Weather requests
-    char location[WW_LOCATION_BUF]; /// Location (name)
-    char region[WW_LOCATION_BUF]; /// Region location is in
-    char state[WW_LOCATION_BUF]; /// Australian state name (e.g. NSW)
-    char postcode[WW_LOCATION_BUF]; /// Australian post code (e.g. 3960)
-    double latitude; /// Latitude of interest
-    double longitude; /// Longitude of interest
+    uint16_t id; ///< Location ID for Willy Weather requests
+    char location[WW_LOCATION_BUF]; ///< Location (name)
+    char region[WW_LOCATION_BUF]; ///< Region location is in
+    char state[WW_LOCATION_BUF]; ///< Australian state name (e.g. NSW)
+    char postcode[WW_LOCATION_BUF]; ///< Australian post code (e.g. 3960)
+    double latitude; ///< Latitude of interest
+    double longitude; ///< Longitude of interest
 } WW_Location_TypeDef;
 
 /// Locations of Willy Weather stations
 typedef struct {
-    uint16_t count;
-    WW_Location_TypeDef locations[WW_MAX_NUM_LOCATONS];
+    uint16_t count; ///< Number of locations in locations list
+    WW_Location_TypeDef locations[WW_MAX_NUM_LOCATONS]; ///< List of locations
 } WW_Locations_TypeDef;
 
 /// Get an ID describing a location from Willy Weather.

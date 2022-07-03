@@ -8,6 +8,7 @@
 
 #include "utils.h"
 
+/// File Transfer Protocol request
 CURLcode FTPRequest(const char* url, Utils_ReqData_TypeDef* stream);
 
 #endif //PROGRAM_FTP_H

@@ -214,6 +214,20 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
              "PostgreSQL database.\n");
 }
 
+/**
+ * Build a harvest area / locations lookup table in PostgreSQL database.
+ *
+ * To make it easier to query datasources a lookup table is created using
+ * this function that matches a program name to the closest BOM weather
+ * station, Willy Weather location and other relevant information.
+ *
+ * @note This function requires that the harvest_area table is populated
+ * and there is an available bom weather station .txt file available.
+ *
+ * @todo Improve this function to use the BOM FTP, rather than the .txt file
+ *
+ * @param psql_conn PostgreSQL connection handler.
+ */
 void FA_CreateLocationsLookupDB(PGconn* psql_conn){
 
     log_info("Writing locations lookup to PostgreSQL database\n");
@@ -316,6 +330,17 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
     PQclear(res);
 }
 
+/**
+ * Load unique locations from lookup table in PostgreSQL database.
+ *
+ * Load all the relevent locations from the lookup table (only 20 something
+ * locations to load).
+ *
+ * @note This requires the lookup table being populated.
+ *
+ * @param locations Lookup table locations from PostgreSQL table.
+ * @param psql_conn PostgreSQL database connection.
+ */
 void FA_UniqueLocationsFromDB(T_LocationsLookup_TypeDef* locations,
                               PGconn* psql_conn){
 

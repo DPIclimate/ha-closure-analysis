@@ -421,6 +421,18 @@ IBM_TimeseriesDataset_TypeDef IBM_TimeseriesFromCSV(const char *filename) {
     return dataset;
 }
 
+/**
+ * Insert an IBM dataset into a PostgreSQL table.
+ *
+ * This function handles precipitation, min and max temperatures. Several
+ * other datasets are required to give context regarding the IBM datasets
+ * location and relevance.
+ *
+ * @param req_info Request information provided to IBM.
+ * @param dataset Dataset to insert into table.
+ * @param location Location information from PostgreSQL lookup table.
+ * @param psql_conn PostgreSQL database connection handler.
+ */
 void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
                         IBM_TimeseriesDataset_TypeDef* dataset,
                         T_LocationLookup_TypeDef* location,
@@ -431,8 +443,6 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
     int32_t index = 0;
     while(index < dataset->count){
         char ts[30];
-        // Add one day as this is UTC time and we want it to line up with
-        // AEST time
         time_t unix_time = dataset->timestamps[index];
         struct tm ctm = *localtime(&unix_time);
         strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);

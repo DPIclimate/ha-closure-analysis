@@ -17,6 +17,7 @@
 /// Maximum name length for devices
 #define UBIDOTS_MAX_INFO_LENGTH             100
 
+/// TODO turn this into a single device then have a list of devices struct
 typedef struct{
     int16_t count;
     char names[UBIDOTS_MAX_NUMBER_DEVICES][UBIDOTS_MAX_INFO_LENGTH];

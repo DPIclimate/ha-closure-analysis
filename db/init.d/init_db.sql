@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS harvest_area (
     UNIQUE(time_processed, name, status)
 );
 
+-- This table contains information regarding the expected outlook for each harvest area.
+-- For example, if the harvest area is expected to close, why will it close and when
+-- is it predicted to close.
 CREATE TABLE IF NOT EXISTS harvest_outlook (
     last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
     closed                              boolean NOT NULL,                   -- Is harvest area currently closed?
@@ -28,68 +31,87 @@ CREATE TABLE IF NOT EXISTS harvest_outlook (
     est_closure_time                    text NOT NULL                       -- How long will it close for?
 );
 
+-- Each harvest area is grouped by location. This location is obtained by searching for
+-- each harvest areas location on Willy Weather. Willy Weather provides a latitude and longitude
+-- for a searched query (e.g. searching for "Batemans Bay" on Willy Weather will provide the
+-- latitude and longitude coodinates for Batemans Bay). These coordinates are then compared
+-- to a list of latitude and longitude coordinates for BOM weather stations. This comparison
+-- results in the closest BOM weather station being found and its distance in km being calcualted.
+-- This table provides all the above information in an easy to query form.
 CREATE TABLE IF NOT EXISTS harvest_lookup (
-    last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    fa_program_name             text NOT NULL,
-    ww_location                 text NOT NULL,
-    ww_location_id              int NOT NULL,
-    ww_latitude                 float NOT NULL,
-    ww_longitude                float NOT NULL,
-    bom_location                text NOT NULL,
-    bom_location_id             text NOT NULL,
-    bom_latitude                float NOT NULL,
-    bom_longitude               float NOT NULL,
-    bom_distance                float NOT NULL,
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    fa_program_name                     text NOT NULL,                      -- NSW Food Authority program name
+    ww_location                         text NOT NULL,                      -- Location name from Willy Weather
+    ww_location_id                      int NOT NULL,                       -- Location ID from Willy Weather
+    ww_latitude                         float NOT NULL,                     -- Latitude from Willy Weather (represents HA latitude)
+    ww_longitude                        float NOT NULL,                     -- Longitude from Willy Weather (represents HA longitude)
+    bom_location                        text NOT NULL,                      -- BOM weather station name
+    bom_location_id                     text NOT NULL,                      -- BOM weather station ID
+    bom_latitude                        float NOT NULL,                     -- BOM weather station latitude
+    bom_longitude                       float NOT NULL,                     -- BOM weather station longitude
+    bom_distance                        float NOT NULL,                     -- BOM weather station distance from HA
     UNIQUE(fa_program_name)
 );
 
+-- Daily calculated 7 day weather forecast from Willy Weather. Note, need to confirm exact probabilities
+-- on precipitation data.
 CREATE TABLE IF NOT EXISTS weather_ww (
-    last_updated                    timestamptz DEFAULT NOW() NOT NULL,
-    location                        text NOT NULL,
-    location_id                     int NOT NULL,
-    ts                              timestamptz NOT NULL,
-    rainfall_start_range            int,
-    rainfall_end_range              int,
-    rainfall_range_divider          char,
-    rainfall_range_code             text NOT NULL,
-    rainfall_probability_of_any     int,
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    location                            text NOT NULL,                      -- Location name
+    location_id                         int NOT NULL,                       -- Location ID
+    ts                                  timestamptz NOT NULL,               -- Datetime information is valid for
+    rainfall_start_range                int,                                -- 25 % probability of min rainfall in mm
+    rainfall_end_range                  int,                                -- 25 % probability of max rainfall in mm
+    rainfall_range_divider              char,                               -- Range code divider (e.g. '<', '-' or '>')
+    rainfall_range_code                 text NOT NULL,                      -- Range code (e.g. "5-15") in mm
+    rainfall_probability_of_any         int,                                -- Probability of 0.2 mm of rainfall in grid
     UNIQUE(location_id, ts)
 );
 
+-- Daily observed weather from each BOM weather station in NSW that is close to a NSW oyster harvest area.
+-- Normally these data are updated a few days after they have been recorded, some sites are updated faster
+-- than this. These data are provided over FTP as .csv files. There is a csv parser in this program to extract
+-- the precipitation, max and min temperature.
 CREATE TABLE IF NOT EXISTS weather_bom (
-    last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    location                    text NOT NULL,
-    location_id                 text NOT NULL, -- TODO need to import
-    ts                          timestamptz NOT NULL,
-    precipitation               float,
-    max_temperature             float,
-    min_temperature             float,
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    location                            text NOT NULL,                      -- Location name (of BOM weather station)
+    location_id                         text NOT NULL,                      -- Location ID (of BOM weather station)
+    ts                                  timestamptz NOT NULL,               -- Datetime this data is relevent for
+    precipitation                       float,                              -- Daily precipitation in mm
+    max_temperature                     float,                              -- Daily maximum temperature
+    min_temperature                     float,                              -- Daily minimum temperature
     UNIQUE(location, ts)
 );
 
+-- Daily forecasted and historical weather from IBM's environmental intelligence suite (EIS).
+-- These data come from the ECMWF climate model (30 km gridded weather). The latitude and longitude in these
+-- requests come from Willy Weather. Note, the model updates historical data as well as forecasted weather so values
+-- are subjected to change over time.
 CREATE TABLE IF NOT EXISTS weather_ibm_eis (
-    last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    location                    text NOT NULL,
-    ww_location_id              text NOT NULL,
-    bom_location_id             text NOT NULL,
-    latitude                    float,
-    longitude                   float,
-    ts                          timestamptz NOT NULL,
-    precipitation               float,
-    max_temperature             float,
-    min_temperature             float,
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    location                            text NOT NULL,                      -- Location name from NSW Food Authority
+    ww_location_id                      text NOT NULL,                      -- Willy Weather location ID
+    bom_location_id                     text NOT NULL,                      -- Closes BOM station ID
+    latitude                            float,                              -- Latitude, taken from Willy Weather
+    longitude                           float,                              -- Longitude, taken from Willy Weather
+    ts                                  timestamptz NOT NULL,               -- Datetime these values are relevant for
+    precipitation                       float,                              -- Daily forecasted / estimated precipitation
+    max_temperature                     float,                              -- Daily forecasted / estimated max temperature
+    min_temperature                     float,                              -- Daily forecasted / estimated min temperature
     UNIQUE(ts, ww_location_id, bom_location_id)
 );
 
+-- This table isn't implemented yet. However, it should contain observed weather station data from
+-- FarmDecisionTECH (fdt) automatic weather stations (AWS's).
 CREATE TABLE IF NOT EXISTS weather_fdt (
-    location                    text NOT NULL,
-    latitude                    float,
-    longitude                   float,
-    distance_from_ha            float,
-    ts                          timestamptz,
-    precipitation               float,
-    max_temperature             float,
-    min_temperature             float
+    location                            text NOT NULL,                      -- Time this information was last updated
+    latitude                            float,                              -- Latitude of weather station
+    longitude                           float,                              -- Longitude of weather station
+    distance_from_ha                    float,                              -- Distance from harvest area in km
+    ts                                  timestamptz,                        -- Datetime these values are relevant for
+    precipitation                       float,                              -- Daily observed precipitation
+    max_temperature                     float,                              -- Daily observed max temperature
+    min_temperature                     float                               -- Daily observed min temperature
 );
 
 -- This is the main table where weather data are stored for querying
@@ -98,15 +120,15 @@ CREATE TABLE IF NOT EXISTS weather_fdt (
 -- This makes this table contain both observed rainfall and predicted rainfall
 -- for all locations which should be easier to query
 CREATE TABLE IF NOT EXISTS weather (
-    last_updated                timestamptz DEFAULT NOW() NOT NULL,
-    latitude                    float NOT NULL,
-    longitude                   float NOT NULL,
-    ts                          timestamptz NOT NULL,
-    program_name                text NOT NULL,
-    bom_location_id             text,
-    data_type                   text NOT NULL, -- "forecast", "observed"
-    precipitation               float NOT NULL,
-    forecast_precipitation      float,
-    observed_precipitation      float,
+    last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    latitude                            float NOT NULL,                     -- Latitude of harvest zone
+    longitude                           float NOT NULL,                     -- Longitude of harvest zone
+    ts                                  timestamptz NOT NULL,               -- Datetime this information is relevent for
+    program_name                        text NOT NULL,                      -- NSW FA program name
+    bom_location_id                     text,                               -- BOM weather station ID
+    data_type                           text NOT NULL,                      -- "forecast" or "observed"
+    precipitation                       float NOT NULL,                     -- Daily precipitation
+    forecast_precipitation              float,                              -- Daily precipitation (forecasted)
+    observed_precipitation              float,                              -- Daily precipitation (observed)
     UNIQUE(ts, program_name)
 )
