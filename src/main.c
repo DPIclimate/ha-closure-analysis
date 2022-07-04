@@ -14,16 +14,6 @@ int main(void) {
                   "Error: %s\n", PQerrorMessage(psql_conn));
     }
 
-   // const char* start = "2021-01-01";
-   // struct tm dt = {0};
-   // strptime(start, "%Y-%m-%d", &dt);
-   // for(int i = 0; i < 24; i++){
-   //     char buf[30];
-   //     strftime(buf, sizeof(buf), "%Y%m", &dt);
-   //     log_info("%s\n", buf);
-   //     dt.tm_mon++;
-   // }
-
     //FA_HarvestAreas_TypeDef harvest_areas = {0};
     //FA_GetHarvestAreas(&harvest_areas);
     //FA_HarvestAreasToDB(&harvest_areas, psql_conn);
@@ -33,17 +23,16 @@ int main(void) {
     FA_UniqueLocationsFromDB(&locations, psql_conn);
 
     // BUILD BOM TIMESERIES DATASET
-    const char* start_dt = "2022-06-01";
-    BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
-
+    //const char* start_dt = "2022-07-01";
+    //BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
 
     //// BUILD IBM TIMESERIES DATASET BELOW
-    //const char* start_time = "2022-01-01";
+    //const char* start_time = "2018-01-01";
     //const char* end_time = "2022-07-15";
     //IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
 
     //// BUILD COMBINED WEATHER INFORMATION
-    //T_BuildWeatherDB(&locations, psql_conn);
+    T_BuildWeatherDB(&locations, psql_conn);
 
     //// BUILD HARVEST AREA OUTLOOK
     //T_BuildOutlook(psql_conn);

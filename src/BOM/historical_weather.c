@@ -255,6 +255,7 @@ void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
         uint16_t index = 0;
         const int Q_LEN = 100;
         int queried_ids[Q_LEN];
+        memset(queried_ids, 0, sizeof(queried_ids));
         while(index < locations->count){
             int cws = BOM_ClosestStationIndex((double)locations->locations[index].ww_latitude,
                                               (double)locations->locations[index].ww_longitude,

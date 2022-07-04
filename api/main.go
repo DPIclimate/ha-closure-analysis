@@ -1,6 +1,9 @@
 package main
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
+)
 
 // @title          NSW Oyster Status API
 // @version        0.1
@@ -19,7 +22,7 @@ func main() {
 	defer func(psqlConn *sql.DB) {
 		err := psqlConn.Close()
 		if err != nil {
-
+			log.Fatalf("Error closing PostgreSQL database: %s\n", err)
 		}
 	}(psqlConn)
 

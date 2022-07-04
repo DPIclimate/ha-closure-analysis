@@ -17,7 +17,7 @@ func PSQLConnection() *sql.DB {
 		dbname   = "oyster_db"
 	)
 
-	fmt.Print("Connecting to PSQL database...")
+	log.Print("Connecting to PSQL database...")
 
 	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		hostname, port, username, password, dbname)
@@ -34,8 +34,7 @@ func PSQLConnection() *sql.DB {
 
 	err = psqlConn.Ping()
 	if err != nil {
-		fmt.Println("error")
-		log.Fatal(err)
+		log.Fatalf("error:\n%s\n", err)
 	}
 
 	fmt.Println("success")
