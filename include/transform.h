@@ -17,6 +17,18 @@
 /// Maximum size of timestamp (num chars)
 #define T_TIMESTAMP_SIZE            50
 
+/// Outlook buffer size
+#define T_OUTLOOK_BUF_SIZE          200
+
+/// Outlook closue time code
+#define T_EST_CLOSURE_BUF_SIZE      20
+
+/// Data type size
+#define T_DATA_TYPE_SIZE            30
+
+#define T_DATA_QUERY_LENGTH         15
+#define T_DATA_WINDOW_SIZE          7
+
 /// Structure of a location (i.e. program location)
 typedef struct {
     char last_updated[T_TIMESTAMP_SIZE]; ///< Last time data was updated
@@ -38,8 +50,39 @@ typedef struct {
     T_LocationLookup_TypeDef locations[T_MAX_N_LOCATIONS]; ///< List of locations
 }T_LocationsLookup_TypeDef;
 
+/// Harvest area outlook / prediction information
+typedef struct {
+    char program_name[FA_MAX_BUFFER]; ///< Food Auth location program name
+    int32_t ha_id; ///< Harvest area unique ID
+    char classification[FA_MAX_BUFFER]; ///< Harvest area classification
+    char status[FA_MAX_BUFFER]; ///< Harvest areas status (open, closed etc.)
+    char time_processed[T_TIMESTAMP_SIZE]; ///< Time status was updated
+    char status_reason[FA_MAX_BUFFER]; ///< Reason for change in status
+    bool closed; ///< Is harvest area currently closed?
+    bool to_close; ///< Is the harvest area predicted to close
+    char closure_type[T_OUTLOOK_BUF_SIZE]; ///< What type of closue? Rainfall
+    char closure_reason[T_OUTLOOK_BUF_SIZE]; ///< Extended reason
+    char closure_date[T_TIMESTAMP_SIZE]; ///< Expected closure data
+    float closure_severity_index; ///< Expected closure severity index
+    char est_closure_time[T_EST_CLOSURE_BUF_SIZE]; ///< How long closed for?
+}T_Outlook_Typedef;
+
+typedef struct{
+    char time_processed[T_TIMESTAMP_SIZE];
+    char data_type[T_DATA_TYPE_SIZE];
+    double precipitaiton;
+} T_OutlookData_TypeDef;
+
+typedef struct{
+    int32_t count;
+    T_OutlookData_TypeDef data[T_DATA_QUERY_LENGTH];
+} T_OutlookDataset_TypeDef;
+
 /// Build weather table in PostgreSQL database
 void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                       PGconn* psql_conn);
+
+/// Build outlook for each harvest area
+void T_BuildOutlook(PGconn* psql_conn);
 
 #endif //PROGRAM_TRANSFORM_H

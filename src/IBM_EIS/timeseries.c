@@ -560,3 +560,40 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
              "PostgreSQL database.\n");
 }
 
+
+void IBM_BuildTSDatabase(T_LocationsLookup_TypeDef* locations,
+                         const char* start_time,
+                         const char* end_time,
+                         PGconn* psql_conn){
+
+    struct tm start_dt = {0};
+    strptime(start_time, "%Y-%02m-%02d", &start_dt);
+    const time_t unix_st = mktime(&start_dt);
+
+    struct tm end_dt = {0};
+    strptime(end_time, "%Y-%02m-%02d", &end_dt);
+    const time_t unix_et = mktime(&end_dt);
+
+    IBM_AuthHandle_TypeDef ibm_auth_handle = {0};
+    if(IBM_HandleAuth(&ibm_auth_handle) != 0){
+        log_error("IBM authentication failed.\n");
+        return;
+    }
+
+    uint16_t index = 0;
+    while(index < locations->count){
+        IBM_TimeseriesReq_TypeDef ibm_req = {
+                .layer_id = IBM_PRECIPITATION_ID,
+                .latitude = locations->locations[index].ww_latitude,
+                .longitude = locations->locations[index].ww_longitude,
+                .start = unix_st,
+                .end = unix_et
+        };
+
+        IBM_TimeseriesDataset_TypeDef ibm_dataset;
+        IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &ibm_dataset, 1);
+        IBM_TimeseriesToDB(&ibm_req, &ibm_dataset,
+                           &locations->locations[index], psql_conn);
+        index++;
+    }
+}

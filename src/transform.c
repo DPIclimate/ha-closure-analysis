@@ -1,5 +1,9 @@
 #include "transform.h"
 
+static void T_CloseHarvestArea(T_Outlook_Typedef* outlook,
+                               const char* reason,
+                               const char* timestamp);
+
 /**
  * Main weather table for each location.
  *
@@ -57,27 +61,28 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                 }
 
                 char ibm_insert[1000];
-                snprintf(ibm_insert, sizeof(ibm_insert), "INSERT INTO weather "
-                                                         "(last_updated, "
-                                                         "latitude, "
-                                                         "longitude, "
-                                                         "ts, "
-                                                         "program_name, "
-                                                         "bom_location_id, "
-                                                         "data_type, "
-                                                         "precipitation, "
-                                                         "forecast_precipitation) "
-                                                         "VALUES (NOW(), %f, "
-                                                         "%f, '%s', '%s', '%s', "
-                                                         "'forecast', %f, %f) ON "
-                                                         "CONFLICT (ts, "
-                                                         "program_name) DO UPDATE "
-                                                         "SET last_updated = "
-                                                         "NOW(), "
-                                                         "data_type = 'forecast', "
-                                                         "precipitation = %f, "
-                                                         "forecast_precipitation = "
-                                                         "%f;",
+                snprintf(ibm_insert, sizeof(ibm_insert),
+                         "INSERT INTO weather "
+                         "(last_updated, "
+                         "latitude, "
+                         "longitude, "
+                         "ts, "
+                         "program_name, "
+                         "bom_location_id, "
+                         "data_type, "
+                         "precipitation, "
+                         "forecast_precipitation) "
+                         "VALUES (NOW(), %f, "
+                         "%f, '%s', '%s', '%s', "
+                         "'forecast', %f, %f) ON "
+                         "CONFLICT (ts, "
+                         "program_name) DO UPDATE "
+                         "SET last_updated = "
+                         "NOW(), "
+                         "data_type = 'forecast', "
+                         "precipitation = %f, "
+                         "forecast_precipitation = "
+                         "%f;",
                          loc.ww_latitude,
                          loc.ww_longitude,
                          ibm_timestamp,
@@ -130,27 +135,28 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                 }
 
                 char bom_insert[1000];
-                snprintf(bom_insert, sizeof(bom_insert), "INSERT INTO weather "
-                                                         "(last_updated, "
-                                                         "latitude, "
-                                                         "longitude, "
-                                                         "ts, "
-                                                         "program_name, "
-                                                         "bom_location_id, "
-                                                         "data_type, "
-                                                         "precipitation, "
-                                                         "observed_precipitation) "
-                                                         "VALUES (NOW(), %f, "
-                                                         "%f, '%s', '%s', '%s', "
-                                                         "'observed', %f, %f) ON "
-                                                         "CONFLICT (ts, "
-                                                         "program_name) DO UPDATE "
-                                                         "SET last_updated = "
-                                                         "NOW(), "
-                                                         "data_type = 'observed', "
-                                                         "precipitation = %f, "
-                                                         "observed_precipitation = "
-                                                         "%f;",
+                snprintf(bom_insert, sizeof(bom_insert),
+                         "INSERT INTO weather "
+                         "(last_updated, "
+                         "latitude, "
+                         "longitude, "
+                         "ts, "
+                         "program_name, "
+                         "bom_location_id, "
+                         "data_type, "
+                         "precipitation, "
+                         "observed_precipitation) "
+                         "VALUES (NOW(), %f, "
+                         "%f, '%s', '%s', '%s', "
+                         "'observed', %f, %f) ON "
+                         "CONFLICT (ts, "
+                         "program_name) DO UPDATE "
+                         "SET last_updated = "
+                         "NOW(), "
+                         "data_type = 'observed', "
+                         "precipitation = %f, "
+                         "observed_precipitation = "
+                         "%f;",
                          loc.ww_latitude,
                          loc.ww_longitude,
                          bom_timestamp,
@@ -182,7 +188,154 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
 void T_BuildOutlook(PGconn* psql_conn){
 
+    // Get a unique list of the latest harvest area statuses
+    const char* fa_query = "SELECT DISTINCT ON (id) program_name, id, "
+                           "classification, status, time_processed, "
+                           "status_reason FROM harvest_area "
+                           "ORDER BY id, time_processed DESC;";
+
+    PGresult* fa_res = PQexec(psql_conn, fa_query);
+
+    if(PQresultStatus(fa_res) == PGRES_TUPLES_OK){
+        int num_fields = PQnfields(fa_res);
+        for(int i = 0; i < PQntuples(fa_res); i++){
+
+            // Get basic current harvest area status information
+            T_Outlook_Typedef outlook;
+            char *ptr;
+            for(int j = 0; j < num_fields; j++){
+                switch(j){
+                    case 0: // Program name
+                        strncpy(outlook.program_name, PQgetvalue(fa_res, i, j),
+                                sizeof(outlook.program_name));
+                        break;
+                    case 1: // ID
+                        outlook.ha_id = (int32_t)strtol(PQgetvalue(fa_res, i, j),
+                                                        &ptr, 10);
+                        break;
+                    case 2: // Classification
+                        strncpy(outlook.classification, PQgetvalue(fa_res, i, j),
+                                sizeof(outlook.classification));
+                        break;
+                    case 3: // Status
+                        strncpy(outlook.status, PQgetvalue(fa_res, i, j),
+                                sizeof(outlook.status));
+                        break;
+                    case 4: // Time processed
+                        strncpy(outlook.time_processed, PQgetvalue(fa_res, i, j),
+                                sizeof(outlook.time_processed));
+                        break;
+                    case 5: // Reason for current status
+                        strncpy(outlook.status_reason, PQgetvalue(fa_res, i, j),
+                                sizeof(outlook.status_reason));
+                        break;
+                    default:
+                        log_error("Unknown value recived when parsing harvest "
+                                  "area status information.\n");
+                        return;
+                }
+            }
+
+            // Get current observed weather and forecast information for a
+            // particular harvest area
+            char weather_query[500];
+            snprintf(weather_query, sizeof(weather_query),
+                     "SELECT ts, data_type, precipitation FROM weather WHERE "
+                     "program_name = '%s' ORDER BY ts DESC LIMIT %d;",
+                     outlook.program_name, T_DATA_QUERY_LENGTH);
+
+            PGresult* weather_res = PQexec(psql_conn, weather_query);
+            T_OutlookDataset_TypeDef weather_dataset = {0};
+            weather_dataset.count = 0;
+            if(PQresultStatus(weather_res) == PGRES_TUPLES_OK){
+                int w_num_fields = PQnfields(weather_res);
+                for(int x = PQntuples(weather_res)-1; x >= 0; x--) {
+                    T_OutlookData_TypeDef value = {0};
+                    char* p;
+                    for (int j = 0; j < w_num_fields; j++) {
+                        switch(j){
+                            case 0:
+                                strncpy(value.time_processed,
+                                        PQgetvalue(weather_res, x, j),
+                                        sizeof(value.time_processed));
+                                break;
+                            case 1:
+                                strncpy(value.data_type,
+                                        PQgetvalue(weather_res, x, j),
+                                        sizeof(value.data_type));
+                                break;
+                            case 2:
+                                value.precipitaiton = (double)strtof(
+                                        PQgetvalue(weather_res, x, j), &p);
+                                break;
+                            default:
+                                log_error("Unknown weather information "
+                                          "queried.\n");
+                                return;
+                        }
+                    }
+                    weather_dataset.data[weather_dataset.count] = value;
+                    weather_dataset.count++;
+                }
+            }
+
+            // Setup 7-day total moving window and calculate if daily
+            // precipitation is going to exceed a daily threshold
+            double sum_precip = 0;
+            bool daily_total_closure = false;
+            for(int y = 0; y < weather_dataset.count; y++){
+                double daily_precip = weather_dataset.data[y].precipitaiton;
+                if(y < T_DATA_WINDOW_SIZE){
+                    sum_precip += daily_precip;
+                }
+
+                if(daily_precip > 30.0 && !daily_total_closure){
+                    T_CloseHarvestArea(&outlook,
+                                       "Rainfall is predicted to exceed "
+                                       "30 mm in a single day.",
+                                       weather_dataset.data[y].time_processed);
+                    daily_total_closure = true;
+                }
+            }
+
+            // Moving window to calcualte 7-day total rainfall
+            double seven_day_window_sum = sum_precip;
+            for(int p = T_DATA_WINDOW_SIZE; p < weather_dataset.count; p++){
+                seven_day_window_sum +=
+                        weather_dataset.data[p].precipitaiton -
+                        weather_dataset.data[p -
+                        T_DATA_WINDOW_SIZE].precipitaiton;
+                if(sum_precip < seven_day_window_sum){
+                    sum_precip = seven_day_window_sum;
+                }
+            }
+
+            if(sum_precip > 100.0){
+                T_CloseHarvestArea(&outlook,
+                                   "Rainfall is predicted to exceed "
+                                   "100 mm in a 7-day period", "timestamp");
+            }
+        }
+    }
+}
 
 
+/**
+ * Predicted harvest area closure.
+ *
+ * @param outlook
+ * @param reason
+ * @param timestamp
+ */
+void T_CloseHarvestArea(T_Outlook_Typedef* outlook,
+                        const char* reason,
+                        const char* timestamp){
+    if(strcmp(outlook->status, "Closed") != 0) {
+        outlook->closed = false;
+        outlook->to_close = true;
+        strncpy(outlook->closure_type, "Rainfall", sizeof(outlook->closure_type));
+        strncpy(outlook->closure_reason, reason, sizeof(outlook->closure_reason));
+        strncpy(outlook->closure_date, timestamp, sizeof(outlook->closure_date));
+    }
 
 }

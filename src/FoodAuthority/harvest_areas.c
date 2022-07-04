@@ -180,7 +180,7 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
         char query[3000];
         snprintf(query, sizeof(query), "INSERT INTO harvest_area ("
                                        "last_updated, program_name, location, "
-                                       "name, classification, status, "
+                                       "name, id, classification, status, "
                                        "time_processed, status_reason, "
                                        "status_prev_reason) "
                                        "VALUES "
@@ -188,15 +188,16 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
                                        "'%s',"      // Program name
                                        "'%s',"      // Location
                                        "'%s',"      // Harvest area name
+                                       "%d, "       // Harvest ID
                                        "'%s',"      // Classification
                                        "'%s',"      // Status (open, closed etc.)
                                        "'%s',"      // Timestamptz
                                        "'%s',"      // Reason
                                        "'%s')"      // Previous reason
-                                       "ON CONFLICT (time_processed, name, "
+                                       "ON CONFLICT (time_processed, id, name, "
                                        "status) DO "
                                        "UPDATE SET last_updated = NOW();",
-                 ha.program_name, ha.location, ha.name,
+                 ha.program_name, ha.location, ha.name, ha.id,
                  ha.classification, ha.status, ha.time, ha.reason,
                  ha.previous_reason);
 
@@ -224,7 +225,7 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
  * @note This function requires that the harvest_area table is populated
  * and there is an available bom weather station .txt file available.
  *
- * @todo Improve this function to use the BOM FTP, rather than the .txt file
+ * @todo Improve this function to use the BOM table, rather than the .txt file
  *
  * @param psql_conn PostgreSQL connection handler.
  */

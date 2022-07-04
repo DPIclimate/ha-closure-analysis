@@ -9,12 +9,13 @@ CREATE TABLE IF NOT EXISTS harvest_area (
     program_name                        text NOT NULL,                      -- Area name (E.g. Clyde River)
     location                            text NOT NULL,                      -- Harvest location (can be a zone)
     name                                text NOT NULL,                      -- Harvest area name (e.g. Moonlight)
+    id                                  int NOT NULL,                       -- Unique ID from NSW Food Authority
     classification                      text NOT NULL,                      -- Restrictions and classifications
     status                              text NOT NULL,                      -- Open or Closed
     time_processed                      timestamptz NOT NULL,               -- Time NSW FA updated status
     status_reason                       text NOT NULL,                      -- Reason for latest status
     status_prev_reason                  text NOT NULL,                      -- Reason for the previous status (N/A if not found)
-    UNIQUE(time_processed, name, status)
+    UNIQUE(time_processed, id, name, status)
 );
 
 -- This table contains information regarding the expected outlook for each harvest area.
@@ -22,12 +23,16 @@ CREATE TABLE IF NOT EXISTS harvest_area (
 -- is it predicted to close.
 CREATE TABLE IF NOT EXISTS harvest_outlook (
     last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
+    program_name                        text NOT NULL,                      -- Area name (E.g. Clyde River)
+    location                            text NOT NULL,                      -- Harvest location (can be a zone)
+    name                                text NOT NULL,                      -- Harvest area name (e.g. Moonlight)
+    id                                  int NOT NULL,                       -- Unique ID from NSW Food Authority
     closed                              boolean NOT NULL,                   -- Is harvest area currently closed?
     to_close                            boolean NOT NULL,                   -- Is the harvest area predicted to close?
     closure_type                        text NOT NULL,                      -- Why is it going to close? Rainfall...
     closure_reason                      text NOT NULL,                      -- Extended reason why HA is closing
     closure_date                        timestamptz NOT NULL,               -- What date will the HA close? Predicted...
-    closure_severity                    text NOT NULL,                      -- What is the severity of this closure? (the index)
+    closure_severity                    float NOT NULL,                     -- What is the severity of this closure? (the index)
     est_closure_time                    text NOT NULL                       -- How long will it close for?
 );
 

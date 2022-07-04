@@ -14,7 +14,16 @@ int main(void) {
                   "Error: %s\n", PQerrorMessage(psql_conn));
     }
 
-    // BUILD BOM TIMESERIES DATASET BELOW
+   // const char* start = "2021-01-01";
+   // struct tm dt = {0};
+   // strptime(start, "%Y-%m-%d", &dt);
+   // for(int i = 0; i < 24; i++){
+   //     char buf[30];
+   //     strftime(buf, sizeof(buf), "%Y%m", &dt);
+   //     log_info("%s\n", buf);
+   //     dt.tm_mon++;
+   // }
+
     //FA_HarvestAreas_TypeDef harvest_areas = {0};
     //FA_GetHarvestAreas(&harvest_areas);
     //FA_HarvestAreasToDB(&harvest_areas, psql_conn);
@@ -22,59 +31,22 @@ int main(void) {
 
     T_LocationsLookup_TypeDef locations;
     FA_UniqueLocationsFromDB(&locations, psql_conn);
-    T_BuildWeatherDB(&locations, psql_conn);
 
-    //BOM_WeatherStations_TypeDef stations;
-    //BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+    // BUILD BOM TIMESERIES DATASET
+    const char* start_dt = "2022-06-01";
+    BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
 
-    //uint16_t index = 0;
-    //while(index < locations.count){
-    //    int cws = BOM_ClosestStationIndex((double)locations.locations[index].ww_latitude,
-    //                                      (double)locations.locations[index].ww_longitude,
-    //                                      &stations);
 
-    //    // Get historical weather from BOM
-    //    BOM_WeatherDataset_TypeDef bom_dataset = {0};
-    //    BOM_GetWeather(&bom_dataset, &stations.stations[cws], "202206");
-    //    BOM_HistoricalWeatherToDB(&stations.stations[cws], &bom_dataset, psql_conn);
-    //    index++;
-    //}
+    //// BUILD IBM TIMESERIES DATASET BELOW
+    //const char* start_time = "2022-01-01";
+    //const char* end_time = "2022-07-15";
+    //IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
 
-    // BUILD IBM TIMESERIES DATASET BELOW
-//    T_LocationsLookup_TypeDef locations;
-//    FA_UniqueLocationsFromDB(&locations, psql_conn);
-//
-//    const char* start_time = "2022-06-01";
-//    struct tm start_dt = {0};
-//    strptime(start_time, "%Y-%02m-%02d", &start_dt);
-//    const time_t unix_st = mktime(&start_dt);
-//
-//    const char* end_time = "2022-07-10";
-//    struct tm end_dt = {0};
-//    strptime(end_time, "%Y-%02m-%02d", &end_dt);
-//    const time_t unix_et = mktime(&end_dt);
-//
-//    IBM_AuthHandle_TypeDef ibm_auth_handle = {0};
-//    if(IBM_HandleAuth(&ibm_auth_handle) != 0){
-//        return 1;
-//    }
-//
-//    uint16_t index = 0;
-//    while(index < locations.count){
-//        IBM_TimeseriesReq_TypeDef ibm_req = {
-//                .layer_id = IBM_PRECIPITATION_ID,
-//                .latitude = locations.locations[index].ww_latitude,
-//                .longitude = locations.locations[index].ww_longitude,
-//                .start = unix_st,
-//                .end = unix_et
-//        };
-//
-//        IBM_TimeseriesDataset_TypeDef ibm_dataset;
-//        IBM_GetTimeseries(&ibm_auth_handle, &ibm_req, &ibm_dataset, 1);
-//        IBM_TimeseriesToDB(&ibm_req, &ibm_dataset,
-//                           &locations.locations[index], psql_conn);
-//        index++;
-//    }
+    //// BUILD COMBINED WEATHER INFORMATION
+    //T_BuildWeatherDB(&locations, psql_conn);
+
+    //// BUILD HARVEST AREA OUTLOOK
+    //T_BuildOutlook(psql_conn);
 
     PQfinish(psql_conn);
     curl_global_cleanup();

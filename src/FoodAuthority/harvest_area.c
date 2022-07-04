@@ -103,6 +103,7 @@ void FA_ParseResponse(char *data,
             "sqap-program", // Program name
             "sqap-harvest-area", // Location (may include zone as well)
             "sqap-card__title", // Harvest area name
+            "reference-number", // Food authority unique reference number
             "-classification", // Classification (Depuration, Water Drawing)
             "-status", // Open Close
             "datetime=", // Time updated
@@ -113,6 +114,9 @@ void FA_ParseResponse(char *data,
     // Setup to hold time struct
     struct tm v_time; // Value time
     memset(&v_time, 0, sizeof(struct tm));
+
+    long unique_id = 0;
+    char* ptr;
 
     char value[FA_MAX_BUFFER] = {0};
     for (size_t i = 0; i < sizeof(search_terms) / sizeof(*search_terms); i++) {
@@ -149,12 +153,16 @@ void FA_ParseResponse(char *data,
                 strncpy(harvest_area->name, value, FA_MAX_BUFFER);
                 break;
             case 3:
-                strncpy(harvest_area->classification, value, FA_MAX_BUFFER);
+                unique_id = strtol(value, &ptr, 10);
+                harvest_area->id = (int32_t)unique_id;
                 break;
             case 4:
-                strncpy(harvest_area->status, value, FA_MAX_BUFFER);
+                strncpy(harvest_area->classification, value, FA_MAX_BUFFER);
                 break;
             case 5:
+                strncpy(harvest_area->status, value, FA_MAX_BUFFER);
+                break;
+            case 6:
                 /// Convert time to tm struct
                 strptime(value, "%02d/%02m/%Y - %02H:%02M%p", &v_time);
                 harvest_area->u_time = v_time;
@@ -162,10 +170,10 @@ void FA_ParseResponse(char *data,
                 strftime(ts_tz, sizeof(ts_tz), "%Y-%m-%d %H:%M:%S%z", &v_time);
                 strncpy(harvest_area->time, ts_tz, FA_MAX_BUFFER);
                 break;
-            case 6:
+            case 7:
                 strncpy(harvest_area->reason, value, FA_MAX_BUFFER);
                 break;
-            case 7:
+            case 8:
                 strncpy(harvest_area->previous_reason, value, FA_MAX_BUFFER);
                 break;
             default:

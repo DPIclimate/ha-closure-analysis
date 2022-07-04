@@ -43,10 +43,8 @@ func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	var harvestAreas HarvestAreas
 
-	query := "SELECT DISTINCT last_updated, program_name, location, name, classification, " +
-		"status, time_processed, status_reason, status_prev_reason FROM harvest_area ORDER BY " +
-		"time_processed"
-
+	query := "SELECT DISTINCT ON (name) last_updated, program_name, location, name, classification, status, " +
+		"time_processed, status_reason, status_prev_reason FROM harvest_area ORDER BY name, time_processed DESC;"
 	rows, err := db.Query(query)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)

@@ -67,4 +67,9 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
                         T_LocationLookup_TypeDef* location,
                         PGconn* psql_conn);
 
+void IBM_BuildTSDatabase(T_LocationsLookup_TypeDef* locations,
+                         const char* start_time,
+                         const char* end_time,
+                         PGconn* psql_conn);
+
 #endif //HA_CLOSURE_ANALYSIS_TIMESERIES_H

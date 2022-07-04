@@ -21,15 +21,16 @@
 
 /// Harvest area status information.
 typedef struct {
-    char program_name[FA_MAX_BUFFER]; /// Location of harvest area program
-    char location[FA_MAX_BUFFER]; /// Location of harvest area
-    char name[FA_MAX_BUFFER]; /// Name of harvest area
-    char classification[FA_MAX_BUFFER]; /// NSW FA quality classification
-    char status[FA_MAX_BUFFER]; /// HA status (open / closed)
-    char time[FA_MAX_BUFFER]; /// Time updated
-    struct tm u_time; /// System formatted time
-    char reason[FA_MAX_BUFFER]; /// Reason for status
-    char previous_reason[FA_MAX_BUFFER]; /// Previous status reason
+    char program_name[FA_MAX_BUFFER]; ///< Location of harvest area program
+    char location[FA_MAX_BUFFER]; ///< Location of harvest area
+    char name[FA_MAX_BUFFER]; ///< Name of harvest area
+    int32_t id; ///< Unique id from Food Authority
+    char classification[FA_MAX_BUFFER]; ///< NSW FA quality classification
+    char status[FA_MAX_BUFFER]; ///< HA status (open / closed)
+    char time[FA_MAX_BUFFER]; ///< Time updated
+    struct tm u_time; ///< System formatted time
+    char reason[FA_MAX_BUFFER]; ///< Reason for status
+    char previous_reason[FA_MAX_BUFFER]; ///< Previous status reason
 } FA_HarvestArea_TypeDef;
 
 /// Harvest area of interest status information.

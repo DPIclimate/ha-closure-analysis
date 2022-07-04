@@ -236,3 +236,48 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
 
     log_info("BOM weather data written to PostgreSQL.\n");
 }
+
+void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
+                        const char* start_time,
+                        PGconn* psql_conn){
+
+    BOM_WeatherStations_TypeDef stations;
+    BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
+
+    struct tm dt = {0};
+    strptime(start_time, "%Y-%m-%d", &dt);
+    time_t start_unix = mktime(&dt);
+    time_t end_unix = time(NULL); // Current time as UNIX timestamp
+    while(difftime(end_unix, start_unix) > 0.0){
+        char time_buf[30];
+        strftime(time_buf, sizeof(time_buf), "%Y%m", &dt);
+
+        uint16_t index = 0;
+        const int Q_LEN = 100;
+        int queried_ids[Q_LEN];
+        while(index < locations->count){
+            int cws = BOM_ClosestStationIndex((double)locations->locations[index].ww_latitude,
+                                              (double)locations->locations[index].ww_longitude,
+                                              &stations);
+
+            bool already_queried = false;
+            for(int i = 0; i < Q_LEN; i++){
+                if(queried_ids[i] == cws){
+                    already_queried = true;
+                    break;
+                }
+            }
+
+            if(!already_queried){
+                BOM_WeatherDataset_TypeDef bom_dataset = {0};
+                BOM_GetWeather(&bom_dataset, &stations.stations[cws], time_buf);
+                BOM_HistoricalWeatherToDB(&stations.stations[cws], &bom_dataset, psql_conn);
+            }
+            queried_ids[index] = cws;
+            index++;
+        }
+
+        dt.tm_mon++;
+        start_unix = mktime(&dt);
+    }
+}
