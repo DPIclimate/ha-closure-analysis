@@ -97,12 +97,13 @@ $(document).ready(function(){initNavTree('historical__weather_8h.html',''); init
 <code>#include &lt;ctype.h&gt;</code><br />
 <code>#include &lt;libpq-fe.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="transform_8h_source.html">transform.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="stations_8h_source.html">BOM/stations.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ftp_8h_source.html">ftp.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for historical_weather.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="historical__weather_8h__incl.svg" width="986" height="426"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="historical__weather_8h__incl.svg" width="1702" height="590"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -142,6 +143,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a66ed16101a6e5215921e1c235df386ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a66ed16101a6e5215921e1c235df386ca">BOM_HistoricalWeatherToDB</a> (<a class="el" href="struct_b_o_m___weather_station___type_def.html">BOM_WeatherStation_TypeDef</a> *weather_station, <a class="el" href="struct_b_o_m___weather_dataset___type_def.html">BOM_WeatherDataset_TypeDef</a> *dataset, PGconn *psql_conn)</td></tr>
 <tr class="memdesc:a66ed16101a6e5215921e1c235df386ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write observed weather to PostgreSQL table (weather_bom)  <a href="historical__weather_8h.html#a66ed16101a6e5215921e1c235df386ca">More...</a><br /></td></tr>
 <tr class="separator:a66ed16101a6e5215921e1c235df386ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f9d5ce2083e1d7aaf990ee91681825"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="historical__weather_8h.html#a17f9d5ce2083e1d7aaf990ee91681825">BOM_TimeseriesToDB</a> (<a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *locations, const char *start_time, PGconn *psql_conn)</td></tr>
+<tr class="separator:a17f9d5ce2083e1d7aaf990ee91681825"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="af0cfeba67c248faf642a8c73a20626b8" name="af0cfeba67c248faf642a8c73a20626b8"></a>
@@ -329,6 +332,40 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Status code. </dd></dl>
+
+</div>
+</div>
+<a id="a17f9d5ce2083e1d7aaf990ee91681825" name="a17f9d5ce2083e1d7aaf990ee91681825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f9d5ce2083e1d7aaf990ee91681825">&#9670;&nbsp;</a></span>BOM_TimeseriesToDB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BOM_TimeseriesToDB </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>locations</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>start_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

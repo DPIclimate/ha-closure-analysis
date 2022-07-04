@@ -7,6 +7,7 @@ var searchData=
   ['stations_4',['stations',['../struct_b_o_m___weather_stations___type_def.html#a42fb4698b0228d319362eb4a6be87823',1,'BOM_WeatherStations_TypeDef']]],
   ['stations_2ec_5',['stations.c',['../stations_8c.html',1,'']]],
   ['stations_2eh_6',['stations.h',['../stations_8h.html',1,'']]],
-  ['status_7',['status',['../struct_f_a___harvest_area___type_def.html#a443b9d9c27146656573cd6a278e295b2',1,'FA_HarvestArea_TypeDef']]],
-  ['stdout_5fcallback_8',['stdout_callback',['../log_8c.html#a4835022da53ad0b637272a4e2430022a',1,'log.c']]]
+  ['status_7',['status',['../struct_f_a___harvest_area___type_def.html#a443b9d9c27146656573cd6a278e295b2',1,'FA_HarvestArea_TypeDef::status()'],['../struct_t___outlook___typedef.html#ac9a88ab5c76534437f061d60c18fc42d',1,'T_Outlook_Typedef::status()']]],
+  ['status_5freason_8',['status_reason',['../struct_t___outlook___typedef.html#ad3a3c7eea2e9158dfd3346ee9582c1ff',1,'T_Outlook_Typedef']]],
+  ['stdout_5fcallback_9',['stdout_callback',['../log_8c.html#a4835022da53ad0b637272a4e2430022a',1,'log.c']]]
 ];

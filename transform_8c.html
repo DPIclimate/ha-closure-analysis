@@ -100,10 +100,13 @@ Include dependency graph for transform.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a5b60a7e902139f534dc1f1bb65dbf260"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8c.html#a5b60a7e902139f534dc1f1bb65dbf260">T_CloseHarvestArea</a> (<a class="el" href="struct_t___outlook___typedef.html">T_Outlook_Typedef</a> *outlook, const char *reason, const char *timestamp)</td></tr>
+<tr class="separator:a5b60a7e902139f534dc1f1bb65dbf260"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4189d4916467017dc3d00c2551a74a56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8c.html#a4189d4916467017dc3d00c2551a74a56">T_BuildWeatherDB</a> (<a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *locations, PGconn *psql_conn)</td></tr>
 <tr class="memdesc:a4189d4916467017dc3d00c2551a74a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build weather table in PostgreSQL database.  <a href="transform_8c.html#a4189d4916467017dc3d00c2551a74a56">More...</a><br /></td></tr>
 <tr class="separator:a4189d4916467017dc3d00c2551a74a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1ef7833bcdeaed5dc11aa2e93d9fca1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="transform_8c.html#aa1ef7833bcdeaed5dc11aa2e93d9fca1">T_BuildOutlook</a> (PGconn *psql_conn)</td></tr>
+<tr class="memdesc:aa1ef7833bcdeaed5dc11aa2e93d9fca1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build outlook for each harvest area.  <a href="transform_8c.html#aa1ef7833bcdeaed5dc11aa2e93d9fca1">More...</a><br /></td></tr>
 <tr class="separator:aa1ef7833bcdeaed5dc11aa2e93d9fca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -122,6 +125,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Build outlook for each harvest area. </p>
 
 </div>
 </div>
@@ -159,6 +164,57 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">locations</td><td>Unique locations information. </td></tr>
     <tr><td class="paramname">psql_conn</td><td>PostgreSQL connection handler. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5b60a7e902139f534dc1f1bb65dbf260" name="a5b60a7e902139f534dc1f1bb65dbf260"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b60a7e902139f534dc1f1bb65dbf260">&#9670;&nbsp;</a></span>T_CloseHarvestArea()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void T_CloseHarvestArea </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_t___outlook___typedef.html">T_Outlook_Typedef</a> *&#160;</td>
+          <td class="paramname"><em>outlook</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>reason</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>timestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Predicted harvest area closure.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outlook</td><td></td></tr>
+    <tr><td class="paramname">reason</td><td></td></tr>
+    <tr><td class="paramname">timestamp</td><td></td></tr>
   </table>
   </dd>
 </dl>

@@ -1,6 +1,7 @@
 var struct_f_a___harvest_area___type_def =
 [
     [ "classification", "struct_f_a___harvest_area___type_def.html#a54bbff12bcb16ada4fe7ee5808460a77", null ],
+    [ "id", "struct_f_a___harvest_area___type_def.html#a1339b0dde16f64bed5774c04bc9483e4", null ],
     [ "location", "struct_f_a___harvest_area___type_def.html#a7c6fa58c4211fd310dd5e43eedd606db", null ],
     [ "name", "struct_f_a___harvest_area___type_def.html#ab8952b681da3fa61980f70ba96e00b36", null ],
     [ "previous_reason", "struct_f_a___harvest_area___type_def.html#a9945dc72a1a60c9e416cdf7b7b02d6ec", null ],

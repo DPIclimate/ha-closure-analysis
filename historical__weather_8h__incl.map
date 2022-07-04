@@ -1,22 +1,27 @@
 <map id="include/BOM/historical_weather.h" name="include/BOM/historical_weather.h">
-<area shape="rect" id="node1" title=" " alt="" coords="368,5,522,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="274,393,331,420"/>
-<area shape="rect" id="node3" title=" " alt="" coords="44,319,123,345"/>
-<area shape="rect" id="node4" title=" " alt="" coords="511,169,574,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="649,95,724,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="916,319,980,345"/>
-<area shape="rect" id="node7" href="$stations_8h.html" title=" " alt="" coords="389,95,501,121"/>
-<area shape="rect" id="node9" href="$ftp_8h.html" title=" " alt="" coords="320,169,367,196"/>
-<area shape="rect" id="node8" title=" " alt="" coords="830,319,892,345"/>
-<area shape="rect" id="node13" href="$utils_8h.html" title=" " alt="" coords="381,244,437,271"/>
-<area shape="rect" id="node10" title=" " alt="" coords="147,319,210,345"/>
-<area shape="rect" id="node11" title=" " alt="" coords="234,319,298,345"/>
-<area shape="rect" id="node12" title=" " alt="" coords="322,319,384,345"/>
-<area shape="rect" id="node14" title=" " alt="" coords="408,319,519,345"/>
-<area shape="rect" id="node15" title=" " alt="" coords="543,319,622,345"/>
-<area shape="rect" id="node16" title=" " alt="" coords="646,319,732,345"/>
-<area shape="rect" id="node17" href="$log_8h.html" title=" " alt="" coords="756,319,806,345"/>
-<area shape="rect" id="node18" title=" " alt="" coords="751,393,811,420"/>
-<area shape="rect" id="node19" title=" " alt="" coords="835,393,903,420"/>
-<area shape="rect" id="node20" title=" " alt="" coords="652,393,726,420"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1370,5,1523,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="27,557,85,584"/>
+<area shape="rect" id="node3" title=" " alt="" coords="726,483,805,509"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1594,333,1657,360"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1360,169,1435,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1628,483,1692,509"/>
+<area shape="rect" id="node7" href="$transform_8h.html" title=" " alt="" coords="1178,95,1265,121"/>
+<area shape="rect" id="node13" href="$stations_8h.html" title=" " alt="" coords="1496,251,1608,278"/>
+<area shape="rect" id="node15" href="$ftp_8h.html" title=" " alt="" coords="1379,333,1426,360"/>
+<area shape="rect" id="node8" title=" " alt="" coords="187,557,247,584"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1122,483,1185,509"/>
+<area shape="rect" id="node10" href="$log_8h.html" title=" " alt="" coords="389,483,438,509"/>
+<area shape="rect" id="node18" href="$utils_8h.html" title=" " alt="" coords="1259,408,1315,435"/>
+<area shape="rect" id="node22" href="$harvest__area_8h.html" title=" " alt="" coords="347,244,496,285"/>
+<area shape="rect" id="node24" href="$location_8h.html" title=" " alt="" coords="839,169,995,196"/>
+<area shape="rect" id="node11" title=" " alt="" coords="331,557,399,584"/>
+<area shape="rect" id="node12" title=" " alt="" coords="424,557,499,584"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1508,483,1569,509"/>
+<area shape="rect" id="node16" title=" " alt="" coords="936,483,1000,509"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1423,483,1484,509"/>
+<area shape="rect" id="node19" title=" " alt="" coords="254,483,365,509"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1319,483,1398,509"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1209,483,1295,509"/>
+<area shape="rect" id="node23" href="$http_8h.html" title=" " alt="" coords="875,333,930,360"/>
+<area shape="rect" id="node25" href="$_willy_weather_2authenticate_8h.html" title=" " alt="" coords="697,251,879,278"/>
 </map>

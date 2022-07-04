@@ -124,8 +124,50 @@ Functions</h2></td></tr>
 <tr class="memitem:a31131b0ea7ad5991a999895575fe1f63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a31131b0ea7ad5991a999895575fe1f63">IBM_TimeseriesToDB</a> (<a class="el" href="struct_i_b_m___timeseries_req___type_def.html">IBM_TimeseriesReq_TypeDef</a> *req_info, <a class="el" href="struct_i_b_m___timeseries_dataset___type_def.html">IBM_TimeseriesDataset_TypeDef</a> *dataset, <a class="el" href="struct_t___location_lookup___type_def.html">T_LocationLookup_TypeDef</a> *location, PGconn *psql_conn)</td></tr>
 <tr class="memdesc:a31131b0ea7ad5991a999895575fe1f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write timeseries dataset to PostgreSQL table.  <a href="timeseries_8c.html#a31131b0ea7ad5991a999895575fe1f63">More...</a><br /></td></tr>
 <tr class="separator:a31131b0ea7ad5991a999895575fe1f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86e1e84647f92ba11de177a949b17faf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeseries_8c.html#a86e1e84647f92ba11de177a949b17faf">IBM_BuildTSDatabase</a> (<a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *locations, const char *start_time, const char *end_time, PGconn *psql_conn)</td></tr>
+<tr class="separator:a86e1e84647f92ba11de177a949b17faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a86e1e84647f92ba11de177a949b17faf" name="a86e1e84647f92ba11de177a949b17faf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86e1e84647f92ba11de177a949b17faf">&#9670;&nbsp;</a></span>IBM_BuildTSDatabase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IBM_BuildTSDatabase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_t___locations_lookup___type_def.html">T_LocationsLookup_TypeDef</a> *&#160;</td>
+          <td class="paramname"><em>locations</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>start_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>end_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PGconn *&#160;</td>
+          <td class="paramname"><em>psql_conn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a44e9f7dbf87004b1e08552d3200c17f1" name="a44e9f7dbf87004b1e08552d3200c17f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a44e9f7dbf87004b1e08552d3200c17f1">&#9670;&nbsp;</a></span>IBM_BuildURL()</h2>
 
