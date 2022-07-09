@@ -15,6 +15,7 @@ import (
 // @licencse.name  MIT
 // @license.url    https://github.com/DPIclimate/ha-closure-analysis/blob/master/LICENCE
 func main() {
+
 	psqlConn := PSQLConnection()
 
 	HTTPRouter(psqlConn)

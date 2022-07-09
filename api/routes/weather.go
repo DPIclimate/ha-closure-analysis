@@ -1,12 +1,13 @@
 package routes
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"time"
 )
 
 type Precipitation struct {
@@ -24,6 +25,22 @@ type PrecipitationResults struct {
 
 func LocationalPrecipitationRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
+	var (
+		ctx    context.Context
+		cancel context.CancelFunc
+	)
+
+	// If the request contains a timeout parameter this request will cancel
+	// when the timeout elapses
+	timeout, err := time.ParseDuration(r.FormValue("timeout"))
+	if err == nil {
+		ctx, cancel = context.WithTimeout(context.Background(), timeout)
+	} else {
+		ctx, cancel = context.WithCancel(context.Background())
+	}
+
+	defer cancel()
+
 	var precip Precipitation
 
 	args := mux.Vars(r)
@@ -31,19 +48,27 @@ func LocationalPrecipitationRoute(w http.ResponseWriter, r *http.Request, db *sq
 
 	log.Printf("Request for precipitation data for location: %s\n", locationID)
 
-	query := fmt.Sprintf("SELECT last_updated, program_name, bom_location_id FROM weather "+
-		"WHERE bom_location_id = '%s' LIMIT 1;", locationID)
-	err := db.QueryRow(query).Scan(&precip.LastUpdated, &precip.ProgramName, &precip.LocationBOMID)
+	// First query to get the locations basic information
+	stmt, err := db.PrepareContext(ctx, "SELECT last_updated, program_name, bom_location_id "+
+		"FROM weather WHERE bom_location_id = $1 LIMIT 1;")
+	err = stmt.QueryRowContext(ctx, locationID).Scan(&precip.LastUpdated, &precip.ProgramName,
+		&precip.LocationBOMID)
 	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
 		log.Fatalf("Locational precipitation query failed: %s\n", err)
 	}
 
-	query = fmt.Sprintf("SELECT ts, precipitation, data_type FROM weather "+
-		"WHERE bom_location_id = '%s' LIMIT 15;", locationID)
-	rows, err := db.Query(query)
+	// Second query to get a select dataset from a particular locaiton
+	stmt, err = db.PrepareContext(ctx, "SELECT ts, precipitation, data_type FROM weather "+
+		"WHERE bom_location_id = $1 LIMIT 15;")
 	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Fatalf("Locational precipitation query failed: %s\n", err)
 	}
+
+	defer stmt.Close()
+
+	rows, err := stmt.QueryContext(ctx, locationID)
 
 	dataset := make([]PrecipitationResults, 0)
 	var data PrecipitationResults
@@ -51,6 +76,7 @@ func LocationalPrecipitationRoute(w http.ResponseWriter, r *http.Request, db *sq
 		err = rows.Scan(&data.Timestamp, &data.Precipitation, &data.DataType)
 		dataset = append(dataset, data)
 		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			log.Fatalf("Locational precipitation query failed: %s\n", err)
 		}
 	}
@@ -58,8 +84,8 @@ func LocationalPrecipitationRoute(w http.ResponseWriter, r *http.Request, db *sq
 	precip.Results = dataset
 
 	err = json.NewEncoder(w).Encode(precip)
-
 	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Fatalf("JSON encode error: %s\n", err)
 	}
 
