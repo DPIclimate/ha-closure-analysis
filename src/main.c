@@ -14,13 +14,13 @@ int main(void) {
                   "Error: %s\n", PQerrorMessage(psql_conn));
     }
 
-    //FA_HarvestAreas_TypeDef harvest_areas = {0};
-    //FA_GetHarvestAreas(&harvest_areas);
-    //FA_HarvestAreasToDB(&harvest_areas, psql_conn);
-    //FA_CreateLocationsLookupDB(psql_conn);
+    FA_HarvestAreas_TypeDef harvest_areas = {0};
+    FA_GetHarvestAreas(&harvest_areas);
+    FA_HarvestAreasToDB(&harvest_areas, psql_conn);
+    FA_CreateLocationsLookupDB(psql_conn);
 
-    T_LocationsLookup_TypeDef locations;
-    FA_UniqueLocationsFromDB(&locations, psql_conn);
+    //T_LocationsLookup_TypeDef locations;
+    //FA_UniqueLocationsFromDB(&locations, psql_conn);
 
     // BUILD BOM TIMESERIES DATASET
     //const char* start_dt = "2022-07-01";
@@ -32,7 +32,7 @@ int main(void) {
     //IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
 
     //// BUILD COMBINED WEATHER INFORMATION
-    T_BuildWeatherDB(&locations, psql_conn);
+    //T_BuildWeatherDB(&locations, psql_conn);
 
     //// BUILD HARVEST AREA OUTLOOK
     //T_BuildOutlook(psql_conn);

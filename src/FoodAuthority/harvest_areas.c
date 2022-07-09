@@ -238,13 +238,38 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
 
     const char* query = "SELECT DISTINCT program_name FROM harvest_area;";
 
+    // Insert harvest lookup
+    const char* i_query = "INSERT INTO harvest_lookup (last_updated, "
+                          "fa_program_name, ww_location, ww_location_id, "
+                          "ww_latitude, ww_longitude, bom_location, "
+                          "bom_location_id, bom_latitude, bom_longitude, "
+                          "bom_distance) VALUES (NOW(), $1, $2, $3, $4, $5, "
+                          "$6, $7, $8, $9, $10) "
+                          "ON CONFLICT (fa_program_name) DO UPDATE SET "
+                          "last_updated = NOW();";
+
+    // Build prepared statment
+    PGresult* p_res = PQprepare(psql_conn, "InsertHarvestArea", i_query, 10,
+                                NULL);
+    if(PQresultStatus(p_res) != PGRES_COMMAND_OK) {
+        log_error("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
+        return;
+    }
+
+    char id_buf[10];
+    char latitude_buf[10];
+    char longitude_buf[10];
+    char slatitude_buf[10];
+    char slongitude_buf[10];
+    char distance_buf[10];
+    const char* param_values[10];
+
     PGresult* res = PQexec(psql_conn, query);
     uint16_t index = 0;
     if(PQresultStatus(res) == PGRES_TUPLES_OK){
         int num_fields = PQnfields(res);
         for(int i = 0; i < PQntuples(res); i++){
             for(int j = 0; j < num_fields; j++){
-                //FA_HarvestLookup_TypeDef ha_lookup = {0};
                 char* location_name = PQgetvalue(res, i , j);
                 WW_Location_TypeDef location_info = {0};
                 if(strcmp(location_name, "Wapengo Lake") == 0){
@@ -262,62 +287,67 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                     WillyWeather_GetLocationByName(new_name, &location_info);
                 }
                 else{
-                    WillyWeather_GetLocationByName(location_name, &location_info);
+                    WillyWeather_GetLocationByName(location_name,
+                                                   &location_info);
                 }
 
                 int cws = BOM_ClosestStationIndex(location_info.latitude,
                                                   location_info.longitude,
                                                   &stations);
 
-                double distance = Utils_PointsDistance(location_info.latitude,
-                                                       location_info.longitude,
-                                                       stations.stations[cws].latitude,
-                                                       stations.stations[cws].longitude);
+                double distance =
+                        Utils_PointsDistance(location_info.latitude,
+                                             location_info.longitude,
+                                             stations.stations[cws].latitude,
+                                             stations.stations[cws].longitude);
 
-                log_debug("%s\t Willy Weather: %s\t BOM: %s\t Distance: %0.2lf\n", location_name,
-                          location_info.location, stations.stations[cws].name, distance);
+                log_debug("%s\t Willy Weather: %s\t BOM: %s\t "
+                          "Distance: %0.2lf\n", location_name,
+                          location_info.location, stations.stations[cws].name,
+                          distance);
 
-                char i_query[3000];
-                snprintf(i_query,
-                         sizeof(i_query),
-                         "INSERT INTO harvest_lookup (last_updated, "
-                         "fa_program_name, ww_location, ww_location_id, "
-                         "ww_latitude, ww_longitude, bom_location, "
-                         "bom_location_id, bom_latitude, bom_longitude, "
-                         "bom_distance) VALUES ("
-                         "NOW(), " // Last updated
-                         "'%s', " // program name
-                         "'%s'," // ww location
-                         "%d," // ww location id
-                         "%f," // ww latitude
-                         "%f, " // ww longitude
-                         "'%s', " // bom location
-                         "'%s'," // bom location id
-                         "%f, " // bom latitude
-                         "%f, " // bom longitude
-                         "%f) "  // bom distance
-                         "ON CONFLICT (fa_program_name) DO UPDATE SET "
-                         "last_updated = NOW();",
-                         location_name,
-                         location_info.location,
-                         location_info.id,
-                         location_info.latitude,
-                         location_info.longitude,
-                         stations.stations[cws].name,
-                         stations.stations[cws].id,
-                         stations.stations[cws].latitude,
-                         stations.stations[cws].longitude,
-                         distance);
-                PGresult* i_res = PQexec(psql_conn, i_query);
+                param_values[0] = location_name;
+                param_values[1] = location_info.location;
+
+                snprintf(id_buf, sizeof(id_buf), "%d", location_info.id);
+                param_values[2] = id_buf;
+
+                snprintf(latitude_buf, sizeof(latitude_buf), "%f",
+                         location_info.latitude);
+                param_values[3] = latitude_buf;
+
+                snprintf(longitude_buf, sizeof(longitude_buf), "%f",
+                         location_info.longitude);
+                param_values[4] = longitude_buf;
+
+                param_values[5] = stations.stations[cws].name;
+                param_values[6] = stations.stations[cws].id;
+
+                snprintf(slatitude_buf, sizeof(slatitude_buf), "%f",
+                         stations.stations[cws].latitude);
+                param_values[7] = slatitude_buf;
+
+                snprintf(slongitude_buf, sizeof(slongitude_buf), "%f",
+                         stations.stations[cws].longitude);
+                param_values[8] = slongitude_buf;
+
+                snprintf(distance_buf, sizeof(distance_buf), "%f", distance);
+                param_values[9] = distance_buf;
+
+                // Execute prepared statment
+                PGresult* i_res = PQexecPrepared(psql_conn, "InsertHarvestArea",
+                                                 10, param_values, NULL,
+                                                 NULL, 1);
+
                 if(PQresultStatus(i_res) != PGRES_COMMAND_OK){
                     log_error("PSQL command failed when entering station "
                               "information for %s. Error: %s\n", location_name,
                               PQerrorMessage(psql_conn));
                 }
 
-                index++;
-
                 PQclear(i_res);
+
+                index++;
 
                 if(index > WW_MAX_NUM_LOCATONS){
                     break;
@@ -328,6 +358,7 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
 
     log_info("Harvest area location lookups written to PostgreSQL database\n");
 
+    PQclear(p_res);
     PQclear(res);
 }
 
