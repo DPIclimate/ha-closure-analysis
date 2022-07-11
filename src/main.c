@@ -14,17 +14,17 @@ int main(void) {
                   "Error: %s\n", PQerrorMessage(psql_conn));
     }
 
-    FA_HarvestAreas_TypeDef harvest_areas = {0};
-    FA_GetHarvestAreas(&harvest_areas);
-    FA_HarvestAreasToDB(&harvest_areas, psql_conn);
-    FA_CreateLocationsLookupDB(psql_conn);
+    //FA_HarvestAreas_TypeDef harvest_areas = {0};
+    //FA_GetHarvestAreas(&harvest_areas);
+    //FA_HarvestAreasToDB(&harvest_areas, psql_conn);
+    //FA_CreateLocationsLookupDB(psql_conn);
 
-    //T_LocationsLookup_TypeDef locations;
-    //FA_UniqueLocationsFromDB(&locations, psql_conn);
+    T_LocationsLookup_TypeDef locations;
+    FA_UniqueLocationsFromDB(&locations, psql_conn);
 
     // BUILD BOM TIMESERIES DATASET
-    //const char* start_dt = "2022-07-01";
-    //BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
+    const char* start_dt = "2022-07-01";
+    BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
 
     //// BUILD IBM TIMESERIES DATASET BELOW
     //const char* start_time = "2018-01-01";

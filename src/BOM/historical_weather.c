@@ -23,19 +23,18 @@ CURLcode BOM_GetWeather(BOM_WeatherDataset_TypeDef *dataset,
                         const char *year_month) {
 
     // Build URL from filename and year_month
-    const uint8_t URL_SIZE = 250;
-    char URL[URL_SIZE];
-    snprintf(URL, URL_SIZE, "ftp://ftp.bom.gov.au/anon/gen/clim_data/"
+    char url[250];
+    snprintf(url, sizeof(url), "ftp://ftp.bom.gov.au/anon/gen/clim_data/"
                             "IDCKWCDEA0/tables/nsw/%s/%s-%s.csv",
              station->filename,
              station->filename,
              year_month);
 
     log_info("Getting location data from BOM FTP server in directory: %s\n",
-             URL);
+             url);
 
     Utils_ReqData_TypeDef stream;
-    CURLcode result = FTPRequest(URL, &stream);
+    CURLcode result = FTPRequest(url, &stream);
 
     if (result == CURLE_OK) {
         BOM_ParseWeather(&stream, dataset, station);
@@ -67,7 +66,7 @@ static int8_t BOM_ParseWeather(Utils_ReqData_TypeDef *stream,
 
     size_t full_filename_size = (size_t)(BOM_STATION_FILENAME_SIZE * 2);
     char filename[full_filename_size];
-    snprintf(filename, full_filename_size,
+    snprintf(filename, sizeof(filename),
              "datasets/bom/historical/%s.csv",
              station->filename);
     FILE *write_file = fopen(filename, "w");
@@ -196,35 +195,53 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
 
     log_info("Writing BOM weather data to PostgreSQL.\n");
 
-    int16_t index = 0;
+    // Prepare insert statement using defined types
+    const char* stmt_name = "InsertBOMWeather";
+    const char* stmt = "INSERT INTO weather_bom (last_updated, "
+                       "location, location_id, ts, "
+                       "precipitation, max_temperature, "
+                       "min_temperature) "
+                       "VALUES (NOW(), $1::text, $2::text, $3::timestamptz, "
+                       "$4::float, $5::float, $6::float)"
+                       "ON CONFLICT (ts, location) DO UPDATE "
+                       "SET last_updated = NOW()";
+
+    PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 6, NULL);
+    if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
+        log_warn("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
+    }
+
+    // Holds values to insert into statement
+    const char* paramValues[6];
+
+    // Buffers for inserting into statement
+    char ts[30];
+    char precip_buf[10];
+    char lat_buf[10];
+    char lng_buf[10];
+
+    uint16_t index = 0;
     while(index < dataset->count){
-        char ts[30];
+        memset(ts, 0, sizeof(ts));
         time_t unix_time = dataset->timestamps[index];
         struct tm ctm = *localtime(&unix_time);
         strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);
-        char query[3000];
-        snprintf(query, sizeof(query), "INSERT INTO weather_bom (last_updated, "
-                                       "location, location_id, ts, "
-                                       "precipitation, max_temperature, "
-                                       "min_temperature) "
-                                       "VALUES "
-                                       "(NOW(), "   // Last updated timestamp
-                                       "'%s', "     // Location (name)
-                                       "'%s', "     // Location ID
-                                       "'%s', "     // Timestamp (tz)
-                                       "%lf, "      // Precipitation
-                                       "%lf, "      // Max temperature
-                                       "%lf) "      // Min temperature
-                                       "ON CONFLICT (ts, location) DO UPDATE "
-                                       "SET last_updated = NOW()",
-                                       weather_station->name,
-                                       weather_station->id,
-                                       ts,
-                                       dataset->precipitation[index],
-                                       dataset->max_temperature[index],
-                                       dataset->min_temperature[index]);
 
-        PGresult* res = PQexec(psql_conn, query);
+        paramValues[0] = weather_station->name;
+        paramValues[1] = weather_station->id;
+        paramValues[2] = ts;
+        snprintf(precip_buf, sizeof(precip_buf), "%f",
+                 dataset->precipitation[index]);
+        paramValues[3] = precip_buf;
+        snprintf(lat_buf, sizeof(lat_buf), "%f",
+                 dataset->max_temperature[index]);
+        paramValues[4] = lat_buf;
+        snprintf(lng_buf, sizeof(lng_buf), "%f",
+                 dataset->min_temperature[index]);
+        paramValues[5] = lng_buf;
+
+        PGresult* res = PQexecPrepared(psql_conn, stmt_name, 6,
+                                       paramValues, NULL, NULL, 1);
         if(PQresultStatus(res) != PGRES_COMMAND_OK){
             log_error("PSQL command failed when entering BOM weather data for "
                       "%s. Error: %s\n", weather_station->name,
@@ -233,6 +250,8 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
         PQclear(res);
         index++;
     }
+
+    PQclear(p_res);
 
     log_info("BOM weather data written to PostgreSQL.\n");
 }
@@ -257,9 +276,10 @@ void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
         int queried_ids[Q_LEN];
         memset(queried_ids, 0, sizeof(queried_ids));
         while(index < locations->count){
-            int cws = BOM_ClosestStationIndex((double)locations->locations[index].ww_latitude,
-                                              (double)locations->locations[index].ww_longitude,
-                                              &stations);
+            int cws = BOM_ClosestStationIndex(
+                    (double)locations->locations[index].ww_latitude,
+                    (double)locations->locations[index].ww_longitude,
+                    &stations);
 
             bool already_queried = false;
             for(int i = 0; i < Q_LEN; i++){
@@ -271,14 +291,18 @@ void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
 
             if(!already_queried){
                 BOM_WeatherDataset_TypeDef bom_dataset = {0};
-                BOM_GetWeather(&bom_dataset, &stations.stations[cws], time_buf);
-                BOM_HistoricalWeatherToDB(&stations.stations[cws], &bom_dataset, psql_conn);
+                BOM_GetWeather(&bom_dataset,
+                               &stations.stations[cws],
+                               time_buf);
+                BOM_HistoricalWeatherToDB(&stations.stations[cws],
+                                          &bom_dataset,
+                                          psql_conn);
             }
             queried_ids[index] = cws;
             index++;
         }
 
-        dt.tm_mon++;
         start_unix = mktime(&dt);
+        dt.tm_mon++;
     }
 }
