@@ -23,16 +23,16 @@ int main(void) {
     FA_UniqueLocationsFromDB(&locations, psql_conn);
 
     // BUILD BOM TIMESERIES DATASET
-    const char* start_dt = "2022-07-01";
-    BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
+    //const char* start_dt = "2022-07-01";
+    //BOM_TimeseriesToDB(&locations, start_dt, psql_conn);
 
     //// BUILD IBM TIMESERIES DATASET BELOW
-    //const char* start_time = "2018-01-01";
-    //const char* end_time = "2022-07-15";
-    //IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
+    const char* start_time = "2022-07-01";
+    const char* end_time = "2022-08-01";
+    IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
 
     //// BUILD COMBINED WEATHER INFORMATION
-    //T_BuildWeatherDB(&locations, psql_conn);
+    T_BuildWeatherDB(&locations, psql_conn);
 
     //// BUILD HARVEST AREA OUTLOOK
     //T_BuildOutlook(psql_conn);

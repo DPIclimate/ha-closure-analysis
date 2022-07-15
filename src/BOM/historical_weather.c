@@ -197,19 +197,26 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
 
     // Prepare insert statement using defined types
     const char* stmt_name = "InsertBOMWeather";
-    const char* stmt = "INSERT INTO weather_bom (last_updated, "
-                       "location, location_id, ts, "
-                       "precipitation, max_temperature, "
-                       "min_temperature) "
-                       "VALUES (NOW(), $1::text, $2::text, $3::timestamptz, "
-                       "$4::float, $5::float, $6::float)"
-                       "ON CONFLICT (ts, location) DO UPDATE "
-                       "SET last_updated = NOW()";
+    PGresult* p_info = PQdescribePrepared(psql_conn, stmt_name);
+    if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
+        const char* stmt = "INSERT INTO weather_bom (last_updated, "
+                           "location, location_id, ts, "
+                           "precipitation, max_temperature, "
+                           "min_temperature) "
+                           "VALUES (NOW(), $1::text, $2::text, $3::timestamptz, "
+                           "$4::float, $5::float, $6::float)"
+                           "ON CONFLICT (ts, location) DO UPDATE "
+                           "SET last_updated = NOW()";
 
-    PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 6, NULL);
-    if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
-        log_warn("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
+        PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 6, NULL);
+        if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
+            log_warn("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
+        }
+        // Ok to clear here as prepared statement will continue to exist even
+        // after PQclear has completed
+        PQclear(p_res);
     }
+    PQclear(p_info);
 
     // Holds values to insert into statement
     const char* paramValues[6];
@@ -251,8 +258,6 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
         index++;
     }
 
-    PQclear(p_res);
-
     log_info("BOM weather data written to PostgreSQL.\n");
 }
 
@@ -272,7 +277,7 @@ void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
         strftime(time_buf, sizeof(time_buf), "%Y%m", &dt);
 
         uint16_t index = 0;
-        const int Q_LEN = 100;
+        const int8_t Q_LEN = 100;
         int queried_ids[Q_LEN];
         memset(queried_ids, 0, sizeof(queried_ids));
         while(index < locations->count){
@@ -301,8 +306,7 @@ void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
             queried_ids[index] = cws;
             index++;
         }
-
-        start_unix = mktime(&dt);
         dt.tm_mon++;
+        start_unix = mktime(&dt);
     }
 }
