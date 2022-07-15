@@ -440,6 +440,48 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
 
     log_info("Inserting IBM query results into PostgreSQL database.\n");
 
+    const char* stmt = "INSERT INTO weather_ibm_eis (last_updated, "
+                       "location, ww_location_id, bom_location_id, "
+                       "latitude, longitude, ts, %s) "
+                       "VALUES (NOW(), $1::text, $2::text, $3::text, "
+                       "$4::float, $5::float, $6::timestamptz, $7::float) "
+                       "ON CONFLICT (ts, ww_location_id, bom_location_id) "
+                       "DO UPDATE SET last_updated = NOW()%s;";
+
+    const char* clm_names[3] = {"precipitation", "min_temperature",
+                                "max_temperature"};
+
+    const char* update_stmts[3] = {", precipitation = $8::float",
+                                   ", min_temperature = $8::float",
+                                   ", max_temperature = $8::float"};
+    const char* stmt_names[3] = {"InsertIBMPrecipitation", "InsertIBMTempMin",
+                                 "InsertIBMTempMax"};
+
+    char stmt_buf[500];
+    for(int8_t i = 0; i < 3; i++){
+        memset(stmt_buf, 0, sizeof(stmt_buf));
+        snprintf(stmt_buf, sizeof(stmt_buf), stmt, clm_names[i],
+                 update_stmts[i]);
+
+        PGresult* p_info = PQdescribePrepared(psql_conn, stmt_names[i]);
+        if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
+            PGresult* p_res;
+            if(i != 0){
+                p_res = PQprepare(psql_conn, stmt_names[i], stmt_buf,
+                                            7, NULL);
+            } else {
+                p_res = PQprepare(psql_conn, stmt_names[i], stmt_buf,
+                                  8, NULL);
+            }
+            if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
+                log_warn("PostgreSQL prepare error: %s\n",
+                         PQerrorMessage(psql_conn));
+            }
+            PQclear(p_res);
+        }
+        PQclear(p_info);
+    }
+
     int32_t index = 0;
     while(index < dataset->count){
         char ts[30];
@@ -447,108 +489,45 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
         struct tm ctm = *localtime(&unix_time);
         strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);
         char query[3000];
+
+        const char* paramValues[8];
+
+        char value_buf[10];
+        char lat_buf[10];
+        char lng_buf[10];
+
+        paramValues[0] = location->ww_location;
+        paramValues[1] = location->ww_location_id;
+        paramValues[2] = location->bom_location_id;
+        snprintf(lat_buf, sizeof(lat_buf), "%f", req_info->latitude);
+        paramValues[3] = lat_buf;
+        snprintf(lng_buf, sizeof(lng_buf), "%f", req_info->longitude);
+        paramValues[4] = lng_buf;
+        paramValues[5] = ts;
+        snprintf(value_buf, sizeof(value_buf), "%f", dataset->values[index]);
+        paramValues[6] = value_buf;
+        paramValues[7] = value_buf;
+
+        PGresult *res = NULL;
         switch(req_info->layer_id){
             case IBM_PRECIPITATION_ID:
-                snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
-                                               "last_updated, location, "
-                                               "ww_location_id, "
-                                               "bom_location_id, latitude, "
-                                               "longitude, "
-                                               "ts, "
-                                               "precipitation) "
-                                               "VALUES ("
-                                               "NOW(), " // Last updated
-                                               "'%s', " // Location name
-                                               "'%s', " // WW location id
-                                               "'%s', " // BOM location id
-                                               "%f, " // Latitude
-                                               "%f, " // Longitude
-                                               "'%s', " // Timestamp
-                                               "%f) " // Precipitation
-                                               "ON CONFLICT (ts, "
-                                               "ww_location_id, "
-                                               "bom_location_id) DO "
-                                               "UPDATE SET "
-                                               "last_updated = NOW();",
-                         location->ww_location,
-                         location->ww_location_id,
-                         location->bom_location_id,
-                         req_info->latitude,
-                         req_info->longitude,
-                         ts,
-                         dataset->values[index]);
+                res = PQexecPrepared(psql_conn, stmt_names[0], 8, paramValues,
+                               NULL, NULL, 1);
                 break;
-
             case IBM_MIN_TEMPERATURE_ID:
-                snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
-                                               "last_updated, location, "
-                                               "ww_location_id, "
-                                               "bom_location_id, latitude, "
-                                               "longitude, ts, precipitation) "
-                                               "VALUES ("
-                                               "NOW(), " // Last updated
-                                               "'%s', " // Location name
-                                               "'%s', " // WW location id
-                                               "'%s', " // BOM location id
-                                               "%f, " // Latitude
-                                               "%f, " // Longitude
-                                               "'%s', " // Timestamp
-                                               "%f) " // Precipitation
-                                               "ON CONFLICT (ts, "
-                                               "ww_location_id, "
-                                               "bom_location_id) DO "
-                                               "UPDATE SET "
-                                               "last_updated = NOW(), "
-                                               "min_temperature = %f;",
-                         location->ww_location,
-                         location->ww_location_id,
-                         location->bom_location_id,
-                         req_info->latitude,
-                         req_info->longitude,
-                         ts,
-                         dataset->values[index] - 272.15,
-                         dataset->values[index] - 272.15);
+                res =PQexecPrepared(psql_conn, stmt_names[1], 8, paramValues,
+                               NULL, NULL, 1);
                 break;
-
             case IBM_MAX_TEMPERATURE_ID:
-                snprintf(query, sizeof(query), "INSERT INTO weather_ibm_eis ("
-                                               "last_updated, location, "
-                                               "ww_location_id, "
-                                               "bom_location_id, latitude, "
-                                               "longitude, ts, precipitation) "
-                                               "VALUES ("
-                                               "NOW(), " // Last updated
-                                               "'%s', " // Location name
-                                               "'%s', " // WW location id
-                                               "'%s', " // BOM location id
-                                               "%f, " // Latitude
-                                               "%f, " // Longitude
-                                               "'%s', " // Timestamp
-                                               "%f) " // Precipitation
-                                               "ON CONFLICT (ts, "
-                                               "ww_location_id, "
-                                               "bom_location_id) DO "
-                                               "UPDATE SET "
-                                               "last_updated = NOW(), "
-                                               "max_temperature = %f;",
-                         location->ww_location,
-                         location->ww_location_id,
-                         location->bom_location_id,
-                         req_info->latitude,
-                         req_info->longitude,
-                         ts,
-                         dataset->values[index] - 272.15,
-                         dataset->values[index] - 272.15);
+                res = PQexecPrepared(psql_conn, stmt_names[2], 8, paramValues,
+                               NULL, NULL, 1);
                 break;
-
-
             default:
                 log_error("Unknown IBM dataset query results. Unable to insert"
                           "into PostgreSQL database.\n");
                 break;
         }
 
-        PGresult* res = PQexec(psql_conn, query);
         if(PQresultStatus(res) != PGRES_COMMAND_OK){
             log_error("PSQL command failed when parsing IBM query. Error: %s\n",
                       PQerrorMessage(psql_conn));
