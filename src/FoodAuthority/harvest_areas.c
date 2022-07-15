@@ -174,34 +174,48 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
 
     log_info("Inserting harvest areas status into PostgreSQL database.\n");
 
+    const char* stmt = "INSERT INTO harvest_area (last_updated, program_name, "
+                       "location, name, id, classification, status, "
+                       "time_processed, status_reason, status_prev_reason) "
+                       "VALUES (NOW(), $1::text, $2::text, $3::text, "
+                       "$4::int, $5::text, $6::text, $7::timestamptz, "
+                       "$8::text, $9::text)"
+                       "ON CONFLICT (time_processed, id, name, "
+                       "status) DO UPDATE SET last_updated = NOW();";
+
+    const char* stmt_name = "InsertHarvestArea";
+
+    PGresult* p_info = PQdescribePrepared(psql_conn, stmt_name);
+    if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
+        PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 9, NULL);
+        if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
+            log_warn("PostgreSQL prepare error: %s\n",
+                     PQerrorMessage(psql_conn));
+        }
+        PQclear(p_res);
+    }
+    PQclear(p_info);
+
+    const char* paramValues[9];
+    char id_buf[10];
+
     int16_t index = 0;
     while(index < harvest_areas->count){
         FA_HarvestArea_TypeDef ha = harvest_areas->harvest_area[index];
-        char query[3000];
-        snprintf(query, sizeof(query), "INSERT INTO harvest_area ("
-                                       "last_updated, program_name, location, "
-                                       "name, id, classification, status, "
-                                       "time_processed, status_reason, "
-                                       "status_prev_reason) "
-                                       "VALUES "
-                                       "(NOW(), "   // Current time
-                                       "'%s',"      // Program name
-                                       "'%s',"      // Location
-                                       "'%s',"      // Harvest area name
-                                       "%d, "       // Harvest ID
-                                       "'%s',"      // Classification
-                                       "'%s',"      // Status (open, closed etc.)
-                                       "'%s',"      // Timestamptz
-                                       "'%s',"      // Reason
-                                       "'%s')"      // Previous reason
-                                       "ON CONFLICT (time_processed, id, name, "
-                                       "status) DO "
-                                       "UPDATE SET last_updated = NOW();",
-                 ha.program_name, ha.location, ha.name, ha.id,
-                 ha.classification, ha.status, ha.time, ha.reason,
-                 ha.previous_reason);
+        paramValues[0] = ha.program_name;
+        paramValues[1] = ha.location;
+        paramValues[2] = ha.name;
+        snprintf(id_buf, sizeof(id_buf), "%d", ha.id);
+        paramValues[3] = id_buf;
+        paramValues[4] =  ha.classification;
+        paramValues[5] = ha.status;
+        paramValues[6] = ha.time;
+        paramValues[7] = ha.reason;
+        paramValues[8] = ha.previous_reason;
 
-        PGresult* res = PQexec(psql_conn, query);
+        PGresult* res = PQexecPrepared(psql_conn, stmt_name, 9, paramValues,
+                                       NULL, NULL, 1);
+
         if(PQresultStatus(res) != PGRES_COMMAND_OK){
             log_error("PSQL command failed when entering %s harvest area "
                       "information. Error: %s\n", ha.name,
@@ -211,8 +225,8 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
         index++;
     }
 
-    log_info("Done inserting harvest area statuses into "
-             "PostgreSQL database.\n");
+    log_info("Done inserting harvest area statuses into PostgreSQL "
+             "database.\n");
 }
 
 /**
@@ -239,30 +253,32 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
     const char* query = "SELECT DISTINCT program_name FROM harvest_area;";
 
     // Insert harvest lookup
-    const char* i_query = "INSERT INTO harvest_lookup (last_updated, "
-                          "fa_program_name, ww_location, ww_location_id, "
-                          "ww_latitude, ww_longitude, bom_location, "
-                          "bom_location_id, bom_latitude, bom_longitude, "
-                          "bom_distance) VALUES (NOW(), $1, $2, $3, $4, $5, "
-                          "$6, $7, $8, $9, $10) "
-                          "ON CONFLICT (fa_program_name) DO UPDATE SET "
-                          "last_updated = NOW();";
+    const char* stmt = "INSERT INTO harvest_lookup (last_updated, "
+                       "fa_program_name, ww_location, ww_location_id, "
+                       "ww_latitude, ww_longitude, bom_location, "
+                       "bom_location_id, bom_latitude, bom_longitude, "
+                       "bom_distance) VALUES (NOW(), $1::text, $2::text, "
+                       "$3::int, $4::float, $5::float, $6::text, $7::text, "
+                       "$8::float, $9::float, $10::float) "
+                       "ON CONFLICT (fa_program_name) DO UPDATE SET "
+                       "last_updated = NOW();";
 
     // Build prepared statment
-    PGresult* p_res = PQprepare(psql_conn, "InsertHarvestArea", i_query, 10,
+    PGresult* p_res = PQprepare(psql_conn, "InsertHarvestLookup", stmt, 10,
                                 NULL);
     if(PQresultStatus(p_res) != PGRES_COMMAND_OK) {
         log_error("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
         return;
     }
 
-    char id_buf[10];
-    char latitude_buf[10];
-    char longitude_buf[10];
-    char slatitude_buf[10];
-    char slongitude_buf[10];
-    char distance_buf[10];
     const char* param_values[10];
+
+    char id_buf[10];
+    char lat_buf[10];
+    char lng_buf[10];
+    char slat_buf[10];
+    char slng_buf[10];
+    char distance_buf[10];
 
     PGresult* res = PQexec(psql_conn, query);
     uint16_t index = 0;
@@ -291,9 +307,9 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                                                    &location_info);
                 }
 
-                int cws = BOM_ClosestStationIndex(location_info.latitude,
-                                                  location_info.longitude,
-                                                  &stations);
+                int16_t cws = BOM_ClosestStationIndex(location_info.latitude,
+                                                      location_info.longitude,
+                                                      &stations);
 
                 double distance =
                         Utils_PointsDistance(location_info.latitude,
@@ -312,24 +328,24 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                 snprintf(id_buf, sizeof(id_buf), "%d", location_info.id);
                 param_values[2] = id_buf;
 
-                snprintf(latitude_buf, sizeof(latitude_buf), "%f",
+                snprintf(lat_buf, sizeof(lat_buf), "%f",
                          location_info.latitude);
-                param_values[3] = latitude_buf;
+                param_values[3] = lat_buf;
 
-                snprintf(longitude_buf, sizeof(longitude_buf), "%f",
+                snprintf(lng_buf, sizeof(lng_buf), "%f",
                          location_info.longitude);
-                param_values[4] = longitude_buf;
+                param_values[4] = lng_buf;
 
                 param_values[5] = stations.stations[cws].name;
                 param_values[6] = stations.stations[cws].id;
 
-                snprintf(slatitude_buf, sizeof(slatitude_buf), "%f",
+                snprintf(slat_buf, sizeof(slat_buf), "%f",
                          stations.stations[cws].latitude);
-                param_values[7] = slatitude_buf;
+                param_values[7] = slat_buf;
 
-                snprintf(slongitude_buf, sizeof(slongitude_buf), "%f",
+                snprintf(slng_buf, sizeof(slng_buf), "%f",
                          stations.stations[cws].longitude);
-                param_values[8] = slongitude_buf;
+                param_values[8] = slng_buf;
 
                 snprintf(distance_buf, sizeof(distance_buf), "%f", distance);
                 param_values[9] = distance_buf;

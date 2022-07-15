@@ -321,18 +321,10 @@ static void IBM_BuildURLAlt(IBM_TimeseriesReq_TypeDef *req, char *url) {
              end_tm->tm_min,
              end_tm->tm_sec);
 
-    snprintf(url, IBM_URL_SIZE, "%s/timeseries/"
-                                "%d"
-                                "?latitude=%f"
-                                "&longitude=%f"
-                                "&startingDateTime=%s"
-                                "&endingDateTime=%s",
-             IBM_ALT_REQUEST_URL,
-             req->layer_id,
-             req->latitude,
-             req->longitude,
-             start_time,
-             end_time);
+    snprintf(url, IBM_URL_SIZE, "%s/timeseries/%d?latitude=%f&longitude=%f"
+                                "&startingDateTime=%s&endingDateTime=%s",
+             IBM_ALT_REQUEST_URL, req->layer_id, req->latitude, req->longitude,
+             start_time, end_time);
 }
 
 /**
@@ -454,6 +446,7 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
     const char* update_stmts[3] = {", precipitation = $8::float",
                                    ", min_temperature = $8::float",
                                    ", max_temperature = $8::float"};
+
     const char* stmt_names[3] = {"InsertIBMPrecipitation", "InsertIBMTempMin",
                                  "InsertIBMTempMax"};
 
@@ -467,11 +460,9 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
         if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
             PGresult* p_res;
             if(i != 0){
-                p_res = PQprepare(psql_conn, stmt_names[i], stmt_buf,
-                                            7, NULL);
+                p_res = PQprepare(psql_conn, stmt_names[i], stmt_buf, 7, NULL);
             } else {
-                p_res = PQprepare(psql_conn, stmt_names[i], stmt_buf,
-                                  8, NULL);
+                p_res = PQprepare(psql_conn, stmt_names[i], stmt_buf, 8, NULL);
             }
             if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
                 log_warn("PostgreSQL prepare error: %s\n",
@@ -529,8 +520,8 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
         }
 
         if(PQresultStatus(res) != PGRES_COMMAND_OK){
-            log_error("PSQL command failed when parsing IBM query. Error: %s\n",
-                      PQerrorMessage(psql_conn));
+            log_error("PSQL command failed when parsing IBM query. "
+                      "Error: %s\n", PQerrorMessage(psql_conn));
         }
         PQclear(res);
         index++;
