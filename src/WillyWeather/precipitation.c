@@ -179,48 +179,69 @@ void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
                                WW_RainfallForecast_TypeDef* forecast,
                                PGconn* psql_conn){
 
+    const char* stmt_name = "InsertWillyWeather";
+    const char* stmt = "INSERT INTO weather_ww (last_updated, location, "
+                       "location_id, ts, rainfall_start_range, "
+                       "rainfall_end_range, rainfall_range_divider, "
+                       "rainfall_range_code, rainfall_probability_of_any) "
+                       "VALUES (NOW(), $1::text, $2::int, $3::timestamptz, "
+                       "$4::int, $5::int, $6::char, $7::text, $8::int) "
+                       "ON CONFLICT (location_id, ts) DO "
+                       "UPDATE SET last_updated = NOW(), "
+                       "rainfall_start_range = $9::int, "
+                       "rainfall_end_range = $10::int, "
+                       "rainfall_range_divider = $11::char, "
+                       "rainfall_range_code = $12::text, "
+                       "rainfall_probability_of_any = $13::int;";
+
+    PGresult* p_info = PQdescribePrepared(psql_conn, stmt_name);
+    if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
+        PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 13, NULL);
+        if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
+            log_warn("PostgreSQL prepare error: %s\n",
+                     PQerrorMessage(psql_conn));
+        }
+        PQclear(p_res);
+    }
+    PQclear(p_info);
+
+    const char* paramValues[13];
+
+    char locid_buf[10]; // Location ID buffer
+    char srf_buf[10]; // Start rainfall buffer
+    char erf_buf[10]; // End rainfall buffer
+    char probrf_buf[10]; // Probability rainfall buffer
+
     int16_t index = 0;
     while(index < forecast->n_days){
-        char query[3000];
         WW_Rainfall_TypeDef daily_rf = forecast->forecast[index];
-        snprintf(query, sizeof(query), "INSERT INTO weather_ww (last_updated, "
-                                       "location, location_id,"
-                                       "ts, rainfall_start_range, "
-                                       "rainfall_end_range, "
-                                       "rainfall_range_divider, "
-                                       "rainfall_range_code, "
-                                       "rainfall_probability_of_any) "
-                                       "VALUES ("
-                                       "NOW(), "    // Current time (updated)
-                                       "'%s', "     // Location name
-                                       "%d, "       // Location ID
-                                       "'%s', "     // Timestamp (tz)
-                                       "%d, "       // Start range
-                                       "%d, "       // End range
-                                       "'%c', "     // Range divider
-                                       "'%s', "     // Range code
-                                       "%d) "       // Probability
-                                       "ON CONFLICT (location_id, ts) DO "
-                                       "UPDATE SET last_updated = NOW(), "
-                                       "rainfall_start_range = %d, "
-                                       "rainfall_end_range = %d, "
-                                       "rainfall_range_divider = '%c', "
-                                       "rainfall_range_code = '%s', "
-                                       "rainfall_probability_of_any = %d;",
-                                       location->location,
-                                       location->id,
-                                       daily_rf.ts,
-                                       daily_rf.start_range,
-                                       daily_rf.end_range,
-                                       daily_rf.range_divider,
-                                       daily_rf.range_code,
-                                       daily_rf.probability,
-                                       daily_rf.start_range,
-                                       daily_rf.end_range,
-                                       daily_rf.range_divider,
-                                       daily_rf.range_code,
-                                       daily_rf.probability);
-        PGresult* res = PQexec(psql_conn, query);
+
+        paramValues[0] = location->location;
+        snprintf(locid_buf, sizeof(locid_buf), "%d", location->id);
+        paramValues[1] = locid_buf;
+        paramValues[2] = daily_rf.ts;
+        snprintf(srf_buf, sizeof(srf_buf), "%d", daily_rf.start_range);
+        paramValues[3] = srf_buf;
+
+        snprintf(erf_buf, sizeof(erf_buf), "%d", daily_rf.end_range);
+        paramValues[4] = erf_buf;
+
+        paramValues[5] = &daily_rf.range_divider;
+        paramValues[6] = daily_rf.range_code;
+
+        snprintf(probrf_buf, sizeof(probrf_buf), "%d", daily_rf.probability);
+        paramValues[7] = probrf_buf;
+
+        paramValues[8] = srf_buf;
+        paramValues[9] = erf_buf;
+        paramValues[10] = &daily_rf.range_divider;
+
+        paramValues[11] = daily_rf.range_code;
+        paramValues[12] = probrf_buf;
+
+        PGresult* res = PQexecPrepared(psql_conn, stmt_name, 13, paramValues,
+                                       NULL, NULL, 1);
+
         if(PQresultStatus(res) != PGRES_COMMAND_OK){
             log_error("PSQL command failed when entering %s "
                       "information. Error: %s\n", location->location,

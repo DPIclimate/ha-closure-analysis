@@ -207,7 +207,7 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
         paramValues[2] = ha.name;
         snprintf(id_buf, sizeof(id_buf), "%d", ha.id);
         paramValues[3] = id_buf;
-        paramValues[4] =  ha.classification;
+        paramValues[4] = ha.classification;
         paramValues[5] = ha.status;
         paramValues[6] = ha.time;
         paramValues[7] = ha.reason;
@@ -252,6 +252,7 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
 
     const char* query = "SELECT DISTINCT program_name FROM harvest_area;";
 
+    const char* stmt_name = "InsertHarvestLookup";
     // Insert harvest lookup
     const char* stmt = "INSERT INTO harvest_lookup (last_updated, "
                        "fa_program_name, ww_location, ww_location_id, "
@@ -264,7 +265,7 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                        "last_updated = NOW();";
 
     // Build prepared statment
-    PGresult* p_res = PQprepare(psql_conn, "InsertHarvestLookup", stmt, 10,
+    PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 10,
                                 NULL);
     if(PQresultStatus(p_res) != PGRES_COMMAND_OK) {
         log_error("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
@@ -351,7 +352,7 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
                 param_values[9] = distance_buf;
 
                 // Execute prepared statment
-                PGresult* i_res = PQexecPrepared(psql_conn, "InsertHarvestArea",
+                PGresult* i_res = PQexecPrepared(psql_conn, stmt_name,
                                                  10, param_values, NULL,
                                                  NULL, 1);
 

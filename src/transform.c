@@ -21,6 +21,78 @@ static void T_CloseHarvestArea(T_Outlook_Typedef* outlook,
 void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                       PGconn* psql_conn){
 
+    const char* ibm_select = "SELECT ts AT TIME ZONE 'AEST', precipitation "
+                             "FROM weather_ibm_eis WHERE "
+                             "bom_location_id = '%s' "
+                             "ORDER BY (ts) DESC;";
+    char ibm_query[200];
+
+    // Prepare weather table insert statement (using IBM (forecast) data)
+    const char* forecast_stmt_name = "InsertIBMForecast";
+    PGresult* forecast_info = PQdescribePrepared(psql_conn, forecast_stmt_name);
+    if(PQresultStatus(forecast_info) != PGRES_COMMAND_OK){
+        const char* forecast_stmt ="INSERT INTO weather (last_updated, latitude, "
+                                   "longitude, ts, program_name, bom_location_id, "
+                                   "data_type, precipitation, "
+                                   "forecast_precipitation) "
+                                   "VALUES (NOW(), $1::float, $2::float, "
+                                   "$3::timestamptz, $4::text, $5::text, "
+                                   "$6::text, $7::float, $8::float) "
+                                   "ON CONFLICT (ts, program_name) DO UPDATE "
+                                   "SET last_updated = NOW(), "
+                                   "data_type = 'forecast', "
+                                   "precipitation = $9::float, "
+                                   "forecast_precipitation = $10::float;";
+        PGresult* forecast_prep = PQprepare(psql_conn, forecast_stmt_name,
+                                            forecast_stmt, 1, NULL);
+        if(PQresultStatus(forecast_prep) != PGRES_COMMAND_OK){
+            log_warn("PostgreSQL prepare error: %s\n",
+                     PQerrorMessage(psql_conn));
+        }
+        PQclear(forecast_prep);
+    }
+    PQclear(forecast_info);
+
+    const char* forecast_paramValues[10];
+
+    const char* bom_select ="SELECT ts AT TIME ZONE 'AEST', precipitation "
+                            "FROM weather_bom WHERE location_id = '%s' "
+                            "ORDER BY (ts) DESC;";
+    char bom_query[200];
+
+    // Prepare weather table insert statement (using BOM (historical) data)
+    const char* historical_stmt_name = "InsertBOMHistorical";
+    PGresult* historical_info = PQdescribePrepared(psql_conn,
+                                                   historical_stmt_name);
+    if(PQresultStatus(historical_info) != PGRES_COMMAND_OK){
+        const char* historical_stmt = "INSERT INTO weather (last_updated, "
+                                      "latitude, longitude, ts, program_name, "
+                                      "bom_location_id, data_type, "
+                                      "precipitation, observed_precipitation) "
+                                      "VALUES (NOW(), $1::float, $2::float, "
+                                      "$3::timestamptz, $4::text, $5::text, "
+                                      "$6::text, $7::float, $8::float) "
+                                      "ON CONFLICT (ts, program_name) DO "
+                                      "UPDATE SET last_updated = NOW(), "
+                                      "data_type = 'observed', "
+                                      "precipitation = $9::float, "
+                                      "observed_precipitation = $10::float;";
+        PGresult* historical_prep = PQprepare(psql_conn, historical_stmt_name,
+                                              historical_stmt, 1, NULL);
+        if(PQresultStatus(historical_prep) != PGRES_COMMAND_OK){
+            log_warn("PostgreSQL prepare error: %s\n",
+                     PQerrorMessage(psql_conn));
+        }
+        PQclear(historical_prep);
+    }
+    PQclear(historical_info);
+
+    const char* historical_paramValues[10];
+
+    char lat_buf[10];
+    char lng_buf[10];
+    char precip_buf[10];
+
     uint16_t index = 0;
     while(index < locations->count){
         T_LocationLookup_TypeDef loc = locations->locations[index];
@@ -28,15 +100,8 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
         log_info("Parsing location %d of %d (%s)\n", index+1, locations->count,
                  loc.fa_program_name);
 
-        // Get weather from IBM EIS for location ID
-        char ibm_query[1000];
-        snprintf(ibm_query, sizeof(ibm_query),
-                 "SELECT ts AT TIME ZONE 'AEST', precipitation "
-                 "FROM weather_ibm_eis "
-                 "WHERE bom_location_id = '%s' "
-                 "ORDER BY (ts) DESC;",
-                 loc.bom_location_id);
-
+        memset(ibm_query, 0, sizeof(ibm_query));
+        snprintf(ibm_query, sizeof(ibm_query), ibm_select, loc.bom_location_id);
         PGresult* ibm_res = PQexec(psql_conn, ibm_query);
         float ibm_precipitation = 0;
         char ibm_timestamp[50] = {0};
@@ -45,14 +110,13 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
             for(int i = 0; i < PQntuples(ibm_res); i++){
                 for(int j = 0; j < num_fields; j++){
                     char* ptr;
+                    char* val = PQgetvalue(ibm_res, i, j);
                     switch(j){
                         case 0:
-                            strncpy(ibm_timestamp, PQgetvalue(ibm_res, i, j),
-                                    sizeof(ibm_timestamp));
+                            strncpy(ibm_timestamp, val, sizeof(ibm_timestamp));
                             break;
                         case 1:
-                            ibm_precipitation = strtof(PQgetvalue(ibm_res, i, j),
-                                                       &ptr);
+                            ibm_precipitation = strtof(val, &ptr);
                             break;
                         default:
                             log_error("Unknown value in IBM query.\n");
@@ -60,40 +124,26 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                     }
                 }
 
-                char ibm_insert[1000];
-                snprintf(ibm_insert, sizeof(ibm_insert),
-                         "INSERT INTO weather "
-                         "(last_updated, "
-                         "latitude, "
-                         "longitude, "
-                         "ts, "
-                         "program_name, "
-                         "bom_location_id, "
-                         "data_type, "
-                         "precipitation, "
-                         "forecast_precipitation) "
-                         "VALUES (NOW(), %f, "
-                         "%f, '%s', '%s', '%s', "
-                         "'forecast', %f, %f) ON "
-                         "CONFLICT (ts, "
-                         "program_name) DO UPDATE "
-                         "SET last_updated = "
-                         "NOW(), "
-                         "data_type = 'forecast', "
-                         "precipitation = %f, "
-                         "forecast_precipitation = "
-                         "%f;",
-                         loc.ww_latitude,
-                         loc.ww_longitude,
-                         ibm_timestamp,
-                         loc.fa_program_name,
-                         loc.bom_location_id,
-                         ibm_precipitation,
-                         ibm_precipitation,
-                         ibm_precipitation,
+                // Prepare values to be inserted into weather table
+                snprintf(lat_buf, sizeof(lat_buf), "%f", loc.ww_latitude);
+                forecast_paramValues[0] = lat_buf;
+                snprintf(lng_buf, sizeof(lng_buf), "%f", loc.ww_longitude);
+                forecast_paramValues[1] = lng_buf;
+                forecast_paramValues[2] = ibm_timestamp;
+                forecast_paramValues[3] = loc.fa_program_name;
+                forecast_paramValues[4] = loc.bom_location_id;
+                forecast_paramValues[5] = "forecast";
+                snprintf(precip_buf, sizeof(precip_buf), "%f",
                          ibm_precipitation);
+                forecast_paramValues[6] = precip_buf;
+                forecast_paramValues[7] = precip_buf;
+                forecast_paramValues[8] = precip_buf;
+                forecast_paramValues[9] = precip_buf;
 
-                PGresult* ibm_insert_query = PQexec(psql_conn, ibm_insert);
+                // Insert weather forecast data from IBM
+                PGresult* ibm_insert_query =
+                        PQexecPrepared(psql_conn, forecast_stmt_name, 10,
+                                       forecast_paramValues, NULL, NULL, 1);
                 if(PQresultStatus(ibm_insert_query) != PGRES_COMMAND_OK){
                     log_error("PSQL command failed: %s\n",
                               PQerrorMessage(psql_conn));
@@ -104,14 +154,10 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
             log_error("PSQL command failed: %s ", PQerrorMessage(psql_conn));
         }
 
-        // Get the latest (at max) 20 values from BOM dataset
-        char bom_query[1000];
-        snprintf(bom_query, sizeof(bom_query),
-                 "SELECT ts AT TIME ZONE 'AEST', precipitation "
-                 "FROM weather_bom WHERE location_id = '%s' "
-                 "ORDER BY (ts) DESC;", loc.bom_location_id);
-
-        PGresult* bom_res =  PQexec(psql_conn, bom_query);
+        // BOM historical data select
+        memset(bom_query, 0, sizeof(bom_query));
+        snprintf(bom_query, sizeof(bom_query), bom_select, loc.bom_location_id);
+        PGresult* bom_res = PQexec(psql_conn, bom_query);
         float bom_precipitation = 0;
         char bom_timestamp[50] = {0};
         if(PQresultStatus(bom_res) == PGRES_TUPLES_OK){
@@ -134,40 +180,25 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                     }
                 }
 
-                char bom_insert[1000];
-                snprintf(bom_insert, sizeof(bom_insert),
-                         "INSERT INTO weather "
-                         "(last_updated, "
-                         "latitude, "
-                         "longitude, "
-                         "ts, "
-                         "program_name, "
-                         "bom_location_id, "
-                         "data_type, "
-                         "precipitation, "
-                         "observed_precipitation) "
-                         "VALUES (NOW(), %f, "
-                         "%f, '%s', '%s', '%s', "
-                         "'observed', %f, %f) ON "
-                         "CONFLICT (ts, "
-                         "program_name) DO UPDATE "
-                         "SET last_updated = "
-                         "NOW(), "
-                         "data_type = 'observed', "
-                         "precipitation = %f, "
-                         "observed_precipitation = "
-                         "%f;",
-                         loc.ww_latitude,
-                         loc.ww_longitude,
-                         bom_timestamp,
-                         loc.fa_program_name,
-                         loc.bom_location_id,
-                         bom_precipitation,
-                         bom_precipitation,
-                         bom_precipitation,
+                // Populate BOM values for inserting into weather db
+                snprintf(lat_buf, sizeof(lat_buf), "%f", loc.ww_latitude);
+                historical_paramValues[0] = lat_buf;
+                snprintf(lng_buf, sizeof(lng_buf), "%f", loc.ww_longitude);
+                historical_paramValues[1] = lng_buf;
+                historical_paramValues[2] = bom_timestamp;
+                historical_paramValues[3] = loc.fa_program_name;
+                historical_paramValues[4] = loc.bom_location_id;
+                historical_paramValues[5] = "observed";
+                snprintf(precip_buf, sizeof(precip_buf), "%f",
                          bom_precipitation);
+                historical_paramValues[6] = precip_buf;
+                historical_paramValues[7] = precip_buf;
+                historical_paramValues[8] = precip_buf;
+                historical_paramValues[9] = precip_buf;
 
-                PGresult* bom_insert_query = PQexec(psql_conn, bom_insert);
+                PGresult* bom_insert_query =
+                        PQexecPrepared(psql_conn, historical_stmt_name, 10,
+                                       historical_paramValues, NULL, NULL, 1);
                 if(PQresultStatus(bom_insert_query) != PGRES_COMMAND_OK){
                     log_error("PSQL command failed: %s\n",
                               PQerrorMessage(psql_conn));
@@ -238,7 +269,7 @@ void T_BuildOutlook(PGconn* psql_conn){
 
             // Get current observed weather and forecast information for a
             // particular harvest area
-            char weather_query[500];
+            char weather_query[300];
             snprintf(weather_query, sizeof(weather_query),
                      "SELECT ts, data_type, precipitation FROM weather WHERE "
                      "program_name = '%s' ORDER BY ts DESC LIMIT %d;",
@@ -333,9 +364,12 @@ void T_CloseHarvestArea(T_Outlook_Typedef* outlook,
     if(strcmp(outlook->status, "Closed") != 0) {
         outlook->closed = false;
         outlook->to_close = true;
-        strncpy(outlook->closure_type, "Rainfall", sizeof(outlook->closure_type));
-        strncpy(outlook->closure_reason, reason, sizeof(outlook->closure_reason));
-        strncpy(outlook->closure_date, timestamp, sizeof(outlook->closure_date));
+        strncpy(outlook->closure_type, "Rainfall",
+                sizeof(outlook->closure_type));
+        strncpy(outlook->closure_reason, reason,
+                sizeof(outlook->closure_reason));
+        strncpy(outlook->closure_date, timestamp,
+                sizeof(outlook->closure_date));
     }
 
 }

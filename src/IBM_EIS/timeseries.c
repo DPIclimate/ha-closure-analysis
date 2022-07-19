@@ -268,16 +268,9 @@ static void IBM_BuildURL(IBM_TimeseriesReq_TypeDef *req, char *url) {
     log_info("Building URL for IBM EIS endpoint: %s\n",
              IBM_REQUEST_URL);
 
-    snprintf(url, IBM_URL_SIZE, "%s/v2/timeseries?layer="
-                                "%d"
-                                "&lat=%f"
-                                "&lon=%f"
-                                "&start=%ld"
-                                "&end=%ld",
-             IBM_REQUEST_URL,
-             req->layer_id,
-             req->latitude,
-             req->longitude,
+    snprintf(url, IBM_URL_SIZE, "%s/v2/timeseries?layer=%d&lat=%f&lon=%f"
+                                "&start=%ld&end=%ld",
+             IBM_REQUEST_URL, req->layer_id, req->latitude, req->longitude,
              (req->start - 86400) * 1000,
              (req->end - 86400) * 1000);
 }
@@ -479,7 +472,6 @@ void IBM_TimeseriesToDB(IBM_TimeseriesReq_TypeDef* req_info,
         time_t unix_time = dataset->timestamps[index];
         struct tm ctm = *localtime(&unix_time);
         strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S%z", &ctm);
-        char query[3000];
 
         const char* paramValues[8];
 
