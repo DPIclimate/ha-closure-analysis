@@ -13,7 +13,7 @@ import (
 type Precipitation struct {
 	LastUpdated string                 `json:"last_updated"`
 	ProgramName string                 `json:"program_name"`
-	ProgramID   string                 `json:"bom_id"`
+	ProgramID   string                 `json:"program_id"`
 	Count       int32                  `json:"count"`
 	Results     []PrecipitationResults `json:"results"`
 }
