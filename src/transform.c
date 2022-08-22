@@ -171,8 +171,8 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                                     sizeof(bom_timestamp));
                             break;
                         case 1:
-                            bom_precipitation = strtof(PQgetvalue(bom_res, i, j),
-                                                       &ptr);
+                            bom_precipitation = strtof(PQgetvalue(bom_res, i,
+                                                                  j), &ptr);
                             break;
                         default:
                             log_error("Unknown value in IBM query.\n");

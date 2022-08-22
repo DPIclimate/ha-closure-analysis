@@ -103,6 +103,7 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
     // Convert filename to uppercase location (could be done better)
     // E.g. moruya_airport -> MORUYA AIRPORT
     char location[BOM_STATION_FILENAME_SIZE];
+    memset(location, 0, sizeof(location));
     for (int16_t i = 0; i < BOM_STATION_FILENAME_SIZE; i++) {
         if (station->filename[i] == '\0') break;
 
@@ -118,9 +119,12 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
         }
     }
 
+    log_info("Loading %s from .csv file.\n", location);
+
     // Extract location, timestamp, rainfall, max temp, min temp
     char buffer[500];
     char loc[BOM_STATION_NAME_SIZE]; // Location name
+    memset(loc, 0, sizeof(loc));
     char ts[11]; // Timestamp of values
     char precip_buf[8]; // Daily precipitaion
     char max_t_buf[8]; // Daily max temperature
@@ -171,7 +175,11 @@ int8_t BOM_LoadWeatherFromCSV(const char *filename,
         }
     }
 
-    log_info("BOM Dataset successfully parsed and loaded.\n");
+    if(dataset->count != 0){
+        log_info("BOM dataset successfully parsed and loaded.\n");
+    } else {
+        log_error("BOM dataset could not be loaded.\n");
+    }
 
     fclose(file);
 
@@ -261,52 +269,60 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
     log_info("BOM weather data written to PostgreSQL.\n");
 }
 
-void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
-                        const char* start_time,
+void BOM_TimeseriesToDB(const char* start_time,
                         PGconn* psql_conn){
 
     BOM_WeatherStations_TypeDef stations;
     BOM_LoadStationsFromTxt("tmp/bom_weather_stations.txt", &stations);
 
+    const char* stmt = "SELECT DISTINCT bom_location_id from harvest_lookup;";
+
+    PGresult* bom_locations = PQexec(psql_conn, stmt);
+    if(PQresultStatus(bom_locations) != PGRES_TUPLES_OK){
+        log_fatal("Error getting BOM location ids from harvest_lookup table: "
+                  "%s\n", PQerrorMessage(psql_conn));
+        PQclear(bom_locations);
+        return;
+    }
+
     struct tm dt = {0};
     strptime(start_time, "%Y-%m-%d", &dt);
     time_t start_unix = mktime(&dt);
     time_t end_unix = time(NULL); // Current time as UNIX timestamp
+
+    const int16_t Q_LEN = 600;
     while(difftime(end_unix, start_unix) > 0.0){
         char time_buf[30];
         strftime(time_buf, sizeof(time_buf), "%Y%m", &dt);
 
-        uint16_t index = 0;
-        const int8_t Q_LEN = 100;
-        int queried_ids[Q_LEN];
-        memset(queried_ids, 0, sizeof(queried_ids));
-        while(index < locations->count){
-            int cws = BOM_ClosestStationIndex(
-                    (double)locations->locations[index].ww_latitude,
-                    (double)locations->locations[index].ww_longitude,
-                    &stations);
+        for(int i = 0; i < PQntuples(bom_locations); i++){
+            const char* bom_location_id = PQgetvalue(bom_locations, i, 0);
 
-            bool already_queried = false;
-            for(int i = 0; i < Q_LEN; i++){
-                if(queried_ids[i] == cws){
-                    already_queried = true;
+            int16_t index = 0;
+            bool location_found = false;
+            for(int16_t x = 0; x < Q_LEN; x++){
+                if(strcmp(bom_location_id, stations.stations[x].id) == 0){
+                    index = x;
+                    location_found = true;
                     break;
                 }
             }
 
-            if(!already_queried){
-                BOM_WeatherDataset_TypeDef bom_dataset = {0};
-                BOM_GetWeather(&bom_dataset,
-                               &stations.stations[cws],
-                               time_buf);
-                BOM_HistoricalWeatherToDB(&stations.stations[cws],
-                                          &bom_dataset,
-                                          psql_conn);
+            if(!location_found){
+                log_error("BOM station (ID: %s) not found in station list.\n",
+                          bom_location_id);
+                continue;
             }
-            queried_ids[index] = cws;
-            index++;
+
+            BOM_WeatherDataset_TypeDef bom_dataset = {0};
+            BOM_GetWeather(&bom_dataset, &stations.stations[index], time_buf);
+            BOM_HistoricalWeatherToDB(&stations.stations[index], &bom_dataset,
+                                      psql_conn);
         }
+
         dt.tm_mon++;
         start_unix = mktime(&dt);
     }
+
+    PQclear(bom_locations);
 }

@@ -14,9 +14,9 @@
 /// BOM state identifier size (length)
 #define BOM_STATION_STATE_SIZE              4
 /// BOM site name size (length)
-#define BOM_STATION_NAME_SIZE               100
+#define BOM_STATION_NAME_SIZE               150
 /// BOM filename max size
-#define BOM_STATION_FILENAME_SIZE           100
+#define BOM_STATION_FILENAME_SIZE           150
 
 /// Static location of BOM sites .txt file on BOM FTP server
 #define BOM_FTP_STATIONS_URL "ftp://ftp.bom.gov.au/anon/gen/clim_data/IDCKWCDEA0/tables/stations_db.txt"

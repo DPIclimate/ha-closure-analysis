@@ -45,8 +45,6 @@ void BOM_HistoricalWeatherToDB(BOM_WeatherStation_TypeDef* weather_station,
                                BOM_WeatherDataset_TypeDef* dataset,
                                PGconn* psql_conn);
 
-void BOM_TimeseriesToDB(T_LocationsLookup_TypeDef* locations,
-                        const char* start_time,
-                        PGconn* psql_conn);
+void BOM_TimeseriesToDB(const char* start_time, PGconn* psql_conn);
 
 #endif //PROGRAM_HISTORICAL_WEATHER_H
