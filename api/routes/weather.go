@@ -26,15 +26,15 @@ type PrecipitationResults struct {
 
 // LocationalPrecipitationRoute ... Get precipitation (observed and forecast) information for a harvest area.
 // @Summary      Get observed and forecast for a particular harvest area.
-// @description  Obtains the forecast and obeserved (if available) precipitation data for a particular oyster farming
-// region.
-// @Tags         Precipitation
+// @description  Obtains the forecast and obeserved (if available) precipitation data for a particular oyster farming region.
+// @description  These data contain daily values in millimeters of rainfall (mm). Be aware, observed and forecast values can differ significantly.
+// @Tags         Weather
 // @Produce      json
 // @Success      200  {object}  Precipitation
 // @Failure      404
 // @Failure      500
 // @Param program_id path integer true "Unique program area ID"
-// @Router       /oyster_regions/weather/precipitation/{program_id} [get]
+// @Router       /oyster_regions/{program_id}/weather/precipitation [get]
 func LocationalPrecipitationRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	var (
@@ -98,7 +98,10 @@ func LocationalPrecipitationRoute(w http.ResponseWriter, r *http.Request, db *sq
 	precip.Results = dataset
 	precip.Count = count
 
-	err = json.NewEncoder(w).Encode(precip)
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(precip)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Printf("JSON encode error: %s\n", err)

@@ -10,7 +10,7 @@ import (
 // @host           localhost:8080
 // @BasePath       /
 //
-// @contact.name   Harvey Bates \@ NSW DPI
+// @contact.name   Harvey Bates \@ NSW Department of Primary Industries
 // @contact.email  harvey.bates@dpi.nsw.gov.au
 // @licencse.name  MIT
 // @license.url    https://github.com/DPIclimate/ha-closure-analysis/blob/master/LICENCE

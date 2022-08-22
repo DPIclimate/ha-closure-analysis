@@ -26,7 +26,7 @@ int main(void) {
     //const char* start_dt = "2022-08-01";
     //BOM_TimeseriesToDB(start_dt, psql_conn);
 
-    ////// BUILD IBM TIMESERIES DATASET BELOW
+    ////// BUILD IBM TIMESERIES DATASET
     //const char* start_time = "2022-08-01";
     //const char* end_time = "2022-09-01";
     //IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);

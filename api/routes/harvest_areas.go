@@ -32,7 +32,7 @@ type Status struct {
 // ListHarvestAreasRoute ... Get a list of all NSW oyster harvesting areas
 // @Summary      Get a list of unique NSW oyster harvesting areas
 // @description  This request obtains a list containing all NSW oyster harvest areas and their current statuses.
-// @Tags         HarvestAreas
+// @Tags         Oyster Production Regions
 // @Produce      json
 // @Success      200  {object}  HarvestAreas
 // @Failure      404
@@ -82,7 +82,9 @@ func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	harvestAreas.Results = results
 	harvestAreas.Count = count
 
-	err = json.NewEncoder(w).Encode(harvestAreas)
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(harvestAreas)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

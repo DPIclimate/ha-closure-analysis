@@ -36,7 +36,7 @@ type BOMStation struct {
 // ListLocationsRoute ... Get a list of locations
 // @Summary      Get a list of unique NSW oyster harvesting locations
 // @description  This request obtains a list of all NSW oyster farming locations. Within this there may be several harvest areas.
-// @Tags         Locations
+// @Tags         Oyster Production Regions
 // @Produce      json
 // @Success      200  {object}  Locations
 // @Failure      404
@@ -90,7 +90,9 @@ func ListLocationsRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	locations.Results = results
 	locations.Count = count
 
-	err = json.NewEncoder(w).Encode(locations)
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(locations)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
