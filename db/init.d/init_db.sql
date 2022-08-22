@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS harvest_outlook (
 CREATE TABLE IF NOT EXISTS harvest_lookup (
     last_updated                        timestamptz DEFAULT NOW() NOT NULL, -- Time this information was last updated
     fa_program_name                     text NOT NULL,                      -- NSW Food Authority program name
+    fa_program_id                       SERIAL PRIMARY KEY NOT NULL,        -- Unique identifier for a program location
     ww_location                         text NOT NULL,                      -- Location name from Willy Weather
     ww_location_id                      int NOT NULL,                       -- Location ID from Willy Weather
     ww_latitude                         float NOT NULL,                     -- Latitude from Willy Weather (represents HA latitude)
@@ -130,6 +131,7 @@ CREATE TABLE IF NOT EXISTS weather (
     longitude                           float NOT NULL,                     -- Longitude of harvest zone
     ts                                  timestamptz NOT NULL,               -- Datetime this information is relevent for
     program_name                        text NOT NULL,                      -- NSW FA program name
+    program_id                          int NOT NULL,                       -- Unique ID (based on assigned SERIAL PRIMARY KEY in harvest_lookup)
     bom_location_id                     text,                               -- BOM weather station ID
     data_type                           text NOT NULL,                      -- "forecast" or "observed"
     precipitation                       float NOT NULL,                     -- Daily precipitation

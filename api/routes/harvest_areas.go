@@ -17,6 +17,7 @@ type HarvestArea struct {
 	ProgramName     string `json:"program_name"`
 	HarvestLocation string `json:"location_name"`
 	HarvestName     string `json:"harvest_name"`
+	HarvestId       string `json:"harvest_id"`
 	HAStatus        Status `json:"status"`
 }
 
@@ -30,7 +31,7 @@ type Status struct {
 
 // ListHarvestAreasRoute ... Get a list of all NSW oyster harvesting areas
 // @Summary      Get a list of unique NSW oyster harvesting areas
-// @description  This request obtains a list containing all NSW harvest areas and their current status
+// @description  This request obtains a list containing all NSW oyster harvest areas and their current statuses.
 // @Tags         HarvestAreas
 // @Produce      json
 // @Success      200  {object}  HarvestAreas
@@ -43,7 +44,7 @@ func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	var harvestAreas HarvestAreas
 
-	query := "SELECT DISTINCT ON (name) last_updated, program_name, location, name, classification, status, " +
+	query := "SELECT DISTINCT ON (name) last_updated, program_name, location, name, id, classification, status, " +
 		"time_processed, status_reason, status_prev_reason FROM harvest_area ORDER BY name, time_processed DESC;"
 	rows, err := db.Query(query)
 	if err != nil {
@@ -65,9 +66,8 @@ func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		var harvestArea HarvestArea
 		var status Status
 		err = rows.Scan(&harvestArea.LastUpdated, &harvestArea.ProgramName, &harvestArea.HarvestLocation,
-			&harvestArea.HarvestName, &status.Classification, &status.State, &status.TimeProcessed,
-			&status.StatusReason, &status.StatusPrevReason)
-
+			&harvestArea.HarvestName, &harvestArea.HarvestId, &status.Classification, &status.State,
+			&status.TimeProcessed, &status.StatusReason, &status.StatusPrevReason)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			log.Printf("Locational precipitation query failed: %s\n", err)

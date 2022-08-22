@@ -22,6 +22,7 @@ type Program struct {
 	Latitude  string     `json:"latitude"`
 	Longitude string     `json:"longitude"`
 	BOM       BOMStation `json:"bom_info"`
+	ID        int32      `json:"id"`
 }
 
 type BOMStation struct {
@@ -34,8 +35,7 @@ type BOMStation struct {
 
 // ListLocationsRoute ... Get a list of locations
 // @Summary      Get a list of unique NSW oyster harvesting locations
-// @description  There are currently 28 oyster harvesting locations in NSW this methood obtains a list containing
-// @description  their latitude and longitude, name, closest BOM weather station and other important values.
+// @description  This request obtains a list of all NSW oyster farming locations. Within this there may be several harvest areas.
 // @Tags         Locations
 // @Produce      json
 // @Success      200  {object}  Locations
@@ -48,8 +48,8 @@ func ListLocationsRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	var locations Locations
 
-	query := "SELECT last_updated, fa_program_name, ww_latitude, ww_longitude, bom_location, bom_location_id, " +
-		"bom_latitude, bom_longitude, bom_distance FROM harvest_lookup;"
+	query := "SELECT last_updated, fa_program_name, fa_program_id, ww_latitude, ww_longitude, bom_location, " +
+		"bom_location_id, bom_latitude, bom_longitude, bom_distance FROM harvest_lookup;"
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -71,7 +71,7 @@ func ListLocationsRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		var location Location
 		var program Program
 		var bomStation BOMStation
-		err = rows.Scan(&location.LastUpdated, &program.Name, &program.Latitude,
+		err = rows.Scan(&location.LastUpdated, &program.Name, &program.ID, &program.Latitude,
 			&program.Longitude, &bomStation.Name, &bomStation.ID, &bomStation.Latitude, &bomStation.Longitude,
 			&bomStation.Distance)
 

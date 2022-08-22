@@ -32,17 +32,17 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
     PGresult* forecast_info = PQdescribePrepared(psql_conn, forecast_stmt_name);
     if(PQresultStatus(forecast_info) != PGRES_COMMAND_OK){
         const char* forecast_stmt ="INSERT INTO weather (last_updated, latitude, "
-                                   "longitude, ts, program_name, bom_location_id, "
-                                   "data_type, precipitation, "
+                                   "longitude, ts, program_name, program_id, "
+                                   "bom_location_id, data_type, precipitation, "
                                    "forecast_precipitation) "
                                    "VALUES (NOW(), $1::float, $2::float, "
-                                   "$3::timestamptz, $4::text, $5::text, "
-                                   "$6::text, $7::float, $8::float) "
+                                   "$3::timestamptz, $4::text, $5::int, "
+                                   "$6::text, $7::text, $8::float, $9::float) "
                                    "ON CONFLICT (ts, program_name) DO UPDATE "
                                    "SET last_updated = NOW(), "
                                    "data_type = 'forecast', "
-                                   "precipitation = $9::float, "
-                                   "forecast_precipitation = $10::float;";
+                                   "precipitation = $10::float, "
+                                   "forecast_precipitation = $11::float;";
         PGresult* forecast_prep = PQprepare(psql_conn, forecast_stmt_name,
                                             forecast_stmt, 1, NULL);
         if(PQresultStatus(forecast_prep) != PGRES_COMMAND_OK){
@@ -53,7 +53,7 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
     }
     PQclear(forecast_info);
 
-    const char* forecast_paramValues[10];
+    const char* forecast_paramValues[11];
 
     const char* bom_select ="SELECT ts AT TIME ZONE 'AEST', precipitation "
                             "FROM weather_bom WHERE location_id = '%s' "
@@ -67,16 +67,17 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
     if(PQresultStatus(historical_info) != PGRES_COMMAND_OK){
         const char* historical_stmt = "INSERT INTO weather (last_updated, "
                                       "latitude, longitude, ts, program_name, "
-                                      "bom_location_id, data_type, "
+                                      "program_id, bom_location_id, data_type, "
                                       "precipitation, observed_precipitation) "
                                       "VALUES (NOW(), $1::float, $2::float, "
-                                      "$3::timestamptz, $4::text, $5::text, "
-                                      "$6::text, $7::float, $8::float) "
-                                      "ON CONFLICT (ts, program_name) DO "
-                                      "UPDATE SET last_updated = NOW(), "
+                                      "$3::timestamptz, $4::text, $5::int, "
+                                      "$6::text, $7::text, $8::float, "
+                                      "$9::float) ON CONFLICT "
+                                      "(ts, program_name) DO UPDATE SET "
+                                      "last_updated = NOW(), "
                                       "data_type = 'observed', "
-                                      "precipitation = $9::float, "
-                                      "observed_precipitation = $10::float;";
+                                      "precipitation = $10::float, "
+                                      "observed_precipitation = $11::float;";
         PGresult* historical_prep = PQprepare(psql_conn, historical_stmt_name,
                                               historical_stmt, 1, NULL);
         if(PQresultStatus(historical_prep) != PGRES_COMMAND_OK){
@@ -87,7 +88,7 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
     }
     PQclear(historical_info);
 
-    const char* historical_paramValues[10];
+    const char* historical_paramValues[11];
 
     char lat_buf[10];
     char lng_buf[10];
@@ -131,18 +132,19 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                 forecast_paramValues[1] = lng_buf;
                 forecast_paramValues[2] = ibm_timestamp;
                 forecast_paramValues[3] = loc.fa_program_name;
-                forecast_paramValues[4] = loc.bom_location_id;
-                forecast_paramValues[5] = "forecast";
+                forecast_paramValues[4] = loc.fa_program_id;
+                forecast_paramValues[5] = loc.bom_location_id;
+                forecast_paramValues[6] = "forecast";
                 snprintf(precip_buf, sizeof(precip_buf), "%f",
                          ibm_precipitation);
-                forecast_paramValues[6] = precip_buf;
                 forecast_paramValues[7] = precip_buf;
                 forecast_paramValues[8] = precip_buf;
                 forecast_paramValues[9] = precip_buf;
+                forecast_paramValues[10] = precip_buf;
 
                 // Insert weather forecast data from IBM
                 PGresult* ibm_insert_query =
-                        PQexecPrepared(psql_conn, forecast_stmt_name, 10,
+                        PQexecPrepared(psql_conn, forecast_stmt_name, 11,
                                        forecast_paramValues, NULL, NULL, 1);
                 if(PQresultStatus(ibm_insert_query) != PGRES_COMMAND_OK){
                     log_error("PSQL command failed: %s\n",
@@ -187,17 +189,18 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                 historical_paramValues[1] = lng_buf;
                 historical_paramValues[2] = bom_timestamp;
                 historical_paramValues[3] = loc.fa_program_name;
-                historical_paramValues[4] = loc.bom_location_id;
-                historical_paramValues[5] = "observed";
+                historical_paramValues[4] = loc.fa_program_id;
+                historical_paramValues[5] = loc.bom_location_id;
+                historical_paramValues[6] = "observed";
                 snprintf(precip_buf, sizeof(precip_buf), "%f",
                          bom_precipitation);
-                historical_paramValues[6] = precip_buf;
                 historical_paramValues[7] = precip_buf;
                 historical_paramValues[8] = precip_buf;
                 historical_paramValues[9] = precip_buf;
+                historical_paramValues[10] = precip_buf;
 
                 PGresult* bom_insert_query =
-                        PQexecPrepared(psql_conn, historical_stmt_name, 10,
+                        PQexecPrepared(psql_conn, historical_stmt_name, 11,
                                        historical_paramValues, NULL, NULL, 1);
                 if(PQresultStatus(bom_insert_query) != PGRES_COMMAND_OK){
                     log_error("PSQL command failed: %s\n",

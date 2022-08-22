@@ -396,7 +396,11 @@ void FA_UniqueLocationsFromDB(T_LocationsLookup_TypeDef* locations,
     log_info("Getting unique oyster farming regions from PostgreSQL DB.\n",
              locations->count);
 
-    const char* query = "SELECT * FROM harvest_lookup;";
+    const char* query = "SELECT last_updated, fa_program_name, fa_program_id, "
+                        "ww_location, ww_location_id, ww_latitude, "
+                        "ww_longitude, bom_location, bom_location_id, "
+                        "bom_latitude, bom_longitude, bom_distance "
+                        "FROM harvest_lookup;";
     PGresult* res = PQexec(psql_conn, query);
 
     if(PQresultStatus(res) == PGRES_TUPLES_OK){
@@ -419,38 +423,42 @@ void FA_UniqueLocationsFromDB(T_LocationsLookup_TypeDef* locations,
                                 PQgetvalue(res, i, j), FA_MAX_BUFFER);
                         break;
                     case 2:
+                        strncpy(locations->locations[i].fa_program_id,
+                                PQgetvalue(res, i, j), FA_MAX_BUFFER);
+                        break;
+                    case 3:
                         strncpy(locations->locations[i].ww_location,
                                 PQgetvalue(res, i, j), WW_LOCATION_BUF);
                         break;
-                    case 3:
+                    case 4:
                         strncpy(locations->locations[i].ww_location_id,
                                 PQgetvalue(res, i, j), WW_LOCATION_BUF);
                         break;
-                    case 4:
+                    case 5:
                         locations->locations[i].ww_latitude =
                                 strtof(PQgetvalue(res, i, j), &ptr);
                         break;
-                    case 5:
+                    case 6:
                         locations->locations[i].ww_longitude =
                                 strtof(PQgetvalue(res, i, j), &ptr);
                         break;
-                    case 6:
+                    case 7:
                         strncpy(locations->locations[i].bom_location,
                                 PQgetvalue(res, i, j), BOM_STATION_NAME_SIZE);
                         break;
-                    case 7:
+                    case 8:
                         strncpy(locations->locations[i].bom_location_id,
                                 PQgetvalue(res, i, j), BOM_STATION_ID_SIZE);
                         break;
-                    case 8:
+                    case 9:
                         locations->locations[i].bom_latitude =
                                 strtof(PQgetvalue(res, i, j), &ptr);
                         break;
-                    case 9:
+                    case 10:
                         locations->locations[i].bom_longitude =
                                 strtof(PQgetvalue(res, i, j), &ptr);
                         break;
-                    case 10:
+                    case 11:
                         locations->locations[i].bom_distance =
                                 strtof(PQgetvalue(res, i, j), &ptr);
                         break;

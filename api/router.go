@@ -22,7 +22,8 @@ func HTTPRouter(psqlConn *sql.DB) {
 		routes.ListHarvestAreasRoute(w, r, psqlConn)
 	})
 
-	router.HandleFunc("/weather/precipitation/{location_id}", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/oyster_regions/weather/precipitation/{program_id}", func(w http.ResponseWriter,
+		r *http.Request) {
 		routes.LocationalPrecipitationRoute(w, r, psqlConn)
 	})
 

@@ -33,6 +33,7 @@
 typedef struct {
     char last_updated[T_TIMESTAMP_SIZE]; ///< Last time data was updated
     char fa_program_name[FA_MAX_BUFFER]; ///< NSW Food Authority program name
+    char fa_program_id[FA_MAX_BUFFER]; ///< Unique ID of each program area
     char ww_location[WW_LOCATION_BUF]; ///< Willy Weather location name
     char ww_location_id[WW_LOCATION_BUF]; ///< Willy Weather location ID
     float ww_latitude; ///< Willy Weather location latitude
