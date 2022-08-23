@@ -221,7 +221,47 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
 
 void T_BuildOutlook(PGconn* psql_conn){
-    // TODO Build outlook method here
+
+    // Get statistics for forecast precipitation
+    const char* stmt_name = "SelectPrecipStats";
+    PGresult* stats_info = PQdescribePrepared(psql_conn, stmt_name);
+    if(PQresultStatus(stats_info) != PGRES_COMMAND_OK){
+        log_debug("Adding prepared SQL statement: %s\n", stmt_name);
+        const char* stmt = "SELECT "
+                           "MIN(forecast_precipitation), "
+                           "MAX(forecast_precipitation), "
+                           "AVG(forecast_precipitation), "
+                           "STDDEV(forecast_precipitation) "
+                           "FROM weather "
+                           "WHERE program_id = $1::int;";
+        PGresult* stats_prep = PQprepare(psql_conn, stmt_name, stmt, 1, NULL);
+        if(PQresultStatus(stats_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(stats_prep);
+    }
+    PQclear(stats_info);
+
+    // Add required paramters to prepared statement
+    const char* stats_params[1];
+    int id = 5; // TODO make this dynamic
+    char buf[10];
+    snprintf(buf, sizeof(buf), "%d", id);
+    stats_params[0] = buf;
+
+    PGresult* stats_res = PQexecPrepared(psql_conn, stmt_name, 1, stats_params,
+                                         NULL, NULL, 0);
+    if(PQresultStatus(stats_res) == PGRES_TUPLES_OK){
+        int num_fields = PQnfields(stats_res);
+        for(int i = 0; i < PQntuples(stats_res); i++){
+            for(int j = 0; j < num_fields; j++){
+                printf("Value: %s\n", PQgetvalue(stats_res, i, j));
+            }
+        }
+    }
+
+    PQclear(stats_res);
 }
 
 
