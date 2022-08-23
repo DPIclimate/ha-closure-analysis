@@ -137,5 +137,6 @@ CREATE TABLE IF NOT EXISTS weather (
     precipitation                       float NOT NULL,                     -- Daily precipitation
     forecast_precipitation              float,                              -- Daily precipitation (forecasted)
     observed_precipitation              float,                              -- Daily precipitation (observed)
+    forecast_zscore_precip              float,                              -- Z-Score (and log) transformed daily precipitation
     UNIQUE(ts, program_name)
 )

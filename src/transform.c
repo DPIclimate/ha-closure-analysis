@@ -223,10 +223,10 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 void T_BuildOutlook(PGconn* psql_conn){
 
     // Get statistics for forecast precipitation
-    const char* stmt_name = "SelectPrecipStats";
-    PGresult* stats_info = PQdescribePrepared(psql_conn, stmt_name);
+    const char* stats_stmt_name = "SelectPrecipStats";
+    PGresult* stats_info = PQdescribePrepared(psql_conn, stats_stmt_name);
     if(PQresultStatus(stats_info) != PGRES_COMMAND_OK){
-        log_debug("Adding prepared SQL statement: %s\n", stmt_name);
+        log_debug("Adding prepared SQL statement: %s\n", stats_stmt_name);
         const char* stmt = "SELECT "
                            "MIN(forecast_precipitation), "
                            "MAX(forecast_precipitation), "
@@ -234,7 +234,7 @@ void T_BuildOutlook(PGconn* psql_conn){
                            "STDDEV(forecast_precipitation) "
                            "FROM weather "
                            "WHERE program_id = $1::int;";
-        PGresult* stats_prep = PQprepare(psql_conn, stmt_name, stmt, 1, NULL);
+        PGresult* stats_prep = PQprepare(psql_conn, stats_stmt_name, stmt, 1, NULL);
         if(PQresultStatus(stats_prep) != PGRES_COMMAND_OK){
             log_error("PostgreSQL prepare error: %s\n",
                       PQerrorMessage(psql_conn));
@@ -244,24 +244,97 @@ void T_BuildOutlook(PGconn* psql_conn){
     PQclear(stats_info);
 
     // Add required paramters to prepared statement
-    const char* stats_params[1];
+    const char* params[1];
     int id = 5; // TODO make this dynamic
     char buf[10];
     snprintf(buf, sizeof(buf), "%d", id);
-    stats_params[0] = buf;
+    params[0] = buf;
 
-    PGresult* stats_res = PQexecPrepared(psql_conn, stmt_name, 1, stats_params,
-                                         NULL, NULL, 0);
+    PGresult* stats_res = PQexecPrepared(psql_conn, stats_stmt_name, 1,
+                                         params, NULL, NULL, 0);
+    char* ptr;
+    double min = 0, max = 0, avg = 0, stdev = 0;
     if(PQresultStatus(stats_res) == PGRES_TUPLES_OK){
         int num_fields = PQnfields(stats_res);
         for(int i = 0; i < PQntuples(stats_res); i++){
             for(int j = 0; j < num_fields; j++){
-                printf("Value: %s\n", PQgetvalue(stats_res, i, j));
+                double value = strtod(PQgetvalue(stats_res, i, j), &ptr);
+                switch(j){
+                    case 0:
+                        min = value;
+                        break;
+                    case 1:
+                        max = value;
+                        break;
+                    case 2:
+                        avg = value;
+                        break;
+                    case 3:
+                        stdev = value;
+                        break;
+                    default:
+                        log_error("Unexpected value in query response.\n");
+                        break;
+                }
             }
         }
     }
-
+    log_info("Min: %f\tMax: %f\tAvg: %f\tStdev: %f\n", min, max, avg, stdev);
     PQclear(stats_res);
+
+    // Get historical and future forecast information
+    const char* fcst_stmt_name = "SelectPrecipForecast";
+    PGresult* fcst_info = PQdescribePrepared(psql_conn, fcst_stmt_name);
+    if(PQresultStatus(fcst_info) != PGRES_COMMAND_OK){
+        const char* fcst_stmt = "SELECT forecast_precipitation FROM weather "
+                                "WHERE program_id = $1::int "
+                                "ORDER BY ts ASC "
+                                "LIMIT 10;";
+        PGresult* fcst_prep = PQprepare(psql_conn, fcst_stmt_name, fcst_stmt,
+                                        1, NULL);
+        if(PQresultStatus(fcst_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(fcst_prep);
+    }
+    PQclear(fcst_info);
+
+    // Prepare SQL statement for inserting (updating) Z-Score values
+    const char* zs_stmt_name = "InsertZScorePrecip";
+    PGresult* zs_info = PQdescribePrepared(psql_conn, zs_stmt_name);
+    if(PQresultStatus(zs_info) != PGRES_COMMAND_OK){
+        const char* zs_stmt = "UPDATE weather "
+                              "SET forecast_zscore_precip = $1::float "
+                              "WHERE program_id = $2::int "
+                              "AND ts = $3::timestamptz";
+        PGresult* zs_prep = PQprepare(psql_conn, zs_stmt_name, zs_stmt,
+                                      1, NULL);
+        if(PQresultStatus(zs_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(zs_prep);
+    }
+    PQclear(zs_info);
+
+    PGresult* fcst_res = PQexecPrepared(psql_conn, fcst_stmt_name, 1,
+                                         params, NULL, NULL, 0);
+    if(PQresultStatus(fcst_res) == PGRES_TUPLES_OK) {
+        int num_fields = PQnfields(fcst_res);
+        for (int i = 0; i < PQntuples(fcst_res); i++) {
+            for (int j = 0; j < num_fields; j++) {
+                double value = strtod(PQgetvalue(fcst_res, i, j), &ptr);
+                if(value > 0){
+                    value = log(value);
+                }
+                double z_score = (value - avg) / stdev;
+                printf("Value: %f\n", z_score);
+            }
+        }
+    }
+    PQclear(fcst_res);
+
 }
 
 
