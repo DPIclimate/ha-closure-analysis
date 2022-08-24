@@ -1,8 +1,89 @@
 #include "transform.h"
 
-static void T_CloseHarvestArea(T_Outlook_Typedef* outlook,
-                               const char* reason,
-                               const char* timestamp);
+static void T_PreparedStatements(PGconn* psql_conn){
+    if(db_prepared){
+        return;
+    }
+
+    // Get historical and future forecast information
+    const char* fcst_stmt_name = "SelectPrecipForecast";
+    PGresult* fcst_info = PQdescribePrepared(psql_conn, fcst_stmt_name);
+    if(PQresultStatus(fcst_info) != PGRES_COMMAND_OK){
+        const char* fcst_stmt = "SELECT ts, forecast_precipitation "
+                                "FROM weather "
+                                "WHERE program_id = $1::int "
+                                "ORDER BY ts ASC "
+                                "LIMIT 20;";
+        PGresult* fcst_prep = PQprepare(psql_conn, fcst_stmt_name, fcst_stmt,
+                                        1, NULL);
+        if(PQresultStatus(fcst_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(fcst_prep);
+    }
+    PQclear(fcst_info);
+
+    // Prepare SQL statement for inserting (updating) intermediate log
+    // tranformed values
+    const char* log_stmt_name = "InsertLogPrecip";
+    PGresult* log_info = PQdescribePrepared(psql_conn, log_stmt_name);
+    if(PQresultStatus(log_info) != PGRES_COMMAND_OK){
+        const char* log_stmt = "UPDATE weather "
+                               "SET log_precip = $1::float "
+                               "WHERE program_id = $2::int "
+                               "AND ts = $3::timestamptz;";
+        PGresult* log_prep = PQprepare(psql_conn, log_stmt_name, log_stmt,
+                                       1, NULL);
+        if(PQresultStatus(log_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(log_prep);
+    }
+    PQclear(log_info);
+
+    // Prepare SQL statement for inserting (updating) Z-Score values
+    const char* zs_stmt_name = "InsertZScorePrecip";
+    PGresult* zs_info = PQdescribePrepared(psql_conn, zs_stmt_name);
+    if(PQresultStatus(zs_info) != PGRES_COMMAND_OK){
+        const char* zs_stmt = "UPDATE weather "
+                              "SET forecast_zscore_precip = $1::float "
+                              "WHERE program_id = $2::int "
+                              "AND ts = $3::timestamptz;";
+        PGresult* zs_prep = PQprepare(psql_conn, zs_stmt_name, zs_stmt,
+                                      1, NULL);
+        if(PQresultStatus(zs_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(zs_prep);
+    }
+    PQclear(zs_info);
+
+    const char* stats_stmt_name = "SelectPrecipStats";
+    PGresult* stats_info = PQdescribePrepared(psql_conn, stats_stmt_name);
+    if(PQresultStatus(stats_info) != PGRES_COMMAND_OK){
+        log_debug("Adding prepared SQL statement: %s\n", stats_stmt_name);
+        const char* stmt = "SELECT "
+                           "MIN(log_precip), "
+                           "MAX(log_precip), "
+                           "AVG(log_precip), "
+                           "STDDEV(log_precip) "
+                           "FROM weather "
+                           "WHERE program_id = $1::int;";
+        PGresult* stats_prep = PQprepare(psql_conn, stats_stmt_name, stmt, 1,
+                                         NULL);
+        if(PQresultStatus(stats_prep) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(stats_prep);
+    }
+    PQclear(stats_info);
+
+    db_prepared = true;
+}
 
 /**
  * Main weather table for each location.
@@ -222,37 +303,81 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
 void T_BuildOutlook(PGconn* psql_conn){
 
-    // Get statistics for forecast precipitation
-    const char* stats_stmt_name = "SelectPrecipStats";
-    PGresult* stats_info = PQdescribePrepared(psql_conn, stats_stmt_name);
-    if(PQresultStatus(stats_info) != PGRES_COMMAND_OK){
-        log_debug("Adding prepared SQL statement: %s\n", stats_stmt_name);
-        const char* stmt = "SELECT "
-                           "MIN(forecast_precipitation), "
-                           "MAX(forecast_precipitation), "
-                           "AVG(forecast_precipitation), "
-                           "STDDEV(forecast_precipitation) "
-                           "FROM weather "
-                           "WHERE program_id = $1::int;";
-        PGresult* stats_prep = PQprepare(psql_conn, stats_stmt_name, stmt, 1, NULL);
-        if(PQresultStatus(stats_prep) != PGRES_COMMAND_OK){
-            log_error("PostgreSQL prepare error: %s\n",
-                      PQerrorMessage(psql_conn));
-        }
-        PQclear(stats_prep);
-    }
-    PQclear(stats_info);
+    T_PreparedStatements(psql_conn);
 
     // Add required paramters to prepared statement
+    // Looking to query by program_id
     const char* params[1];
     int id = 5; // TODO make this dynamic
     char buf[10];
     snprintf(buf, sizeof(buf), "%d", id);
     params[0] = buf;
 
-    PGresult* stats_res = PQexecPrepared(psql_conn, stats_stmt_name, 1,
+    // Insert preicpitation parameters buffers
+    const char* weather_params[3];
+    char zs_buf[15]; // Z-Score value
+    // program_id from previous `buf`
+    char ts_buf[30];
+
+    // First itteration just parses the log precipitation value for each row
+    // and puts these data into their own column `log_precip`
+    Utils_PrepareStatement(psql_conn, "SelectPrecipForecast",
+                           "SELECT ts, forecast_precipitation "
+                           "FROM weather "
+                           "WHERE program_id = $1::int "
+                           "ORDER BY ts ASC "
+                           "LIMIT 20;");
+    PGresult* fcst_res = PQexecPrepared(psql_conn, "SelectPrecipForecast", 1,
                                          params, NULL, NULL, 0);
     char* ptr;
+    double fcst_precip = 0;
+    if(PQresultStatus(fcst_res) == PGRES_TUPLES_OK) {
+        int num_fields = PQnfields(fcst_res);
+        for (int i = 0; i < PQntuples(fcst_res); i++) {
+            memset(ts_buf, 0, sizeof(ts_buf));
+            for (int j = 0; j < num_fields; j++) {
+                switch(j){
+                    case 0:
+                        // Timestamp
+                        strncpy(ts_buf, PQgetvalue(fcst_res, i, j),
+                                sizeof(ts_buf));
+                        break;
+                    case 1:
+                        // Forecast precipitation
+                        fcst_precip = strtod(PQgetvalue(fcst_res, i, j), &ptr);
+                        break;
+                    default:
+                        log_error("Unexpected value in query response.\n");
+                        break;
+                }
+            }
+            /* LOG10 TRANSFORMATION START */
+            double log_precip = 0;
+            if(fcst_precip > 0){
+                log_precip = log10(fcst_precip);
+            }
+            /* LOG10 TRANSFORMATION END */
+
+            log_debug("%s:\t%f\t%f\n", ts_buf, fcst_precip, log_precip);
+
+            snprintf(zs_buf, sizeof(zs_buf), "%f", log_precip);
+            weather_params[0] = zs_buf; // Z-Score buffer
+            weather_params[1] = buf; // program_id buffer
+            weather_params[2] = ts_buf; // Timestamp buffer
+
+            PGresult* fcst_insert = PQexecPrepared(psql_conn, log_stmt_name, 3,
+                                         weather_params, NULL, NULL, 1);
+            if(PQresultStatus(fcst_insert) != PGRES_COMMAND_OK){
+                log_error("PostgreSQL transformation insert error: %s\n",
+                          PQerrorMessage(psql_conn));
+            }
+            PQclear(fcst_insert);
+        }
+    }
+    PQclear(fcst_res);
+
+    PGresult* stats_res = PQexecPrepared(psql_conn, stats_stmt_name, 1,
+                                         params, NULL, NULL, 0);
     double min = 0, max = 0, avg = 0, stdev = 0;
     if(PQresultStatus(stats_res) == PGRES_TUPLES_OK){
         int num_fields = PQnfields(stats_res);
@@ -282,81 +407,18 @@ void T_BuildOutlook(PGconn* psql_conn){
     log_info("Min: %f\tMax: %f\tAvg: %f\tStdev: %f\n", min, max, avg, stdev);
     PQclear(stats_res);
 
-    // Get historical and future forecast information
-    const char* fcst_stmt_name = "SelectPrecipForecast";
-    PGresult* fcst_info = PQdescribePrepared(psql_conn, fcst_stmt_name);
-    if(PQresultStatus(fcst_info) != PGRES_COMMAND_OK){
-        const char* fcst_stmt = "SELECT forecast_precipitation FROM weather "
-                                "WHERE program_id = $1::int "
-                                "ORDER BY ts ASC "
-                                "LIMIT 10;";
-        PGresult* fcst_prep = PQprepare(psql_conn, fcst_stmt_name, fcst_stmt,
-                                        1, NULL);
-        if(PQresultStatus(fcst_prep) != PGRES_COMMAND_OK){
-            log_error("PostgreSQL prepare error: %s\n",
-                      PQerrorMessage(psql_conn));
-        }
-        PQclear(fcst_prep);
-    }
-    PQclear(fcst_info);
+    // Calculate z-score
+    //double z_score = (log_precip - avg) / stdev;
 
-    // Prepare SQL statement for inserting (updating) Z-Score values
-    const char* zs_stmt_name = "InsertZScorePrecip";
-    PGresult* zs_info = PQdescribePrepared(psql_conn, zs_stmt_name);
-    if(PQresultStatus(zs_info) != PGRES_COMMAND_OK){
-        const char* zs_stmt = "UPDATE weather "
-                              "SET forecast_zscore_precip = $1::float "
-                              "WHERE program_id = $2::int "
-                              "AND ts = $3::timestamptz";
-        PGresult* zs_prep = PQprepare(psql_conn, zs_stmt_name, zs_stmt,
-                                      1, NULL);
-        if(PQresultStatus(zs_prep) != PGRES_COMMAND_OK){
-            log_error("PostgreSQL prepare error: %s\n",
-                      PQerrorMessage(psql_conn));
-        }
-        PQclear(zs_prep);
-    }
-    PQclear(zs_info);
+    //snprintf(zs_buf, sizeof(zs_buf), "%f", z_score);
+    //weather_params[0] = zs_buf; // Z-Score buffer
+    //weather_params[1] = buf; // program_id buffer
+    //weather_params[2] = ts_buf; // Timestamp buffer
 
-    PGresult* fcst_res = PQexecPrepared(psql_conn, fcst_stmt_name, 1,
-                                         params, NULL, NULL, 0);
-    if(PQresultStatus(fcst_res) == PGRES_TUPLES_OK) {
-        int num_fields = PQnfields(fcst_res);
-        for (int i = 0; i < PQntuples(fcst_res); i++) {
-            for (int j = 0; j < num_fields; j++) {
-                double value = strtod(PQgetvalue(fcst_res, i, j), &ptr);
-                if(value > 0){
-                    value = log(value);
-                }
-                double z_score = (value - avg) / stdev;
-                printf("Value: %f\n", z_score);
-            }
-        }
-    }
-    PQclear(fcst_res);
-
-}
-
-
-/**
- * Predicted harvest area closure.
- *
- * @param outlook
- * @param reason
- * @param timestamp
- */
-void T_CloseHarvestArea(T_Outlook_Typedef* outlook,
-                        const char* reason,
-                        const char* timestamp){
-    if(strcmp(outlook->status, "Closed") != 0) {
-        outlook->closed = false;
-        outlook->to_close = true;
-        strncpy(outlook->closure_type, "Rainfall",
-                sizeof(outlook->closure_type));
-        strncpy(outlook->closure_reason, reason,
-                sizeof(outlook->closure_reason));
-        strncpy(outlook->closure_date, timestamp,
-                sizeof(outlook->closure_date));
-    }
-
+    //fcst_insert = PQexecPrepared(psql_conn, zs_stmt_name, 3,
+    //                             weather_params, NULL, NULL, 1);
+    //if(PQresultStatus(fcst_insert) != PGRES_COMMAND_OK){
+    //    log_error("PostgreSQL transformation insert error: %s\n",
+    //              PQerrorMessage(psql_conn));
+    //}
 }

@@ -197,3 +197,19 @@ double Utils_PointsDistance(double latitude,
              (cos(station_latitude * p) * cos(latitude * p)) *
              ((1 - cos((longitude - station_longitude) * p)) / 2.0))));
 }
+
+
+void Utils_PrepareStatement(PGconn* psql_conn, const char* stmt_name,
+                            const char* stmt){
+    // Get historical and future forecast information
+    PGresult* info = PQdescribePrepared(psql_conn, stmt_name);
+    if(PQresultStatus(info) != PGRES_COMMAND_OK){
+        PGresult* prepare = PQprepare(psql_conn, stmt_name, stmt, 1, NULL);
+        if(PQresultStatus(prepare) != PGRES_COMMAND_OK){
+            log_error("PostgreSQL prepare error: %s\n",
+                      PQerrorMessage(psql_conn));
+        }
+        PQclear(prepare);
+    }
+    PQclear(info);
+}

@@ -29,6 +29,8 @@
 #define T_DATA_QUERY_LENGTH         15
 #define T_DATA_WINDOW_SIZE          7
 
+bool db_prepared = false;
+
 /// Structure of a location (i.e. program location)
 typedef struct {
     char last_updated[T_TIMESTAMP_SIZE]; ///< Last time data was updated

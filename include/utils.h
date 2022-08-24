@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <math.h>
 #include <log.h>
+#include <libpq-fe.h>
 
 #define USER_AGENT "EnvMonitoring/0.1 (NSW Department of Primary Industries)"
 
@@ -40,5 +41,8 @@ double Utils_PointsDistance(double latitude,
                             double longitude,
                             double station_latitude,
                             double station_longitude);
+
+void Utils_PrepareStatement(PGconn* psql_conn, const char* stmt_name,
+                            const char* stmt);
 
 #endif // HA_CLOSURE_ANALYSIS_UTILS_H
