@@ -210,6 +210,9 @@ void Utils_PrepareStatement(PGconn* psql_conn, const char* stmt_name,
                       PQerrorMessage(psql_conn));
         }
         PQclear(prepare);
+    } else {
+        log_error("PostgreSQL information request error: %s\n",
+                  PQresultErrorMessage(info));
     }
     PQclear(info);
 }
