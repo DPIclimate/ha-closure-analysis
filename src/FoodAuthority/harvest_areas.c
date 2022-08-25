@@ -174,28 +174,16 @@ void FA_HarvestAreasToDB(FA_HarvestAreas_TypeDef* harvest_areas,
 
     log_info("Inserting harvest areas status into PostgreSQL database.\n");
 
-    const char* stmt = "INSERT INTO harvest_area (last_updated, program_name, "
-                       "location, name, id, classification, status, "
-                       "time_processed, status_reason, status_prev_reason) "
-                       "VALUES (NOW(), $1::text, $2::text, $3::text, "
-                       "$4::int, $5::text, $6::text, $7::timestamptz, "
-                       "$8::text, $9::text)"
-                       "ON CONFLICT (time_processed, id, name, "
-                       "status) DO UPDATE SET last_updated = NOW();";
-
     const char* stmt_name = "InsertHarvestArea";
-
-    PGresult* p_info = PQdescribePrepared(psql_conn, stmt_name);
-    if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
-        PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 9, NULL);
-        if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
-            log_warn("PostgreSQL prepare error: %s\n",
-                     PQerrorMessage(psql_conn));
-        }
-        PQclear(p_res);
-    }
-    PQclear(p_info);
-
+    Utils_PrepareStatement(psql_conn, stmt_name,
+                           "INSERT INTO harvest_area (last_updated, program_name, "
+                           "location, name, id, classification, status, "
+                           "time_processed, status_reason, status_prev_reason) "
+                           "VALUES (NOW(), $1::text, $2::text, $3::text, "
+                           "$4::int, $5::text, $6::text, $7::timestamptz, "
+                           "$8::text, $9::text)"
+                           "ON CONFLICT (time_processed, id, name, "
+                           "status) DO UPDATE SET last_updated = NOW();", 9);
     const char* paramValues[9];
     char id_buf[10];
 
@@ -253,25 +241,16 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
     const char* query = "SELECT DISTINCT program_name FROM harvest_area;";
 
     const char* stmt_name = "InsertHarvestLookup";
-    // Insert harvest lookup
-    const char* stmt = "INSERT INTO harvest_lookup (last_updated, "
-                       "fa_program_name, ww_location, ww_location_id, "
-                       "ww_latitude, ww_longitude, bom_location, "
-                       "bom_location_id, bom_latitude, bom_longitude, "
-                       "bom_distance) VALUES (NOW(), $1::text, $2::text, "
-                       "$3::int, $4::float, $5::float, $6::text, $7::text, "
-                       "$8::float, $9::float, $10::float) "
-                       "ON CONFLICT (fa_program_name) DO UPDATE SET "
-                       "last_updated = NOW();";
-
-    // Build prepared statment
-    PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 10,
-                                NULL);
-    if(PQresultStatus(p_res) != PGRES_COMMAND_OK) {
-        log_error("PostgreSQL prepare error: %s\n", PQerrorMessage(psql_conn));
-        return;
-    }
-
+    Utils_PrepareStatement(psql_conn, stmt_name,
+                           "INSERT INTO harvest_lookup (last_updated, "
+                           "fa_program_name, ww_location, ww_location_id, "
+                           "ww_latitude, ww_longitude, bom_location, "
+                           "bom_location_id, bom_latitude, bom_longitude, "
+                           "bom_distance) VALUES (NOW(), $1::text, $2::text, "
+                           "$3::int, $4::float, $5::float, $6::text, $7::text, "
+                           "$8::float, $9::float, $10::float) "
+                           "ON CONFLICT (fa_program_name) DO UPDATE SET "
+                           "last_updated = NOW();", 10);
     const char* param_values[10];
 
     char id_buf[10];
@@ -375,7 +354,6 @@ void FA_CreateLocationsLookupDB(PGconn* psql_conn){
 
     log_info("Harvest area location lookups written to PostgreSQL database\n");
 
-    PQclear(p_res);
     PQclear(res);
 }
 

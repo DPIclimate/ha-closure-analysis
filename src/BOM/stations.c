@@ -99,7 +99,8 @@ int8_t BOM_LoadStationsFromTxt(const char *filename,
     int16_t index = 0;
     while (fgets(buffer, sizeof(buffer), file) != NULL
            && index < BOM_STATION_MAX_RESPONSES) {
-        sscanf(buffer, "%6[^ ] %3[^ ] %*[^ ] %99[a-z A-Z()] %*[^ ] %9[^ ] %9[^ ] \n",
+        sscanf(buffer,
+               "%6[^ ] %3[^ ] %*[^ ] %99[a-z A-Z()] %*[^ ] %9[^ ] %9[^ ] \n",
                id_buf, state_buf, name_buf, lat_buf, lng_buf);
 
         // Only parse stations in NSW

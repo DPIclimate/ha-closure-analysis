@@ -43,6 +43,6 @@ double Utils_PointsDistance(double latitude,
                             double station_longitude);
 
 void Utils_PrepareStatement(PGconn* psql_conn, const char* stmt_name,
-                            const char* stmt);
+                            const char* stmt, const int nparams);
 
 #endif // HA_CLOSURE_ANALYSIS_UTILS_H

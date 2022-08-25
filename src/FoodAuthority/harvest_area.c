@@ -75,7 +75,8 @@ CURLcode FA_GetHarvestAreaStatus(const char *harvest_name,
     if (result == CURLE_OK) {
         log_info("NSW Food Authority request was successful.\n");
         log_debug("Location: %s, Status: %s, Time Updated: %s\n",
-                  harvest_area->location, harvest_area->status, harvest_area->time);
+                  harvest_area->location, harvest_area->status,
+                  harvest_area->time);
     }
 
     free(req_body);

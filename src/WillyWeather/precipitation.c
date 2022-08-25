@@ -180,31 +180,20 @@ void WillyWeather_RainfallToDB(WW_Location_TypeDef* location,
                                PGconn* psql_conn){
 
     const char* stmt_name = "InsertWillyWeather";
-    const char* stmt = "INSERT INTO weather_ww (last_updated, location, "
-                       "location_id, ts, rainfall_start_range, "
-                       "rainfall_end_range, rainfall_range_divider, "
-                       "rainfall_range_code, rainfall_probability_of_any) "
-                       "VALUES (NOW(), $1::text, $2::int, $3::timestamptz, "
-                       "$4::int, $5::int, $6::char, $7::text, $8::int) "
-                       "ON CONFLICT (location_id, ts) DO "
-                       "UPDATE SET last_updated = NOW(), "
-                       "rainfall_start_range = $9::int, "
-                       "rainfall_end_range = $10::int, "
-                       "rainfall_range_divider = $11::char, "
-                       "rainfall_range_code = $12::text, "
-                       "rainfall_probability_of_any = $13::int;";
-
-    PGresult* p_info = PQdescribePrepared(psql_conn, stmt_name);
-    if(PQresultStatus(p_info) != PGRES_COMMAND_OK){
-        PGresult* p_res = PQprepare(psql_conn, stmt_name, stmt, 13, NULL);
-        if(PQresultStatus(p_res) != PGRES_COMMAND_OK){
-            log_warn("PostgreSQL prepare error: %s\n",
-                     PQerrorMessage(psql_conn));
-        }
-        PQclear(p_res);
-    }
-    PQclear(p_info);
-
+    Utils_PrepareStatement(psql_conn, stmt_name,
+                           "INSERT INTO weather_ww (last_updated, location, "
+                           "location_id, ts, rainfall_start_range, "
+                           "rainfall_end_range, rainfall_range_divider, "
+                           "rainfall_range_code, rainfall_probability_of_any) "
+                           "VALUES (NOW(), $1::text, $2::int, $3::timestamptz, "
+                           "$4::int, $5::int, $6::char, $7::text, $8::int) "
+                           "ON CONFLICT (location_id, ts) DO "
+                           "UPDATE SET last_updated = NOW(), "
+                           "rainfall_start_range = $9::int, "
+                           "rainfall_end_range = $10::int, "
+                           "rainfall_range_divider = $11::char, "
+                           "rainfall_range_code = $12::text, "
+                           "rainfall_probability_of_any = $13::int;", 13);
     const char* paramValues[13];
 
     char locid_buf[10]; // Location ID buffer

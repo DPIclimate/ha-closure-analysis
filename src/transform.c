@@ -25,30 +25,19 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
     // Prepare weather table insert statement (using IBM (forecast) data)
     const char* forecast_stmt_name = "InsertIBMForecast";
-    PGresult* forecast_info = PQdescribePrepared(psql_conn, forecast_stmt_name);
-    if(PQresultStatus(forecast_info) != PGRES_COMMAND_OK){
-        const char* forecast_stmt ="INSERT INTO weather (last_updated, latitude, "
-                                   "longitude, ts, program_name, program_id, "
-                                   "bom_location_id, data_type, precipitation, "
-                                   "forecast_precipitation) "
-                                   "VALUES (NOW(), $1::float, $2::float, "
-                                   "$3::timestamptz, $4::text, $5::int, "
-                                   "$6::text, $7::text, $8::float, $9::float) "
-                                   "ON CONFLICT (ts, program_name) DO UPDATE "
-                                   "SET last_updated = NOW(), "
-                                   "data_type = 'forecast', "
-                                   "precipitation = $10::float, "
-                                   "forecast_precipitation = $11::float;";
-        PGresult* forecast_prep = PQprepare(psql_conn, forecast_stmt_name,
-                                            forecast_stmt, 1, NULL);
-        if(PQresultStatus(forecast_prep) != PGRES_COMMAND_OK){
-            log_warn("PostgreSQL prepare error: %s\n",
-                     PQerrorMessage(psql_conn));
-        }
-        PQclear(forecast_prep);
-    }
-    PQclear(forecast_info);
-
+    Utils_PrepareStatement(psql_conn, forecast_stmt_name,
+                           "INSERT INTO weather (last_updated, latitude, "
+                           "longitude, ts, program_name, program_id, "
+                           "bom_location_id, data_type, precipitation, "
+                           "forecast_precipitation) "
+                           "VALUES (NOW(), $1::float, $2::float, "
+                           "$3::timestamptz, $4::text, $5::int, "
+                           "$6::text, $7::text, $8::float, $9::float) "
+                           "ON CONFLICT (ts, program_name) DO UPDATE "
+                           "SET last_updated = NOW(), "
+                           "data_type = 'forecast', "
+                           "precipitation = $10::float, "
+                           "forecast_precipitation = $11::float;", 11);
     const char* forecast_paramValues[11];
 
     const char* bom_select ="SELECT ts AT TIME ZONE 'AEST', precipitation "
@@ -58,32 +47,20 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
     // Prepare weather table insert statement (using BOM (historical) data)
     const char* historical_stmt_name = "InsertBOMHistorical";
-    PGresult* historical_info = PQdescribePrepared(psql_conn,
-                                                   historical_stmt_name);
-    if(PQresultStatus(historical_info) != PGRES_COMMAND_OK){
-        const char* historical_stmt = "INSERT INTO weather (last_updated, "
-                                      "latitude, longitude, ts, program_name, "
-                                      "program_id, bom_location_id, data_type, "
-                                      "precipitation, observed_precipitation) "
-                                      "VALUES (NOW(), $1::float, $2::float, "
-                                      "$3::timestamptz, $4::text, $5::int, "
-                                      "$6::text, $7::text, $8::float, "
-                                      "$9::float) ON CONFLICT "
-                                      "(ts, program_name) DO UPDATE SET "
-                                      "last_updated = NOW(), "
-                                      "data_type = 'observed', "
-                                      "precipitation = $10::float, "
-                                      "observed_precipitation = $11::float;";
-        PGresult* historical_prep = PQprepare(psql_conn, historical_stmt_name,
-                                              historical_stmt, 1, NULL);
-        if(PQresultStatus(historical_prep) != PGRES_COMMAND_OK){
-            log_warn("PostgreSQL prepare error: %s\n",
-                     PQerrorMessage(psql_conn));
-        }
-        PQclear(historical_prep);
-    }
-    PQclear(historical_info);
-
+    Utils_PrepareStatement(psql_conn, historical_stmt_name,
+                           "INSERT INTO weather (last_updated, "
+                           "latitude, longitude, ts, program_name, "
+                           "program_id, bom_location_id, data_type, "
+                           "precipitation, observed_precipitation) "
+                           "VALUES (NOW(), $1::float, $2::float, "
+                           "$3::timestamptz, $4::text, $5::int, "
+                           "$6::text, $7::text, $8::float, "
+                           "$9::float) ON CONFLICT "
+                           "(ts, program_name) DO UPDATE SET "
+                           "last_updated = NOW(), "
+                           "data_type = 'observed', "
+                           "precipitation = $10::float, "
+                           "observed_precipitation = $11::float;", 11);
     const char* historical_paramValues[11];
 
     char lat_buf[10];
@@ -237,14 +214,14 @@ void T_BuildOutlook(PGconn* psql_conn){
     Utils_PrepareStatement(psql_conn, fcst_stmt_name,
                            "SELECT ts, forecast_precipitation "
                            "FROM weather "
-                           "WHERE program_id = $1::int ");
+                           "WHERE program_id = $1::int ", 1);
 
     const char* log_stmt_name = "InsertLogPrecip";
     Utils_PrepareStatement(psql_conn, log_stmt_name,
                            "UPDATE weather "
                            "SET log_precip = $1::float "
                            "WHERE program_id = $2::int "
-                           "AND ts = $3::timestamptz;");
+                           "AND ts = $3::timestamptz;", 3);
 
     const char* stats_stmt_name = "SelectPrecipStats";
     Utils_PrepareStatement(psql_conn, stats_stmt_name,
@@ -254,20 +231,20 @@ void T_BuildOutlook(PGconn* psql_conn){
                            "AVG(log_precip), "
                            "STDDEV(log_precip) "
                            "FROM weather "
-                           "WHERE program_id = $1::int;");
+                           "WHERE program_id = $1::int;", 1);
 
     const char* log_fcst_stmt_name = "SelectLogPrecip";
     Utils_PrepareStatement(psql_conn, log_fcst_stmt_name,
                            "SELECT ts, log_precip "
                            "FROM weather "
-                           "WHERE program_id = $1::int;");
+                           "WHERE program_id = $1::int;", 1);
 
     const char* zs_stmt_name = "InsertZScorePrecip";
     Utils_PrepareStatement(psql_conn, zs_stmt_name,
                            "UPDATE weather "
                            "SET zscore_precip = $1::float "
                            "WHERE program_id = $2::int "
-                           "AND ts = $3::timestamptz;");
+                           "AND ts = $3::timestamptz;", 3);
 
     // Get forecast precipitation values and timestamps (for transformation)
     PGresult* fcst_res = PQexecPrepared(psql_conn, fcst_stmt_name, 1,
