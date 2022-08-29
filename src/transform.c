@@ -198,15 +198,65 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
 }
 
+void T_FloodPrediction(PGconn* psql_conn){
 
-void T_ForecastToZScore(PGconn* psql_conn){
+    const char* stmt_name = "SelectProgramIds";
+    Utils_PrepareStatement(psql_conn, stmt_name,
+                           "SELECT fa_program_id FROM harvest_lookup;", 0);
+
+    char name_buf[100];
+    PGresult* program_res = PQexec(psql_conn, "SELECT fa_program_name, "
+                                              "fa_program_id FROM "
+                                              "harvest_lookup;");
+    if(PQresultStatus(program_res) == PGRES_TUPLES_OK){
+        int n_fields = PQnfields(program_res);
+        char* ptr;
+        for(int i = 0; i < PQntuples(program_res); i++){
+            int program_id = -1;
+            for(int j = 0; j < n_fields; j++){
+                switch(j){
+                    case 0:
+                        // Program name
+                        strncpy(name_buf, PQgetvalue(program_res, i, j),
+                                sizeof(name_buf));
+                        break;
+                    case 1:
+                        // Program ID
+                        program_id = (int)strtol(PQgetvalue(program_res, i, j),
+                                            &ptr, 10);
+                        break;
+                    default:
+                        log_error("Unexpected value in query response.\n");
+                        break;
+                }
+
+            }
+            if(program_id == -1){
+                log_fatal("PostgreSQL error selecting program_id: %s\n",
+                          PQerrorMessage(psql_conn));
+                return;
+            }
+
+            log_debug("Transforming (%d of %d):\t%s (ID: %d)\n", i + 1,
+                      PQntuples(program_res), name_buf, program_id);
+
+            T_WindowDataset(psql_conn, program_id);
+            T_NormaliseWindowedPrecipitation(psql_conn, program_id);
+        }
+
+    }
+
+    PQclear(program_res);
+}
+
+
+void T_ForecastToZScore(PGconn* psql_conn, const int program_id){
 
     // Add required paramters to prepared statement
     // Looking to query by program_id
     const char* params[1];
-    int id = 5; // TODO make this dynamic
     char buf[10];
-    snprintf(buf, sizeof(buf), "%d", id);
+    snprintf(buf, sizeof(buf), "%d", program_id);
     params[0] = buf;
 
     // Insert preicpitation parameters buffers

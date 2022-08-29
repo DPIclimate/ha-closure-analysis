@@ -15,30 +15,28 @@ int main(void) {
         return 1;
     }
 
-    //FA_HarvestAreas_TypeDef harvest_areas = {0};
-    //FA_GetHarvestAreas(&harvest_areas);
-    //FA_HarvestAreasToDB(&harvest_areas, psql_conn);
-    //FA_CreateLocationsLookupDB(psql_conn);
+    FA_HarvestAreas_TypeDef harvest_areas = {0};
+    FA_GetHarvestAreas(&harvest_areas);
+    FA_HarvestAreasToDB(&harvest_areas, psql_conn);
+    FA_CreateLocationsLookupDB(psql_conn);
 
-    //T_LocationsLookup_TypeDef locations;
-    //FA_UniqueLocationsFromDB(&locations, psql_conn);
+    T_LocationsLookup_TypeDef locations;
+    FA_UniqueLocationsFromDB(&locations, psql_conn);
 
     //// BUILD BOM TIMESERIES DATASET
-    //const char* start_dt = "2022-08-01";
-    //BOM_TimeseriesToDB(start_dt, psql_conn);
+    const char* start_dt = "2022-08-01";
+    BOM_TimeseriesToDB(start_dt, psql_conn);
 
     ////// BUILD IBM TIMESERIES DATASET
-    //const char* start_time = "2022-08-01";
-    //const char* end_time = "2022-09-01";
-    //IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
+    const char* start_time = "2022-08-01";
+    const char* end_time = "2022-10-01";
+    IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
 
     //// BUILD COMBINED WEATHER INFORMATION
-    //T_BuildWeatherDB(&locations, psql_conn);
+    T_BuildWeatherDB(&locations, psql_conn);
 
     //// BUILD HARVEST AREA OUTLOOK
-    //T_ForecastToZScore(psql_conn);
-    //T_WindowDataset(psql_conn, 5);
-    T_NormaliseWindowedPrecipitation(psql_conn, 5);
+    T_FloodPrediction(psql_conn);
 
     PQfinish(psql_conn);
     curl_global_cleanup();
