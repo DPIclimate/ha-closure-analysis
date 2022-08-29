@@ -22,9 +22,17 @@ func HTTPRouter(psqlConn *sql.DB) {
 		routes.ListHarvestAreasRoute(w, r, psqlConn)
 	})
 
+	router.HandleFunc("/oyster_regions/harvest_areas/{harvest_id}", func(w http.ResponseWriter, r *http.Request) {
+		routes.GetHarvestArea(w, r, psqlConn)
+	})
+
 	router.HandleFunc("/oyster_regions/{program_id}/weather/precipitation", func(w http.ResponseWriter,
 		r *http.Request) {
 		routes.LocationalPrecipitationRoute(w, r, psqlConn)
+	})
+
+	router.HandleFunc("/oyster_regions/{program_id}/outlook", func(w http.ResponseWriter, r *http.Request) {
+		routes.OutlookRoute(w, r, psqlConn)
 	})
 
 	// Docs founds at /swagger/index.html
