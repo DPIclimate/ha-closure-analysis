@@ -89,4 +89,7 @@ void T_ForecastToZScore(PGconn* psql_conn);
 /// Window transform Z-Score values into a probability of flooding event
 void T_WindowDataset(PGconn* psql_conn, int program_id);
 
+/// Normalise summed moving window precipitation between 0 and 1
+void T_NormaliseWindowedPrecipitation(PGconn* psql_conn, int program_id);
+
 #endif //PROGRAM_TRANSFORM_H

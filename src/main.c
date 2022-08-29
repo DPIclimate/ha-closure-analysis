@@ -37,7 +37,8 @@ int main(void) {
 
     //// BUILD HARVEST AREA OUTLOOK
     //T_ForecastToZScore(psql_conn);
-    T_WindowDataset(psql_conn, 5);
+    //T_WindowDataset(psql_conn, 5);
+    T_NormaliseWindowedPrecipitation(psql_conn, 5);
 
     PQfinish(psql_conn);
     curl_global_cleanup();

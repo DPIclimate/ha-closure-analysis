@@ -1,5 +1,11 @@
 #include "transform.h"
 
+static inline float T_Normalise(const float value,
+                                const float min,
+                                const float max){
+    return (value - min) / (max - min);
+}
+
 /**
  * Main weather table for each location.
  *
@@ -452,6 +458,7 @@ void T_WindowDataset(PGconn* psql_conn, const int program_id){
                           PQerrorMessage(psql_conn));
             }
 
+            PQclear(w_res);
             free(timestamps[i]);
         }
 
@@ -461,6 +468,105 @@ void T_WindowDataset(PGconn* psql_conn, const int program_id){
 
     PQclear(fcst_res);
 
+}
 
 
+void T_NormaliseWindowedPrecipitation(PGconn* psql_conn, const int program_id){
+
+    const char* params[1];
+    char buf[10];
+    snprintf(buf, sizeof(buf), "%d", program_id);
+    params[0] = buf;
+
+    const char* stats_stmt_name = "SelectWindowStats";
+    Utils_PrepareStatement(psql_conn, stats_stmt_name,
+                           "SELECT "
+                           "MIN(sum_precip), "
+                           "MAX(sum_precip) "
+                           "FROM weather WHERE program_id = $1::int;", 1);
+
+    PGresult* stats_res = PQexecPrepared(psql_conn, stats_stmt_name, 1, params,
+                                         NULL, NULL, 0);
+    char* ptr;
+    float min = 0, max = 0;
+    if(PQresultStatus(stats_res) == PGRES_TUPLES_OK){
+        min = strtof(PQgetvalue(stats_res, 0, 0), &ptr);
+        max = strtof(PQgetvalue(stats_res, 0, 1), &ptr);
+    } else {
+        log_fatal("PostgreSQL stats select error: %s\n",
+                  PQerrorMessage(psql_conn));
+        return;
+    }
+    PQclear(stats_res);
+
+    const char* norm_stmt_name = "InsertNormalisedPrecip";
+    Utils_PrepareStatement(psql_conn, norm_stmt_name,
+                           "UPDATE weather "
+                           "SET normalised_precip = "
+                           "CASE WHEN sum_precip IS NOT NULL "
+                           "THEN $1::float END "
+                           "WHERE program_id = $2::int "
+                           "AND ts = $3::timestamptz;", 3);
+
+    const char* fcst_stmt_name = "SelectWindowedForecast";
+    Utils_PrepareStatement(psql_conn, fcst_stmt_name,
+                           "SELECT ts, sum_precip "
+                           "FROM weather "
+                           "WHERE program_id = $1::int "
+                           "ORDER BY ts ASC;", 1);
+
+    PGresult* fcst_res = PQexecPrepared(psql_conn, fcst_stmt_name, 1,
+                                        params, NULL, NULL, 0);
+    const int ts_buf_size = 30;
+    if(PQresultStatus(fcst_res) == PGRES_TUPLES_OK) {
+        int num_fields = PQnfields(fcst_res);
+        char **timestamps = malloc((unsigned long) PQntuples(fcst_res) *
+                                   sizeof(char *));
+        float *values = malloc((unsigned long) PQntuples(fcst_res) *
+                               sizeof(float));
+        for (int i = 0; i < PQntuples(fcst_res); i++) {
+            for (int j = 0; j < num_fields; j++) {
+                switch (j) {
+                    case 0:
+                        // Timestamp
+                        timestamps[i] = malloc(ts_buf_size + 1);
+                        strncpy(timestamps[i], PQgetvalue(fcst_res, i, j),
+                                ts_buf_size);
+                        break;
+                    case 1:
+                        // Precipitation
+                        values[i] = strtof(PQgetvalue(fcst_res, i, j), &ptr);
+                        break;
+                    default:
+                        log_error("Unexpected value in query response.\n");
+                        break;
+                }
+            }
+        }
+
+        /* Normalise windowed data between 0 and 1 */
+        const char* norm_params[3];
+        char val_buf[10];
+
+        for(int i = 0; i < PQntuples(fcst_res); i++){
+            float norm_val = T_Normalise(values[i], min, max);
+            snprintf(val_buf, sizeof(val_buf), "%f", norm_val);
+            norm_params[0] = val_buf;
+            norm_params[1] = buf;
+            norm_params[2] = timestamps[i];
+
+            PGresult* norm_res = PQexecPrepared(psql_conn, norm_stmt_name, 3,
+                                             norm_params, NULL, NULL, 0);
+            if(PQresultStatus(norm_res) != PGRES_COMMAND_OK){
+                log_error("PostgreSQL windowed data insert error: %s\n",
+                          PQerrorMessage(psql_conn));
+            }
+
+            PQclear(norm_res);
+            free(timestamps[i]);
+        }
+        free(timestamps);
+        free(values);
+    }
+    PQclear(fcst_res);
 }
