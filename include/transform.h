@@ -83,7 +83,10 @@ typedef struct{
 void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
                       PGconn* psql_conn);
 
-/// Build outlook for each harvest area
-void T_BuildOutlook(PGconn* psql_conn);
+/// Transform forecast data into Z-Score for each day and site in dataset
+void T_ForecastToZScore(PGconn* psql_conn);
+
+/// Window transform Z-Score values into a probability of flooding event
+void T_WindowDataset(PGconn* psql_conn, int program_id);
 
 #endif //PROGRAM_TRANSFORM_H

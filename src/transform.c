@@ -193,7 +193,7 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 }
 
 
-void T_BuildOutlook(PGconn* psql_conn){
+void T_ForecastToZScore(PGconn* psql_conn){
 
     // Add required paramters to prepared statement
     // Looking to query by program_id
@@ -372,4 +372,95 @@ void T_BuildOutlook(PGconn* psql_conn){
         }
     }
     PQclear(log_fcst_res);
+}
+
+
+void T_WindowDataset(PGconn* psql_conn, const int program_id){
+
+    const char* params[1];
+    char buf[10];
+    snprintf(buf, sizeof(buf), "%d", program_id);
+    params[0] = buf;
+
+    const char* fcst_stmt_name = "SelectPrecipForecast";
+    Utils_PrepareStatement(psql_conn, fcst_stmt_name,
+                           "SELECT ts, forecast_precipitation "
+                           "FROM weather "
+                           "WHERE program_id = $1::int "
+                           "ORDER BY ts ASC;", 1);
+
+    const char* window_stmt_name = "InsertWindowedSum";
+    Utils_PrepareStatement(psql_conn, window_stmt_name,
+                           "UPDATE weather SET sum_precip = $1::float "
+                           "WHERE program_id = $2::int "
+                           "AND ts = $3::timestamptz;", 3);
+
+    PGresult* fcst_res = PQexecPrepared(psql_conn, fcst_stmt_name, 1,
+                                            params, NULL, NULL, 0);
+    const int ts_buf_size = 30;
+    char* ptr;
+    if(PQresultStatus(fcst_res) == PGRES_TUPLES_OK) {
+        int num_fields = PQnfields(fcst_res);
+        char** timestamps = malloc((unsigned long) PQntuples(fcst_res) *
+                sizeof(char*));
+        float* values = malloc((unsigned long)PQntuples(fcst_res) *
+                sizeof(float));
+        for (int i = 0; i < PQntuples(fcst_res); i++) {
+            for (int j = 0; j < num_fields; j++) {
+                switch(j){
+                    case 0:
+                        // Timestamp
+                        timestamps[i] = malloc(ts_buf_size + 1);
+                        strncpy(timestamps[i], PQgetvalue(fcst_res, i, j),
+                                ts_buf_size);
+                        break;
+                    case 1:
+                        // Precipitation
+                        values[i] = strtof(PQgetvalue(fcst_res, i, j), &ptr);
+                        break;
+                    default:
+                        log_error("Unexpected value in query response.\n");
+                        break;
+                }
+            }
+        }
+
+        /* Summed Data windowing */
+        int w_start = 5; // Days prior to sum
+        int w_end = 10; // Forecasted days (max)
+        // Total window size = w_start + w_end
+
+        // Insert parameters and buffers
+        const char* w_params[3];
+        char val_buf[10];
+
+        for(int i = w_start; i < PQntuples(fcst_res) - w_end; i++){
+            float sum = 0;
+            for(int x = i - w_start; x < (i + w_end); x++){
+                sum += values[x];
+            }
+
+            snprintf(val_buf, sizeof(val_buf), "%f", sum);
+            w_params[0] = val_buf;
+            w_params[1] = buf;
+            w_params[2] = timestamps[i];
+
+            PGresult* w_res = PQexecPrepared(psql_conn, window_stmt_name, 3,
+                                             w_params, NULL, NULL, 0);
+            if(PQresultStatus(w_res) != PGRES_COMMAND_OK){
+                log_error("PostgreSQL windowed data insert error: %s\n",
+                          PQerrorMessage(psql_conn));
+            }
+
+            free(timestamps[i]);
+        }
+
+        free(timestamps);
+        free(values);
+    }
+
+    PQclear(fcst_res);
+
+
+
 }

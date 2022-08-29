@@ -10,8 +10,9 @@ int main(void) {
                                  "user=postgres password=admin";
     psql_conn = PQconnectdb(psql_conn_info);
     if(PQstatus(psql_conn) != CONNECTION_OK){
-        log_error("Unable to connect to PostgreSQL database. "
+        log_fatal("Unable to connect to PostgreSQL database. "
                   "Error: %s\n", PQerrorMessage(psql_conn));
+        return 1;
     }
 
     //FA_HarvestAreas_TypeDef harvest_areas = {0};
@@ -35,7 +36,8 @@ int main(void) {
     //T_BuildWeatherDB(&locations, psql_conn);
 
     //// BUILD HARVEST AREA OUTLOOK
-    T_BuildOutlook(psql_conn);
+    //T_ForecastToZScore(psql_conn);
+    T_WindowDataset(psql_conn, 5);
 
     PQfinish(psql_conn);
     curl_global_cleanup();
