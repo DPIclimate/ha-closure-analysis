@@ -33,7 +33,7 @@ type Status struct {
 }
 
 // ListHarvestAreasRoute ... Get a list of all NSW oyster harvesting areas
-// @Summary      Get a list of unique NSW oyster harvesting areas
+// @Summary      Get a list of unique NSW oyster harvesting areas.
 // @description  This request obtains a list containing all NSW oyster harvest areas and their current statuses.
 // @Tags         Oyster Harvest Areas
 // @Produce      json
@@ -168,6 +168,118 @@ func GetHarvestArea(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Printf("JSON encode error: %s\n", err)
 		return
+	}
+
+}
+
+// LocationStatusRoute ... Get a list of harvest area statuses for a particular location
+// @Summary      Get a list of oyster harvesting areas (and their status) for a particular region.
+// @description  This request obtains list of all NSW oyster farming harvest areas for a particualar location.
+// @Tags         Oyster Production Regions
+// @Produce      json
+// @Success      200  {object}  Locations
+// @Failure      404
+// @Failure      500
+// @Param program_id path integer true "Unique program ID"
+// @Router       /oyster_regions/{program_id}/status [get]
+func LocationStatusRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	log.Printf("[GET]: Unique locations list.")
+
+	args := mux.Vars(r)
+	program_id := args["program_id"]
+
+	var (
+		harvestAreas HarvestAreas
+		ctx          context.Context
+		cancel       context.CancelFunc
+	)
+
+	// If the request contains a timeout parameter this request will cancel
+	// when the timeout elapses
+	timeout, err := time.ParseDuration(r.FormValue("timeout"))
+	if err == nil {
+		ctx, cancel = context.WithTimeout(context.Background(), timeout)
+	} else {
+		ctx, cancel = context.WithCancel(context.Background())
+	}
+
+	defer cancel()
+
+	// Program ID to get program name
+	var query string = "SELECT fa_program_name FROM harvest_lookup WHERE fa_program_id = $1;"
+
+	stmt, err := db.PrepareContext(ctx, query)
+
+	var program_name string
+	err = stmt.QueryRowContext(ctx, program_id).Scan(&program_name)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		log.Printf("Locations request failed: %s\n", err)
+		return
+	}
+
+	query = "SELECT DISTINCT ON (name) last_updated, program_name, location, name, id, " +
+		"classification, status, time_processed, status_reason, status_prev_reason " +
+		"FROM harvest_area WHERE program_name = $1 ORDER BY name, time_processed DESC;"
+
+	stmt, err = db.PrepareContext(ctx, query)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Printf("Locational precipitation query failed: %s\n", err)
+	}
+
+	defer stmt.Close()
+
+	rows, err := stmt.QueryContext(ctx, program_name)
+
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			log.Printf("Error closing rows from query: %s\n", err)
+		}
+	}(rows)
+
+	results := make([]HarvestArea, 0)
+	var count int32 = 0
+	for rows.Next() {
+		var (
+			harvestArea    HarvestArea
+			locationStatus Status
+		)
+		err = rows.Scan(&harvestArea.LastUpdated,
+			&harvestArea.ProgramName,
+			&harvestArea.HarvestLocation,
+			&harvestArea.HarvestName,
+			&harvestArea.HarvestId,
+			&locationStatus.Classification,
+			&locationStatus.State,
+			&locationStatus.TimeProcessed,
+			&locationStatus.StatusReason,
+			&locationStatus.StatusPrevReason)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Printf("Locational precipitation query failed: %s\n", err)
+			return
+		}
+
+		harvestArea.HAStatus = locationStatus
+
+		results = append(results, harvestArea)
+		count++
+	}
+
+	harvestAreas.Count = count
+	harvestAreas.Results = results
+
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(harvestAreas)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Printf("JSON encode error: %s\n", err)
 	}
 
 }

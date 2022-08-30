@@ -18,6 +18,10 @@ func HTTPRouter(psqlConn *sql.DB) {
 		routes.ListLocationsRoute(w, r, psqlConn)
 	})
 
+	router.HandleFunc("/oyster_regions/{program_id}/status", func(w http.ResponseWriter, r *http.Request) {
+		routes.LocationStatusRoute(w, r, psqlConn)
+	})
+
 	router.HandleFunc("/oyster_regions/harvest_areas/list", func(w http.ResponseWriter, r *http.Request) {
 		routes.ListHarvestAreasRoute(w, r, psqlConn)
 	})
