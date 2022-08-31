@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv=”Content-Type”/>
+		<script type="text/javascript" src="floodrisk.js"></script>
+		<script type="text/javascript" src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script>
+		<link href="style.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<div class="widget-container">
+			<div class="gauge-container">
+				<h2>Flood Risk</h2>
+				<canvas id="flood-risk-gauge" class="flood-risk-gauge" style="width: 400px"/>
+			</div>
+			<h2 id="gauge-value" style="margin-top: 0;">...</h2>
+			<script>
+				GetFloodRisk().then(opts => {
+					var target = document.getElementById('flood-risk-gauge');
+					var gauge = new Gauge(target).setOptions(opts);
+					gauge.set(10); // set actual value
+					gauge.setTextField(document.getElementById("gauge-value"));
+				});
+			</script>
+			<div class="cards">
+				<div class="status-card">
+					<div class="card-head">
+						<h2 id="harvest-name">Waterfall</h2>
+						<div>
+							<span>Last updated: </span>
+							<span class="card-date" id="last-updated">2022-08-29 01:51 pm</span>
+						</div>
+						<hr>
+					</div>
+					<div class="card-body">
+						<span id="reason">Open for harvest and hold in accordance with the Harvest and Hold Scheme (18/07/2022 10:30am)</span>
+					</div>
+					<div class="card-foot">
+						<h3 id="status">Open</h3>
+					</div>
+				</div>
+				<div class="status-card">
+					<div class="card-head">
+						<h2 id="harvest-name">Waterfall</h2>
+						<div>
+							<span>Last updated: </span>
+							<span class="card-date" id="last-updated">2022-08-29 01:51 pm</span>
+						</div>
+					</div>
+					<div class="card-body">
+						<span id="reason">Open for harvest and hold in accordance with the Harvest and Hold Scheme (18/07/2022 10:30am)</span>
+					</div>
+					<div class="card-foot">
+						<h3 id="status">Open</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
