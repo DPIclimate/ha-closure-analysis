@@ -43,6 +43,8 @@ type Status struct {
 // @Router       /oyster_regions/harvest_areas/list [get]
 func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
+	w.Header().Set("Content-Type", "application/json")
+
 	log.Printf("[GET]: Unique harvest areas list.")
 
 	var harvestAreas HarvestAreas
@@ -86,7 +88,6 @@ func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	harvestAreas.Count = count
 
 	encoder := json.NewEncoder(w)
-	encoder.SetIndent("", "  ")
 	err = encoder.Encode(harvestAreas)
 
 	if err != nil {

@@ -1,5 +1,5 @@
 
-async function GetFloodRisk() {
+async function BuildGauge() {
 	var opts = {
 		angle: 0.0, // The span of the gauge arc
 		lineWidth: 0.44, // The line thickness
@@ -24,5 +24,22 @@ async function GetFloodRisk() {
 	};
 
 	return opts;
+}
+
+
+async function GetFloodRisk() {
+	try{
+		var response = await fetch("http://localhost:8080/oyster_regions/5/outlook")
+			.then(res => res.json());
+
+		const cards = document.getElementById("cards");
+
+		console.log(cards);
+
+		return response.flood_index;
+	}
+	catch(e){
+		console.log(e);
+	}
 }
 

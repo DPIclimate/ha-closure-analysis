@@ -16,14 +16,17 @@
 			</div>
 			<h2 id="gauge-value" style="margin-top: 0;">...</h2>
 			<script>
-				GetFloodRisk().then(opts => {
+				BuildGauge().then(opts => {
 					var target = document.getElementById('flood-risk-gauge');
 					var gauge = new Gauge(target).setOptions(opts);
-					gauge.set(10); // set actual value
-					gauge.setTextField(document.getElementById("gauge-value"));
+
+					GetFloodRisk().then(flood_index => {
+						gauge.set(flood_index * 100); // set actual value
+						gauge.setTextField(document.getElementById("gauge-value"));
+					});
 				});
 			</script>
-			<div class="cards">
+			<div id="cards" class="cards">
 				<div class="status-card">
 					<div class="card-head">
 						<h2 id="harvest-name">Waterfall</h2>

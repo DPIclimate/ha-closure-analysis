@@ -19,8 +19,8 @@ type Location struct {
 
 type Program struct {
 	Name      string     `json:"name"`
-	Latitude  string     `json:"latitude"`
-	Longitude string     `json:"longitude"`
+	Latitude  float64    `json:"latitude"`
+	Longitude float64    `json:"longitude"`
 	BOM       BOMStation `json:"bom_info"`
 	ID        int32      `json:"id"`
 }
@@ -44,12 +44,17 @@ type BOMStation struct {
 // @Router       /oyster_regions/list [get]
 func ListLocationsRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Content-Type", "application/json")
+
 	log.Printf("[GET]: Unique locations list.")
 
 	var locations Locations
 
 	query := "SELECT last_updated, fa_program_name, fa_program_id, ww_latitude, ww_longitude, bom_location, " +
-		"bom_location_id, bom_latitude, bom_longitude, bom_distance FROM harvest_lookup;"
+		"bom_location_id, bom_latitude, bom_longitude, bom_distance FROM harvest_lookup ORDER BY fa_program_name;"
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -91,7 +96,6 @@ func ListLocationsRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	locations.Count = count
 
 	encoder := json.NewEncoder(w)
-	encoder.SetIndent("", "  ")
 	err = encoder.Encode(locations)
 
 	if err != nil {
