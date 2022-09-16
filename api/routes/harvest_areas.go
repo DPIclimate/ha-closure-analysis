@@ -43,6 +43,9 @@ type Status struct {
 // @Router       /oyster_regions/harvest_areas/list [get]
 func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.Header().Set("Content-Type", "application/json")
 
 	log.Printf("[GET]: Unique harvest areas list.")
@@ -108,6 +111,11 @@ func ListHarvestAreasRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 // @Param harvest_id path integer true "Unique harvest area ID"
 // @Router       /oyster_regions/harvest_areas/{harvest_id} [get]
 func GetHarvestArea(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Content-Type", "application/json")
 
 	var harvestArea HarvestArea
 	var locationStatus Status
@@ -185,6 +193,11 @@ func GetHarvestArea(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 // @Router       /oyster_regions/{program_id}/status [get]
 func LocationStatusRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	log.Printf("[GET]: Unique locations list.")
+
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Content-Type", "application/json")
 
 	args := mux.Vars(r)
 	program_id := args["program_id"]

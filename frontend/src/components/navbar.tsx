@@ -56,7 +56,8 @@ export class NavbarNative extends React.Component<any, any> {
 	loadRegions(regions: Regions) {
 		return regions.results.map((region: Region) => {
 			return (
-				<NavDropdown.Item href={region.program_info.name}>
+				<NavDropdown.Item key={region.program_info.name}
+								  href={region.program_info.name}>
 					<span>{region.program_info.name}</span>
 				</NavDropdown.Item>
 			)
@@ -73,7 +74,7 @@ export class NavbarNative extends React.Component<any, any> {
 	}
 
 	render() {
-		if(this.state.count == 0){
+		if(this.state.count === 0){
 			return (
 				<div>Loading...</div>
 			)

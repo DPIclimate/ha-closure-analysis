@@ -38,14 +38,29 @@ export class ReportError extends React.Component<any, any> {
                     <Modal.Header closeButton>
                         <Modal.Title>Sign Up for Alerts</Modal.Title>
                     </Modal.Header>
-                    <FloatingLabel
-                        controlId="floatingInput"
-                        label="Email address"
-                        className="mb-3"
-                    >
-                        <Form.Control type="email" placeholder="name@example.com" />
-                    </FloatingLabel>
-                    <Button variant="primary">Submit</Button>{' '}
+                    <Modal.Body>
+                        <p>
+                            Enter your phone and/or email address below to get
+                            notifications regarding the Clyde River.
+                        </p>
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Mobile phone number"
+                            className="mb-3"
+                        >
+                            <Form.Control type="phone" placeholder="+61 xxx xxx xxx" />
+                        </FloatingLabel>
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Email address"
+                            className="mb-3"
+                        >
+                            <Form.Control type="email" placeholder="name@example.com" />
+                        </FloatingLabel>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary">Submit</Button>{' '}
+                    </Modal.Footer>
                 </Modal>
             </div>
         )

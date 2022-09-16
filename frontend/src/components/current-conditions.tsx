@@ -2,6 +2,7 @@ import React from 'react';
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import DataTable, {TableColumn} from 'react-data-table-component';
+import WindyMap from "./windymap";
 
 interface DataRow {
     buoy: number,
@@ -19,15 +20,6 @@ export class CurrentConditions extends React.Component<any, any> {
     }
 
     componentDidMount(){
-        //fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/raw/series", {
-        //    headers: {
-        //        "x-auth-token": "BBAU-VOMMw42nHGcLPKVfBMQxYXDUiL78ln",
-        //        "Content-Type": "application/json"
-        //    }, method: "POST"
-        //})
-        //    .then(res => res.json())
-        //    .then()
-
         const tabledata = [
             {
                 id: 1,
@@ -76,6 +68,9 @@ export class CurrentConditions extends React.Component<any, any> {
                         </Tab>
                         <Tab eventKey="weather" title="Weather">
                             <p>Hello</p>
+                        </Tab>
+                        <Tab eventKey="map" title="Map">
+                            A map
                         </Tab>
                     </Tabs>
                 </div>

@@ -29,7 +29,10 @@ type Outlook struct {
 // @Router       /oyster_regions/{program_id}/outlook [get]
 func OutlookRoute(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Content-Type", "application/json")
 
 	var outlook Outlook
 

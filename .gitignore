@@ -1,3 +1,7 @@
+# User defined
+*.geojson
+*.shp
+
 # Node
 /node_modules
 /coverage
