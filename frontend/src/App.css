@@ -7,3 +7,16 @@
 
     --transition-speed: 0.25s;
 }
+
+.accordian-container{
+    margin: 1rem;
+}
+
+.harvest-alerts {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}

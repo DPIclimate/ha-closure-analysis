@@ -2,11 +2,11 @@ import React from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './map.css';
-import {Region, Regions} from "./navbar";
+import {Region} from "../navbar/navbar";
 
 (mapboxgl as any).accessToken = 'pk.eyJ1IjoiaGFydmV5YmF0ZXMiLCJhIjoiY2w3c2k4N3kzMDdvejN4bnh4YnA4bWtuYSJ9.hSGj3OSZE89Ub1e7LkH48Q';
 
-export class Map extends React.Component<any, any> {
+export class MapRegions extends React.Component<any, any> {
     private readonly mapContainer: React.RefObject<HTMLDivElement>;
     constructor(props?: any) {
         super(props);
@@ -110,7 +110,7 @@ export class Map extends React.Component<any, any> {
             });
         }
         return (
-            <div ref={this.mapContainer} className="map-container"></div>
+            <div ref={this.mapContainer} className="map-regions-container"></div>
         )
     }
 

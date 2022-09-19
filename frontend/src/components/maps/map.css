@@ -1,8 +1,16 @@
-.accordian-container{
-    margin: 1rem;
+.map-regions-container {
+    height: 96vh;
+    border-radius: 1rem;
+    margin: 1rem 1rem 1rem 1rem;
 }
 
-.ha-map {
+.map-region-container {
+    height: 350px;
+    border-radius: 1rem;
+    margin: 1rem 1rem 1rem 1rem;
+}
+
+.map-windy {
     height: 400px;
     margin: 1rem;
     border-radius: 10px;

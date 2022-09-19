@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class WindyMap extends React.Component<any, any>{
+export default class MapWindy extends React.Component<any, any>{
     windy: any = null;
     map: any;
 
@@ -25,7 +25,7 @@ export default class WindyMap extends React.Component<any, any>{
 
     render() {
         return (
-            <div id="windy" className="ha-map" />
+            <div id="windy" className="map-windy" />
         );
     }
 }

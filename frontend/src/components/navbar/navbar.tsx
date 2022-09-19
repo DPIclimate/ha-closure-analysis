@@ -1,13 +1,13 @@
 import React from 'react';
-import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
-import Home from '../views/home';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Home from '../../views/home';
 
 // Bootstrap
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import ClydeRiver from "../views/clyderiver";
+import ClydeRiver from "../../views/clyderiver";
 
 export interface Regions {
 	count: number,

@@ -1,7 +1,6 @@
 import React from 'react';
 import Accordion from "react-bootstrap/Accordion";
 import Badge from "react-bootstrap/Badge";
-import "./region-information.css";
 
 export class LatestNews extends React.Component<any, any> {
     constructor(props?: any) {

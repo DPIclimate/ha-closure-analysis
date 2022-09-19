@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {NavbarNative} from "./components/navbar";
+import {NavbarNative} from "./components/navbar/navbar";
 
 function App() {
   return (

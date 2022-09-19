@@ -4,7 +4,8 @@ import React from 'react';
 import Accordion from "react-bootstrap/Accordion";
 import Badge from "react-bootstrap/Badge";
 import Alert from 'react-bootstrap/Alert';
-import {MapRegion} from "./map-region";
+import {MapRegion} from "../maps/map-region";
+import {ReportError} from "../utils/report-error";
 
 interface HarvestStatuses {
     count: number,
@@ -119,7 +120,10 @@ export class HarvestStatus extends React.Component<any, any> {
             }
             return (
                 <div className="accordian-container">
-                    <h2>Harvest Area Status</h2>
+                    <div className="harvest-alerts">
+                        <h2>Harvest Area Status</h2>
+                        <ReportError/>
+                    </div>
                     {this.lastUpdated(harvest_areas)}
                     <MapRegion/>
                     <Accordion>

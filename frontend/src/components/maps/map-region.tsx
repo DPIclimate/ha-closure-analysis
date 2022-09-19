@@ -2,7 +2,6 @@ import React from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './map.css';
-import {Region, Regions} from "./navbar";
 
 (mapboxgl as any).accessToken = 'pk.eyJ1IjoiaGFydmV5YmF0ZXMiLCJhIjoiY2w3c2k4N3kzMDdvejN4bnh4YnA4bWtuYSJ9.hSGj3OSZE89Ub1e7LkH48Q';
 
@@ -63,9 +62,9 @@ export class MapRegion extends React.Component<any, any> {
                     },
                     "source-layer": "Rocky_Point-8lfu2v",
                     paint: {
-                        "fill-color": "#dc3545",
+                        "fill-color": "#198754",
                         "fill-opacity": 0.8,
-                        "fill-outline-color": "#dc3545"
+                        "fill-outline-color": "#198754"
                     }
                 });
                 map.addLayer({
