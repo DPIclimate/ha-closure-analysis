@@ -22,6 +22,16 @@ export class WaterTable extends React.Component<any, any> {
         }
     }
 
+    timeSince(ts: Date) {
+        const diff = new Date().getTime() - ts.getTime();
+        if(diff < 60000) {
+            return "< 60 secs ago"
+        } else if(diff >= 60000 && diff < (60000 * 30) ) {
+            return "<30 mins ago"
+        }
+        return "Alert! Data not recent"
+    }
+
     async componentDidMount() {
 
         fetch("https://industrial.api.ubidots.com.au/api/v2.0/devices/", {
@@ -72,12 +82,14 @@ export class WaterTable extends React.Component<any, any> {
                                 last_values: last_values
                             })
 
-                            const ts = new Date(last_values.salinity.timestamp).toLocaleString();
+                            const ts = new Date(last_values.salinity.timestamp);
+                            const timeSince = this.timeSince(ts);
+
                             table_data.push({
                                 buoy: value.name,
                                 salinity: last_values.salinity.value,
                                 temperature: last_values.temperature.value,
-                                date: ts,
+                                date: timeSince,
                                 device_id: value.device_id
                             });
                         })
@@ -138,7 +150,7 @@ export class WaterTable extends React.Component<any, any> {
                 sortable: true
             },
             {
-                name: "Date",
+                name: "Time",
                 selector: (row: { date: string; }) => row.date,
                 sortable: true
             }

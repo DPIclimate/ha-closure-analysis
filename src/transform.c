@@ -483,7 +483,7 @@ void T_WindowDataset(PGconn* psql_conn, const int program_id){
 
         /* Summed Data windowing */
         int w_start = 5; // Days prior to sum
-        int w_end = 10; // Forecasted days (max)
+        int w_end = 8; // Forecasted days (max)
         // Total window size = w_start + w_end
 
         // Insert parameters and buffers

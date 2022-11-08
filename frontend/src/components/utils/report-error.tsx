@@ -40,7 +40,7 @@ export class ReportError extends React.Component<any, any> {
                     </Modal.Header>
                     <Modal.Body>
                         <p>
-                            Enter your phone and/or email address below to get
+                            Enter your phone and/or email address below to get alerts and
                             notifications regarding the Clyde River.
                         </p>
                         <FloatingLabel

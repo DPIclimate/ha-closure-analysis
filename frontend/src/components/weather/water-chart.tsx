@@ -162,7 +162,7 @@ export class WaterChart extends React.Component<any, any> {
         return (
             <div className="accordian-container">
                 <div>
-                    <h4>Fetching data...</h4>
+                    <h6>Fetching data...</h6>
                 </div>
             </div>
         )

@@ -92,7 +92,7 @@ export class HarvestStatus extends React.Component<any, any> {
             if(time_diff > cutoff_time * 60){
                 return (
                     <Alert key="0" variant="danger">
-                        Error data last updated at {last_updated.toLocaleString()}
+                        Alert! Data last updated at {last_updated.toLocaleString()}
                     </Alert>
                 )
             }

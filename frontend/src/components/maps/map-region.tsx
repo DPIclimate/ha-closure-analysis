@@ -34,7 +34,8 @@ export class MapRegion extends React.Component<any, any> {
                 container: this.mapContainer.current!,
                 style: 'mapbox://styles/mapbox/outdoors-v11',
                 center: [150.149884, -35.691361],
-                zoom: this.state.zoom
+                zoom: this.state.zoom,
+                scrollZoom: false
             });
 
             // Add region coordinates

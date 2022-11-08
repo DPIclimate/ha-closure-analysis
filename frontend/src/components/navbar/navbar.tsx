@@ -57,7 +57,7 @@ export class NavbarNative extends React.Component<any, any> {
 		return regions.results.map((region: Region) => {
 			return (
 				<NavDropdown.Item key={region.program_info.name}
-								  href={region.program_info.name}>
+								  href="/clyderiver">
 					<span>{region.program_info.name}</span>
 				</NavDropdown.Item>
 			)

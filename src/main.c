@@ -29,13 +29,13 @@ int main(void) {
 
     ////// BUILD IBM TIMESERIES DATASET
     const char* start_time = "2022-08-01";
-    const char* end_time = "2022-10-01";
+    const char* end_time = "2022-11-01";
     IBM_BuildTSDatabase(&locations, start_time, end_time, psql_conn);
 
     //// BUILD COMBINED WEATHER INFORMATION
     T_BuildWeatherDB(&locations, psql_conn);
 
-    //// BUILD HARVEST AREA OUTLOOK
+    // BUILD HARVEST AREA OUTLOOK
     T_FloodPrediction(psql_conn);
 
     PQfinish(psql_conn);
