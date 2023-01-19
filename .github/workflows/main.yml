@@ -1,4 +1,4 @@
-name: 'Oyster HA - Documentation Builder'
+name: 'Docs'
 
 on:
   push:
@@ -18,20 +18,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y graphviz libclang-cpp1-9 libclang1-9
-
-      # Download alternative style
-      - name: Install doxygen-awesome
-        run: |
-          mkdir doxygen-styles
-          wget -O doxygen-awesome-css.tar.gz https://github.com/jothepro/doxygen-awesome-css/archive/refs/tags/v2.0.3.tar.gz
-          mkdir doxygen-awesome-css
-          tar -xvzf doxygen-awesome-css.tar.gz -C doxygen-awesome-css --strip-components=1
-          cd doxygen-awesome-css
-          mv doxygen-awesome.css ../doxygen-styles/doxygen-awesome.css
-          mv doxygen-awesome-sidebar-only.css ../doxygen-styles/doxygen-awesome-sidebar-only.css
-          cd ..
-          rmdir --ignore-fail-on-non-empty doxygen-awesome-css
-        shell: bash
 
       # Generate documentaiton in docs/html folder
       - name: Generate Doxygen Documentation

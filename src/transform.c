@@ -1,5 +1,13 @@
 #include "transform.h"
 
+/**
+ * @brief Helper function for nomalising data.
+ *
+ * @param value Raw input value.
+ * @param min Raw maxiumum value.
+ * @param max Raw miniumum value.
+ * @return Normalised input value (between 0 and 1).
+ */
 static inline float T_Normalise(const float value,
                                 const float min,
                                 const float max){
@@ -198,6 +206,15 @@ void T_BuildWeatherDB(T_LocationsLookup_TypeDef* locations,
 
 }
 
+/**
+ * @breif Main entry point for calculating the risk of a harvest area closure.
+ *
+ * Gets a list of the harvest areas. Loops through each of these locations
+ * to calcualte a windowed moving average of precipitation and then normalises
+ * this window to provide a value between 0 and 1.
+ *
+ * @param psql_conn PostgreSQL connection.
+ */
 void T_FloodPrediction(PGconn* psql_conn){
 
     const char* stmt_name = "SelectProgramIds";
@@ -249,188 +266,19 @@ void T_FloodPrediction(PGconn* psql_conn){
     PQclear(program_res);
 }
 
-
-void T_ForecastToZScore(PGconn* psql_conn, const int program_id){
-
-    // Add required paramters to prepared statement
-    // Looking to query by program_id
-    const char* params[1];
-    char buf[10];
-    snprintf(buf, sizeof(buf), "%d", program_id);
-    params[0] = buf;
-
-    // Insert preicpitation parameters buffers
-    const char* weather_params[3];
-    char zs_buf[15]; // Z-Score value
-    // program_id from previous `buf`
-    char ts_buf[30];
-
-    // Prepare several SQL statements
-    const char* fcst_stmt_name = "SelectPrecipForecast";
-    Utils_PrepareStatement(psql_conn, fcst_stmt_name,
-                           "SELECT ts, forecast_precipitation "
-                           "FROM weather "
-                           "WHERE program_id = $1::int ", 1);
-
-    const char* log_stmt_name = "InsertLogPrecip";
-    Utils_PrepareStatement(psql_conn, log_stmt_name,
-                           "UPDATE weather "
-                           "SET log_precip = $1::float "
-                           "WHERE program_id = $2::int "
-                           "AND ts = $3::timestamptz;", 3);
-
-    const char* stats_stmt_name = "SelectPrecipStats";
-    Utils_PrepareStatement(psql_conn, stats_stmt_name,
-                           "SELECT "
-                           "MIN(log_precip), "
-                           "MAX(log_precip), "
-                           "AVG(log_precip), "
-                           "STDDEV(log_precip) "
-                           "FROM weather "
-                           "WHERE program_id = $1::int;", 1);
-
-    const char* log_fcst_stmt_name = "SelectLogPrecip";
-    Utils_PrepareStatement(psql_conn, log_fcst_stmt_name,
-                           "SELECT ts, log_precip "
-                           "FROM weather "
-                           "WHERE program_id = $1::int;", 1);
-
-    const char* zs_stmt_name = "InsertZScorePrecip";
-    Utils_PrepareStatement(psql_conn, zs_stmt_name,
-                           "UPDATE weather "
-                           "SET zscore_precip = $1::float "
-                           "WHERE program_id = $2::int "
-                           "AND ts = $3::timestamptz;", 3);
-
-    // Get forecast precipitation values and timestamps (for transformation)
-    PGresult* fcst_res = PQexecPrepared(psql_conn, fcst_stmt_name, 1,
-                                         params, NULL, NULL, 0);
-    char* ptr;
-    double fcst_precip = 0;
-    if(PQresultStatus(fcst_res) == PGRES_TUPLES_OK) {
-        int num_fields = PQnfields(fcst_res);
-        for (int i = 0; i < PQntuples(fcst_res); i++) {
-            memset(ts_buf, 0, sizeof(ts_buf));
-            for (int j = 0; j < num_fields; j++) {
-                switch(j){
-                    case 0:
-                        // Timestamp
-                        strncpy(ts_buf, PQgetvalue(fcst_res, i, j),
-                                sizeof(ts_buf));
-                        break;
-                    case 1:
-                        // Forecast precipitation
-                        fcst_precip = strtod(PQgetvalue(fcst_res, i, j), &ptr);
-                        break;
-                    default:
-                        log_error("Unexpected value in query response.\n");
-                        break;
-                }
-            }
-            /* LOG10 TRANSFORMATION START */
-            double log_precip = 0;
-            if(fcst_precip > 0){
-                log_precip = log10(fcst_precip);
-            }
-            /* LOG10 TRANSFORMATION END */
-
-            snprintf(zs_buf, sizeof(zs_buf), "%f", log_precip);
-            weather_params[0] = zs_buf; // Z-Score buffer
-            weather_params[1] = buf; // program_id buffer
-            weather_params[2] = ts_buf; // Timestamp buffer
-
-            PGresult* fcst_insert = PQexecPrepared(psql_conn, log_stmt_name, 3,
-                                         weather_params, NULL, NULL, 1);
-            if(PQresultStatus(fcst_insert) != PGRES_COMMAND_OK){
-                log_error("PostgreSQL log transformation insert error: %s\n",
-                          PQerrorMessage(psql_conn));
-            }
-            PQclear(fcst_insert);
-        }
-    }
-    PQclear(fcst_res);
-
-    // Get descriptive statistics from log10 transformed column
-    PGresult* stats_res = PQexecPrepared(psql_conn, stats_stmt_name, 1,
-                                         params, NULL, NULL, 0);
-    double min = 0, max = 0, avg = 0, stdev = 0;
-    if(PQresultStatus(stats_res) == PGRES_TUPLES_OK){
-        int num_fields = PQnfields(stats_res);
-        for(int i = 0; i < PQntuples(stats_res); i++){
-            for(int j = 0; j < num_fields; j++){
-                double value = strtod(PQgetvalue(stats_res, i, j), &ptr);
-                switch(j){
-                    case 0:
-                        min = value;
-                        break;
-                    case 1:
-                        max = value;
-                        break;
-                    case 2:
-                        avg = value;
-                        break;
-                    case 3:
-                        stdev = value;
-                        break;
-                    default:
-                        log_error("Unexpected value in query response.\n");
-                        break;
-                }
-            }
-        }
-    }
-    log_info("Min: %f\tMax: %f\tAvg: %f\tStdev: %f\n", min, max, avg, stdev);
-    PQclear(stats_res);
-
-    // Z-Score based on log10 transformation
-    PGresult* log_fcst_res = PQexecPrepared(psql_conn, log_fcst_stmt_name, 1,
-                                            params, NULL, NULL, 0);
-    double log_fcst_precip = 0;
-    if(PQresultStatus(log_fcst_res) == PGRES_TUPLES_OK) {
-        int num_fields = PQnfields(log_fcst_res);
-        for (int i = 0; i < PQntuples(log_fcst_res); i++) {
-            memset(ts_buf, 0, sizeof(ts_buf));
-            for (int j = 0; j < num_fields; j++) {
-                switch(j){
-                    case 0:
-                        // Timestamp
-                        strncpy(ts_buf, PQgetvalue(log_fcst_res, i, j),
-                                sizeof(ts_buf));
-                        break;
-                    case 1:
-                        // Forecast precipitation
-                        log_fcst_precip = strtod(PQgetvalue(log_fcst_res, i, j),
-                                             &ptr);
-                        break;
-                    default:
-                        log_error("Unexpected value in query response.\n");
-                        break;
-                }
-            }
-
-            /* Z-Score TRANSFORMATION START */
-            double zs_precip = (log_fcst_precip - avg) / stdev;
-            /* Z-Score TRANSFORMATION END */
-
-            // Add prepared statement parameters
-            snprintf(zs_buf, sizeof(zs_buf), "%f", zs_precip);
-            weather_params[0] = zs_buf; // Z-Score buffer
-            weather_params[1] = buf; // program_id buffer
-            weather_params[2] = ts_buf; // Timestamp buffer
-
-            PGresult* zs_fcst_insert = PQexecPrepared(psql_conn, zs_stmt_name, 3,
-                                                   weather_params, NULL, NULL, 1);
-            if(PQresultStatus(zs_fcst_insert) != PGRES_COMMAND_OK){
-                log_error("PostgreSQL log transformation insert error: %s\n",
-                          PQerrorMessage(psql_conn));
-            }
-            PQclear(zs_fcst_insert);
-        }
-    }
-    PQclear(log_fcst_res);
-}
-
-
+/**
+ * @brief Window dataset into sum of next 8-days and previous 5-days.
+ *
+ * For each `program_id` calcualte the sum of the next 8-days precipitation and
+ * the previous 5-days preciptiation. This acts as a moving window across all
+ * available data.
+ *
+ * @note The outlook and hindlook can be adjusted by altering the `w_start` and
+ * `w_end` variables in this function.
+ *
+ * @param psql_conn PostgreSQL connection.
+ * @param program_id Food authority program ID.
+ */
 void T_WindowDataset(PGconn* psql_conn, const int program_id){
 
     const char* params[1];
@@ -520,7 +368,16 @@ void T_WindowDataset(PGconn* psql_conn, const int program_id){
 
 }
 
-
+/**
+ * @breif Normalise precipiation data between 0 and 1.
+ *
+ * After a summed window average has been completed by `T_WindowDataset` the
+ * data can then be normalised. This normalisation is program specific i.e.
+ * each normalisations max and min are based on that program only and not the
+ * max and min of all programs in NSW.
+ *
+ * @param psql_conn PostgreSQL connection.
+ */
 void T_NormaliseWindowedPrecipitation(PGconn* psql_conn, const int program_id){
 
     const char* params[1];
