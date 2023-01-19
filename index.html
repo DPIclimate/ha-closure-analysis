@@ -102,11 +102,24 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 About</h2>
 <p >Oyster harvest areas close due to rainfall, salinity, algal blooms and various other non-environmental factors. This works aims to predict closures relating to rainfall (i.e. freshwater input). This process is essentially attempting to quantify the amount of fresh water that has entered a river system (through precipitation) and then calculating a risk factor based on previous events. The same is done for temperature accumulation.</p>
 <h2><a class="anchor" id="autotoc_md1"></a>
-Install</h2>
-<p >This process requires <a href="https://cmake.org/">cmake</a>.</p>
+Backend</h2>
 <h3><a class="anchor" id="autotoc_md2"></a>
-Install dependencies</h3>
+Dependencies</h3>
+<p >This setup assumes you are working with a clean Ubuntu image. Commands may vary based on your OS. </p>
 <h4><a class="anchor" id="autotoc_md3"></a>
+CMake (greater than v3.19.0)</h4>
+<p >Only required if this command fails: </p><div class="fragment"><div class="line">cmake --version</div>
+</div><!-- fragment --><p >Install only if above command fails: </p><div class="fragment"><div class="line">apt-get install wget</div>
+<div class="line">cd /opt</div>
+<div class="line">wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar.gz</div>
+<div class="line">tar -xvzf cmake-3.23.0.tar.gz</div>
+<div class="line">rm cmake-3.23.0.tar.gz</div>
+<div class="line">cd cmake-3.23.0/</div>
+<div class="line">./configure</div>
+<div class="line">make -s</div>
+<div class="line">make install -s</div>
+<div class="line">ln -s /opt/cmake-3.23.0/bin/* /usr/bin</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md4"></a>
 cJSON</h4>
 <p >A JSON parsing and building library. See: <a href="https://github.com/DaveGamble/cJSON">cJSON</a></p>
 <div class="fragment"><div class="line"># In a directory of your choosing</div>
@@ -115,29 +128,79 @@ cJSON</h4>
 <div class="line">mkdir build</div>
 <div class="line">cd build</div>
 <div class="line">cmake ..</div>
-<div class="line">make</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
-ENV Variables</h3>
-<p >This project uses several environmental variables. You need to provide these or the program will not run.</p>
-<div class="fragment"><div class="line">export UBI_TOKEN=&quot;&lt;your_ubidots_token&gt;&quot;</div>
-<div class="line">export WW_TOKEN=&quot;&lt;your_willy_weather_token&gt;&quot;</div>
-<div class="line">export IBM_TOKEN=&quot;&lt;your_ibm_token&gt;&quot;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
-Build &amp; Run</h3>
-<p >Clone this repository from your command line:</p>
-<div class="fragment"><div class="line">git clone https://github.com/DPIclimate/ha-closure-analysis</div>
+<div class="line">sudo make install</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md5"></a>
+Curl</h4>
+<div class="fragment"><div class="line">apt-get install curl</div>
+<div class="line">apt-get install libcurl4-openssl-dev</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md6"></a>
+PostGreSQL</h4>
+<div class="fragment"><div class="line">apt-get remove libpq5 # May not be nessessary</div>
+<div class="line">apt-get install libpq-dev</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+Environment Variables</h3>
+<p >This project uses several environmental variables. You need to provide these or the program will compile but cannot be run.</p>
+<div class="fragment"><div class="line"># In a directory of your choosing</div>
+<div class="line">git clone https://github.com/DPIclimate/ha-closure-analysis</div>
 <div class="line">cd ha-closure-analysis</div>
+<div class="line">touch .env</div>
+<div class="line">echo &quot;UBI_TOKEN=&lt;your_ubidots_token&gt;&quot; &gt;&gt; .env</div>
+<div class="line">echo &quot;WW_TOKEN=&lt;your_willy_weather_token&gt;&quot; &gt;&gt; .env</div>
+<div class="line">echo &quot;IBM_TOKEN=&lt;your_ibm_token&gt;&quot; &gt;&gt; .env</div>
+</div><!-- fragment --><p >Then to build to backend: </p><div class="fragment"><div class="line">cd ha-closure-analysis</div>
 <div class="line">mkdir build</div>
 <div class="line">cd build</div>
 <div class="line">cmake ..</div>
 <div class="line">make</div>
-<div class="line">./bin/program # Run</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><p >And run: </p><div class="fragment"><div class="line">./bin/program # Run</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+PostGreSQL Database</h2>
+<h3><a class="anchor" id="autotoc_md9"></a>
+Add PSQL Environment</h3>
+<p >The username and password are defined by you. </p><div class="fragment"><div class="line">cd ha-closure-analysis</div>
+<div class="line">echo &quot;PSQL_USERNAME=&lt;YOUR_USERNAME&gt;&quot; &gt;&gt; .env</div>
+<div class="line">echo &quot;PSQL_PASSWORD=&lt;YOUR_PASSWORD&gt;&quot; &gt;&gt; .env</div>
+<div class="line">echo &quot;PSQL_DB=oyster_db&quot; &gt;&gt; .env</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
+Build and Deploy</h3>
+<p >This will build the PSQL container and populate it with tables as defined in <code>db/init.d/init_db.sql</code> </p><div class="fragment"><div class="line">cd ha-closure-analysis</div>
+<div class="line">docker compose up</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
+Load from Backup</h3>
+<h4><a class="anchor" id="autotoc_md12"></a>
+Expose your backup</h4>
+<p >Put your backup in the <code>db/data/</code> directory. </p><div class="fragment"><div class="line">cd ha-closure-analysis/db/data # &lt;-- Put &lt;YOUR_BACKUP&gt;.sql file here.</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md13"></a>
+Enter the PSQL Container</h4>
+<p ><b>If</b> you have a database backup you want to load you can: </p><div class="fragment"><div class="line">docker ps # Copy the container ID from this command</div>
+<div class="line">docker exec -it &lt;container_id&gt; bash</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md14"></a>
+Add your Backup</h4>
+<p >You should now have a bash terminal within the databases continer. From within the container you can run: </p><div class="fragment"><div class="line">cd /var/lib/postgres/data</div>
+<div class="line">psql -U &lt;YOUR_USERNAME&gt; -d oyster_db &lt; &lt;YOUR_BACKUP&gt;.sql</div>
+<div class="line">````</div>
+<div class="line"> </div>
+<div class="line">## API</div>
+<div class="line">### Dependences</div>
+<div class="line">#### Go (Lang)</div>
+<div class="line">Install [Go](https://go.dev/) as per the instructurion provided on their website.</div>
+<div class="line">##### Build and Run</div>
+<div class="line">The Docker container must be running first.</div>
+<div class="line">```bash</div>
+<div class="line">cd ha-closure-analysis</div>
+<div class="line">cd api</div>
+<div class="line">go get .</div>
+<div class="line">go run .</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
+Front-end</h2>
+<h3><a class="anchor" id="autotoc_md16"></a>
+Dependencies</h3>
+<h4><a class="anchor" id="autotoc_md17"></a>
+NPM</h4>
+<div class="fragment"><div class="line">apt-get install npm</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
 License</h2>
-<p >This project is MIT licensed, as found in the LICENCE file.</p>
-<blockquote class="doxtable">
-<p >&zwj;Contact <a href="#" onclick="location.href='mai'+'lto:'+'har'+'ve'+'y.b'+'at'+'es@'+'dp'+'i.n'+'sw'+'.go'+'v.'+'au'; return false;">Harvey Bates</a> </p>
-</blockquote>
+<p >This project is MIT licensed, as found in the LICENCE file. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

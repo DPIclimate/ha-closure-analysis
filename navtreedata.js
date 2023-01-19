@@ -28,14 +28,30 @@ var NAVTREE =
     [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "About", "index.html#autotoc_md0", null ],
-      [ "Install", "index.html#autotoc_md1", [
-        [ "Install dependencies", "index.html#autotoc_md2", [
-          [ "cJSON", "index.html#autotoc_md3", null ]
+      [ "Backend", "index.html#autotoc_md1", [
+        [ "Dependencies", "index.html#autotoc_md2", [
+          [ "CMake (greater than v3.19.0)", "index.html#autotoc_md3", null ],
+          [ "cJSON", "index.html#autotoc_md4", null ],
+          [ "Curl", "index.html#autotoc_md5", null ],
+          [ "PostGreSQL", "index.html#autotoc_md6", null ]
         ] ],
-        [ "ENV Variables", "index.html#autotoc_md4", null ],
-        [ "Build & Run", "index.html#autotoc_md5", null ]
+        [ "Environment Variables", "index.html#autotoc_md7", null ]
       ] ],
-      [ "License", "index.html#autotoc_md6", null ],
+      [ "PostGreSQL Database", "index.html#autotoc_md8", [
+        [ "Add PSQL Environment", "index.html#autotoc_md9", null ],
+        [ "Build and Deploy", "index.html#autotoc_md10", null ],
+        [ "Load from Backup", "index.html#autotoc_md11", [
+          [ "Expose your backup", "index.html#autotoc_md12", null ],
+          [ "Enter the PSQL Container", "index.html#autotoc_md13", null ],
+          [ "Add your Backup", "index.html#autotoc_md14", null ]
+        ] ]
+      ] ],
+      [ "Front-end", "index.html#autotoc_md15", [
+        [ "Dependencies", "index.html#autotoc_md16", [
+          [ "NPM", "index.html#autotoc_md17", null ]
+        ] ]
+      ] ],
+      [ "License", "index.html#autotoc_md18", null ],
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
@@ -60,7 +76,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_i_b_m___e_i_s_2authenticate_8c.html",
-"struct_f_a___harvest_area___type_def.html#a7c6fa58c4211fd310dd5e43eedd606db"
+"struct_b_o_m___weather_station___type_def.html#a98795c70e51e154409d74d4abbdc8e86"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
