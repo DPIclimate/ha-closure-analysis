@@ -26,11 +26,28 @@ This works aims to predict closures relating to rainfall (i.e. freshwater input)
 attempting to quantify the amount of fresh water that has entered a river system (through precipitation) and
 then calculating a risk factor based on previous events. The same is done for temperature accumulation.
 
-## Install
+## Backend
+### Dependencies
+This setup assumes you are working with a clean Ubuntu image. Commands may vary based on your OS.
+#### CMake (greater than v3.19.0)
+Only required if this command fails:
+```bash
+cmake --version
+```
 
-This process requires [cmake](https://cmake.org/).
-
-### Install dependencies
+Install only if above command fails:
+```bash
+apt-get install wget
+cd /opt
+wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar.gz
+tar -xvzf cmake-3.23.0.tar.gz
+rm cmake-3.23.0.tar.gz
+cd cmake-3.23.0/
+./configure
+make -s
+make install -s
+ln -s /opt/cmake-3.23.0/bin/* /usr/bin
+```
 
 #### cJSON
 
@@ -43,36 +60,110 @@ cd cJSON
 mkdir build
 cd build
 cmake ..
-make
+sudo make install
 ```
 
-### ENV Variables
+#### Curl
+```bash
+apt-get install curl
+apt-get install libcurl4-openssl-dev
+```
 
+#### PostGreSQL
+```bash
+apt-get remove libpq5 # May not be nessessary
+apt-get install libpq-dev
+```
+
+### Environment Variables
 This project uses several environmental variables. 
-You need to provide these or the program will not run.
+You need to provide these or the program will compile but cannot be run.
 
 ```bash
-export UBI_TOKEN="<your_ubidots_token>"
-export WW_TOKEN="<your_willy_weather_token>"
-export IBM_TOKEN="<your_ibm_token>"
+# In a directory of your choosing
+git clone https://github.com/DPIclimate/ha-closure-analysis
+cd ha-closure-analysis
+touch .env
+echo "UBI_TOKEN=<your_ubidots_token>" >> .env
+echo "WW_TOKEN=<your_willy_weather_token>" >> .env
+echo "IBM_TOKEN=<your_ibm_token>" >> .env
 ```
 
-### Build & Run
-
-Clone this repository from your command line:
-
+Then to build to backend:
 ```bash
-git clone https://github.com/DPIclimate/ha-closure-analysis
 cd ha-closure-analysis
 mkdir build
 cd build
 cmake ..
 make
+```
+
+And run:
+```bash
 ./bin/program # Run
 ```
 
-## License
+## PostGreSQL Database
+### Add PSQL Environment
+The username and password are defined by you.
+```bash
+cd ha-closure-analysis
+echo "PSQL_USERNAME=<YOUR_USERNAME>" >> .env
+echo "PSQL_PASSWORD=<YOUR_PASSWORD>" >> .env
+echo "PSQL_DB=oyster_db" >> .env
+```
 
+### Build and Deploy
+This will build the PSQL container and populate it with tables as defined in `db/init.d/init_db.sql`
+```bash
+cd ha-closure-analysis
+docker compose up
+```
+
+### Load from Backup
+#### Expose your backup
+Put your backup in the `db/data/` directory.
+```bash
+cd ha-closure-analysis/db/data # <-- Put <YOUR_BACKUP>.sql file here.
+```
+
+#### Enter the PSQL Container
+**If** you have a database backup you want to load you can:
+```bash
+docker ps # Copy the container ID from this command
+docker exec -it <container_id> bash
+```
+
+#### Add your Backup
+You should now have a bash terminal within the databases continer. From within the container you can run:
+```bash
+cd /var/lib/postgres/data
+psql -U <YOUR_USERNAME> -d oyster_db < <YOUR_BACKUP>.sql
+````
+
+## API
+### Dependences
+#### Go (Lang)
+Install [Go](https://go.dev/) as per the instructurion provided on their website.
+##### Build and Run
+The Docker container must be running first.
+```bash
+cd ha-closure-analysis
+cd api
+go get .
+go run .
+```
+
+## Front-end
+### Dependencies
+#### NPM
+```bash
+apt-get install npm
+```
+
+
+
+## License
 This project is MIT licensed, as found in the LICENCE file.
 
-> Contact [Harvey Bates](mailto:harvey.bates@dpi.nsw.gov.au)
+
