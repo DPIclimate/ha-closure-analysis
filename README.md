@@ -156,12 +156,21 @@ go run .
 
 ## Front-end
 ### Dependencies
-#### NPM
+#### NPM & Node.js
+Only required if not installed.
 ```bash
-apt-get install npm
+curl -sL https://deb.nodesource.com/setup_14.x | bash
+apt-get install nodejs -y
+npm --version # Validate install
 ```
 
-
+### Build and Run
+Requires Go API to be running and database online.
+```bash
+cd ha-closure-analysis/frontend
+npm install
+npm start # Starts the server 
+```
 
 ## License
 This project is MIT licensed, as found in the LICENCE file.
