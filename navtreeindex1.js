@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"struct_b_o_m___weather_station___type_def.html#a81229ebd89f1e3c4241eae0e6f2b8959":[1,5,1,5],
 "struct_b_o_m___weather_station___type_def.html#a98795c70e51e154409d74d4abbdc8e86":[1,5,1,4],
 "struct_b_o_m___weather_station___type_def.html#ab1c7e4c611c36924c86be214c537f1ec":[1,5,1,1],
 "struct_b_o_m___weather_station___type_def.html#ab8b75fa54b03b03431f904a83ce12175":[1,5,1,2],

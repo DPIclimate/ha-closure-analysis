@@ -75,8 +75,8 @@ var NAVTREEINDEX0 =
 "ftp_8h_source.html":[2,0,0,5],
 "functions.html":[1,7,0],
 "functions_vars.html":[1,7,1],
-"globals.html":[2,1,0],
 "globals.html":[2,1,0,0],
+"globals.html":[2,1,0],
 "globals_c.html":[2,1,0,1],
 "globals_defs.html":[2,1,5],
 "globals_eval.html":[2,1,4],
@@ -153,7 +153,8 @@ var NAVTREEINDEX0 =
 "index.html#autotoc_md15":[3],
 "index.html#autotoc_md16":[3,0],
 "index.html#autotoc_md17":[3,0,0],
-"index.html#autotoc_md18":[4],
+"index.html#autotoc_md18":[3,1],
+"index.html#autotoc_md19":[4],
 "index.html#autotoc_md2":[1,0],
 "index.html#autotoc_md3":[1,0,0],
 "index.html#autotoc_md4":[1,0,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "struct_b_o_m___weather_dataset___type_def.html#ad9bd5e8cc5782628518327d10d6f3693":[1,5,0,0],
 "struct_b_o_m___weather_station___type_def.html":[1,5,1],
 "struct_b_o_m___weather_station___type_def.html#a251cbc9b4fc0efec31e2aedfe85ba4cc":[1,5,1,0],
-"struct_b_o_m___weather_station___type_def.html#a7c5b5228d19d6854abacd353359210e5":[1,5,1,3],
-"struct_b_o_m___weather_station___type_def.html#a81229ebd89f1e3c4241eae0e6f2b8959":[1,5,1,5]
+"struct_b_o_m___weather_station___type_def.html#a7c5b5228d19d6854abacd353359210e5":[1,5,1,3]
 };

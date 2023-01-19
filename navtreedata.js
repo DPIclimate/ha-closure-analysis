@@ -48,10 +48,11 @@ var NAVTREE =
       ] ],
       [ "Front-end", "index.html#autotoc_md15", [
         [ "Dependencies", "index.html#autotoc_md16", [
-          [ "NPM", "index.html#autotoc_md17", null ]
-        ] ]
+          [ "NPM & Node.js", "index.html#autotoc_md17", null ]
+        ] ],
+        [ "Build and Run", "index.html#autotoc_md18", null ]
       ] ],
-      [ "License", "index.html#autotoc_md18", null ],
+      [ "License", "index.html#autotoc_md19", null ],
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
@@ -76,7 +77,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_i_b_m___e_i_s_2authenticate_8c.html",
-"struct_b_o_m___weather_station___type_def.html#a98795c70e51e154409d74d4abbdc8e86"
+"struct_b_o_m___weather_station___type_def.html#a81229ebd89f1e3c4241eae0e6f2b8959"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
