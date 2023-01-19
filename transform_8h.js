@@ -12,6 +12,8 @@ var transform_8h =
     [ "T_MAX_N_LOCATIONS", "transform_8h.html#a42101b2c4b9443d38e0d191150203aa1", null ],
     [ "T_OUTLOOK_BUF_SIZE", "transform_8h.html#abca0a3e862066a4f78ef705c69b47575", null ],
     [ "T_TIMESTAMP_SIZE", "transform_8h.html#aa49393d575e5f8692268004cf458f58c", null ],
-    [ "T_BuildOutlook", "transform_8h.html#aa1ef7833bcdeaed5dc11aa2e93d9fca1", null ],
-    [ "T_BuildWeatherDB", "transform_8h.html#a4189d4916467017dc3d00c2551a74a56", null ]
+    [ "T_BuildWeatherDB", "transform_8h.html#a4189d4916467017dc3d00c2551a74a56", null ],
+    [ "T_FloodPrediction", "transform_8h.html#ae06774642cc02397bc8d37a57ca075fa", null ],
+    [ "T_NormaliseWindowedPrecipitation", "transform_8h.html#a59b5db28bc2cd01ffb5057c07812dccf", null ],
+    [ "T_WindowDataset", "transform_8h.html#a1f082241da08d3da97a3611d2391d6d2", null ]
 ];

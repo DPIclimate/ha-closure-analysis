@@ -5,6 +5,7 @@ var utils_8h =
     [ "cJSON_Minify_Mod", "utils_8h.html#a2dd2caaadd6c88b345799d955652f908", null ],
     [ "MakeDirectory", "utils_8h.html#a6885b6b56d62d9d96fc7682c122bb719", null ],
     [ "Utils_PointsDistance", "utils_8h.html#ae9a4fc4203f0487ffc856084f3e4a8a6", null ],
+    [ "Utils_PrepareStatement", "utils_8h.html#afdc0b49cf1b8441d00d0876ab599ccbd", null ],
     [ "WriteMemoryCallback", "utils_8h.html#abd11b076bf3b435e484a1880c77343ee", null ],
     [ "WriteTimeseriesToFile", "utils_8h.html#aae3626bba6a021ce94bdfed42c1dbdb9", null ]
 ];

@@ -12,5 +12,5 @@ var searchData=
   ['historical_5fweather_2eh_9',['historical_weather.h',['../historical__weather_8h.html',1,'']]],
   ['http_2ec_10',['http.c',['../http_8c.html',1,'']]],
   ['http_2eh_11',['http.h',['../http_8h.html',1,'']]],
-  ['httprequest_12',['HttpRequest',['../http_8h.html#a791777d7da6f02b27c321174b9977fd2',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body):&#160;http.c'],['../http_8c.html#a791777d7da6f02b27c321174b9977fd2',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body):&#160;http.c']]]
+  ['httprequest_12',['HttpRequest',['../http_8c.html#a791777d7da6f02b27c321174b9977fd2',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body):&#160;http.c'],['../http_8h.html#a791777d7da6f02b27c321174b9977fd2',1,'HttpRequest(cJSON **response, const char *URL, struct curl_slist *headers, int8_t post, const char *body):&#160;http.c']]]
 ];

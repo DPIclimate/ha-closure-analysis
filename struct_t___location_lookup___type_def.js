@@ -5,6 +5,7 @@ var struct_t___location_lookup___type_def =
     [ "bom_location", "struct_t___location_lookup___type_def.html#add9088c84b5c5b79780b1c820690d567", null ],
     [ "bom_location_id", "struct_t___location_lookup___type_def.html#aa13a87ce0672408b3ae63f999ede0e12", null ],
     [ "bom_longitude", "struct_t___location_lookup___type_def.html#a137a8d58c4bfa96d0dab9a6d362f216c", null ],
+    [ "fa_program_id", "struct_t___location_lookup___type_def.html#a3c8f68108eca734716887dcd7418c61c", null ],
     [ "fa_program_name", "struct_t___location_lookup___type_def.html#a9525e4c51ff97ee09d8d4af484cc53ed", null ],
     [ "last_updated", "struct_t___location_lookup___type_def.html#a5578143a3ed82f76cdb92846e4471e03", null ],
     [ "ww_latitude", "struct_t___location_lookup___type_def.html#a430b5ef001c903f6956fd4fcd74d7ae9", null ],

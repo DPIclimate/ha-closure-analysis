@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Oyster HA Closure Analysis", "index.html", [
+  [ "Oyster Harvest Area Closure Analysis", "index.html", [
     [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "About", "index.html#autotoc_md0", null ],
@@ -46,7 +46,7 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
@@ -60,7 +60,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_i_b_m___e_i_s_2authenticate_8c.html",
-"struct_i_b_m___timeseries_dataset___type_def.html"
+"struct_f_a___harvest_area___type_def.html#a7c6fa58c4211fd310dd5e43eedd606db"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -14,7 +14,7 @@ var log_8c =
     [ "stdout_callback", "log_8c.html#a4835022da53ad0b637272a4e2430022a", null ],
     [ "unlock", "log_8c.html#abb7cc7eb4e959fda6a43c8dd85f20090", null ],
     [ "callbacks", "log_8c.html#a8ef88a49b6363714e9fd310bdc90caf7", null ],
-    [ "L", "log_8c.html#a32afcca366c50561cf80f8df68a4e552", null ],
+    [ "L", "log_8c.html#a4b6bb2cdbcb8c783619e595db7aad454", null ],
     [ "level", "log_8c.html#acf4d33ee4cff36f69b924471174dcb11", null ],
     [ "level_strings", "log_8c.html#a3c28d4a33f3ac2df9e3755241cbd244f", null ],
     [ "lock", "log_8c.html#a9863926e23e26ddb194b82b7fc50756a", null ],

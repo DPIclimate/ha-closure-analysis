@@ -1,6 +1,6 @@
 <map id="include/WillyWeather/tide.h" name="include/WillyWeather/tide.h">
-<area shape="rect" id="node1" title=" " alt="" coords="63,5,205,47"/>
-<area shape="rect" id="node2" href="$main_8h.html" title=" " alt="" coords="5,95,111,121"/>
-<area shape="rect" id="node4" href="$tide_8c.html" title=" " alt="" coords="134,95,289,121"/>
-<area shape="rect" id="node3" href="$main_8c.html" title=" " alt="" coords="17,169,99,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="69,5,229,45"/>
+<area shape="rect" id="node2" href="$main_8h.html" title=" " alt="" coords="5,93,124,119"/>
+<area shape="rect" id="node4" href="$tide_8c.html" title=" " alt="" coords="148,93,320,119"/>
+<area shape="rect" id="node3" href="$main_8c.html" title=" " alt="" coords="20,167,109,192"/>
 </map>

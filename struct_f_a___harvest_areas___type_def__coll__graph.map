@@ -1,4 +1,4 @@
 <map id="FA_HarvestAreas_TypeDef" name="FA_HarvestAreas_TypeDef">
-<area shape="rect" id="node1" title="Holds a list of oyster harvest areas (and their status) in NSW." alt="" coords="5,277,187,355"/>
-<area shape="rect" id="node2" href="$struct_f_a___harvest_area___type_def.html" title="Harvest area status information." alt="" coords="9,5,183,215"/>
+<area shape="rect" id="node1" title="Holds a list of oyster harvest areas (and their status) in NSW." alt="" coords="5,255,205,309"/>
+<area shape="rect" id="node2" href="$struct_f_a___harvest_area___type_def.html" title="Harvest area status information." alt="" coords="9,5,202,192"/>
 </map>

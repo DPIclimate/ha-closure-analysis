@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['oyster_20ha_20closure_20analysis_0',['Oyster HA Closure Analysis',['../index.html',1,'']]]
+  ['oyster_20harvest_20area_20closure_20analysis_0',['Oyster Harvest Area Closure Analysis',['../index.html',1,'']]]
 ];
