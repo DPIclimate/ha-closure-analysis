@@ -57,7 +57,7 @@ RUN \
   echo "IBM_TOKEN=None" >> .env
 
 # Build harvest-area-closure analysis
-WORKDIR "/root/ha-closure-analysis/
+WORKDIR "/root/ha-closure-analysis/"
 RUN \
   mkdir build && \
   cd build/ && \
