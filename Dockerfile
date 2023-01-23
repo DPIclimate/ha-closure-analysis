@@ -4,63 +4,76 @@ FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Update Ubuntu Software repository
-RUN apt-get update
-RUN apt update
-RUN apt upgrade -y
+RUN apt-get update && apt-get upgrade - y
 
 # Install required packages. libssl-dev, libpq, postgresql-server-dev-all required for building cmake 3.23.0
-RUN apt install -y cron curl git cmake golang-go wget libssl-dev libpq-dev postgresql-server-dev-all
-RUN rm -rf /var/lib/apt/lists/*
-RUN apt clean
+RUN apt-get install -y \
+  'cron' \
+  'curl' \
+  'git' \
+  'golang-go' \
+  'wget' \
+  'libssl-dev' \
+  'libpq-dev' \
+  'postgresql-server-dev-all' \
+  'libcurl4-openssl-dev'
 
-RUN apt-get update -y
+# Cleanup apt
+RUN rm -rf /var/lib/apt/lists/* && apt clean
 
-RUN apt install -y libcurl4-openssl-dev
-
+# Install CMake from source
 WORKDIR "/opt/"
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar.gz
-RUN tar -xvzf cmake-3.23.0.tar.gz
-RUN rm cmake-3.23.0.tar.gz
-WORKDIR "/opt/cmake-3.23.0/"
-RUN ./configure
-RUN make -s
-RUN make install -s
-#RUN ln -s /opt/cmake-3.23.0/bin/* /usr/bin
+RUN \
+  wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar.gz && \ 
+  tar -xvzf cmake-3.23.0.tar.gz && \ 
+  rm cmake-3.23.0.tar.gz && \
+  cd cmake-3.23.0/ && \
+  ./configure && \
+  make -s && \ 
+  make install -s && \
+  ln -s /opt/cmake-3.23.0/bin/* /usr/bin
 
 WORKDIR "/root/"
-RUN git clone https://github.com/DaveGamble/cJSON
-
-WORKDIR "/root/cJSON/"
-RUN mkdir build
-
-WORKDIR "/root/cJSON/build/"
-RUN cmake ..
-RUN make install
+RUN \
+  git clone https://github.com/DaveGamble/cJSON && \
+  cd cJSON/ && \
+  mkdir build && \
+  cd build/ && \
+  cmake .. && \
+  make install
 
 # In a directory of your choice, clone the repository.
 WORKDIR "/root/"
-RUN git clone https://github.com/DPIclimate/ha-closure-analysis
+RUN \
+  git clone https://github.com/DPIclimate/ha-closure-analysis && \
+  cd ha-closure-analysis/
 
-WORKDIR "/root/ha-closure-analysis/"
-RUN touch .env
-RUN echo "UBI_TOKEN=UBI_KEY" >> .env
-RUN echo "WW_TOKEN=WW_KEY" >> .env
-RUN echo "IBM_TOKEN=None" >> .env
-RUN mkdir build
+# Add environment variables
+WORKDIR "/root/ha-closure-analysis"
+RUN \
+  touch .env && \
+  echo "UBI_TOKEN=UBI_KEY" >> .env && \
+  echo "WW_TOKEN=WW_KEY" >> .env && \
+  echo "IBM_TOKEN=None" >> .env
 
-WORKDIR "/root/ha-closure-analysis/build/"
-RUN cmake ..
-RUN make
-CMD ./bin/program
+# Build harvest-area-closure analysis
+WORKDIR "/root/ha-closure-analysis/
+RUN \
+  mkdir build && \
+  cd build/ && \
+  cmake .. && \
+  make
+# ./bin/program
 
+# Build and run API
 WORKDIR "/root/ha-closure-analysis/api/"
-RUN go get .
-RUN go run .
+RUN go get . && go run .
 
+# Build and run webserver
 WORKDIR "/root/ha-closure-analysis/frontend/"
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
-RUN apt-get install nodejs -y
-RUN npm install
-RUN npm start
-
-
+RUN \
+  curl -sL https://deb.nodesource.com/setup_14.x | bash && \
+  apt-get install nodejs -y && \
+  npm install && \
+  npm start
+  
